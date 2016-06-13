@@ -1,0 +1,153 @@
+.car_img{padding:0;z-index:10}
+.car_img img{width:100%;}
+.header_bg{background:#5ABAD2;margin-top:0.5%;margin-left:-3%;text-align:center;width: 86.33333333%;
+padding:1.5% 0 1.5% 0;-webkit-box-shadow: 3px 3px 5px 0px rgba(204,133,143,0.5);
+-moz-box-shadow: 3px 3px 5px 0px rgba(204,133,143,0.5);box-shadow: 3px 3px 5px 0px rgba(204,133,143,0.5);color: #fff;
+border-radius: 5px;}
+.header_bg h2{text-shadow: 0px 4px 1px rgba(150, 150, 150, 0.5);}
+.custom-xs{/* width:8%;margin:0 0px 0 3%; */float: right;}
+.menu{text-align:center;border-radius:0px;position:absolute;background:url('../images/signal.png') no-repeat;width:90px;
+height:223px;}
+.menu i{color:#fff;text-align:center;border-radius:50px;font-size:20px;padding:8px 0 8px 0;width:40%;margin:5% 2% 2% 7%;}
+.menu i.fa-user{background:#79C942}
+.menu i.fa-phone{background:#FFCC66}
+.menu i.fa-info{background:#ED1B23}
+.menu i.fa-user:hover{color:#79C942;background:#fff}
+.menu i.fa-phone:hover{color:#FFCC66;background:#fff}
+.menu i.fa-info:hover{color:#ED1B23;background:#fff}
+.login{position:absolute;top:20px;right:20px;border:2px solid #337ab7;color:#fff;font-size:38px;padding:10px;border-radius:50%;
+width:62px;}
+
+
+/* My style */
+.sidebar-nav{position:fixed;left:0;width:16%;text-align:center;height:100%;}
+.sidebar-nav .navbar-default{background:#eee;border:#eee;margin:0;border-radius:0;height:100%;box-shadow: 0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12),0 2px 4px -1px rgba(0,0,0,.2);}
+.sidebar-nav i{font-size:28px;background:#B4E0E1;width:50px;border-radius:26px;height:50px;padding:12px 0 0 0;float:left;}
+.sidebar-nav .nav>li{float:none}
+.sidebar-nav .nav>li>a{padding:15px 0 15px 0;color:#000;background:none}
+.sidebar-nav .nav>li>a:hover{color:#03A9F4;background:none}
+.sidebar-nav .nav>li>a:focus{color:#000;background:none}
+.sidebar-nav .nav>li>a.active {color:#03A9F4;}
+.sidebar-nav .nav>li>a.active i{box-shadow:0 3px 4px 0 rgba(0,0,0,.14),0 3px 3px -2px rgba(0,0,0,.2),0 1px 8px 0 rgba(0,0,0,.12);}
+
+
+/* Modal style */
+.closeIcon {
+	position: absolute;
+    top: -85px;
+    z-index: 100;
+	font-size: 2.3em;
+	text-align: center;
+	color: #F44336;
+	cursor:pointer;
+}
+.label-floatlabel  {
+	color:red;
+}
+.userIcon {
+	width: 150px;
+	height: 150px;
+	border-radius: 82px;
+	background: #fff;
+	line-height: 6.9;
+	font-size: 1.82em;
+	border: 1px solid #ddd;
+	color: #03A9F4;
+}
+
+.iconSection {
+	margin-top: -70px;
+}
+
+.modal-dialog {
+	width: 720px;
+	margin: 100px auto;
+}
+
+.modal-content {
+	border-radius: 0px;
+}
+.formInput input[type="radio"]{height:10px}
+.formInput input {
+	border: none;
+	border-bottom: 2px solid #ddd;
+	border-radius: 0px;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	-webkit-transition: none;
+	transition: none;
+	height: 72px;
+}
+.formInput button{
+	font-size:20px;
+	padding:10px 37px;
+	border-radius:0px;
+}
+.formInput input:FOCUS {
+	border-color: transparent;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	border: none;
+	border-bottom: 2px solid #9C9A9A;
+}
+
+
+
+.navbar.navbar_home{background:#03A9F4;margin:0;height:74px;}
+.sidebar-nav p {text-align:left;font-size:12px;padding:15px 0px 0px 0px;}
+
+.show-hide.ng-hide-add, 
+.show-hide.ng-hide-remove {
+    transition: all linear 0.2s;
+    display: block!important;
+    position: absolute;
+}
+
+.show-hide.ng-hide-add.ng-hide-add-active,
+.show-hide.ng-hide-remove {
+    top: -8px;
+    display: block!important;
+    position: absolute;
+    opacity: 0;
+}
+
+.show-hide.ng-hide-add,
+.show-hide.ng-hide-remove.ng-hide-remove-active {
+    top: -14px;
+    opacity: 1;
+    display: block!important;
+    position: absolute;
+}
+
+.field {
+    position: relative;
+    margin-bottom: 1em;
+    padding-bottom: 1em;
+}
+
+.field > label {
+    position: absolute;
+    top: -14px;
+    color: #428bca;
+    font-size: 0.8em;
+}
+.field > input {
+    border: 0;
+    padding: 0.5em 0!important;
+    box-shadow: none !important;
+    border-radius: 0;;
+    border-bottom: 2px solid #555555;
+    margin-top: 15px
+}
+.floatlabeltxt{
+	position: absolute;
+    top: 0px;
+    left: 20px;
+    display: block;
+    opacity: 1;
+    font-size: 11px;
+    font-weight: bold;
+    color: rgb(41, 150, 204);
+    transition: all 0.2s ease;
+    z-index: 10;
+}

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="modal-header">
+		<span class="close_icon" ng-click="cancel()">&times;</span>
+		<h4 class="modal-title">Device Details</h4>
+	</div>
+	<div class="modal-body">
+		<ul class="nav nav-tabs">
+			<li class="active"><a id="vInfo" href data-target="#tab1"
+				data-toggle="tab">Vehicle Info</a></li>
+			<li><a id="vCurr" href data-target="#tab3" data-toggle="tab"
+				ng-click="showCurrentData()">Latest Data</a></li>
+			<li><a id="vCurr" href data-target="#tab4" data-toggle="tab">Settings</a></li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane fade in active" id="tab1">
+				<div class="row">
+					<div class="col-sm-12">
+						<!-- Vehicle Information -->
+						<section class="vehInfo">
+							<div class="row" ng-init="whatVehicle()">
+								<div class="col-sm-2">
+									<div class="imgpart">
+										<img ng-src="{{url}}" class="img-circle img-responsive" />
+									</div>
+								</div>
+								<div class="col-sm-10">
+									<div class="row">
+										<div class="col-sm-6 form-group">
+											<div class="col-sm-6">
+												<label>Driver Name</label>
+											</div>
+											<div class="col-sm-6 ">
+												<p>{{dev.driver_name}}</p>
+											</div>
+										</div>
+										<div class="col-sm-6 form-group">
+											<div class="col-sm-6">
+												<label>Associated Group</label>
+											</div>
+											<div class="col-sm-6">
+												<p>{{dev.associated_group.gname}}</p>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-6 form-group">
+											<div class="col-sm-6">
+												<label>Driver license</label>
+											</div>
+											<div class="col-sm-6">
+												<p>{{dev.driver_licence}}</p>
+											</div>
+										</div>
+										<div class="col-sm-6 form-group">
+											<div class="col-sm-6">
+												<label>Vechile No</label>
+											</div>
+											<div class="col-sm-6">
+												<p>{{dev.vehicle_num}}</p>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-6 form-group">
+											<div class="col-sm-6">
+												<label>Time Interval</label>
+											</div>
+											<div class="col-sm-6 ">
+												<p>{{dev.time_interval}} secs</p>
+											</div>
+										</div>
+										<div class="col-sm-6 form-group">
+											<div class="col-sm-6">
+												<label>Speed Limit</label>
+											</div>
+											<div class="col-sm-6">
+												<p>{{dev.speed_limit}} kmph</p>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-12 form-group">
+											<div class="col-sm-12">
+												<label>Description</label>
+											</div>
+											<div class="col-sm-12 mtop10">
+												<p>{{dev.desc}}</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</section>
+
+						<!-- ./Vehicle Information -->
+						<div class="row">
+							<!-- Device Information -->
+							<div class="col-sm-12">
+								<h4 class="deviceHeading">Device Information</h4>
+								<section class="devInfo">
+									<div class="row">
+										<div class="col-sm-6 form-group">
+											<div class="col-sm-6">
+												<label>Organization ID</label>
+											</div>
+											<div class="col-sm-6">
+												<p>{{dev.org_id}}</p>
+											</div>
+										</div>
+										<div class="col-sm-6 form-group">
+											<div class="col-sm-6">
+												<label>Serial Number</label>
+											</div>
+											<div class="col-sm-6">
+												<p>{{dev.sr_num}}</p>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-6 form-group">
+											<div class="col-sm-6">
+												<label>Manufacturer ID</label>
+											</div>
+											<div class="col-sm-6">
+												<p>{{dev.mf_id}}</p>
+											</div>
+										</div>
+										<div class="col-sm-6 form-group">
+											<div class="col-sm-6">
+												<label>Contact Number</label>
+											</div>
+											<div class="col-sm-6">
+												<p ng-repeat="cno in dev.contact_num">{{cno}}</p>
+											</div>
+										</div>
+									</div>
+								</section>
+							</div>
+							<!-- ./Device Information -->
+							<!-- Device Address -->
+							<div class="col-sm-12">
+								<h4 class="deviceHeading">Device Location</h4>
+								<section class="devAddr">
+									<div class="row">
+										<div class="col-sm-6 form-group">
+											<div class="col-sm-6">
+												<label>Country</label>
+											</div>
+											<div class="col-sm-6">
+												<p>{{dev.country}}</p>
+											</div>
+										</div>
+										<div class="col-sm-6 form-group">
+											<div class="col-sm-6">
+												<label>State</label>
+											</div>
+											<div class="col-sm-6">
+												<p>{{dev.state}}</p>
+											</div>
+										</div>
+									</div>
+								</section>
+							</div>
+							<!-- ./Device Address -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="tab-pane fade" id="tab2">
+				
+
+			</div>
+			<div class="tab-pane fade" id="tab3">
+				<table class="table">
+					<thead>
+						<tr class="header">
+							<th>Slno</th>
+							<th>Latitude</th>
+							<th>Longitude</th>
+							<th>Speed in KMPH</th>
+							<th>Date Time</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat='y in currData.values'>
+							<td>{{$index+1}}</td>
+							<td>{{y.lat}}</td>
+							<td>{{y.long}}</td>
+							<td>{{y.Velocity}}</td>
+							<td>{{getDate(y.ts)}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="tab-pane fade" id="tab4">
+				<div class="row">
+					<div class="col-sm-12">
+						<form class="form formInput" name="deviceSettings">
+							<div class="form-group">
+								<div class="field">
+									<label ng-show="device.time_interval" class="show-hide">Set
+										Time Interval in Secs</label> <input type="text" class="form-control"
+										ng-model="device.time_interval" name="timeinterval"
+										placeholder="Set Time Interval in Secs" numbers-only required />
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="field">
+									<label ng-show="device.speed_limit" class="show-hide">Set
+										Speed Limit in KmpH</label> <input type="text" class="form-control"
+										ng-model="device.speed_limit" name="speedlimit"
+										placeholder="Set Speed Limit in KmpH" numbers-only required />
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<div class="field">
+								<label ng-show="device.alive_frequency"
+											class="show-hide">Alive Frequency in Minutes</label>
+								<select ng-model="device.alive_frequency" name="alive_frequency"
+													class="form-control floatlabel floatlabel_select" required>
+													<option selected disabled value="">- - Select Alive Frequency in Minutes- -</option>
+													<option value="2">2</option>
+													<option value="5">5</option>
+													<option value="7">7</option>
+													<option value="10">10</option>
+												</select>
+								</div>
+							</div>
+							
+							<div class="form-group"
+								ng-class="{ 'has-error' : deviceSettings.contact_num.$invalid && !deviceSettings.contact_num.$pristine}">
+								<div class="field">
+									<label ng-show="device.contact_num" class="show-hide">Enter
+										Contact Number</label> <input type="text" class="form-control"
+										ng-model="device.contact_num" name="contact_num"
+										placeholder="Enter Contact Number" ng-minlength="10"
+										ng-maxlength="10" numbers-only data-phone required />
+								</div>
+								<p
+									ng-show="deviceSettings.contact_num.$invalid && !deviceSettings.contact_num.$pristine"
+									class="help-block">Enter Valid Mobile Number.</p>
+								<p
+									ng-show="deviceSettings.contact_num.$error.minlength && deviceSettings.contact_num.$error.maxlength"
+									class="help-block">Mobile Number max 10 numbers.</p>
+							</div>
+							<button class="btn btn-primary" ng-click="submitSettings()"
+								ng-disabled="deviceSettings.$invalid" ng-disabled="btnDisabled">Submit</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- <div class="modal-footer">
+		<button class="btn btn-warning" type="button" ng-click="cancel()">Close</button>
+	</div> -->
+</body>
+</html>

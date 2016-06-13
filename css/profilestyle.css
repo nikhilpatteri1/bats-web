@@ -1,0 +1,97 @@
+@CHARSET "ISO-8859-1";
+
+.header-image {
+	display: block;
+	width: 100%;
+	background: url('http://placehold.it/1900x500') no-repeat center center
+		scroll;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;
+	-o-background-size: cover;
+}
+
+.border {
+	border: 1px solid #000;
+}
+
+.headline {
+	padding: 100px 0;
+}
+
+.company li {
+	list-style-type: none;
+	display: inline-table;
+}
+
+.user li {
+	list-style-type: none;
+	display: inline-table;
+	margin: 20px 5px;
+}
+
+.nav-tabs>li.active>a,.nav-tabs>li.active>a:hover,.nav-tabs>li.active>a:focus
+	{
+	color: #555;
+	cursor: default;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	border-bottom-color: transparent;
+	border-top-right-radius: 25px;
+	padding: 5px 45px;
+}
+
+.content {
+	padding: 20px
+}
+.panel-heading a:after {
+    font-family:'Glyphicons Halflings';
+    content:"\e114";
+    float: right;
+    color: grey;
+}
+.panel-heading a.collapsed:after {
+    content:"\e080";
+}
+
+.social {
+	-webkit-padding-start: 0px;
+}
+
+.social li {
+	list-style-type: none;
+	border: 1px solid #000;
+	border-radius: 50px;
+	width: 30px;
+	height: 30px;
+	display: inline-block;
+	text-align: center;
+	margin: 10px 23px;
+}
+
+.social li>i {
+	padding: 8px;
+}
+
+.block {
+	border: 1px solid #d5d5d5;
+}
+
+.videoPart {
+	text-align: center;
+	padding: 60px 10px;
+}
+
+.videoPart i {
+	font-size: 7em;
+}
+
+.namePart {
+	border-top: 1px solid #d5d5d5;
+	padding: 25px 10px;
+}
+
+.socialBlock {
+	border-top: 1px solid #d5d5d5;
+	padding: 12px;
+}

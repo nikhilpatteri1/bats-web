@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="batsAdminHome">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<!-- <link rel="icon" href="../../favicon.ico"> -->
+<title>BATS</title>
+
+<!-- Bootstrap core CSS -->
+<link rel="stylesheet" type="text/css"
+	href="../assets/bootstrap-3.3.5/css/bootstrap.min.css">
+
+<!-- font awesome for icons-->
+<link rel="stylesheet" type="text/css"
+	href="../assets/font-awesome-4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+
+
+<!-- Reset CSS -->
+<link rel="stylesheet" type="text/css" href="../css/reset.css">
+
+<!-- Custom CSS -->
+<link rel="stylesheet" type="text/css" href="../css/nav.css">
+<!-- <link rel="stylesheet" type="text/css" href="css/content.css"> -->
+<link rel="stylesheet" type="text/css" href="../css/carousel.css">
+
+<link rel="stylesheet" type="text/css"
+	href="../assets/sweetalert/sweetalert.css">
+
+<!-- Material Design Calendar -->
+<link rel='stylesheet prefetch' href='../css/angular-material.css'>
+<!-- Select Filter -->
+<link rel="stylesheet" type="text/css"
+	href="../assets/select_filter/select2.css">
+<link rel="stylesheet" type="text/css"
+	href="../assets/select_filter/select2-bootstrap.css">
+<style class="cp-pen-styles">
+.speedTitle {
+	font-family: Georgia, serif;
+}
+
+.md-datepicker-invalid {
+	border-bottom-color: #ddd !important;
+}
+
+.datepickerdemoBasicUsage {
+	/** Demo styles for mdCalendar. */
+	
+}
+
+.datepickerdemoBasicUsage md-content {
+	
+}
+
+.datepickerdemoBasicUsage .validation-messages {
+	font-size: 11px;
+	color: darkred;
+	margin: 10px 0 0 25px;
+}
+
+/* input.ng-pristine.ng-invalid { border-bottom: dashed 2px red; } */
+input.ng-dirty.ng-invalid {
+	border-bottom: solid 2px red;
+}
+
+input.ng-dirty.ng-valid {
+	border-bottom: solid 2px green;
+}
+
+.titleHead {
+	margin-bottom: 40px;
+	text-align: center;
+	color: #03A9F4
+}
+
+.mismatch {
+	font-size: 14px;
+	font-weight: 600;
+	color: red;
+}
+
+.warning {
+	border: 1px solid red;
+}
+
+#custPwdhelp {
+	top: 50px;
+	left: 300px;
+}
+
+#newPwdhelp {
+	top: 40px;
+	left: 300px;
+}
+
+#rePwdhelp {
+	top: 40px;
+	left: 300px;
+}
+
+.input-help {
+	display: none;
+	position: absolute;
+	z-index: 100;
+	top: 82px;
+	left: 390px;
+	width: 200px;
+	padding: 10px;
+	background: #fefefe;
+	font-size: .875em;
+	border-radius: 5px;
+	box-shadow: 0 1px 3px #aaa;
+	border: 1px solid #ddd;
+	opacity: 0.9;
+}
+
+.input-help::before {
+	content: "\25C0";
+	position: absolute;
+	top: 10px;
+	left: -12px;
+	font-size: 16px;
+	line-height: 16px;
+	color: #ddd;
+	text-shadow: none;
+}
+
+.input-help h4 {
+	margin: 0;
+	padding: 0;
+	font-weight: normal;
+	font-size: 1.1em;
+}
+
+/* Always hide the input help when it's pristine */
+input.ng-pristine+.input-help {
+	display: none;
+}
+
+/* Hide the invalid box while the input has focus */
+.ng-invalid:focus+.input-help {
+	display: none;
+}
+
+/* Show a blue border while an input has focus, make sure it overrides everything else */
+/* Overriding Twitter Bootstrap cuz I don't agree we need to alarm the user while they're typing */
+/* input:focus {
+  color: black !important;
+  border-color: rgba(82, 168, 236, 0.8) !important;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6) !important;
+  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6) !important;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6) !important;
+}
+  */
+.has-error .form-control:focus {
+	box-shadow: none;
+}
+/* Show green border when stuff has been typed in, and its valid */
+.ng-dirty.ng-valid {
+	border-color: #3a7d34;
+}
+
+/* Show red border when stuff has been typed in, but its invalid */
+.ng-dirty.ng-invalid {
+	border-color: #ec3f41;
+}
+
+/* Show the help box once it has focus */
+.immediate-help:focus+.input-help {
+	display: block;
+}
+
+/* Immediate help should be red when pristine */
+.immediate-help.ng-pristine:focus+.input-help {
+	border-color: #ec3f41;
+}
+
+.immediate-help.ng-pristine:focus+.input-help::before {
+	color: #ec3f41;
+}
+
+/* Help hould be green when input is valid */
+.ng-valid+.input-help {
+	border-color: #3a7d34;
+}
+
+.ng-valid+.input-help::before {
+	color: #3a7d34;
+}
+
+/* Help should show and be red when invalid */
+.ng-invalid+.input-help {
+	display: block;
+	border-color: #ec3f41;
+}
+
+.ng-invalid+.input-help::before {
+	color: #ec3f41;
+}
+
+/* Style input help requirement bullets */
+.input-help ul {
+	list-style: none;
+	margin: 10px 0 0 0;
+}
+
+/* Default each bullet to be invalid with a red cross and text */
+.input-help li {
+	padding-left: 22px;
+	line-height: 24px;
+	color: #ec3f41;
+	background:
+		url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAA1CAYAAABIkmvkAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAAJwAAACcBKgmRTwAAABZ0RVh0Q3JlYXRpb24gVGltZQAxMC8wOS8xMlhq+BkAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzVxteM2AAAEA0lEQVRIie2WW2jbVRzHv//zT5rkn0ub61zaNdEiPqTC9EFRhtgJk63qg3Wr0806pswNiYgDUXxwyryCEB8UBevtaSCCDHQoboKyoVvVzfRmL2napU0mrdbl8s//dy4+dM1M28n64FsPnIdz+XzO75zfOXA0pRRWU7o/uS9FxOc+3/vlIQBgq4F3fHxvKuIPJ9cFwi9uTXU8BwDa1Uaw/aN7UusCkWRbPI5yxcTI2Bgy49kXrkrwwIedqYg/nGyLXwsJiYHBYWTGs7Cq5Kpt4cA3PXft+2rX40vhrt7OVLgplIzHYuBKoH9gCKMjGVE1LdfJl86YDAAOfN2ziZP4NODyv9/z2fanFuH7P9iWCjcFk/FYK4QSGLgEk0WeUy/3mQCgPXFs9xbBRW883NrssDvQN3hWcOLPEPGWiD94MBaPQymBoaERjI9mBSfu+fHwL+biItpjR3e6JFfloDeAaGQ9SpUycvlp6ExHJBKGYsDvgyMYH81KTsL90yuX4VoWdh3pMqSQpWBjAC3RZkgpYEkCFDA8NIqJ0UlFxI3Tr/5aB9elsau305BcloKBAFpjLeBSYGRwDBNjk4oTN06/dnYZXCcAgK1vbzYkl6VwOATihOzYlOLEjTOvn1sRXiYAgDsP32YIKUuWaXFOwtP3xrnqleAVBQBwy/M3GZy4+PnN3/4TvqJgNWVVj2lNsCZYE6wJ1gRrgv9dYAMAHHw2Bl2fUEpBVavtLPVW/78nVR/Zk4CupzVHA6zChSOK0yHv0S8GFyK4BMPhAJxOgLE03/9kYhE2dz+agKaldY8bDaEQ7D5ft7Roy+UIlCooy5LQdaZ5vVBEgGmmrT172yVxaIylmdcDm9cHc2oK1Zm8kETvLAo0pRRk8mmnEqKouVw68zVCzP8F/uccFHHoXi/sjT6Y53Mw83mhOHn8J7416wQAwPftd0ouiswwdJu/CRASkBKQAmYuBzNfWIC/O173W6llwfbeu6Yi8tDsrAQJYGICyGQAIWDO5KUkaxlcJwAASdSmaWAQHCACOAc4h6YzJi1qWymNNUHlwYcT0JDWXQbACYhGgeh6gHM4Ghuh2/R0YePNiaUCTSmFcvdDCY1paZvhht3nQ2VmGmahICSR5vQHmDt6DcozeZSnp2FdLLZHhwdq94SVd+xMaJqWtrkM2L1uVHILpy0t8igidymXExfHMzBCQbhCIdga7Onz8etqkdgkUYTZbYCSqORmULlQEIq4J3jyexMA8jdu9BRzuaKyLN3udkNjDEqICID+2hbm797Wwez24/T3vJTE3aFTP9Sd9vT1NziVEMUGr1c35+Y2b5jKnqgNKqWglMLspjs6/rj1dudie2mdao07J5s3dCzt/werJTyI1yYqpQAAAABJRU5ErkJggg==)
+		no-repeat 2px -34px;
+}
+
+/* Set to green check and text when valid */
+.input-help li.valid {
+	color: #3a7d34;
+	background-position: 2px 6px;
+}
+
+/* Set submit button */
+form .btn,form.ng-valid .btn[disabled] {
+	display: none;
+}
+
+form.ng-invalid .btn[disabled],form.ng-valid .btn {
+	display: inline-block;
+}
+
+/* body {
+	padding: 20px 0;
+} */
+input {
+	width: 166px
+}
+
+.form-horizontal .control-label {
+	width: 100px;
+}
+
+.form-horizontal .controls {
+	position: relative;
+	margin-left: 120px;
+}
+
+/* My style */
+.search_customer {
+	background: rgba(180, 180, 180, 0.5);
+	padding: 15px 0px 15px 32px;
+}
+
+.search_customer_results {
+	background: rgba(255, 255, 255, 0.5);
+	padding: 20px 15px 5px 15px;
+	height: 310px;
+	overflow: auto;
+}
+
+.search_heading {
+	color: #eee;
+	background: #424242;
+	padding: 12px 0px 10px 10px;
+	border-radius: 10px 10px 0 0;
+}
+
+.search_heading input {
+	width: auto
+}
+
+select {
+	padding: 3px 5px 3px 5px;
+	border: 0;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+.add_new_customer {
+	position: absolute;
+	bottom: 10px;
+	right: 40px;
+	width: 75px;
+	height: 75px;
+	border-radius: 50%;
+	padding: 18px 0 0 0;
+}
+
+.add_new_customer i {
+	font-size: 40px;
+}
+
+.edit_icon,.delete_icon {
+	border: 1px solid #03A9F4;
+	padding: 5px;
+	border-radius: 20px;
+	padding: 3px 7px 3px 7px;
+	margin: 0 0 0 15px;
+}
+
+#map-canvas {
+	height: 400px;
+}
+
+.select_heading {
+	color: #eee;
+	background: #424242;
+	padding: 12px 0px 10px 10px;
+	border-radius: 10px 10px 0 0;
+}
+
+.select_customer {
+	background: rgba(180, 180, 180, 0.5);
+	padding: 15px 30px 15px 30px;
+}
+
+.select_device {
+	background: rgba(180, 180, 180, 0.5);
+	padding: 15px 30px 15px 30px;
+	height: 220px;
+	overflow: auto;
+}
+
+.select_device th,.select_device td {
+	color: #000
+}
+
+.heading_title {
+	text-align: left;
+	margin: 0 0 24px 0;
+	color: #03A9F4;
+}
+
+/* Map style */
+.angular-google-map-container {
+	height: 50vh;
+}
+
+.vechInfolist,.devInfolist,.devAddrlist {
+	-webkit-padding-start: 0px;
+}
+
+.vechInfolist li,.devInfolist li,.devAddrlist li {
+	list-style-type: none;
+}
+
+.imgpart {
+	background: #ccc;
+	border-radius: 50%;
+	padding: 10px;
+	border: 2px solid #ddd;
+}
+
+.vehInfo,.devInfo,.devAddr {
+	background: #eee;
+	padding: 10px;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+
+.xClose {
+	cursor: pointer;
+	color: red;
+}
+
+.mtop10 {
+	margin-top: 10px;
+}
+
+.mtop10.count_label label {
+	color: #fff
+}
+
+rect {
+	fill: transparent;
+}
+/*============= manage_user ==============*/
+select.select_group,select.select_device {
+	width: 100%;
+	margin: 15px 0 30px 0;
+	background: #eee;
+	height: 80px;
+}
+
+.formInput .select_group input,.formInput .select_device input {
+	height: 15px
+}
+
+.select_group,.select_device {
+	background: rgba(180, 180, 180, 0.5);
+	padding: 15px 30px 15px 30px;
+	height: 220px;
+	overflow: auto;
+}
+
+.select_group ul,.select_group li,.select_device ul,.select_device li {
+	list-style: none;
+}
+
+/*============== History Table ================*/
+.tableSection {
+	position: relative;
+	border: 1px solid #000;
+	padding-top: 37px;
+	background: #500;
+}
+
+.hist-container {
+	overflow-y: auto;
+	height: 200px;
+}
+
+.hist-container>table {
+	border-spacing: 0;
+	background: #fff;
+	margin-bottom: 0px;
+	width: 100%;
+}
+
+.hist-container>td+td {
+	border-left: 1px solid #eee;
+}
+
+.hist-container>td,th {
+	border-bottom: 1px solid #eee;
+	background: #ddd;
+	color: #000;
+	padding: 10px 25px;
+}
+
+.hist-container table>thead>tr>th {
+	height: 0;
+	line-height: 0;
+	padding-top: 0;
+	padding-bottom: 0;
+	color: transparent;
+	border: none;
+	white-space: nowrap;
+}
+
+.hist-container table>thead>tr>th>div {
+	position: absolute;
+	background: transparent;
+	color: #fff;
+	padding: 9px 25px;
+	top: 0;
+	margin-left: -25px;
+	line-height: normal;
+	border-left: 1px solid #800;
+}
+
+.hist-container>th:first-child div {
+	border: none;
+}
+
+.show-hide.ng-hide-add,.show-hide.ng-hide-remove {
+	transition: all linear 0.2s;
+	display: block !important;
+	position: absolute;
+}
+
+.show-hide.ng-hide-add.ng-hide-add-active,.show-hide.ng-hide-remove {
+	top: -8px;
+	display: block !important;
+	position: absolute;
+	opacity: 0;
+}
+
+.show-hide.ng-hide-add,.show-hide.ng-hide-remove.ng-hide-remove-active {
+	top: -14px;
+	opacity: 1;
+	display: block !important;
+	position: absolute;
+}
+
+.field {
+	position: relative;
+	margin-bottom: 1em;
+	padding-bottom: 1em;
+}
+
+.field>label {
+	position: absolute;
+	top: -14px;
+	color: #428bca;
+	font-size: 0.8em;
+}
+
+.field>input {
+	border: 0;
+	padding: 0.5em 0 !important;
+	box-shadow: none !important;
+	border-radius: 0;;
+	border-bottom: 2px solid #555555;
+	margin-top: 15px
+}
+
+.geo {
+	width: 20%;
+	height: 30px;
+	background-color: #f44336;
+}
+
+.speed {
+	width: 20%;
+	height: 30px;
+	background-color: #ffde01;
+}
+
+.geospeed {
+	width: 20%;
+	height: 30px;
+	background-color: #e59305;
+}
+
+.normalVehicle {
+	width: 20%;
+	height: 30px;
+	background-color: #000;
+}
+.aliveVehicle{
+	width: 20%;
+	height: 30px;
+	background-color: #0540E5;
+}
+.make20{
+	width:20%;
+}
+.textColor {
+	font-weight: 900;
+	color: #333;
+}
+
+.legendBG {
+	margin-top: 10px;
+	padding: 10px;
+	background-color: #fff;
+	margin-right: 0px;
+	margin-left: 0px;
+}
+
+.redColor {
+	color: red;
+}
+
+.reCenter {
+	position: absolute;
+	z-index: 100000000000;
+	top: 250px;
+	left: 20px;
+	background: #ddd;
+	color: #1909F3;
+	font-size: 1.2em;
+	font-weight: 900;
+	padding: 10px;
+}
+
+.marginTop20 {
+	margin-top: 20px;
+}
+
+.highcharts-container {
+	width: 325px !important;
+	height: 100% !important;
+}
+
+.md-calendar-scroll-mask {
+	height: 265px;
+}
+
+.md-calendar-month-label {
+	height: 43px;
+}
+
+.helplist {
+	-webkit-padding-start: 0px;
+	 padding: 10px;
+}
+
+.helplist li {
+	display: inline-block;
+	font-size: 10px;
+}
+</style>
+</head>
+<body ng-controller="AdminController" ng-cloak>
+
+
+	<!--================= Nav Header Starts =================-->
+	<nav class="navbar navbar_home">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="object">
+						<img src="../images/car_logo_active.png" alt="car_logo" /> <span
+							class="logo_Title">Bydesign Automatic Tracking System</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</nav>
+	<!--================= Nav Header Ends =================-->
+
+
+	<!--================= Content Starts =================-->
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="row">
+					<div class="col-sm-2">
+						<div class="sidebar-nav">
+							<div class="navbar navbar-default" role="navigation">
+								<div class="navbar-collapse collapse sidebar-navbar-collapse">
+									<ul class="nav navbar-nav" track-active>
+										<li><a ng-class="{ active: activePath=='/admin/map' }"
+											href="/admin/map">
+												<div class="row">
+													<div class="col-sm-4">
+														<i class="fa fa-home"></i>
+													</div>
+													<div class="col-sm-8">
+														<p>Map</p>
+													</div>
+												</div>
+										</a></li>
+										<li><a
+											ng-class="{ active: activePath=='/admin/history' }"
+											href="/admin/history">
+												<div class="row">
+													<div class="col-sm-4">
+														<i class="fa fa-history"></i>
+													</div>
+													<div class="col-sm-8">
+														<p>Vehicle History</p>
+													</div>
+												</div>
+										</a></li>
+										<li><a ng-class="{ active: activePath=='/admin/group' }"
+											href="/admin/group">
+												<div class="row">
+													<div class="col-sm-4">
+														<i class="fa fa-user"></i>
+													</div>
+													<div class="col-sm-8">
+														<p>Manage Group</p>
+													</div>
+												</div>
+										</a></li>
+										<li><a ng-class="{ active: activePath=='/admin/user' }"
+											href="/admin/user">
+												<div class="row">
+													<div class="col-sm-4">
+														<i class="fa fa-cog"></i>
+													</div>
+													<div class="col-sm-8">
+														<p>Manage User</p>
+													</div>
+												</div>
+										</a></li>
+										<li><a ng-class="{ active: activePath=='/admin/device' }"
+											href="/admin/device">
+												<div class="row">
+													<div class="col-sm-4">
+														<i class="fa fa-cog"></i>
+													</div>
+													<div class="col-sm-8">
+														<p>Manage Device</p>
+													</div>
+												</div>
+										</a></li>
+										<li><a href="#" data-toggle="modal"
+											data-target="#changePwdAdmin">
+												<div class="row">
+													<div class="col-sm-4">
+														<i class="fa fa-key"></i>
+													</div>
+													<div class="col-sm-8">
+														<p>Change Password</p>
+													</div>
+												</div>
+										</a></li>
+										<li><a href="#" ng-controller="logoutAdminUser"
+											ng-click="logoutAdminSubmit()">
+												<div class="row">
+													<div class="col-sm-4">
+														<i class="fa fa-sign-out"></i>
+													</div>
+													<div class="col-sm-8">
+														<p>Logout</p>
+													</div>
+												</div>
+										</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- angular templating -->
+					<!-- this is where content will be injected -->
+					<div ng-view ng-init="getGrouplist()"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--================= Content Ends =================-->
+
+
+	<!-- Change Password Modal -->
+	<!-- Change Password -->
+	<div id="changePwdAdmin" class="modal modal_login"
+		data-backdrop="static" ng-controller="changePwdformAdmin">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="iconSection" align="center">
+					<div class="userIcon">
+						<i class="fa fa-key fa-3x"></i>
+					</div>
+				</div>
+				<div class="modal-body">
+					<div class="col-sm-2 col-sm-offset-10" align="right">
+						<span class="closeIcon" data-direction="left" data-dismiss="modal"
+							aria-hidden="true" ng-click="reset()">&times;</span>
+					</div>
+					<div class="row">
+						<div class="col-sm-6 col-sm-offset-3">
+							<!-- Change Password -->
+							<h1 class="titleHead">Change Password</h1>
+							<form name="changePwd" class="formInput" id="changePwdFrm">
+								<div class="control-group">
+									<div class="form-group">
+										<div class="row">
+											<div class="col-sm-12 controls">
+												<label ng-show="newpwd" class="floatlabeltxt show-hide">Enter
+													New Password</label> <input type="password" ng-model="newpwd"
+													class="form-control new_pwd" name="new_pd"
+													placeholder="Enter New Password" ng-change="hidePasswordMismatch()" password-validate required>											
+												<span class='help-inline' ng-show='changePwd.newpwd.$valid'>
+													<i class='icon-ok'></i>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="control-group">
+									<div class="form-group">
+										<div class="row">
+											<div class="col-sm-12 controls">
+												<label ng-show="repwd && newpwd"
+													class="floatlabeltxt show-hide">Re-Enter New
+													Password</label> <input type="password" ng-model="repwd"
+													ng-show="newpwd" class="form-control confirm_pwd"
+													name="confirm_pd" same-as='newpwd'
+													placeholder="Re-Enter New Password" repassword-validate
+													required> <span class='help-inline'
+													ng-show='changePwd.repwd.$valid'> <i class='icon-ok'></i>
+												</span> <span class="mismatch" ng-show="isMismatch">Password
+													Mistmatch</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div ng-hide="newpwd && repwd">
+									<ul class="helplist">
+										<li>At least <strong>one letter</strong></li>
+										<li>At least <strong>one number</strong></li>
+										<li>At least <strong>8 characters long</strong></li>
+									</ul>
+								</div>
+								<div class="form-group">
+									<div class="row">
+										<div class="col-sm-6 col-sm-offset-3" align="center">
+											<button class="btn btn-primary chngbtn"
+												ng-disabled="!changePwd.$valid"
+												ng-click="pwdChangeAdmin(repwd)">Submit</button>
+										</div>
+									</div>
+								</div>
+
+							</form>
+
+							<!-- ./Change Password -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- ./Change Password -->
+	<!-- Change Password Modal Ends -->
+
+
+
+
+
+
+	<!-- Bootstrap core JavaScript ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script type="text/javascript" src="../js/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript"
+		src="../assets/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../assets/angular.min.js"></script>
+	<script type="text/javascript" src="../assets/ngStorage.js"></script>
+	<script type="text/javascript" src="../assets/angular-route.js"></script>
+	<script src="https://maps.google.com/maps/api/js?libraries=placeses,visualization,drawing,geometry,places"></script>
+	<!-- <script	src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false&libraries=drawing"></script> --> 
+	<!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=geometry,places&ext=.js"></script> -->
+    <script type ="text/javascript" src="http://www.geocodezip.com/scripts/v3_epoly.js"></script>
+	
+
+
+	<script type="text/javascript" src="../js/app.js"></script>
+	<script type="text/javascript" src="../js/global.js"></script>
+	<script type="text/javascript" src="../js/loginController.js"></script>
+
+	<script src="../assets/angular/angular-animate.js"></script>
+	<script src='../assets/angular/angular-google-maps.js'></script>
+	
+	<script src='../assets/angular/lodash.min.js'></script>
+	<script src="../assets/angular/ui-bootstrap-tpls-0.14.3.js"></script>
+	<!-- <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script> -->
+	<script src="../assets/angular/angular-simple-logger.js"></script>
+	<script src="http://code.highcharts.com/highcharts.js"></script>
+	<script src="http://code.highcharts.com/highcharts-more.js"></script>
+	<script type="text/javascript" src="../js/admin/mapController.js"></script>
+	<script type="text/javascript" src="../js/admin/mapModalController.js"></script>
+	<script type="text/javascript" src="../js/admin/vehicle_history.js"></script>
+	<script src="../js/admin/speedometer.js"></script>
+	<script type="text/javascript" src="../js/admin/groupController.js"></script>
+	<script type="text/javascript" src="../js/admin/userController.js"></script>
+	<script type="text/javascript" src="../js/admin/deviceController.js"></script>
+	<script type="text/javascript" src="../js/admin/directive.js"></script>
+	<script type="text/javascript" src="../js/admin/filter.js"></script>
+	<script type="text/javascript"
+		src="../assets/sweetalert/sweetalert-dev.js"></script>
+	<!-- Material Design Calendar -->
+	<script
+		src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js'></script>
+	<script
+		src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js'></script>
+	<script
+		src='https://cdn.gitcdn.xyz/cdn/angular/bower-material/v1.0.1-master-a687bfc/angular-material.js'></script>
+	<script
+		src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.js'></script>
+	<!-- ./Material Design Calendar -->
+
+	<script type="text/javascript">
+		function resetlabel() {
+			$('.floatlabeltxt').addClass("show-hide ng-hide");
+		}
+		function showPrev() {
+			//on click of reset in group update form 
+			$('#show1').show();//show home form
+			$('#show2').hide();//hide map form
+		}
+	</script>
+
+
+
+</body>
+</html>

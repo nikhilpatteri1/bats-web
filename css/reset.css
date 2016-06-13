@@ -1,0 +1,288 @@
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+    margin:0;
+    padding:0;
+    border:0;
+    outline:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+}
+
+body {
+    line-height:1;
+     background:url('../images/bg1.jpg')no-repeat center center fixed;
+     -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+    z-index:-10;
+    font-family: roboto-regular;
+}
+
+article,aside,details,figcaption,figure,
+footer,header,hgroup,menu,nav,section { 
+	display:block;
+}
+
+nav ul {
+    list-style:none;
+}
+
+blockquote, q {
+    quotes:none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content:'';
+    content:none;
+}
+
+a {
+    margin:0;
+    padding:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+    color:#03A9F4;
+}
+
+/* change colours to suit your needs */
+ins {
+    background-color:#ff9;
+    color:#000;
+    text-decoration:none;
+}
+
+/* change colours to suit your needs */
+mark {
+    background-color:#ff9;
+    color:#000; 
+    font-style:italic;
+    font-weight:bold;
+}
+
+del {
+    text-decoration: line-through;
+}
+
+abbr[title], dfn[title] {
+    border-bottom:1px dotted;
+    cursor:help;
+}
+
+table {
+    border-collapse:collapse;
+    border-spacing:0;
+}
+
+/* change border colour to suit your needs */
+hr {
+    display:block;
+    height:1px;
+    border:0;   
+    border-top:1px solid #cccccc;
+    margin:1em 0;
+    padding:0;
+}
+
+input, select {
+    vertical-align:middle;
+}
+
+
+/*=================== Custom Common Styles ===================*/
+
+h1,h2,h3,h4,h5,h6{font-family: roboto-bold;}
+h1{font-size:32px}
+h2{font-size:28px}
+h3{font-size:24px}
+h4{font-size:20px}
+h5{font-size:16px}
+h6{font-size:12px}
+
+@font-face {
+    font-family: 'roboto-bold';
+    src: url('../assets/fonts/Roboto/bold/roboto-bold-webfont.eot');
+    src: url('../assets/fonts/Roboto/bold/roboto-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../assets/fonts/Roboto/bold/roboto-bold-webfont.woff2') format('woff2'),
+         url('../assets/fonts/Roboto/bold/roboto-bold-webfont.woff') format('woff'),
+         url('../assets/fonts/Roboto/bold/roboto-bold-webfont.ttf') format('truetype'),
+         url('../assets/fonts/Roboto/bold/roboto-bold-webfont.svg#robotobold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'roboto-regular';
+    src: url('../assets/fonts/Roboto/regular/roboto-regular-webfont.eot');
+    src: url('../assets/fonts/Roboto/regular/roboto-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../assets/fonts/Roboto/regular/roboto-regular-webfont.woff2') format('woff2'),
+         url('../assets/fonts/Roboto/regular/roboto-regular-webfont.woff') format('woff'),
+         url('../assets/fonts/Roboto/regular/roboto-regular-webfont.ttf') format('truetype'),
+         url('../assets/fonts/Roboto/regular/roboto-regular-webfont.svg#robotoregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+/*=================== Custom Scrollbar Style for Webkit browser ===================*/
+/* Let's get this party started */
+::-webkit-scrollbar {
+    width: 12px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+} 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: rgba(0,0,0,0.6); 
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+::-webkit-scrollbar-thumb:window-inactive {
+	background: rgba(0,0,0,0.4); 
+}
+
+
+
+a.btn.btn-primary, .btn.btn-primary{background:#03A9F4;border-color:#03A9F4;cursor:pointer}
+
+select option{text-transform:capitalize}
+
+input[type='number'] {
+    -moz-appearance:textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+.plus_91{background: #eee;padding: 24px 0px 24px 8px;}
+.chk_frm_server {color: #a94442;}
+.assignedList2{display:none}
+
+
+
+
+/*======= Device Controller Style for Admin ========*/
+.assignedList,.newassignedList{
+	-webkit-padding-start: 5px;
+}
+.assignedList li,.newassignedList li{
+	list-style-type: none;
+    display: inline-block;
+    margin: 3px;
+    padding: 7px;
+    background: #ccc;
+    font-size: 12px;
+    font-weight: 900;
+    border-radius: 18px;
+    color: #000;
+}
+.assignedList li>span{
+	cursor:pointer;
+	background-color: #ccc;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    padding: 0px 3px;
+    font-size:10px;
+    font-weight: 900;
+    color: red;
+}
+.padding_rt0{padding-right:0}
+.padding_lt0{padding-left:0}
+input[type="checkbox"]{width:20px}
+textarea.form-control{resize:none;border:2px solid #ddd;border-radius:0;margin-top:20px;height:80px;}
+
+.modal-footer {padding:15px;text-align:right; border-top:0;background:#eee;text-align:left;}
+.modal-title {color:#03A9F4;text-align:center;font-size:30px;}
+.close_icon{position:absolute;right:20px;z-index: 100;font-size: 2.3em;text-align: center; color: #F44336;cursor: pointer;}
+
+.speedo_meter{background:#fff;height:400px;padding:0}
+.speedo_meter h5{background:#424242;color:#eee;padding:5px 20px;}
+
+
+/*============= Animated Logo ===============*/
+/* .object {
+    position: absolute;
+} */
+/* #axis:hover .move-right{
+    transform: translate(850px,0);
+    -webkit-transform: translate(850px,0); * Chrome & Safari *
+    -o-transform: translate(850px,0); * Opera *
+    -moz-transform: translate(850px,0); * Firefox *
+} */
+/* .object {
+    position: absolute;
+    transition: all 2s ease-in-out;
+    -webkit-transition: all 2s ease-in-out; * Chrome & Safari *
+    -moz-transition: all 2s ease-in-out; * Firefox *
+    -o-transition: all 2s ease-in-out; * Opera *
+} */
+
+ .object{
+  position:absolute;
+  /* -webkit-animation: 7000ms pulsate infinite alternate ease-in-out;
+  -moz-animation: 7000ms pulsate infinite alternate ease-in-out;
+  -ms-animation: 7000ms pulsate infinite alternate ease-in-out;
+  -o-animation: 7000ms pulsate infinite alternate ease-in-out;
+  animation:7000ms pulsate infinite alternate ease-in-out; */
+}
+.object img{float:left}
+.logo_Title{display:block;color:#fff;font-size:28px;padding:20px 0 0 20px;float:left;}
+.deviceHeading{color:#03A9F4;padding:15px 0 5px 0;}
+
+/*@keyframes pulsate {
+  0% { transform: translate(0,0); }
+  50% { transform: translate(850px,0); }
+  100% { transform: translate(0,0); }
+}
+@-webkit-keyframes pulsate {
+   0% { -webkit-transform: translate(0,0); }
+  50% { -webkit-transform: translate(850px,0); }
+  100% { -webkit-transform: translate(0,0); }
+}
+@-moz-keyframes pulsate {
+  0% { -moz-transform: translate(0,0); }
+  50% { -moz-transform: translate(850px,0); }
+  100% { -moz-transform: translate(0,0); }
+}
+@-ms-keyframes pulsate {
+  0% { -ms-transform: translate(0,0); }
+  50% { -ms-transform: translate(850px,0); }
+  100% { -ms-transform: translate(0,0); } 
+}
+@-o-keyframes pulsate {
+  0% { -o-transform: translate(0,0); }
+  50% { -o-transform: translate(850px,0); }
+  100% { -o-transform: translate(0,0); }  
+} */
+
+.floatlabel_select{height:74px;border: none;border-bottom:2px solid #ddd;border-radius:0;}
+select.floatlabel_select.ng-dirty.ng-valid {border-bottom: solid 2px green;}
+.formInput select.floatlabel_select:FOCUS {-webkit-box-shadow: none;box-shadow: none;}
+
+/*================== added on 04-05-2016 =================*/
+select.search_width{width:200px}
+a:focus{ outline: none; }
+.btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus{outline: none;}
+.btn.btn-primary.btn_anchor{font-size:20px;padding:10px 37px;border-radius:0;}
+

@@ -1,0 +1,644 @@
+/** Group Creation Controller 
+*/
+batsAdminHome.controller('groupController', function($scope, $http, $localStorage) {
+	var posArray;
+	var geofence;
+	
+	$scope.token = $localStorage.data;
+	if(typeof $scope.token==="undefined"){
+		swal({ 
+			   title: "Un Authorized Access",
+		  	   text: "Kindly Login!",   
+		  	   type: "warning",   
+		  	   confirmButtonColor: "#ff0000",   
+		  	   closeOnConfirm: false }, 
+		  	   function(){  
+		  		 $localStorage.$reset();
+		  		 window.location = apiURL;
+		  }); 
+		 
+	}
+	/**------------------------------------
+	 * for enabling geo fence based on user choice
+	 * is performed here----------------------------------------------------------------------------*/
+	$scope.geoChoiceRadio = '1';
+	$scope.IsgeoFence=function(inc){
+		return inc===$scope.geoChoiceRadio;
+	};
+	
+	
+	/*
+	 Hardcoded Values of Alive Frequency
+	 */
+	var aliveFrequency = [2,5,7,10];
+	$scope.alive_frequency = aliveFrequency;
+	
+	
+	/*
+	 Hardcoded Country & State Values
+	 */
+		var countries = ['India'];
+		var states = ['Andaman and Nicobar Islands', 'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chandigarh', 
+		                'Chhattisgarh', 'Dadra and Nagar Haveli', 'Daman and Diu', 'Delhi', 'Goa', 'Gujarat', 'Haryana', 
+		                'Himachal Pradesh', 'Jammu and Kashmir', 'Jharkhand', 'Karnataka', 'Kerala', 'Lakshadweep', 'Madhya Pradesh', 
+		                'Maharashtra', 'Manipur', '	Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Puducherry', 'Punjab', 'Rajasthan', 
+		                'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal'];
+		$scope.country = countries;
+		$scope.state = [];
+		$scope.onSelectCountry = function () {
+	        var myNewOptions = states;
+	        $scope.state = myNewOptions;
+		};
+		$scope.states = states;
+		
+/**
+* Load Group list 
+* 1) on load of page load the Group_name, Country, State in the dropdown
+* 2) Load Group details in grid*/
+			$scope.customer = {};
+			$scope.customer.token = $scope.token;
+			//$scope.customer.id = $scope.token;
+			console.log(JSON.stringify($scope.customer));
+			$http({
+			  method  : 'POST',		  
+			  url     :apiURL+'group/list',
+			  data    : JSON.stringify($scope.customer), 
+			  headers : { 'Content-Type': 'application/json' }
+			 })
+			  .success(function(data) {
+			  var glist = data.glist;
+			  console.log(JSON.stringify(glist));
+			  if(glist.length == 0){
+				  $scope.noGroupList = true;
+			  }
+			  })
+			  .error(function(data, status, headers, config) {
+				  console.log(data.err);
+				  if(data.err == "Expired Session")
+				  {
+				      expiredSession();
+				      $localStorage.$reset();
+				  }
+	        	  else if(data.err == "Invalid User"){
+	        		  invalidUser();
+	    			  $localStorage.$reset();  
+	        	  }
+				  console.log(status);
+				  console.log(headers);
+				  console.log(config);
+			  });
+			
+/**
+* Load Device list 
+* 1) on page load the devices is loaded*/
+	$scope.loadDevices=function(){
+		$scope.user = {"token":$scope.token};
+		//console.log($scope.user);
+	    $http({
+	      method  : 'POST',		  
+	      url     : apiURL+'device/list',
+		  data    : JSON.stringify($scope.user), 
+		  headers : { 'Content-Type': 'application/json' }
+	     })
+		  .success(function(data) {
+		  $scope.customerDevices = data.un_allocated;
+		  //console.log(JSON.stringify($scope.customerDevices));
+		  $scope.presentStock = true;
+		  if(data.un_allocated.length == 0){
+			  $scope.noDevices = true;
+			  $scope.presentStock = false;
+		  }
+		  //$scope.loadDevice();
+	      })
+	      .error(function(data, status, headers, config) {
+	    	  if(data.err == "Expired Session")
+			  {
+			      expiredSession();
+			      $localStorage.$reset();
+			  }
+        	  else if(data.err == "Invalid User"){
+        		  invalidUser();
+    			  $localStorage.$reset();  
+        	  }
+	    	  console.log(data.err);
+	    	  console.log(status);
+	    	  console.log(headers);
+	    	  console.log(config);
+		  });
+	};
+	
+/**
+* On Selection and On Remove of device
+* 1)selecting device from un allocated
+* 2)Remove device from assigned*/
+	$scope.selection=[];
+	$scope.toggleSelectDevice = function toggleSelectDevice(deviceID) {
+		
+		$scope.noDevices = false;
+		$scope.presentStock = true;
+		
+	    var idx = $scope.selection.indexOf(deviceID);
+	    // is currently selected
+	    if (idx > -1) {
+	      $scope.selection.splice(idx, 1);
+	      //console.log($scope.selection);
+	      $scope.customerDevices.push(deviceID);
+	    }
+
+	    // is newly selected
+	    else {
+	      $scope.selection.push(deviceID);
+	      //console.log($scope.selection);
+	      var index = -1;		
+			var comArr = eval( $scope.customerDevices );
+			//console.log($scope.rows);
+			for( var i = 0; i < comArr.length; i++ ) {
+				if( comArr[i] === deviceID ) {
+					index = i;
+					break;
+				}
+			}
+			if( index === -1 ) {
+				alert( "Something gone wrong" );
+			}
+			$scope.customerDevices.splice( index, 1 );		
+	    }
+	  };
+	  
+/**
+ 	* On Submit of Create Group Form
+*/
+	$scope.reset=function(){
+		$scope.group={};
+		$scope.createGroupForm.$setPristine();
+		$scope.selection=[];
+		/*
+		 * function defintion is written in admin.html page 
+		 * becoz it operates via jquery show hide\
+		 * --- showPrev() is used to show the home form of udpate group ----
+		 * */ 
+		showPrev();
+	};
+	$scope.group = {};
+	$scope.submitCreateGroupForm = function() {
+	$scope.group.token = $scope.token;
+	$scope.group.geofence = posArray;
+	var deviceList=[];
+		var dev_len=$scope.selection.length;
+		for(var inc=0;inc<dev_len;inc++){
+			deviceList.push($scope.selection[inc]);
+		}
+	$scope.group.devlist=deviceList;
+	$scope.group.gname=angular.lowercase($scope.group.gname);
+	var cno = [];
+	cno.push($scope.group.contact_num);
+	$scope.group.contact_num = cno;
+	var alive_frequency = $scope.groups.aliveFrequency;
+	console.log(JSON.stringify(alive_frequency));
+	$scope.group.alive_frequency = String(alive_frequency * 60);
+	console.log(JSON.stringify($scope.group.alive_frequency));
+	//console.log($scope.group.devlist);
+	console.log(JSON.stringify($scope.group));
+	$('#createGroupModal').modal('hide');
+    $http({
+      method  : 'POST',		  
+      url     : apiURL+'group/create',
+	  data    : JSON.stringify($scope.group), 
+	  headers : { 'Content-Type': 'application/json' }
+     })
+	  .success(function(data) {
+		  swal({title: "Group Created Successfully",
+			   text: "Success!",   
+			   type: "success",   
+			   confirmButtonColor: "#9afb29",   
+			   closeOnConfirm: false }, 
+			   function(){   
+				   $scope.data = data;
+				   console.log(JSON.stringify($scope.data));
+				   location.reload();
+		});
+      })
+      .error(function(data, status, headers, config) {
+    	  //swal(data.status);
+    	  swal({ 
+			   title: data.status,
+		  	   text: "Try with different group name",   
+		  	   type: "warning",   
+		  	   confirmButtonColor: "#ff0000",   
+		  	   closeOnConfirm: false }, 
+		  	   function(){   
+		  		 location.reload();
+		  });
+    	  console.log(data);
+    	  console.log(status);
+    	  console.log(headers);
+    	  console.log(config);
+	  });
+    };
+    
+/**
+    * On Click of Edit Icon
+    * 1)Fetch Details of Particular Group
+    * 2)Display Fetched Details & Dispaly on the Form
+    * 3)Show Update Button & Hide Create Button
+    * 4)Show Update Title & Hide Create Title*/
+    $scope.submitEditGroup = function(gid) {
+            $scope.btn = {
+                update: false,
+                create: true
+            };
+            $scope.title = {
+                    update: true,
+                    create: false
+                };
+            $scope.createGroupState = false;
+            $scope.editGroupState = true;
+        $scope.truefalse = true;
+    	$scope.group = {};
+    	$scope.group.token = $scope.token;
+    	$scope.group.gid = gid;
+    	//console.log(JSON.stringify($scope.group));
+        $http({
+          method  : 'POST',		  
+          url     : apiURL+'group/info',
+    	  data    : JSON.stringify($scope.group), 
+    	  headers : { 'Content-Type': 'application/json' }
+         })
+    	  .success(function(data) {
+			  $scope.group = data;
+              console.log(JSON.stringify($scope.group));
+              $scope.selection = $scope.group.devlist;
+              geofence = $scope.group.geofence;
+              //console.log(JSON.stringify(geofence));
+              /*var mobile_no = data.contact_num;
+              var contact_number;
+              for(i=0;i<mobile_no.length;i++){
+            	  contact_number = mobile_no[i];
+            	  //console.log(contact_number);
+              }
+              var contact_num = contact_number.slice(3);
+			  //console.log(contact_num);
+			  $scope.group.contact_num = contact_num;*/
+              var update_alive_frequency = Number($scope.group.alive_frequency);
+              console.log(JSON.stringify(update_alive_frequency));
+              $scope.aliveFrequency = update_alive_frequency/60;
+              $scope.groups = {"aliveFrequency": $scope.aliveFrequency};
+              console.log(JSON.stringify($scope.groups.aliveFrequency));
+          })
+          .error(function(data, status, headers, config) {
+        	  //console.log(data.err);
+        	  if(data.err == "Expired Session")
+			  {
+        		  $('#editModal').modal('hide');
+			      expiredSession();
+			      $localStorage.$reset();
+			  }
+        	  else if(data.err == "Invalid User"){
+        		  $('#editModal').modal('hide');
+        		  invalidUser();
+    			  $localStorage.$reset();  
+        	  }
+        	  console.log(status);
+        	  console.log(headers);
+        	  console.log(config);
+    	  });
+        }; 
+        
+/**
+   * On Click of Edit Icon
+   * 1)Show Create Button & Hide Update Button
+   * 2)Show Create Title & Hide Update Title*/      
+        $scope.showCreateBtn = function() {
+            $scope.btn = {
+            	create: false,
+                update: true
+            };
+            $scope.title = {
+                	create: true,
+                    update: false
+            };
+            $scope.createGroupState = true;
+            $scope.editGroupState = false;
+        };
+        
+/**
+   * On Click of Update Button
+   * 1)Update Details of particular Group*/
+        $scope.submitEditGroupForm = function() {
+        	//$scope.group = {};
+        	$scope.group.token = $scope.token;
+        	$scope.group.gid = $scope.group.gid;
+        	$scope.group.gname=angular.lowercase($scope.group.gname);
+        	 if(Object.prototype.toString.call( $scope.group.contact_num ) != '[object Array]'){
+        		 var cno = [];
+        		 cno.push($scope.group.contact_num);
+        		 $scope.group.contact_num = cno;
+        	 }
+        	//console.log($scope.group.contact_num);
+        	//$scope.group.contact_num=[$scope.group.contact_num];
+        	//$scope.group.geofence = posArray;
+        	//$scope.group.geofence = geofence;
+        	if(posArray == null){
+        		$scope.group.geofence = geofence;
+        	}
+        	else{
+        		$scope.group.geofence = posArray;
+        	}
+        	
+        	
+        	var alive_frequency = $scope.groups.aliveFrequency;
+        	console.log(JSON.stringify(alive_frequency));
+        	$scope.group.alive_frequency = String(alive_frequency * 60);
+        	console.log(JSON.stringify($scope.group.alive_frequency));
+        	console.log(JSON.stringify($scope.group));
+            $http({
+              method  : 'POST',		  
+              url     : apiURL+'group/modify',
+        	  data    : JSON.stringify($scope.group),  
+        	  headers : { 'Content-Type': 'application/json' }
+             })
+        	  .success(function(data) {
+        		  swal({title: "Group Updated Successfully",
+       			   text: "Success!",   
+       			   type: "success",   
+       			   confirmButtonColor: "#9afb29",   
+       			   closeOnConfirm: false }, 
+       			   function(){   
+       				$scope.group = data;
+                    console.log(JSON.stringify($scope.group));
+                    location.reload();
+       		});
+              })
+              .error(function(data, status, headers, config) {
+            	  //console.log(data.err);
+            	  if(data.err == "Expired Session")
+    			  {
+            		  $('#editModal').modal('hide');
+    			      expiredSession();
+    			      $localStorage.$reset();
+    			  }
+            	  else if(data.err == "Invalid User"){
+            		  $('#editModal').modal('hide');
+            		  invalidUser();
+        			  $localStorage.$reset();  
+            	  }
+            	  else if(data.err == "Email Exist"){
+            		  swal("Email Id already exists. Enter different mail id."); 
+            	  }
+            	  console.log(status);
+            	  console.log(headers);
+            	  console.log(config);
+        	  });
+            };
+            
+/**
+   * On Click of Delete Icon
+   * 1)Delete Details of particular Group*/            
+            $scope.submitDeleteGroup = function(gid) {
+            	swal({   title: "Are you sure?",   
+                	text: "You want to delete this Group?",   
+                	type: "warning",   
+                	showCancelButton: true,   
+                	confirmButtonColor: "#DD6B55",   
+                	confirmButtonText: "Yes, delete it!",   
+                	cancelButtonText: "No, cancel it!",   
+                	closeOnConfirm: false,   
+                	closeOnCancel: false }, 
+                	function(isConfirm){   
+                		if (isConfirm) {     
+                	    	$scope.group.token = $scope.token;
+                	    	$scope.group.gid = gid;
+                	    	//console.log(JSON.stringify($scope.group));
+                	        $http({
+                	          method  : 'POST',		  
+                	          url     : apiURL+'group/delete',
+                	    	  data    : JSON.stringify($scope.group), 
+                	    	  headers : { 'Content-Type': 'application/json' }
+                	         })
+                	    	  .success(function(data) {
+                	    		  console.log(data);
+                	    			  swal({title: "Group Deleted Successfully",
+                      	   			   text: "Success!",   
+                      	   			   type: "success",   
+                      	   			   confirmButtonColor: "#9afb29",   
+                      	   			   closeOnConfirm: false }, 
+                      	   			   function(){   
+                      	   				   $scope.data = data;
+                      	   			       //console.log(JSON.stringify($scope.data));
+                      	   			       location.reload();
+                      	   			   });
+                	          })
+                	          .error(function(data, status, headers, config) {
+                	        	  //console.log(data.err);
+                	        	  if(data.err == "Expired Session")
+            	    			  {
+            	    			      expiredSession();
+            	    			      $localStorage.$reset();
+            	    			  }
+                	        	  else if(data.err == "Invalid User"){
+                	        		  invalidUser();
+                	    			  $localStorage.$reset();  
+                	        	  }
+                	        	  console.log(status);
+                	        	  console.log(headers);
+                	        	  console.log(config);
+                	    	  }); 
+                			} 
+                		else {     
+                			swal("Cancelled", "You have cancelled :)", "error");   
+                			} 
+                		});
+                };
+                
+/**
+   * Google Map
+   * 1)Draw Polygon on the Map
+   * 2)Show Polygon on the Map based on geo-fence values
+   * 3)Reset Polygon onclick of Re-Draw Button*/  
+$('#show2').hide();     
+  $(document).on('click', '#showMap', function () {
+	$('#show2').show();
+	$('#show1').hide();
+	$('.create_button').hide();
+	showGeofenceMap();
+}); 
+function showGeofenceMap(){
+/**
+     * A library to draw overlays on top of Google Maps to get geospatial info
+     * Author: @rodowi
+     * Updated: 2014-03
+     * TODO: draggable, editable
+     */
+    var mapOverlays = [],
+        mapDataId = 'map-data',
+        mapOverlayStyle = {
+    		strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#FF0000',
+            fillOpacity: 0.35,
+            //draggable: true, // turn off if it gets annoying
+            //editable: true,
+            //paths: triangleCoords,
+        };
+    /**
+     * Upon page load, setup map and bind listeners
+     *
+     */
+    $(document).ready(function () {
+    	var styleMap = [{"featureType":"water","stylers":[{"color":"#46bcec"},{"visibility":"on"}]},{"featureType":"landscape","stylers":[{"color":"#eeeeee"}]},{"featureType":"road","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"transit","stylers":[{"visibility":"off"}]},{"featureType":"poi","stylers":[{"visibility":"off"}]}];
+      // Variables and definitions
+      var mapCanvasId = 'map-canvas',
+          map = new google.maps.Map(document.getElementById(mapCanvasId), {
+            center: new google.maps.LatLng(21.0000, 78.0000),
+            streetViewControl: false,
+            zoom: 4,
+            disableDefaultUI: true,
+			styles: styleMap,
+            zoomControlOptions: {
+              style: google.maps.ZoomControlStyle.LARGE,
+              position: google.maps.ControlPosition.LEFT_CENTER
+            }
+          }); 
+      // Setup drawing manager
+      var drawingManager = new google.maps.drawing.DrawingManager({
+        drawingControl: true,
+        drawingControlOptions: {
+          position: google.maps.ControlPosition.TOP_CENTER,
+          drawingModes: [
+            google.maps.drawing.OverlayType.POLYGON
+          ]
+        },
+        polygonOptions: mapOverlayStyle,
+      });
+      drawingManager.setMap(map);
+      
+        var geoJson = geofence;
+		var resultGeoJson = [];
+		for (var key in geoJson) {
+		if (geoJson.hasOwnProperty(key)) {
+			resultGeoJson.push({
+		   'lat': geoJson[key].lat,
+		   'lng': geoJson[key].long
+		});
+		}
+		}
+		//var result = JSON.stringify(resultGeoJson)
+		//console.log(JSON.stringify(resultGeoJson));
+      var triangleCoords = resultGeoJson;
+      myPolygon = new google.maps.Polygon({
+          paths: triangleCoords,
+          //draggable: true, // turn off if it gets annoying
+          //editable: true,
+          strokeColor: '#FF0000',
+          strokeOpacity: 0.8,
+          strokeWeight: 2,
+          fillColor: '#FF0000',
+          fillOpacity: 0.35
+        });
+        myPolygon.setMap(map); 
+      // Add custom clear button
+      var resetControl = $('<h6>Re-Draw</h6>').css({
+        backgroundColor: '#03A9F4',
+        borderColor: '#03A9F4',
+        borderStyle: 'solid',
+        borderWidth: '1px',
+        color: '#ffffff',
+        cursor: 'pointer',
+        margin: '5px',
+        padding: '5px'
+      })[0];
+      map.controls[google.maps.ControlPosition.TOP_CENTER].push(resetControl);
+      google.maps.event.addDomListener(resetControl, 'click', function() {
+        resetMap();
+        myPolygon.setMap(null);
+      });
+      // Insert a DIV container to hold geospatial data from the map
+      var $mapData = $('<div></div>')
+        .attr('id', mapDataId);
+        //.css('padding', '0 10px 10px 10px');
+      $('#' + mapCanvasId).after($mapData);
+      // Events to be trigger when drawing completes
+      google.maps.event.addListener(drawingManager, 'overlaycomplete', function (event) {
+    	  myPolygon.setMap(null);
+    	  resetMap();
+        // Get bounds in CAP <area> format
+        var bounds = event.overlay.toCapArea();
+        // Store geo data in DOM
+        insertBoundsIntoDOM(bounds, mapDataId);
+        // Store overlay in global array
+        mapOverlays.push(event.overlay);
+      });
+    });
+    /*** DOM Operations ***/
+    /**
+     * Inserts geo-data into DOM.
+     */
+    function insertBoundsIntoDOM(bounds, domElementId) {
+      //console.log('insertBoundsIntoDOM("' + bounds + '")');
+      posArray = bounds;
+    }
+    /**
+     * Removes map overlays and DOM elements with map data
+     */
+    function resetMap() {
+      removeMapOverlays();
+      removeMapData();
+      $('.create_button').hide();
+      $('.update_button').hide();
+    }
+    /**
+     * Removes map overlays (global variable)
+     *
+     */
+    function removeMapOverlays() {
+      while(mapOverlays[0])
+        mapOverlays.pop().setMap(null);
+    }
+    /**
+     * Removes DOM elements with map data
+     *
+     */
+    function removeMapData() { $('#' + mapDataId).empty() }
+    /*** Maps extensions ***/
+    /**
+     * Both methods return a string with geospatial info of a map overlay formatted for CAP <area> elements
+     * Note: As of Maps API v3.exp radius is given in meters and CAP v1.2 use KM
+     * https://developers.google.com/maps/documentation/javascript/reference#Circle
+     * http://docs.oasis-open.org/emergency/cap/v1.2/CAP-v1.2-os.html
+     * Note: first and last pair of coordinates should be equal
+     *
+     */
+    google.maps.Polygon.prototype.toCapArea = function () {
+      var posArray=[];
+      var capArea = '';
+      this.getPath().forEach(function (element, index) {
+        capArea += 'lat:' + element.lat() + ',long:' + element.lng() + ' ';
+        posArray.push({"lat":element.lat(),"long":element.lng()});
+      });
+      var start = this.getPath().getAt(0);
+      capArea += 'lat:' + start.lat() + ',long:' + start.lng();
+      posArray.push({"lat":start.lat(),"long":start.lng()});
+      //console.log(JSON.stringify(posArray));
+      if(posArray == null){
+		  $('.create_button').hide();
+		  $('.update_button').hide();
+		}
+		else{
+		  $('.create_button').show();
+		  $('.update_button').show();
+		}
+      return posArray;
+    };
+ }
+$(document).on('click', '#lat_long_geofence', function(){
+      	//$('#geofence').val(posArray);
+      	$('#show2').hide();
+    	$('#show1').show();
+ });
+});
+
+
+
+
+

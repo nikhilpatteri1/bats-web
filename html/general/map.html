@@ -1,0 +1,114 @@
+<div class="col-sm-10"> 
+	<h2 class="heading_title">Map</h2>
+	<div class="row">
+		<div class="col-sm-12">
+			<!-- ng-controller='smartcontroller' Starts Here -->
+			<div ng-controller='GeneralController' ng-init="initialize()">
+				<div class="row">
+					<div class="col-sm-4" id="clearTextGroup">
+						<!-- <input list="grouplist" class="form-control" name="groupList" id="groupNamelist"
+							ng-model="groupname" ng-change="fetchDevicelist(groupname)"
+							placeholder="Select Group" />
+						<datalist id="grouplist">
+							<option ng-repeat="option in groupList" value="{{ option.gid }}">{{
+								option.gname }}</option>
+						</datalist> -->
+						<select id="selectGroup" class="form-control" name="groupList"
+							ng-model="groupname" ng-change="fetchDevicelist(groupname)">
+							<option value="" selected disabled class="disable_select">- -
+								Select Group - -</option>
+							<option ng-repeat="option in groupList" value="{{ option.gid }}">{{option.gid}}</option>
+						</select>
+					</div>
+					<div class="col-sm-4" id="clearTextDevice">
+						<!-- <input list="devicelist" class="form-control" name="deviceList" id="deviceIdlist"
+							ng-model="deviceId" ng-change="fetchDeviceDetail(deviceId)"
+							placeholder="Select Vechicle" />
+						<datalist id="devicelist">
+							<option ng-repeat="option in deviceList" value="{{ option }}">{{
+								option}}</option>
+						</datalist> -->
+						<select id="selectDevice" class="form-control" name="deviceList"
+							ng-model="deviceId" ng-change="fetchDeviceDetail(gid,deviceId)">
+							<option value="" selected disabled class="disable_select">- -
+								Select Device - -</option>
+							<option ng-repeat="option in deviceList" value="{{ option }}">{{option}}</option>
+						</select>
+					</div>
+				</div>
+				<div class="row mtop10">
+					<div class="col-sm-8">
+						<div class="row mtop10">
+							<div class="col-sm-12">
+								<div id="map_canvas" style="width: 100%; height: 50vh;"></div>
+							</div>
+						</div>
+						<div ng-controller="ModalDemoCtrl"></div>
+						<span class="reCenter" ng-hide="isZoomed" ng-click="reCenter()">RE-CENTER</span>
+						<span class="reCenter" ng-hide="singleDeviceZoomed" ng-click="reCenterDevice()">RE-CENTER</span>						
+						<div class="row mtop10 count_label">
+							<div class="col-sm-3">
+
+								<label>Car: <span>{{carCount}}</span></label>
+							</div>
+							<div class="col-sm-3">
+								<label>Jeep: <span>{{jeepCount}}</span></label>
+							</div>
+							<div class="col-sm-3">
+								<label>Bus: <span>{{busCount}}</span></label>
+							</div>
+							<div class="col-sm-3">
+								<label>Truck: <span>{{truckCount}}</span></label>
+							</div>
+						</div>
+						<div class="row legendBG">
+							<div class="col-sm-3 make20" align="center">
+								<div class="geo"></div>
+								<p class="textColor">Crossed Geo Fence</p>
+							</div>
+							<div class="col-sm-3 make20" align="center">
+								<div class="speed"></div>
+								<p class="textColor">Crossed Speed</p>
+							</div>
+							<div class="col-sm-3 make20" align="center">
+								<div class="geospeed"></div>
+								<p class="textColor">Crossed Geo Fence and Speed</p>
+							</div>
+							<div class="col-sm-3 make20" align="center">
+								<div class="normalVehicle"></div>
+								<p class="textColor">Normal State</p>
+							</div>
+							<div class="col-sm-3 make20" align="center">
+								<div class="aliveVehicle"></div>
+								<p class="textColor">No-Response State</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-4 speedo_meter">
+						<h5 class="speedTitle">Current Speed of Vehicle</h5>
+						<table class="table" ng-show="multiDevice">
+							<thead>
+								<tr>
+									<td>Slno</td>
+									<td>Device ID</td>
+									<td>Device Speed<b>(kmph)</b></td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="(devId,devSpeed) in devData">
+									<td>{{$index+1}}</td>
+									<td>{{devId}}</td>
+									<td>{{devSpeed}}</td>
+								</tr>
+							</tbody>
+						</table>
+						<div ng-show="singleDevice">
+							<div id="container"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- ng-controller='smartcontroller' Ends Here -->
+		</div>
+	</div>
+</div>

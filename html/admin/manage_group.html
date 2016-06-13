@@ -1,0 +1,333 @@
+<div class="col-sm-10">
+
+	<h2 class="heading_title">Manage Group</h2>
+
+	<div class="row">
+		<div class="col-sm-12">
+			<h4 class="search_heading">Search Group</h4>
+		</div>
+	</div>
+	<div class="search_customer">
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="country">
+					<select ng-model="selectedcountry" class="search_width"
+						ng-options="group.country as group.country for group in glist | unique:'country'">
+						<option value="">- - Select Country - -</option>
+					</select>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="country"> 
+					<select ng-model="selectedstate" class="search_width"
+						ng-options="group.state as group.state for group in glist | unique:'state' | filter:{country:selectedcountry}">
+						<option value="">- - Select State - -</option>
+					</select>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="country">
+					<select ng-model="selectedgnames" class="search_width"
+						ng-options="group.gname as group.gname for group in glist | filterMultiple:{country:selectedcountry,state:selectedstate}">
+						<option value="">- - Select Customer - -</option>
+					</select>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="search_customer_results">
+		<div class="panel panel-default"
+			ng-repeat="group in glist | filterMultiple:{country:selectedcountry,state:selectedstate,uname:selectedunames}">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-sm-2">
+						<label>Group ID:</label>
+					</div>
+					<div class="col-sm-3">
+						<p>{{group.gid}}</p>
+					</div>
+					<div class="col-sm-2">
+						<label>Group Name:</label>
+					</div>
+					<div class="col-sm-2">
+						<p>{{group.gname}}</p>
+					</div>
+					<div class="col-sm-3">
+						<a href="#" class="edit_icon"
+							ng-click="submitEditGroup(group.gid)" data-toggle="modal"
+							data-target="#createGroupModal"><i class="fa fa-pencil"></i></a>
+						<a href="#" class="delete_icon"
+							ng-click="submitDeleteGroup(group.gid)"><i
+							class="fa fa-trash"></i></a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<h2 ng-show="noGroupList">No Groups Available</h2>
+		<a href="#" class="btn btn-primary add_new_customer"
+			ng-click="showCreateBtn()" data-toggle="modal"
+			data-target="#createGroupModal"> <i class="fa fa-plus"></i></a>
+	</div>
+
+
+</div>
+
+
+
+
+<!--==================== Create & Update Modal ===================-->
+<div class="modal fade" id="createGroupModal" role="dialog"
+	data-backdrop="static">
+	<div class="modal-dialog modal-lg"> 
+		<div class="modal-content">
+			<div class="iconSection" align="center">
+				<div class="userIcon">
+					<i class="fa fa-users fa-3x"></i>
+				</div>
+			</div>
+			<div class="modal-body">
+				<form name="createGroupForm" class="form formInput"
+					ng-init="loadDevices()" novalidate>
+					<div class="col-sm-2 col-sm-offset-10" align="right">
+						<span class="closeIcon closeIconReload" data-direction="left" data-dismiss="modal"
+							aria-hidden="true" ng-click="reset()" onclick="resetlabel()">&times;</span>
+					</div>
+					<h1 class="titleHead" ng-show="title.create">Create New Group</h1>
+					<h1 class="titleHead" ng-show="title.update">Update Group</h1>
+					<div class="row" id="show1">
+						<div class="col-sm-12">
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group"
+										ng-class="{ 'has-error' : createGroupForm.gname.$invalid && !createGroupForm.gname.$pristine }">
+										<label ng-show="group.gname" class="floatlabeltxt show-hide">Group
+											Name</label> <input type="text" ng-model="group.gname" name="gname"
+											class="form-control" placeholder="Group Name"
+											ng-readonly="truefalse"  style="text-transform: lowercase" required />
+										<p
+											ng-show="createGroupForm.gname.$invalid && !createGroupForm.gname.$pristine"
+											class="help-block">Group name is required.</p>
+
+										<input type="hidden" ng-model="group.gid" name="gid"
+											class="form-control" />
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group"
+										ng-class="{ 'has-error' : createGroupForm.country.$invalid && !createGroupForm.country.$pristine }">
+										<label ng-show="group.country" class="floatlabeltxt show-hide">Country</label>
+										<select ng-model="group.country" name="country" class="form-control floatlabel floatlabel_select" ng-change="onSelectCountry()" required>
+														<option selected disabled value="">- - Select Country - -</option>
+														<option selected value="{{group.country}}" ng-show>{{group.country}}</option>
+														<option ng-repeat="c in country" value="{{c}}">{{c}}</option>
+														</select>
+										<p ng-show="createGroupForm.country.$invalid && !createGroupForm.country.$pristine"
+											class="help-block">Country is required.</p>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group"
+										ng-class="{ 'has-error' : createGroupForm.state.$invalid && !createGroupForm.state.$pristine }">
+										<label ng-show="group.state" class="floatlabeltxt show-hide">State</label>
+										<select ng-model="group.state" name="state" class="form-control floatlabel floatlabel_select" required>
+														<option selected disabled value="">- - Select State - -</option>
+														<option ng-repeat="s in state" value="{{s}}" ng-show="createGroupState">{{s}}</option>
+														<option selected value="{{group.state}}"  ng-show="editGroupState">{{group.state}}</option>
+														<option ng-repeat="s in states" value="{{s}}"  ng-show="editGroupState">{{s}}</option>
+														</select>
+										<p ng-show="createGroupForm.state.$invalid && !createGroupForm.state.$pristine"
+											class="help-block">State is required.</p>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group"
+										ng-class="{ 'has-error' : createGroupForm.time_interval.$invalid && !createGroupForm.time_interval.$pristine }">
+										<label ng-show="group.time_interval"
+											class="floatlabeltxt show-hide">Time Interval in
+											Seconds</label> <input type="number" ng-model="group.time_interval"
+											name="time_interval" class="form-control"
+											placeholder="Time Interval in Seconds" required />
+										<p
+											ng-show="createGroupForm.time_interval.$invalid && !createGroupForm.time_interval.$pristine"
+											class="help-block">Time Interval is required in number.</p>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group"
+										ng-class="{ 'has-error' : createGroupForm.speed_limit.$invalid && !createGroupForm.speed_limit.$pristine }">
+										<label ng-show="group.speed_limit"
+											class="floatlabeltxt show-hide">Speed Limit in Kmph.</label>
+										<input type="number" ng-model="group.speed_limit"
+											name="speed_limit" class="form-control"
+											placeholder="Speed Limit in Kmph" required />
+										<p
+											ng-show="createGroupForm.speed_limit.$invalid && !createGroupForm.speed_limit.$pristine"
+											class="help-block">Speed Limit is required in number.</p>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group"
+										ng-class="{ 'has-error' : createGroupForm.alive_frequency.$invalid && !createGroupForm.alive_frequency.$pristine }">
+										<label ng-show="groups.aliveFrequency"
+											class="floatlabeltxt show-hide">Alive Frequency in Minutes</label>
+										<div class="row">
+											<div class="col-sm-12">
+												<select ng-model="groups.aliveFrequency" name="alive_frequency"
+													class="form-control floatlabel floatlabel_select" required>
+													<option selected disabled value="">- - Select Alive Frequency in Minutes- -</option>
+												    <option selected value="{{groups.aliveFrequency}}" ng-show>{{groups.aliveFrequency}}</option> 
+													<option ng-repeat="freq in alive_frequency" value="{{freq}}">{{freq}}</option>
+												</select>
+											</div>
+										</div>
+										<p ng-show="createGroupForm.alive_frequency.$invalid && !createGroupForm.alive_frequency.$pristine"
+											class="help-block">Alive Frequency is required.</p>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group"
+										ng-class="{ 'has-error' : createGroupForm.contact_num.$invalid && !createGroupForm.contact_num.$pristine }">
+										<label ng-show="group.contact_num"
+											class="floatlabeltxt show-hide">Mobile Number</label>
+										<div class="row">
+											<!-- <div class="col-sm-3 padding_rt0">
+												<h4 class="plus_91">+91</h4>
+											</div> -->
+											<div class="col-sm-12">
+												<input type="number" ng-model="group.contact_num" data-phone
+													name="contact_num" class="form-control" string-to-number
+													placeholder="Mobile Number" ng-minlength="10"
+													ng-maxlength="10" required />
+											</div>
+										</div>
+										<p
+											ng-show="createGroupForm.contact_num.$invalid && !createGroupForm.contact_num.$pristine"
+											class="help-block">Enter Valid Mobile Number.</p>
+										<p
+											ng-show="createGroupForm.contact_num.$error.minlength && createGroupForm.contact_num.$error.maxlength"
+											class="help-block">Mobile Number max 10 numbers.</p>
+										<!-- <span class="help-block">{{mobstatus}}</span> -->
+									</div>
+								</div>
+								<div class="col-sm-6">
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-sm-6">
+									<h4 class="select_heading">Present Stock</h4>
+									<!-- Un Alloted Device list part -->
+									<div class="row">
+										<div class="col-xs-12">
+											<div class="select_device">
+												<table class="table" ng-show="presentStock">
+													<thead>
+														<tr>
+															<th>Slno</th>
+															<th>Device ID</th>
+															<th>Select</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr ng-repeat="devices in customerDevices">
+															<td>{{$index+1}}</td>
+															<td>{{devices}}</td>
+															<td align="center"><input type="checkbox"
+																name="{{devices}}"
+																ng-click="toggleSelectDevice(devices)" /></td>
+														</tr>
+													</tbody>
+												</table>
+												<h4 ng-show="noDevices">No Devices Available</h4>
+											</div>
+										</div>
+									</div>
+									<!-- ./Un Alloted Device list part -->
+								</div>
+								<div class="col-sm-6">
+									<h4 class="select_heading">Allocated Device For the Group</h4>
+									<div class="select_device">
+										<ul class="assignedList">
+											<li ng-repeat="item in selection"
+												ng-click="toggleSelectDevice(item)">{{item}} <span>x</span></li>
+											<li ng-show="!selection.length">No Devices Selected</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-12"> 
+									<label>Do You Need GEO Fencing for this group ?</label>
+									<input type="radio" name="geoChoice" value="1" ng-model="geoChoiceRadio" class="form-control"/>Yes
+									<input type="radio" name="geoChoice" value="2" ng-model="geoChoiceRadio" class="form-control"/>No
+								</div>
+							</div>
+							<div class="row" ng-show="IsgeoFence('1')">
+								<div class="col-sm-6 col-sm-offset-3" align="center">
+									<div class="form-group">
+										<a class="btn btn-primary btn_anchor" id="showMap"
+											ng-hide="!selection.length">Draw Geofence from map</a>
+									</div>
+								</div>
+							</div>
+							<div class="row" ng-show="IsgeoFence('2')">
+								<div class="col-sm-12">
+									<div class="form-group">
+										<div class="row">
+											<div class="col-sm-6 col-sm-offset-3" align="center">
+												<a class="btn btn-primary create_button btn_anchor"
+													ng-click="submitCreateGroupForm()"
+													ng-disabled="btn.create"
+													ng-hide="createGroupForm.$invalid || !selection.length">Create</a>
+												<a class="btn btn-primary update_button btn_anchor"
+													ng-click="submitEditGroupForm()" 
+													ng-disabled="btn.update"
+													ng-hide="createGroupForm.$invalid || !selection.length">Update</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row" id="show2">
+						<div class="col-sm-12">
+							<div class="form-group">
+								<!-- <a class="btn btn-info" data-toggle="modal" data-target="#geofenceMap">Select from map</a> -->
+								<div id="map-canvas"></div>
+								<!-- <a class="btn btn-primary" id="lat_long_geofence">Back</a> -->
+							</div>
+							<div class="form-group">
+								<div class="row">
+									<div class="col-sm-6 col-sm-offset-3" align="center">
+										<a class="btn btn-primary create_button btn_anchor"
+											ng-click="submitCreateGroupForm()"
+											ng-disabled="createGroupForm.$invalid"
+											ng-hide="btn.create">Create</a>
+										<a class="btn btn-primary update_button btn_anchor"
+											ng-click="submitEditGroupForm()" 
+											ng-disabled="createGroupForm.$invalid"
+											ng-hide="btn.update">Update</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+

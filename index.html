@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="batsLogin">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<!-- <link rel="icon" href="../../favicon.ico"> -->
+<title>BATS v1.1</title>
+
+<!-- Bootstrap core CSS -->
+<link rel="stylesheet" type="text/css"
+	href="assets/bootstrap-3.3.5/css/bootstrap.min.css">
+
+<!-- font awesome for icons-->
+<link rel="stylesheet" type="text/css"
+	href="assets/font-awesome-4.5.0/css/font-awesome.min.css">
+
+<!-- Reset CSS -->
+<link rel="stylesheet" type="text/css" href="css/reset.css">
+
+<!-- Custom CSS -->
+<link rel="stylesheet" type="text/css" href="css/nav.css">
+<!-- <link rel="stylesheet" type="text/css" href="css/content.css"> -->
+<link rel="stylesheet" type="text/css" href="css/carousel.css">
+ 
+<link rel="stylesheet" type="text/css" href="assets/sweetalert/sweetalert.css">
+
+<style>
+.modal {
+	color: #000;
+	text-align: left
+}
+</style>
+
+</head>
+<body style="background: #fff">
+
+
+
+
+	<!--================= Nav Header Starts =================-->
+	<nav class="navbar">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="col-xs-2 car_img">
+						<img src="images/car.png" alt="car_logo" />
+					</div>
+					<div class="col-xs-10 header_bg">
+						<h2>
+							<span class="bydesign_logo"><img
+								src="images/bydesign_logo.png" alt="bydesign_logo" /></span> <span>Automatic
+								Tracking System</span>
+						</h2>
+						<br>
+						<p class="bats_summary">Automatic vehicle tracking technology
+							providing fleet data for a comprehensive picture of vehicle
+							locations</p>
+						<a href="" class="login" data-toggle="modal"
+							data-target="#loginModal"><i class="fa fa-key"></i></a>
+						<!-- <div><a href="#" class="login" data-toggle="dropdown"><i class="fa fa-user"></i></a>
+    <ul class="dropdown-menu" style="right:0;left:inherit;">
+      <li><a href="#">Manage Customer</a></li>
+      <li><a href="#">Manage Device</a></li>
+      <li><a href="#">Logout</a></li>
+    </ul>
+  </div> -->
+
+
+						<!--==================== Login Modal ===================-->
+						<div class="modal_login modal fade" id="loginModal" role="dialog" data-backdrop="static"  ng-controller="loginController">
+							<div class="modal-dialog modal-lg">
+								<div class="modal-content">
+									<div class="modal-header">
+										<span class="close_icon" data-direction="left" data-dismiss="modal" aria-hidden="true" ng-click="reset()" onclick="resetlabel()">×</span>
+										<h4 class="modal-title">Login</h4>
+									</div>
+									<div class="modal-body">
+										<form name="userForm" class="form formInput">
+											<div class="form-group field" ng-class="{ 'has-error' : userForm.user.username.$invalid && !userForm.user.username.$pristine }">
+												<label ng-show="user.username" class="show-hide">Username</label>
+												 <input type="text" name="username"
+													class="form-control" ng-model="user.username"
+													 placeholder="username" ng-disabled="isSaving" style="text-transform: lowercase" required />
+													<p ng-show="userForm.user.username.$invalid && userForm.user.username.$pristine"
+															class="help-block">Username is required.</p>
+											</div>
+											<div class="form-group field"  ng-class="{ 'has-error' : userForm.user.password.$invalid && !userForm.user.password.$pristine }">
+												<label ng-show="user.password" class="show-hide">Password</label>
+												 <input type="password" name="password"
+													class="form-control" ng-model="user.password"
+													placeholder="password" ng-disabled="isSaving"  required />
+													<p ng-show="userForm.user.password.$invalid && userForm.user.password.$pristine"
+															class="help-block">Password is required.</p>
+											</div>
+											<button class="btn btn-primary" ng-disabled="userForm.$invalid" ng-click="submitLoginForm()">Submit</button>
+										</form>
+									</div>
+									<div class="modal-footer">
+										<a href="" class="dialog_forgot">Forgot Password?</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+																	
+													
+						<!--==================== Forget Password Modal ===================-->
+						<div class="modal_login modal fade" id="fgtModal" role="dialog" data-backdrop="static" ng-controller="forgetpwdController">
+							<div class="modal-dialog modal-lg">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" onclick="resetlabel()" ng-click="reset()">&times;</button>
+										<h4 class="modal-title">Forgot Password</h4>
+									</div>
+									<div class="modal-body">
+										<form name="fgtForm" class="form formInput">
+											<div class="form-group" ng-class="{ 'has-error' : fgtForm.useremail.$invalid && !fgtForm.useremail.$pristine }">
+												<label ng-show="useremail" class="show-hide">Enter Email ID</label> 
+												<input type="email" name="useremail" class="form-control" ng-model="useremail" 
+												ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
+												 ng-disabled="isSaving" placeholder="Enter Email Id" required />
+												<p ng-show="fgtForm.useremail.$invalid && !fgtForm.useremail.$pristine" class="help-block">Enter a valid email.</p>
+											</div>
+											<button class="btn btn-primary" ng-click="submitFgtForm(useremail)" ng-disabled="fgtForm.$invalid">Submit</button>
+										</form>
+									</div>
+									<div class="modal-footer">
+										<a href="" class="dialog_login">Click here to login</a>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</nav>
+	<!--================= Nav Header Ends =================-->
+	
+	
+	
+	<!--================= Content Starts =================-->
+	<div class="container marginBtm100">
+		<div class="row">
+			<div class="col-sm-12">
+
+				<!-- Carousel ================================================== -->
+
+				<div id="myCarousel" class="carousel slide" data-ride="carousel">
+					<!-- Indicators -->
+					<ol class="carousel-indicators">
+						<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+						<li data-target="#myCarousel" data-slide-to="1" class=""></li>
+						<li data-target="#myCarousel" data-slide-to="2" class=""></li>
+					</ol>
+					<div class="carousel-inner" role="listbox">
+						<div class="item active">
+							<img class="first-slide" src="images/bus_banner.png"
+								alt="First slide">
+							<div class="container">
+								<div class="carousel-caption">
+									<!-- <h1>Banner 1</h1> -->
+									<p>Automatic vehicle tracking technology providing fleet
+										data for a comprehensive picture of vehicle locations</p>
+								</div>
+							</div>
+						</div>
+						<div class="item"> 
+							<img class="second-slide" src="images/truck_banner.png"
+								alt="Second slide">
+							<div class="container">
+								<div class="carousel-caption">
+									<!-- <h1>Banner 2</h1> -->
+									<p>Automatic vehicle tracking technology providing fleet
+										data for a comprehensive picture of vehicle locations</p>
+								</div>
+							</div>
+						</div>
+						<div class="item">
+							<img class="third-slide" src="images/jeep_banner.png"
+								alt="Third slide">
+							<div class="container">
+								<div class="carousel-caption">
+									<!-- <h1>Banner 3</h1> -->
+									<p>Automatic vehicle tracking technology providing fleet
+										data for a comprehensive picture of vehicle locations</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<a class="left carousel-control" href="#myCarousel" role="button"
+						data-slide="prev"> <span
+						class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+						<span class="sr-only">Previous</span>
+					</a> <a class="right carousel-control" href="#myCarousel" role="button"
+						data-slide="next"> <span
+						class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+						<span class="sr-only">Next</span>
+					</a>
+				</div>
+				<!--=================== carousel Ends ===================-->
+
+
+
+
+
+				<div class="container marketing">
+
+					<!-- Three columns of text below the carousel -->
+					<div class="row">
+						<div class="col-lg-4">
+							<i class="fa fa-map-marker vehicle_icons"></i>
+							<h2>Vehicle Location</h2>
+							<p>Know where your vehicle is driving on a map. See accurate
+								driving path of your car on your mobile</p>
+							<p>
+								<a class="btn btn-default" href="#" role="button">View
+									details »</a>
+							</p>
+						</div>
+						<!-- /.col-lg-4 -->
+						<div class="col-lg-4">
+							<i class="fa fa-compass vehicle_icons"></i>
+							<h2>Vehicle Speed</h2>
+							<p>Know the current speed of your vehicle on a map with the
+								vehicle details and driver details</p>
+							<p>
+								<a class="btn btn-default" href="#" role="button">View
+									details »</a>
+							</p>
+						</div>
+						<!-- /.col-lg-4 -->
+						<div class="col-lg-4">
+							<i class="fa fa-history vehicle_icons"></i>
+							<h2>Vehicle History</h2>
+							<p>Know the history of the vehicle for the present day where
+								the vehicle has visited with time</p>
+							<p>
+								<a class="btn btn-default" href="#" role="button">View
+									details »</a>
+							</p>
+						</div>
+						<!-- /.col-lg-4 -->
+					</div>
+					<!-- /.row -->
+
+
+					<!-- START THE FEATURETTES -->
+
+					<hr class="featurette-divider">
+
+					<div class="row featurette">
+						<div class="col-md-7">
+							<h2 class="featurette-heading">
+								First featurette heading. <span class="text-muted">It'll
+									blow your mind.</span>
+							</h2>
+							<p class="lead">Donec ullamcorper nulla non metus auctor
+								fringilla. Vestibulum id ligula porta felis euismod semper.
+								Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+								Fusce dapibus, tellus ac cursus commodo.</p>
+						</div>
+						<div class="col-md-5">
+							<img class="featurette-image img-responsive center-block"
+								alt="300x300" src="images/content_img1.jpg" />
+						</div>
+					</div>
+
+					<hr class="featurette-divider">
+
+					<div class="row featurette">
+						<div class="col-md-7 col-md-push-5">
+							<h2 class="featurette-heading">
+								Oh yeah, it's that good. <span class="text-muted">See for
+									yourself.</span>
+							</h2>
+							<p class="lead">Donec ullamcorper nulla non metus auctor
+								fringilla. Vestibulum id ligula porta felis euismod semper.
+								Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+								Fusce dapibus, tellus ac cursus commodo.</p>
+						</div>
+						<div class="col-md-5 col-md-pull-7">
+							<img class="featurette-image img-responsive center-block"
+								alt="300x300" src="images/content_img2.jpg" />
+						</div>
+					</div>
+
+					<hr class="featurette-divider">
+
+					<div class="row featurette">
+						<div class="col-md-7">
+							<h2 class="featurette-heading">
+								And lastly, this one. <span class="text-muted">Checkmate.</span>
+							</h2>
+							<p class="lead">Donec ullamcorper nulla non metus auctor
+								fringilla. Vestibulum id ligula porta felis euismod semper.
+								Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+								Fusce dapibus, tellus ac cursus commodo.</p>
+						</div>
+						<div class="col-md-5">
+							<img class="featurette-image img-responsive center-block"
+								alt="300x300" src="images/content_img3.jpg" />
+						</div>
+					</div>
+
+					<hr class="featurette-divider">
+
+					<!-- /END THE FEATURETTES -->
+
+
+					<!-- FOOTER -->
+					<footer class="footer_home">
+						<p class="pull-right">
+							<a href="#">Back to top</a>
+						</p>
+						<p>Copyright © 2015 Bydesign All rights reserved</p>
+					</footer>
+
+				</div>
+
+
+
+
+
+
+			</div>
+		</div>
+	</div>
+	<!--================= Content Ends =================-->
+
+
+	<!--================= Footer Starts =================-->
+	<!-- <footer class="footer">
+<div class="container-fluid">
+<div class="row">
+<div class="col-sm-12">
+<p>Copyright &copy; 2015 Bydesign All rights reserved</p>
+</div>
+</div>
+</div>
+</footer>  -->
+	<!--================= Footer Ends =================-->
+
+
+
+	<!-- Bootstrap core JavaScript ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="assets/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript" src="assets/angular.min.js"></script>
+	<script type="text/javascript" src="assets/angular/angular-animate.js"></script>
+	<script type="text/javascript" src="assets/ngStorage.js"></script>
+	<script type="text/javascript" src="js/app.js"></script>
+	<script type="text/javascript" src="js/loginController.js"></script>
+	<script type="text/javascript" src="js/global.js"></script>
+	<script type="text/javascript" src="assets/sweetalert/sweetalert-dev.js"></script>
+	<script type="text/javascript">
+	function resetlabel(){
+		//$('this > label').addClass("show-hide ng-hide");
+	}
+	 $(".dialog_forgot").on("click", function() {
+		 $("#loginModal").removeClass("fade").modal("hide");
+		 $("#fgtModal").modal("show").addClass("fade");
+		});
+	 $(".dialog_login").on("click", function() {
+		 $("#loginModal").modal("show").addClass("fade");
+		 $("#fgtModal").removeClass("fade").modal("hide");
+		});
+	</script>
+
+
+
+</body>
+</html>

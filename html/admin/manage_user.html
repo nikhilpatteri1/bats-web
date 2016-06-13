@@ -1,0 +1,388 @@
+<div class="col-sm-10" ng-init="loadGroups()">
+
+	<h2 class="heading_title">Manage user</h2>
+
+	<div class="row">
+		<div class="col-sm-12">
+			<h4 class="search_heading">User List</h4>
+		</div>
+	</div>
+
+	<div class="search_customer_results">
+		<div class="panel panel-default" ng-repeat="user in ulist">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-sm-2">
+						<label>Username:</label>
+					</div>
+					<div class="col-sm-3">
+						<p>{{user.uname}}</p>
+					</div>
+					<div class="col-sm-2">
+						<label>Group List:</label>
+					</div>
+					<div class="col-sm-2">
+						<p ng-repeat="user1 in user.glist">{{user1.gname}}</p>
+					</div>
+					<div class="col-sm-3">
+						<a href="#" class="edit_icon"
+							ng-click="submitEditUser(user.uname)" data-toggle="modal"
+							data-target="#updateUserModal"><i class="fa fa-pencil"></i></a> <a
+							href="#" class="delete_icon"
+							ng-click="submitDeleteuser(user.uname)"><i
+							class="fa fa-trash"></i></a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<h2 ng-show="noUsers">No Users Available</h2>
+		<a href="#" class="btn btn-primary add_new_customer"
+			ng-click="showCreateBtn()" data-toggle="modal"
+			data-target="#createUserModal" ng-show="addUser"> <i class="fa fa-plus"></i></a>
+	</div>
+
+</div>
+
+
+
+<!--==================== Create Modal ===================-->
+<div class="modal fade" id="createUserModal" role="dialog"
+	data-backdrop="static">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="iconSection" align="center">
+				<div class="userIcon">
+					<i class="fa fa-user fa-3x"></i>
+				</div>
+			</div>
+			<div class="modal-body">
+				<form name="createUserForm" class="form formInput">
+					<div class="col-sm-2 col-sm-offset-10" align="right">
+						<span class="closeIcon" data-direction="left" data-dismiss="modal"
+							aria-hidden="true" ng-click="reset()" onclick="resetlabel()">&times;</span>
+					</div>
+					<h1 class="titleHead">Create New User</h1>
+					<div class="row">
+						<div class="col-sm-12"> 
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group"
+										ng-class="{ 'has-error' : createUserForm.uname.$invalid && !createUserForm.uname.$pristine }">
+										<label ng-show="user.uname" class="floatlabeltxt show-hide">Enter User Name</label>
+										<input type="text" ng-model="user.uname" name="uname"
+											ng-blur="verifyUser(user.uname)"
+											class="form-control" placeholder="Enter User Name" style="text-transform: lowercase"
+											required />
+										<p
+											ng-show="createUserForm.uname.$invalid && !createUserForm.uname.$pristine"
+											class="help-block">Username is required.</p>
+										<span class="help-block chk_frm_server" ng-show="error.uname">{{status}}</span>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="control-group">
+										<div class="form-group">
+											<div class="controls">
+												<label ng-show="user.password" class="floatlabeltxt show-hide">Enter Password</label>
+												<input type="password" ng-model="user.password"
+													name="password" class="form-control immediate-help"
+													placeholder="Enter Password" password-validate required />
+												<div id="custPwdhelp" class="input-help">
+													<h4>Password must meet the following requirements:</h4>
+													<ul>
+														<li ng-class="pwdHasLetter">At least <strong>one
+																letter</strong></li>
+														<li ng-class="pwdHasNumber">At least <strong>one
+																number</strong></li>
+														<li ng-class="pwdValidLength">At least <strong>8
+																characters long</strong></li>
+													</ul>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group"
+										ng-class="{ 'has-error' : createUserForm.useremail.$invalid && !createUserForm.useremail.$pristine }">
+										<label ng-show="user.email" class="floatlabeltxt show-hide">Enter Email Id</label>
+										<input type="email" ng-model="user.email"
+											ng-blur="verifyEmail(user.email)" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
+											name="useremail" class="form-control"
+											placeholder="Enter Email Id" required />
+										<p
+											ng-show="createUserForm.useremail.$invalid && !createUserForm.useremail.$pristine"
+											class="help-block">Enter a valid email.</p>
+										<span class="help-block chk_frm_server"
+											ng-show="error_mail.umail">{{statusMail}}</span>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group"
+										ng-class="{ 'has-error' : createUserForm.contact_no.$invalid && !createUserForm.contact_no.$pristine }">
+										<label ng-show="user.contact_no" class="floatlabeltxt show-hide">Enter Mobile Number</label>
+										<div class="row">
+											<!-- <div class="col-sm-3 padding_rt0">
+												<h4 class="plus_91">+91</h4>
+											</div> -->
+											<div class="col-sm-12">
+												<input type="number" ng-model="user.contact_no" data-phone
+													string-to-number name="contact_no"
+													class="form-control"
+													placeholder="Enter Mobile Number" ng-minlength="10"
+													ng-maxlength="10" required />
+											</div>
+										</div>
+										<p
+											ng-show="createUserForm.contact_no.$invalid && !createUserForm.contact_no.$pristine"
+											class="help-block">Enter Valid Mobile Number.</p>
+										<p
+											ng-show="createUserForm.contact_no.$error.minlength && createUserForm.contact_no.$error.maxlength"
+											class="help-block">Mobile Number max 10 numbers.</p>
+										<!-- <span class="help-block">{{mobstatus}}</span> -->
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<!-- <label>Select Group</label> <br> -->
+									<!-- <select id="myselection" multiple="true" ng-model="selectedGroups" ng-change="selValue"
+													ng-options="c.gname for c in group" class="select_group"></select>	 -->
+
+									<h4 class="select_heading">Group List</h4>
+									<!-- Group list part -->
+									<div class=" select_group">
+										<div class="row">
+											<div class="col-sm-12">
+												<span ng-repeat="user in group"> <input
+													type="checkbox" ng-model="selection.ids[user.gid]"
+													class="selectGroupUser" /> <label> {{user.gname}}
+												</label> <br>
+												</span>
+												<h4 ng-show="noGroups">No Groups Available</h4>
+											</div>
+										</div>
+									</div>
+									<!-- Group list part -->
+								</div>
+								<div class="col-sm-6">
+									<h4 class="select_heading">Selected Groups</h4>
+									<div class="select_group">
+										<ul class="assignedList{{$index+1}}"
+											ng-repeat="name in selection">
+											<li ng-repeat="name1 in name">{{name1.gname}}</li>
+											<li ng-show="!name.length">No Group Selected</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<br>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6 col-sm-offset-3" align="center">
+							<button class="btn btn-primary showUpdateUser"
+								ng-click="submitCreateUserForm()"
+								ng-disabled="createUserForm.$invalid" ng-show="uname && umail && createUserForm.$valid && !name.length">Create</button>
+						</div>
+					</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<!--==================== Update Modal ===================-->
+<div class="modal fade" id="updateUserModal" role="dialog"
+	data-backdrop="static">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="iconSection" align="center">
+				<div class="userIcon">
+					<i class="fa fa-user fa-3x"></i>
+				</div>
+			</div>
+			<div class="modal-body">
+				<form name="updateUserForm" class="form formInput">
+					<div class="col-sm-2 col-sm-offset-10" align="right">
+						<span class="closeIcon" data-direction="left" data-dismiss="modal"
+							aria-hidden="true" ng-click="resetUpdate()">&times;</span>
+					</div>
+					<h1 class="titleHead">Update User</h1>
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group"
+										ng-class="{ 'has-error' : updateUserForm.uname.$invalid && !updateUserForm.uname.$pristine }">
+										<label ng-show="userUpdate.uname" class="floatlabeltxt show-hide">Enter User Name</label>
+										<input type="text" ng-model="userUpdate.uname" name="uname"
+											class="form-control" placeholder="Enter User Name" style="text-transform: lowercase"
+											readonly required />
+										<p
+											ng-show="updateUserForm.uname.$invalid && !updateUserForm.uname.$pristine"
+											class="help-block">Username is required.</p>
+										<!-- <span class="help-block chk_frm_server" ng-show="error.uname">{{status}}</span> -->
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<!-- <div class="form-group" ng-show="password.update">
+															<div class="controls">
+																<input type="text" ng-model="user.password"
+																	ng-disabled="isSaving" name="password"
+																	class="form-control immediate-help"
+																	placeholder="Enter Password" password-validate required />
+																<div id="custPwdhelp" class="input-help">
+																	<h4>Password must meet the following requirements:</h4>
+																	<ul>
+																		<li ng-class="pwdHasLetter">At least <strong>one
+																				letter</strong></li>
+																		<li ng-class="pwdHasNumber">At least <strong>one
+																				number</strong></li>
+																		<li ng-class="pwdValidLength">At least <strong>8
+																				characters long</strong></li>
+																	</ul>
+																</div>
+															</div>
+														</div> -->
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group"
+										ng-class="{ 'has-error' : updateUserForm.useremail.$invalid && !updateUserForm.useremail.$pristine }">
+										<label ng-show="userUpdate.email" class="floatlabeltxt show-hide">Enter Email Id</label>
+										<input type="email" ng-model="userUpdate.email"
+											ng-keyup="verifyEmail(userUpdate.email)" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
+											name="useremail" class="form-control" placeholder="Enter Email Id"
+											required />
+										<p
+											ng-show="updateUserForm.useremail.$invalid && !updateUserForm.useremail.$pristine"
+											class="help-block">Enter a valid email.</p>
+										<span class="help-block chk_frm_server"
+											ng-show="error_mail.umail">{{statusMail}}</span>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group"
+										ng-class="{ 'has-error' : updateUserForm.contact_no.$invalid && !updateUserForm.contact_no.$pristine }">
+										<div class="row">
+											<!-- <div class="col-sm-3 padding_rt0">
+												<h4 class="plus_91">+91</h4>
+											</div> -->
+											<div class="col-sm-12">
+												<label ng-show="userUpdate.contact_no" class="floatlabeltxt show-hide">Enter Mobile Number</label>	
+												<input type="number" ng-model="userUpdate.contact_no"
+													data-phone string-to-number name="contact_no"
+													class="form-control"
+													placeholder="Enter Mobile Number" ng-minlength="10"
+													ng-maxlength="10" required />
+											</div>
+										</div>
+										<p
+											ng-show="updateUserForm.contact_no.$invalid && !updateUserForm.contact_no.$pristine"
+											class="help-block">Enter Valid Mobile Number.</p>
+										<p
+											ng-show="updateUserForm.contact_no.$error.minlength && updateUserForm.contact_no.$error.maxlength"
+											class="help-block">Mobile Number max 10 numbers.</p>
+										<!-- <span class="help-block">{{mobstatus}}</span> -->
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<!-- <label>Select Group</label> <br> -->
+									<!-- <select id="myselection" multiple="true" ng-model="selectedGroups" ng-change="selValue"
+													ng-options="c.gname for c in group" class="select_group"></select>	 -->
+
+									<h4 class="select_heading">Group List</h4>
+									<!-- Group list part -->
+									<div class=" select_group">
+										<div class="row">
+											<div class="col-sm-12">
+												<span ng-repeat="user in group"> <input
+													type="checkbox" ng-model="selection.ids[user.gid]"
+													class="selectGroupUser" /> <label> {{user.gname}}
+												</label> <br>
+												</span>
+												<h4 ng-show="noGroups">No Groups Available</h4>
+											</div>
+										</div>
+									</div>
+									<!-- Group list part -->
+								</div>
+								<div class="col-sm-6">
+									<h4 class="select_heading">Selected Groups</h4>
+									<div class="select_group">
+										<ul class="assignedList{{$index+1}}"
+											ng-repeat="name in selection">
+											<li ng-repeat="name1 in name" ng-init="check()">{{name1.gname}}</li>
+											<li ng-show="!name.length">No Group Selected</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<br>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6 col-sm-offset-3" align="center">
+							<button class="btn btn-primary showUpdateUser"
+								ng-disabled="updateUserForm.$invalid" ng-show="updateUserForm.$valid && !name.length" 
+								ng-click="submitEditUserForm()">Update</button>
+						</div>
+					</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<script type="text/javascript">
+	/*=============== Show hide Button on Group Select & De-select ================*/
+	$(document).ready(function() {
+		if ($('ul.assignedList1 li').length > 3) {
+			//alert("hideL");
+			$('.showUpdateUser').show();
+		} else {
+			//alert("showL");
+			$('.showUpdateUser').hide();
+		}
+	});
+	$(document).on("click", ".selectGroupUser", function() {
+		//var chk = $('ul.assignedList1 li').length;
+		//alert(chk);
+		if ($('ul.assignedList1 li').length > 3) {
+			//alert("showC");
+			$('.showUpdateUser').show();
+		} else {
+			//alert("hideC");
+			$('.showUpdateUser').hide();
+		}
+	});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

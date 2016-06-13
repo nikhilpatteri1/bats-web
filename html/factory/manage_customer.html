@@ -1,0 +1,412 @@
+
+						<div class="col-sm-10">
+						
+						<h2 class="heading_title">Manage Customer</h2>
+
+							<div class="row">
+								<div class="col-sm-12">
+									<h4 class="search_heading">Search Customer</h4>
+								</div>
+							</div>
+							<div class="search_customer">
+								<div class="row">
+									 <div class="col-sm-4">
+										<div class="country">
+											<!-- <input list="country" type="" ng-model="SelectedCountry" ng-change="LoadSessionData(SelectedDoctor)" />
+    <datalist id="country">
+        <option ng-repeat="x in home" value="{{x.country}}">
+    </datalist> -->
+											<select ng-model="selectedcountry" class="search_width"
+												ng-options="customer.country as customer.country for customer in home | unique:'country'">
+												<option value="">- - Select Country - -</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<div class="country">
+											<!-- <input list="state" type="" ng-model="SelectedState" ng-change="LoadSessionData(SelectedDoctor)" />
+    <datalist id="state">
+        <option ng-repeat="x in home" value="{{x.state}}">
+    </datalist> -->
+											<select ng-model="selectedstate" class="search_width"
+												ng-options="customer.state as customer.state for customer in home | unique:'state' | filter:{country:selectedcountry}">
+												<option value="">- - Select State - -</option>
+											</select>
+										</div>
+									</div> 
+									<div class="col-sm-4">
+										<div class="country">
+											<!-- <input list="uname" type="" ng-model="SelectedUname" ng-change="LoadSessionData(SelectedDoctor)" />
+    <datalist id="uname">
+        <option ng-repeat="x in home" value="{{x.uname}}">
+    </datalist> -->
+											<select ng-model="selectedunames" class="search_width"
+												ng-options="customer.uname as customer.uname for customer in home | filterMultiple:{country:selectedcountry,state:selectedstate}">
+												<option value="">- - Select Customer - -</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+							<div class="search_customer_results">
+								<div class="panel panel-default"
+									ng-repeat="customer in home | filterMultiple:{country:selectedcountry,state:selectedstate,uname:selectedunames}">
+									<div class="panel-heading">
+										<div class="row">
+											<div class="col-sm-2">
+												<label>Customer Name:</label>
+											</div>
+											<div class="col-sm-3">
+												<p>{{customer.uname}}</p>
+											</div>
+											<div class="col-sm-2">
+												<label>Device Count:</label>
+											</div>
+											<div class="col-sm-2">
+												<p>{{customer.device_count}}</p>
+											</div>
+											<div class="col-sm-3">
+												<a href="#" class="edit_icon"
+													ng-click="submitEditCustomer(customer.uname)"
+													data-toggle="modal" data-target="#editModal"><i
+													class="fa fa-pencil"></i></a>
+													<a href="#" class="delete_icon"
+													ng-click="submitDeleteCustomer(customer.uname)"><i
+													class="fa fa-trash"></i></a>
+											</div>
+										</div>
+										<!-- <input type="hidden" value="{{customer.country}}" />
+	<input type="hidden" value="{{customer.state}}" /> -->
+									</div>
+								</div>
+								<h2 ng-show="noCustomer">No Customers Available</h2>
+								<a href="#" class="btn btn-primary add_new_customer"
+									data-toggle="modal" data-target="#createModal"> <i
+									class="fa fa-plus"></i></a>
+							</div>
+						</div>
+
+
+
+
+					<!--==================== Create Modal ===================-->
+					<div class="modal fade" id="createModal" role="dialog" data-backdrop="static" ng-controller="factoryCreate">
+						<div class="modal-dialog modal-lg">
+							<div class="modal-content">
+								<div class="iconSection" align="center">
+									<div class="userIcon">
+										<i class="fa fa-user fa-3x"></i>
+									</div>
+								</div>
+								<div class="modal-body">
+									<form name="createForm" class="form formInput"
+										>
+										<div class="col-sm-2 col-sm-offset-10" align="right">
+											<span class="closeIcon" data-direction="left"
+												data-dismiss="modal" aria-hidden="true" ng-click="reset()" onclick="resetlabel()">&times;</span>
+										</div>
+										<h1 class="titleHead">Add New Customer</h1>
+										<div class="row">
+											<div class="col-sm-12">
+											<div class="row">
+												<div class="col-sm-6">
+													<div class="form-group"
+														ng-class="{ 'has-error' : createForm.custname.$invalid && !createForm.custname.$pristine }">
+														<label ng-show="customer.uname" class="floatlabeltxt show-hide">Customer Name</label>
+														<input type="text" name="custname" class="form-control" ng-model="customer.uname"
+															ng-blur="verifyUser(customer.uname)" placeholder="Customer Name" style="text-transform: lowercase" required />
+														<p ng-show="createForm.custname.$invalid && !createForm.custname.$pristine"
+															class="help-block">Customer name is required.</p>
+														<p class="help-block chk_frm_server" ng-show="error.cname">{{status}}</p>
+													</div>
+												</div>
+												<div class="col-sm-6">
+													<div class="control-group">
+														<div class="form-group">
+															<div class="controls">
+															<label ng-show="customer.password" class="floatlabeltxt show-hide">Set Password</label>
+																<input type="password" ng-model="customer.password"
+																	ng-disabled="isSaving" name="password"
+																	class="form-control immediate-help"
+																	placeholder="Set Password" password-validate required />
+																<div id="custPwdhelp" class="input-help">
+																	<h4>Password must meet the following requirements:</h4>
+																	<ul>
+																		<li ng-class="pwdHasLetter">At least <strong>one
+																				letter</strong></li>
+																		<li ng-class="pwdHasNumber">At least <strong>one
+																				number</strong></li>
+																		<li ng-class="pwdValidLength">At least <strong>8
+																				characters long</strong></li>
+																	</ul>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												</div>
+												<div class="row">
+												<div class="col-sm-6">
+													<div class="form-group"
+														ng-class="{ 'has-error' : createForm.useremail.$invalid && !createForm.useremail.$pristine }">
+														<label ng-show="customer.email" class="floatlabeltxt show-hide">Customer Email</label>
+														<input type="email" ng-model="customer.email"
+															ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
+															 ng-blur="verifyEmail(customer.email)" name="useremail"
+															class="form-control floatlabel"
+															placeholder="Customer Email" required />
+														<p ng-show="createForm.useremail.$invalid && !createForm.useremail.$pristine"
+															class="help-block">Enter a valid email.</p>
+															<p class="help-block chk_frm_server" ng-show="error_mail.cmail">{{statusMail}}</p>
+													</div>
+												</div>
+												<div class="col-sm-6">
+													<div class="form-group"
+														ng-class="{ 'has-error' : createForm.contact_no.$invalid && !createForm.contact_no.$pristine }">
+														<label ng-show="customer.contact_no" class="floatlabeltxt show-hide">Customer Contact No</label>
+														<div class="row">
+														<!-- <div class="col-sm-3 padding_rt0"><h4 class="plus_91">+91</h4></div> -->
+														<div class="col-sm-12"><input type="number" ng-model="customer.contact_no"
+															data-phone name="contact_no"
+															class="form-control floatlabel"
+															placeholder="Mobile Number" ng-minlength="10" ng-maxlength="10" required />
+															</div>
+														</div>
+														<p ng-show="createForm.contact_no.$invalid && !createForm.contact_no.$pristine"
+															class="help-block">Enter Valid Mobile Number.</p>
+														<p ng-show="createForm.contact_no.$error.minlength && createForm.contact_no.$error.maxnlength"
+															class="help-block">Mobile Number max 10 numbers.</p>
+														<!-- <p class="help-block chk_frm_server">{{mobstatus}}</p> -->
+													</div>
+												</div>
+												</div>
+												<div class="row">
+												<div class="col-sm-6">
+													<div class="form-group"
+														ng-class="{ 'has-error' : createForm.country.$invalid && !createForm.country.$pristine }">
+														<label ng-show="customer.country" class="floatlabeltxt show-hide">Country</label>
+														<!-- <input type="text" ng-model="customer.country"
+															name="country"
+															class="form-control floatlabel" placeholder="Country" ng-value="names.country" ng-disabled="true"
+															required /> -->
+														<select ng-model="customer.country" name="country" class="form-control floatlabel floatlabel_select" ng-change="onSelectCountry()" required>
+														<option selected disabled value="">- - Select Country - -</option>
+														<option ng-repeat="c in country" value="{{c}}">{{c}}</option>
+														</select>
+														<p ng-show="createForm.country.$invalid && !createForm.country.$pristine"
+															class="help-block">Enter Country Name.</p>
+													</div>
+												</div>
+												<div class="col-sm-6">
+													<div class="form-group"
+														ng-class="{ 'has-error' : createForm.state.$invalid && !createForm.state.$pristine }">
+														<label ng-show="customer.state" class="floatlabeltxt show-hide">State</label>
+														<!-- <input type="text" ng-model="customer.state"
+															name="state"
+															class="form-control floatlabel" placeholder="State"
+															required /> -->
+														<!-- <input list="statelist" class="form-control" name="state" ng-model="customer.state"/>
+														<datalist id="statelist"><option ng-repeat="x in states">{{ x }}</option></datalist> -->
+														<select ng-model="customer.state" name="state" class="form-control floatlabel floatlabel_select" required>
+														<option selected disabled value="">- - Select State - -</option>
+														<option ng-repeat="s in state" value="{{s}}">{{s}}</option>
+														</select>
+														<p ng-show="createForm.state.$invalid && !createForm.state.$pristine"
+															class="help-block">Enter State Name.</p>
+													</div>
+												</div>
+												</div>
+												<div class="row">
+												<div class="col-sm-6">
+													<div class="form-group"
+														ng-class="{ 'has-error' : createForm.orgName.$invalid && !createForm.orgName.$pristine }">
+														<label ng-show="customer.org_id" class="floatlabeltxt show-hide">Organization Name</label>
+														<input type="text" ng-model="customer.org_id"
+															name="orgName" ng-blur="verifyOrgname(customer.org_id)"
+															class="form-control floatlabel"
+															placeholder="Organization Name" required />
+														<p ng-show="createForm.orgName.$invalid && !createForm.orgName.$pristine"
+															class="help-block">Enter Organization Name.</p>
+														<p class="help-block chk_frm_server" ng-show="error.orgname">{{status}}</p>
+													</div>
+												</div>
+												<div class="col-sm-6">
+													<div class="form-group"
+														ng-class="{ 'has-error' : createForm.user_acc_limit.$invalid && !createForm.user_acc_limit.$pristine }">
+														<label ng-show="customer.user_acc_limit" class="floatlabeltxt show-hide">Maximum User</label>
+														<input type="text" ng-model="customer.user_acc_limit"
+															numbers-only name="user_acc_limit"
+															class="form-control floatlabel"
+															placeholder="Maximum User" required />
+														<p
+															ng-show="createForm.user_acc_limit.$invalid && !createForm.user_acc_limit.$pristine"
+															class="help-block">Enter User Count.</p>
+													</div>
+												</div>
+												</div>
+												<div class="form-group">
+													<div class="row">
+														<div class="col-sm-6 col-sm-offset-3" align="center">
+															<button class="btn btn-primary"
+																ng-click="submitCreateForm()"
+																ng-disabled="createForm.$invalid" ng-show="cname && cmail && createForm.$valid">Submit</button>
+														</div>
+													</div>
+												</div>
+
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+
+					<!--==================== Edit Modal ===================-->
+					<div class="modal fade" id="editModal" role="dialog" data-backdrop="static" ng-controller="factoryEdit"> 
+						<div class="modal-dialog modal-lg">
+							<div class="modal-content">
+								<div class="iconSection" align="center">
+									<div class="userIcon">
+										<i class="fa fa-user fa-3x"></i>
+									</div>
+								</div>
+								<div class="modal-body">
+									<form name="editForm" class="form formInput"
+										>
+										<div class="col-sm-2 col-sm-offset-10" align="right">
+											<span class="closeIcon" data-direction="left"
+												data-dismiss="modal" aria-hidden="true">&times;</span>
+										</div>
+										<h1 class="titleHead">Update Customer</h1>
+										<div class="row">
+											<div class="col-sm-12">
+											<div class="row">
+												<div class="col-sm-6">
+													<div class="form-group"
+														ng-class="{ 'has-error' : editForm.custname.$invalid && !editForm.custname.$pristine }">
+														<label ng-show="edit.uname" class="floatlabeltxt show-hide">Edit Name</label>
+														<input type="text" ng-model="edit.uname"
+															ng-blur="verifyUser(edit.uname)" name="custname"
+															class="form-control" placeholder="Edit Name" style="text-transform: lowercase"
+															required readonly/>
+														<p
+															ng-show="editForm.custname.$invalid && !editForm.custname.$pristine"
+															class="help-block">edit name is required.</p>
+														<span class="help-block">{{status}}</span>
+													</div>
+												</div>
+												<div class="col-sm-6">
+													<div class="form-group"
+														ng-class="{ 'has-error' : editForm.email.$invalid && !editForm.email.$pristine }">
+														<label ng-show="edit.email" class="floatlabeltxt show-hide">Edit Email</label>
+														<input type="email" ng-model="edit.email" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
+														 ng-blur="verifyEmail(edit.email)"
+															name="email"
+															class="form-control" placeholder="Edit Email"
+															required />
+														<p ng-show="editForm.email.$invalid && !editForm.email.$pristine"
+															class="help-block">Enter a valid email.</p>
+														<p class="help-block chk_frm_server" ng-show="error_mail.cmail">{{statusMail}}</p>
+													</div>
+												</div>
+												</div>
+												<div class="row">
+												<div class="col-sm-6">
+													<div class="form-group"
+														ng-class="{ 'has-error' : editForm.contact_no.$invalid && !editForm.contact_no.$pristine }">
+														<label ng-show="edit.contact_no" class="floatlabeltxt show-hide">Mobile Number</label>
+														<div class="row">
+														<!-- <div class="col-sm-3 padding_rt0"><h4 class="plus_91">+91</h4></div> -->
+														<div class="col-sm-12"><input type="number" string-to-number ng-model="edit.contact_no" data-phone
+															 name="contact_no"
+															class="form-control"
+															placeholder="Mobile Number" ng-minlength="10" ng-maxlength="10" required />
+														</div>
+														</div>
+														<p
+															ng-show="editForm.contact_no.$invalid && !editForm.contact_no.$pristine"
+															class="help-block">Enter Valid Mobile Number.</p>
+														<p ng-show="editForm.contact_no.$error.minlength && editForm.contact_no.$error.maxlength"
+															class="help-block">Mobile Number max 10 numbers.</p>
+														<!-- <span class="help-block">{{mobstatus}}</span> -->
+													</div>
+												</div>
+												<div class="col-sm-6">
+													<div class="form-group"
+														ng-class="{ 'has-error' : editForm.country.$invalid && !editForm.country.$pristine }">
+														<label ng-show="edit.country" class="floatlabeltxt show-hide">Country</label>
+														<select ng-model="edit.country" name="country" class="form-control floatlabel_select" required>
+														<option disabled value="">- - Select Country - -</option>
+														<option selected value="{{edit.country}}" ng-show>{{edit.country}}</option>
+														<option ng-repeat="c in country" value="{{c}}">{{c}}</option>
+														</select>
+														<p ng-show="editForm.country.$invalid && !editForm.country.$pristine"
+															class="help-block">Enter Country Name.</p>
+													</div>
+												</div>
+												</div>
+												<div class="row">
+												<div class="col-sm-6">
+													<div class="form-group"
+														ng-class="{ 'has-error' : editForm.state.$invalid && !editForm.state.$pristine }">
+														<label ng-show="edit.state" class="floatlabeltxt show-hide">State</label>
+														<select ng-model="edit.state" name="state" class="form-control floatlabel_select" required>
+														<option disabled value="">- - Select State - -</option>
+														<option selected value="{{edit.state}}" ng-show>{{edit.state}}</option>
+														<option ng-repeat="s in states" value="{{s}}">{{s}}</option>
+														</select>
+														<p ng-show="editForm.state.$invalid && !editForm.state.$pristine"
+															class="help-block">Enter State Name.</p>
+													</div>
+												</div>
+												<div class="col-sm-6">
+													<div class="form-group"
+														ng-class="{ 'has-error' : editForm.orgName.$invalid && !editForm.orgName.$pristine }">
+														<label ng-show="edit.org_id" class="floatlabeltxt show-hide">Organization Name</label>
+														<input type="text" ng-model="edit.org_id"
+															 name="orgName"
+															class="form-control"
+															placeholder="Organization Name" required readonly/>
+														<p
+															ng-show="editForm.orgName.$invalid && !editForm.orgName.$pristine"
+															class="help-block">Enter Organization Name.</p>
+													</div>
+												</div>
+												</div>
+												<div class="row">
+												<div class="col-sm-6">
+													<div class="form-group"
+														ng-class="{ 'has-error' : editForm.user_acc_limit.$invalid && !editForm.user_acc_limit.$pristine }">
+														<label ng-show="edit.user_acc_limit" class="floatlabeltxt show-hide">Maximum User</label>
+														<input type="text" ng-model="edit.user_acc_limit"
+															numbers-only name="user_acc_limit"
+															class="form-control floatlabel"
+															placeholder="Maximum User" required />
+														<p
+															ng-show="editForm.user_acc_limit.$invalid && !editForm.user_acc_limit.$pristine"
+															class="help-block">Enter User Count.</p>
+													</div>
+												</div>
+												</div>
+												<div class="form-group">
+													<div class="row">
+														<div class="col-sm-6 col-sm-offset-3" align="center">
+															<button class="btn btn-primary" ng-click="saveEditForm()"
+																ng-disabled="editForm.$invalid" ng-show="editForm.$valid">Submit</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Edit Modal Ends -->

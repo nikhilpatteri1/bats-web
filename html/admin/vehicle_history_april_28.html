@@ -1,0 +1,103 @@
+<div class="col-sm-10">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="row">
+				<div class="col-sm-12">
+					<div align="center">
+						<h2 class="heading_title">Vehicle History</h2>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-4">
+					<select id="selectGroup" class="form-control" name="groupList"
+						ng-model="groupname" ng-change="fetchDevicelistHistory(groupname)">
+						<option value="" selected class="disable_select">- -
+							Select Group - -</option>
+						<option ng-repeat="option in groupList" value="{{ option.gid }}">{{option.gid}}</option>
+					</select>
+				</div>
+				<div class="col-sm-4">
+					<select id="selectDevice" class="form-control" name="deviceList"
+						ng-model="deviceId" ng-change="fetchDeviceDetailHistory(deviceId)">
+						<option value="" selected class="disable_select">- -
+							Select Device - -</option>
+						<option ng-repeat="option in deviceList" value="{{ option }}">{{option}}</option>
+					</select>
+				</div>
+			</div>
+			<div class="row marginTop20">
+				<div class="col-sm-12">
+					<div class="row" ng-hide="showDatepicker">
+						<div class="col-sm-12" align="center">
+							<div class="form-group">
+								<md-content> <md-datepicker ng-model="myDate"
+									md-placeholder="Enter date" ng-change="myDateChange(myDate)"></md-datepicker>
+								</md-content>
+							</div>
+						</div>
+					</div>
+					<div ng-show="noData">
+						<h1>Kindly Check For other Dates</h1>
+					</div>
+					<!-- HistoryMap -->
+					<div ng-show="yoData">
+						<div class="row">
+							<div class="col-sm-12">
+								<ui-gmap-google-map center='historyMap.center'
+									zoom='historyMap.zoom' aria-label="Google map">
+								<ui-gmap-polyline ng-repeat="p in historyMap.polylines"
+									path="p.path" stroke="p.stroke" visible='p.visible'
+									geodesic='p.geodesic' fit="false" editable="p.editable"
+									draggable="p.draggable"> </ui-gmap-polyline> </ui-gmap-google-map>
+							</div>
+						</div>
+						<!-- ./HistoryMap -->
+						<!-- History Table -->
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="table-responsive">
+									<section class="tableSection">
+										<div class="hist-container">
+											<table class="table">
+												<thead>
+													<tr class="header">
+														<th>Slno
+															<div>Slno</div>
+														</th>
+														<th>Latitude
+															<div>Latitude</div>
+														</th>
+														<th>Longitude
+															<div>Longitude</div>
+														</th>
+														<th>Speed in KMPH
+															<div>Speed in KMPH</div>
+														</th>
+														<th>Date Time
+															<div>Date Time</div>
+														</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr ng-repeat='x in histData.values'>
+														<td>{{$index+1}}</td>
+														<td>{{x.lat}}</td>
+														<td>{{x.long}}</td>
+														<td>{{x.Velocity}}</td>
+														<td>{{getDate(x.ts)}}</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</section>
+								</div>
+							</div>
+						</div>
+						<!-- ./History Table -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
