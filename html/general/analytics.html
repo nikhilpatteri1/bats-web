@@ -1,0 +1,221 @@
+<div class="col-sm-10">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="bgloading" ng-show="httpLoading">
+				<div class="bigbar">
+					<h1 class="titleClass">loading!...</h1>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div align="center">
+						<h2 class="heading_title">Vehicle Analytics</h2>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="row">
+						<div class="col-sm-12" id="clearTextGroup">
+							<select id="selectGroup" class="form-control" name="groupList"
+								ng-model="searchGroupModel"
+								ng-change="fetchDevicelist(searchGroupModel)">
+								<option value="" selected disabled class="disable_select">-
+									- Select Group - -</option>
+								<option ng-repeat="option in groupList" value="{{ option.gid }}">{{option.gname}}</option>
+							</select>
+						</div>
+					</div>
+					<div ng-hide="groupSelection" ng-disabled="groupSelection">
+						<div class="row mtop10">
+							<div class="col-sm-12">
+								<input type="radio" class="button button-positive"
+									name="analytics" ng-model="analysisChoiceRadio" ng-value="'1'"
+									ng-change="analysisChoice(analysisChoiceRadio);"
+									ng-click="clearDate()" aria-label="Speed Analysis" />Speed
+								Analysis
+								<!-- </div>
+							<div class="col-sm-6"> -->
+								<input type="radio"
+									class="button button-positive button-outline" name="analytics"
+									ng-model="analysisChoiceRadio" ng-value="'2'"
+									ng-change="analysisChoice(analysisChoiceRadio);"
+									ng-click="clearDate()" aria-lable="Distance Analysis" />Distance
+								Analysis
+							</div>
+						</div>
+					</div>
+					<div ng-hide="selectSpeed">
+						<div class="row date-picker mtop10">
+							<div class="col-sm-6 col-sm-offset-3">
+								<div class="form-group">
+									<div class='input-group date' id='speedDatePicker'>
+										<input type='text' class="form-control" id="selectedDate"
+											name="selectedDate" ng-model="selDate.value"
+											readonly="readonly" /> <label class="input-group-addon btn"
+											for="selectedDate"> <span
+											class="glyphicon glyphicon-calendar"> </span>
+										</label>
+									</div>
+								</div>
+								<div class="row mtop10">
+									<div class="col-sm-6 col-sm-offset-3">
+										<button class="btn btn-primary btn-lg" ng-click="addTS('1')">Show</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div ng-hide="selectDistance">
+						<div class="row paddingTB10">
+							<div class="col-sm-6 col-sm-offset-3">
+								<input type="radio"
+									class="button button-positive analyticsRadio" name="duration"
+									ng-model="durationChoiceRadio" ng-value="'1'"
+									ng-change="durationChoice(durationChoiceRadio);"
+									ng-click="clearDate()" aria-label="weekly" />Weekly
+								<!-- </div>
+						<div class="col-sm-6"> -->
+								<input type="radio"
+									class="button button-positive button-outline analyticsRadio"
+									name="duration" ng-model="durationChoiceRadio" ng-value="'2'"
+									ng-change="durationChoice(durationChoiceRadio);"
+									ng-click="clearDate()" aria-lable="monthly" />Monthly
+							</div>
+						</div>
+					</div>
+					<div ng-hide="weeklyChoice">
+						<div class="row date-picker paddingTB10">
+							<div class="col-sm-6 col-sm-offset-3" align="center">
+								<label class="paddingTB05">Select Month</label>
+								<div class='input-group date' id='speedMonthPicker'>
+									<input type='text' class="form-control" id="selectedMonth"
+										ng-model="selMonth.value" readonly="readonly" /> <span
+										class="input-group-addon"> <span
+										class="glyphicon glyphicon-calendar"> </span>
+									</span>
+								</div>
+								<div class="row mtop10">
+									<div class="col-sm-6 col-sm-offset-3">
+										<button class="btn btn-primary btn-lg" ng-click="addTS('2')">Show</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div ng-hide="monthlyChoice">
+						<div class="row paddingTB10">
+							<div class="col-sm-6" align="center">
+								<div class="date-picker">
+									<label class="paddingTB05">Select Start Month</label>
+									<!--  <input type="month"
+										id="startMonth" ng-model="stMonth.value" /> -->
+									<div class='input-group date' id='startMonthPicker'>
+										<input type='text' class="form-control" id="startMonth"
+											ng-model="stMonth.value" readonly="readonly" /> <span
+											class="input-group-addon"> <span
+											class="glyphicon glyphicon-calendar"> </span>
+										</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-6" align="center">
+								<div class="date-picker">
+									<label class="paddingTB05">Select End Month</label>
+									<!-- <input type="month"
+										id="endMonth" ng-model="edMonth.value" ng-change="addTS('3')" /> -->
+									<div class='input-group date' id='endMonthPicker'>
+										<input type='text' class="form-control" id="endMonth"
+											ng-model="edMonth.value" readonly="readonly" /> <span
+											class="input-group-addon"> <span
+											class="glyphicon glyphicon-calendar"> </span>
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row mtop10">
+							<div class="col-sm-6 col-sm-offset-3" align="center">
+								<button class="btn btn-primary btn-lg" ng-click="addTS('3')">Show</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<div ng-if="noanalyticsData" align="center"
+							class="analytics_landscape">
+							<h1>Currently Data Not Available</h1>
+						</div>
+						<div ng-if="speedAnalytics" class="analytics_landscape">
+							<highchart id="chart1" config="highchartsNG"></highchart>
+						</div>
+						<div ng-if="distanceanalytics" class="analytics_landscape">
+							<highchart id="chart2" config="highchartsDG"></highchart>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$(document).on('click', '#speedDatePicker', function() {
+		console.log("check");
+		$('#speedDatePicker').datetimepicker({
+			inline : true,
+			sideBySide : true,
+			showClose : true,
+			format : 'DD-MM-YYYY',
+			ignoreReadonly : true,
+			allowInputToggle : true,
+			maxDate : 'now',
+		}).on("dp.change", function(e) {
+			$('.bootstrap-datetimepicker-widget').hide();
+			$("#selectedDate").blur();
+		});
+	});
+	$(document).on('click', '#speedMonthPicker', function() {
+		$('#speedMonthPicker').datetimepicker({
+			inline : true,
+			sideBySide : true,
+			showClose : true,
+			format : 'MM-YYYY',
+			ignoreReadonly : true,
+			allowInputToggle : true,
+			maxDate : 'now',
+		}).on("dp.change", function(e) {
+			$('.bootstrap-datetimepicker-widget').hide();
+			$("#selectedMonth").blur();
+		});
+	});
+	$(document).on('click', '#endMonthPicker', function() {
+		$('#endMonthPicker').datetimepicker({
+			inline : true,
+			sideBySide : true,
+			showClose : true,
+			format : 'MM-YYYY',
+			ignoreReadonly : true,
+			allowInputToggle : true,
+			maxDate : 'now',
+		}).on("dp.change", function(e) {
+			$('.bootstrap-datetimepicker-widget').hide();
+			$("#endMonth").blur();
+		});
+	});
+	$(document).on('click', '#startMonthPicker', function() {
+		$('#startMonthPicker').datetimepicker({
+			inline : true,
+			sideBySide : true,
+			showClose : true,
+			format : 'MM-YYYY',
+			ignoreReadonly : true,
+			allowInputToggle : true,
+			maxDate : 'now',
+		}).on("dp.change", function(e) {
+			$('.bootstrap-datetimepicker-widget').hide();
+			$("#startMonth").blur();
+		});
+	});
+</script>
+

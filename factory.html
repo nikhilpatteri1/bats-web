@@ -342,6 +342,45 @@ select {
 	display: inline-block;
 	font-size: 10px;
 }
+.bgloading{
+	z-index: 1000;
+    border: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    opacity: 0.6;
+    cursor: wait;
+    position: fixed;
+    background-color: rgb(102, 102, 102);
+}
+.titleClass {
+	font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 500;
+    line-height: 26.4px;
+}
+
+
+.bigbar{
+	z-index: 1011;
+    position: fixed;
+    padding: 15px;
+    margin: 0px;
+    width: 30%;
+    top: 40%;
+    left: 35%;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    border: none;
+    cursor: wait;
+    border-radius: 10px;   
+    background-color: rgb(0, 0, 0);
+}
 </style>
 
 <script>
@@ -372,7 +411,7 @@ select {
 				<div class="col-sm-12">
 					<div class="object move-right">
 						<img src="../images/car_logo_active.png" alt="car_logo" /> <span
-							class="logo_Title">Bydesign Automatic Tracking System</span>
+							class="logo_Title">Bydesign Automobile Tracking System</span>
 					</div>
 				</div>
 			</div>
@@ -568,6 +607,7 @@ select {
 		src="../js/factory/customerController.js"></script>
 	<script type="text/javascript" src="../js/factory/deviceController.js"></script>
 	<script type="text/javascript" src="../js/factory/directive.js"></script>
+	<script type="text/javascript" src="../js/factory/filter.js"></script>
 	<script type="text/javascript"
 		src="../assets/sweetalert/sweetalert-dev.js"></script>
 	<script type="text/javascript">

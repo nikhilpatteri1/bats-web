@@ -15,7 +15,7 @@
 				data-toggle="tab">Vehicle Info</a></li>
 			<li><a id="vCurr" href data-target="#tab3" data-toggle="tab"
 				ng-click="showCurrentData()">Latest Data</a></li>
-			<li><a id="vCurr" href data-target="#tab4" data-toggle="tab">Settings</a></li>
+			<li><a id="vCurr" href data-target="#tab4" data-toggle="tab">Set Speed limit</a></li>
 		</ul>
 		<div class="tab-content">
 			<div class="tab-pane fade in active" id="tab1">
@@ -202,24 +202,24 @@
 				<div class="row">
 					<div class="col-sm-12">
 						<form class="form formInput" name="deviceSettings">
-							<div class="form-group">
+							<!-- <div class="form-group">
 								<div class="field">
 									<label ng-show="device.time_interval" class="show-hide">Set
 										Time Interval in Secs</label> <input type="text" class="form-control"
 										ng-model="device.time_interval" name="timeinterval"
 										placeholder="Set Time Interval in Secs" numbers-only required />
 								</div>
-							</div>
+							</div> -->
 							<div class="form-group">
 								<div class="field">
 									<label ng-show="device.speed_limit" class="show-hide">Set
 										Speed Limit in KmpH</label> <input type="text" class="form-control"
 										ng-model="device.speed_limit" name="speedlimit"
 										placeholder="Set Speed Limit in KmpH" numbers-only required />
-								</div>
+								</div> 
 							</div>
 							
-							<div class="form-group">
+							<!-- <div class="form-group">
 								<div class="field">
 								<label ng-show="device.alive_frequency"
 											class="show-hide">Alive Frequency in Minutes</label>
@@ -232,9 +232,9 @@
 													<option value="10">10</option>
 												</select>
 								</div>
-							</div>
+							</div> -->
 							
-							<div class="form-group"
+							<!-- <div class="form-group"
 								ng-class="{ 'has-error' : deviceSettings.contact_num.$invalid && !deviceSettings.contact_num.$pristine}">
 								<div class="field">
 									<label ng-show="device.contact_num" class="show-hide">Enter
@@ -249,7 +249,7 @@
 								<p
 									ng-show="deviceSettings.contact_num.$error.minlength && deviceSettings.contact_num.$error.maxlength"
 									class="help-block">Mobile Number max 10 numbers.</p>
-							</div>
+							</div> -->
 							<button class="btn btn-primary" ng-click="submitSettings()"
 								ng-disabled="deviceSettings.$invalid" ng-disabled="btnDisabled">Submit</button>
 						</form>

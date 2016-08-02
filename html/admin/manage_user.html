@@ -1,7 +1,11 @@
 <div class="col-sm-10" ng-init="loadGroups()">
 
 	<h2 class="heading_title">Manage user</h2>
-
+	<div class="bgloading" ng-show="httpLoading">
+		<div class="bigbar">
+			<h1 class="titleClass">loading!...</h1>
+		</div>
+	</div>
 	<div class="row">
 		<div class="col-sm-12">
 			<h4 class="search_heading">User List</h4>
@@ -38,7 +42,8 @@
 		<h2 ng-show="noUsers">No Users Available</h2>
 		<a href="#" class="btn btn-primary add_new_customer"
 			ng-click="showCreateBtn()" data-toggle="modal"
-			data-target="#createUserModal" ng-show="addUser"> <i class="fa fa-plus"></i></a>
+			data-target="#createUserModal" ng-show="addUser"> <i
+			class="fa fa-plus"></i></a>
 	</div>
 
 </div>
@@ -63,16 +68,16 @@
 					</div>
 					<h1 class="titleHead">Create New User</h1>
 					<div class="row">
-						<div class="col-sm-12"> 
+						<div class="col-sm-12">
 							<div class="row">
 								<div class="col-sm-6">
 									<div class="form-group"
 										ng-class="{ 'has-error' : createUserForm.uname.$invalid && !createUserForm.uname.$pristine }">
-										<label ng-show="user.uname" class="floatlabeltxt show-hide">Enter User Name</label>
-										<input type="text" ng-model="user.uname" name="uname"
-											ng-blur="verifyUser(user.uname)"
-											class="form-control" placeholder="Enter User Name" style="text-transform: lowercase"
-											required />
+										<label ng-show="user.uname" class="floatlabeltxt show-hide">Enter
+											User Name</label> <input type="text" ng-model="user.uname"
+											name="uname" ng-blur="verifyUser(user.uname)"
+											class="form-control" placeholder="Enter User Name"
+											style="text-transform: lowercase" required />
 										<p
 											ng-show="createUserForm.uname.$invalid && !createUserForm.uname.$pristine"
 											class="help-block">Username is required.</p>
@@ -83,9 +88,10 @@
 									<div class="control-group">
 										<div class="form-group">
 											<div class="controls">
-												<label ng-show="user.password" class="floatlabeltxt show-hide">Enter Password</label>
-												<input type="password" ng-model="user.password"
-													name="password" class="form-control immediate-help"
+												<label ng-show="user.password"
+													class="floatlabeltxt show-hide">Enter Password</label> <input
+													type="password" ng-model="user.password" name="password"
+													class="form-control immediate-help"
 													placeholder="Enter Password" password-validate required />
 												<div id="custPwdhelp" class="input-help">
 													<h4>Password must meet the following requirements:</h4>
@@ -107,9 +113,10 @@
 								<div class="col-sm-6">
 									<div class="form-group"
 										ng-class="{ 'has-error' : createUserForm.useremail.$invalid && !createUserForm.useremail.$pristine }">
-										<label ng-show="user.email" class="floatlabeltxt show-hide">Enter Email Id</label>
-										<input type="email" ng-model="user.email"
-											ng-blur="verifyEmail(user.email)" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
+										<label ng-show="user.email" class="floatlabeltxt show-hide">Enter
+											Email Id</label> <input type="email" ng-model="user.email"
+											ng-blur="verifyEmail(user.email)"
+											ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
 											name="useremail" class="form-control"
 											placeholder="Enter Email Id" required />
 										<p
@@ -122,15 +129,15 @@
 								<div class="col-sm-6">
 									<div class="form-group"
 										ng-class="{ 'has-error' : createUserForm.contact_no.$invalid && !createUserForm.contact_no.$pristine }">
-										<label ng-show="user.contact_no" class="floatlabeltxt show-hide">Enter Mobile Number</label>
+										<label ng-show="user.contact_no"
+											class="floatlabeltxt show-hide">Enter Mobile Number</label>
 										<div class="row">
 											<!-- <div class="col-sm-3 padding_rt0">
 												<h4 class="plus_91">+91</h4>
 											</div> -->
 											<div class="col-sm-12">
-												<input type="number" ng-model="user.contact_no" data-phone
-													string-to-number name="contact_no"
-													class="form-control"
+												<input type="text" ng-model="user.contact_no" numbers-only
+													name="contact_no" class="form-control" string-to-number
 													placeholder="Enter Mobile Number" ng-minlength="10"
 													ng-maxlength="10" required />
 											</div>
@@ -156,10 +163,10 @@
 									<div class=" select_group">
 										<div class="row">
 											<div class="col-sm-12">
-												<span ng-repeat="user in group"> <input
-													type="checkbox" ng-model="selection.ids[user.gid]"
-													class="selectGroupUser" /> <label> {{user.gname}}
-												</label> <br>
+												<span ng-repeat="user in group" class="group_name_span">
+													<input type="checkbox" ng-model="selection.ids[user.gid]"
+													class="selectGroupUser pull-left" /> <label
+													class="group_name_selected"> {{user.gname}} </label>
 												</span>
 												<h4 ng-show="noGroups">No Groups Available</h4>
 											</div>
@@ -185,7 +192,8 @@
 						<div class="col-sm-6 col-sm-offset-3" align="center">
 							<button class="btn btn-primary showUpdateUser"
 								ng-click="submitCreateUserForm()"
-								ng-disabled="createUserForm.$invalid" ng-show="uname && umail && createUserForm.$valid && !name.length">Create</button>
+								ng-disabled="createUserForm.$invalid"
+								ng-show="uname && umail && createUserForm.$valid && !name.length">Create</button>
 						</div>
 					</div>
 
@@ -220,10 +228,11 @@
 								<div class="col-sm-6">
 									<div class="form-group"
 										ng-class="{ 'has-error' : updateUserForm.uname.$invalid && !updateUserForm.uname.$pristine }">
-										<label ng-show="userUpdate.uname" class="floatlabeltxt show-hide">Enter User Name</label>
-										<input type="text" ng-model="userUpdate.uname" name="uname"
-											class="form-control" placeholder="Enter User Name" style="text-transform: lowercase"
-											readonly required />
+										<label ng-show="userUpdate.uname"
+											class="floatlabeltxt show-hide">Enter User Name</label> <input
+											type="text" ng-model="userUpdate.uname" name="uname"
+											class="form-control" placeholder="Enter User Name"
+											style="text-transform: lowercase" readonly required />
 										<p
 											ng-show="updateUserForm.uname.$invalid && !updateUserForm.uname.$pristine"
 											class="help-block">Username is required.</p>
@@ -256,11 +265,13 @@
 								<div class="col-sm-6">
 									<div class="form-group"
 										ng-class="{ 'has-error' : updateUserForm.useremail.$invalid && !updateUserForm.useremail.$pristine }">
-										<label ng-show="userUpdate.email" class="floatlabeltxt show-hide">Enter Email Id</label>
-										<input type="email" ng-model="userUpdate.email"
-											ng-keyup="verifyEmail(userUpdate.email)" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
-											name="useremail" class="form-control" placeholder="Enter Email Id"
-											required />
+										<label ng-show="userUpdate.email"
+											class="floatlabeltxt show-hide">Enter Email Id</label> <input
+											type="email" ng-model="userUpdate.email"
+											ng-keyup="verifyEmail(userUpdate.email)"
+											ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
+											name="useremail" class="form-control"
+											placeholder="Enter Email Id" required />
 										<p
 											ng-show="updateUserForm.useremail.$invalid && !updateUserForm.useremail.$pristine"
 											class="help-block">Enter a valid email.</p>
@@ -276,12 +287,12 @@
 												<h4 class="plus_91">+91</h4>
 											</div> -->
 											<div class="col-sm-12">
-												<label ng-show="userUpdate.contact_no" class="floatlabeltxt show-hide">Enter Mobile Number</label>	
-												<input type="number" ng-model="userUpdate.contact_no"
-													data-phone string-to-number name="contact_no"
-													class="form-control"
-													placeholder="Enter Mobile Number" ng-minlength="10"
-													ng-maxlength="10" required />
+												<label ng-show="userUpdate.contact_no"
+													class="floatlabeltxt show-hide">Enter Mobile Number</label>
+												<input type="text" ng-model="userUpdate.contact_no"
+													numbers-only name="contact_no" class="form-control"
+													string-to-number placeholder="Enter Mobile Number"
+													ng-minlength="10" ng-maxlength="10" required />
 											</div>
 										</div>
 										<p
@@ -305,10 +316,10 @@
 									<div class=" select_group">
 										<div class="row">
 											<div class="col-sm-12">
-												<span ng-repeat="user in group"> <input
-													type="checkbox" ng-model="selection.ids[user.gid]"
-													class="selectGroupUser" /> <label> {{user.gname}}
-												</label> <br>
+												<span ng-repeat="user in group" class="group_name_span">
+													<input type="checkbox" ng-model="selection.ids[user.gid]"
+													class="selectGroupUser pull-left" /> <label
+													class="group_name_selected"> {{user.gname}} </label>
 												</span>
 												<h4 ng-show="noGroups">No Groups Available</h4>
 											</div>
@@ -333,7 +344,8 @@
 					<div class="row">
 						<div class="col-sm-6 col-sm-offset-3" align="center">
 							<button class="btn btn-primary showUpdateUser"
-								ng-disabled="updateUserForm.$invalid" ng-show="updateUserForm.$valid && !name.length" 
+								ng-disabled="updateUserForm.$invalid"
+								ng-show="updateUserForm.$valid && !name.length"
 								ng-click="submitEditUserForm()">Update</button>
 						</div>
 					</div>

@@ -1,9 +1,16 @@
-batsGeneralHome.controller('vehicleHistory', function($scope, $http, $localStorage){
+batsGeneralHome.controller('vehicleHistory',function($scope, $http, $localStorage,uiGmapGoogleMapApi,uiGmapIsReady){
 	$scope.yoData=false;
 	$scope.noData=false;
 	$scope.showDatepicker=true;
+	$scope.showTimeSlot=false;
 	$scope.token = $localStorage.data;
-	var dev={}; 
+	var dev={};
+	var maploadedInterval;
+	var directionDisplay;
+    var directionsService;
+	var map;
+	var historypolyline = null;
+	//$("#loading_icon").hide();
 	if(typeof $scope.token==="undefined"){
 		swal({ 
 			   title: "Un Authorized Access",
@@ -17,6 +24,46 @@ batsGeneralHome.controller('vehicleHistory', function($scope, $http, $localStora
 		  });
 		 
 	}
+	//function initialize() {
+	$scope.initialize=function () {		
+		var styleMap = [{"featureType":"administrative","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"landscape","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"color":"#bee4f4"},{"visibility":"on"}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"geometry.fill","stylers":[{"visibility":"on"}]},{"featureType":"transit","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#46bcec"},{"visibility":"on"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"on"},{"color":"#000000"}]}];
+		var myOptions = {
+	        zoom: 8,
+	        styles: styleMap,
+	        mapTypeId: google.maps.MapTypeId.ROADMAP
+	    };
+	    address = 'India';
+	    //address = 'Trinidad and Tobago'
+	    geocoder = new google.maps.Geocoder();
+	    geocoder.geocode( { 'address': address}, function(results, status) {
+	     map.fitBounds(results[0].geometry.viewport);
+
+	    });	
+	    map = new google.maps.Map(document.getElementById("history_map"),
+	            myOptions);
+	    google.maps.event.addListenerOnce(map, 'idle', function(){
+	        // do something only the first time the map is loaded
+	    	//console.log("map loaded");
+	    });
+	    google.maps.event.addListenerOnce(map, 'tilesloaded', function(){
+	        //this part runs when the mapobject is created and rendered
+	    	//console.log("Map Loaded");
+	        google.maps.event.addListenerOnce(map, 'tilesloaded', function(){
+	            //this part runs when the mapobject shown for the first time
+	        	//console.log("Map with tiles and polylines loaded one time");        	
+	        	
+	        	//console.log("Hide Loading");
+	        });
+	    });
+	    google.maps.event.addListener(map, 'tilesloaded', function() {
+	    	  // Visible tiles loaded!
+	    	//console.log("map loaded with tiles every time");
+	    	//$("#loading_icon").hide();
+	    	//$scope.httpLoading=false;
+	    	});
+	}
+	
+
 	/**
 	 * on load fetch and fill group drop down menu
 	 * */
@@ -54,12 +101,16 @@ batsGeneralHome.controller('vehicleHistory', function($scope, $http, $localStora
 	 * fetch device list based on group id
 	 */
 	$scope.fetchDevicelistHistory = function(groupID) {
+		$scope.httpLoading=true;
 		$scope.showDatepicker=true;
 		$scope.noData = false;
+		$scope.showTimeSlot=false;
 		$('#clearTextDevice span.select2-chosen').empty();  
 	    $('#clearTextDevice span.select2-chosen').text("- - Select Device - -");
 		// document.getElementById("groupNamelist").blur();
-		console.log(groupID);
+		//console.log(groupID);
+	    $scope.initialize();
+	    $scope.yoData=false;
 		$scope.groupdevicejson = {};
 		$scope.groupdevicejson.token = $scope.token;
 		$scope.groupdevicejson.gid = groupID;
@@ -75,6 +126,7 @@ batsGeneralHome.controller('vehicleHistory', function($scope, $http, $localStora
 				'Content-Type' : 'application/json'
 			}
 		}).success(function(data) {
+			$scope.httpLoading=false;
 			$scope.groupDevice = data;
 			$scope.deviceList = [];
 			var dev_len = $scope.groupDevice.devlist.length;
@@ -97,19 +149,51 @@ batsGeneralHome.controller('vehicleHistory', function($scope, $http, $localStora
 		$scope.showDatepicker=false;
 		$('.md-datepicker-input').prop('readonly', true);
 		dev.devid=devID;
-		$scope.yoData=false; 
+		$scope.yoData=false;
+		$scope.showTimeSlot=false;
 		$scope.myDate = "";
+		$scope.initialize();
 	};
 	
 	$scope.myDateChange=function(myDate){
 		//console.log(new Date(myDate).getTime());
-		var sts=new Date(myDate).getTime();
+		/*var sts=new Date(myDate).getTime();
 		var d=new Date(myDate);
 		d.setHours(23);
 		d.setMinutes(59);
 		d.setSeconds(59);
 		var ets=d.getTime();
-		historyApiCall(sts,ets);
+		historyApiCall(sts,ets);*/
+		$scope.initialize();
+		$scope.showTimeSlot=true;
+		historyApiCall(getTimestamp(0,0,0),getTimestamp(5,59,0));		
+	};
+	/**
+	 * 1 for 00:00 - 05:59
+	 * 2 for 06:00 - 11:59
+	 * 3 for 12:00 - 17:59
+	 * 4 for 18:00 - 23:59
+	 * */
+	$scope.slotHistory=function(slot_num){
+		if(slot_num==1){			
+			historyApiCall(getTimestamp(0,0,0),getTimestamp(5,59,0));
+		}
+		else if(slot_num==2){			
+			historyApiCall(getTimestamp(6,0,0),getTimestamp(11,59,0));
+		}
+		else if(slot_num==3){			
+			historyApiCall(getTimestamp(12,0,0),getTimestamp(17,59,0));
+		}
+		else if(slot_num==4){			
+			historyApiCall(getTimestamp(18,0,0),getTimestamp(23,59,0));
+		}
+	};
+	function getTimestamp(hr,mins,sec){		
+		var d=new Date($scope.myDate);
+		d.setHours(hr);
+		d.setMinutes(mins);
+		d.setSeconds(sec);
+		return d.getTime();
 	}
 	$scope.showHistory = function(mydate) {
 		var sts=new Date(mydate).getTime();
@@ -121,6 +205,8 @@ batsGeneralHome.controller('vehicleHistory', function($scope, $http, $localStora
 		historyApiCall(sts,ets);
 	};
 	function historyApiCall(sts,ets){
+		$scope.httpLoading=true;
+		//$("#loading_icon").show();			
 		$scope.deviceHistoryjson = {};
 		$scope.deviceHistoryjson.token = $scope.token;
 		$scope.deviceHistoryjson.devid = dev.devid;
@@ -137,13 +223,18 @@ batsGeneralHome.controller('vehicleHistory', function($scope, $http, $localStora
 					}
 				}).success(function(data) {
 			$scope.histData = data;
-			//console.log($scope.histData.values.length);
+			//console.log(JSON.stringify(data.values));
 			if($scope.histData.values.length>=1){
-				displayHistory();	
+				$scope.httpLoading=false;
+				displayHistory();				
 			}
 			else{
+				$scope.httpLoading=false;
+				//$("#loading_icon").hide();	
 				$scope.yoData=false;
-				$scope.noData=true;
+				//$scope.noData=true;
+				swal("Kindly check for other slot");
+				$scope.activeMenu=5;
 			}
 		})
 				.error(
@@ -153,57 +244,48 @@ batsGeneralHome.controller('vehicleHistory', function($scope, $http, $localStora
 							console.log(status);
 							console.log(headers);
 							console.log(config);
+						}).finally(function(){		
+							$scope.httpLoading=false;
 						});
+	}
+	function checkMaploaded(){
+		console.log($scope.historyMap);
+		if($scope.historyMap){
+			$interval.cancel(maploadedInterval);		
+		}
+		else{			
+		}
 	}
 	/**
 	1) Plot on Map History Path
 	2) Display on Table
 	-----------------------------------------------------------------------*/
 	function displayHistory() {
-		//console.log("chkng");
+		//console.log(JSON.stringify($scope.histData.values));
+		
 		$scope.yoData=true;
 		$scope.noData=false;
 		var lat_tot = 0, lg_tot = 0, lat_avg = 0, lg_avg = 0;
 		var histData = $scope.histData.values;
+		histData=histData.sort(SortByts);
 		var hist_len = histData.length;
-		var obj = [];
+		var polyPathArray = [];
 		$scope.plottedData=[];
-		var coordinates = [];
-		/*for ( var inc = 0; inc < hist_len; inc++) {
-			var arr = {};
-			var plottedObj={};
-			console.log(JSON.stringify(histData));
-			if(histData[inc].Velocity>5){
-				arr.latitude = Number(histData[inc].lat);
-				arr.longitude = Number(histData[inc].long);
-				plottedObj.lat=Number(histData[inc].lat);
-				plottedObj.long=Number(histData[inc].long);
-				plottedObj.Velocity=histData[inc].Velocity;
-				plottedObj.ts=histData[inc].ts;
-				obj.push(arr);
-				$scope.plottedData.push(plottedObj);
-				lat_tot += Number(histData[inc].lat);
-				lg_tot += Number(histData[inc].long);
-			}
-			else{
-				console.log("less than 50");
-			}
-			
-		}*/
+		var coordinates = [];		
 		
 		for(var inc = 0; inc < hist_len; inc++){
 		  	executeHisory(histData[inc].lat,histData[inc].long,histData[inc].Velocity,histData[inc].ts,
 		  			function(historyStatus){
-                console.log(JSON.stringify(historyStatus));
+                //console.log(JSON.stringify(historyStatus));
                 var arr = {};
     			var plottedObj={};
-    			arr.latitude = Number(historyStatus.latitude);
-				arr.longitude = Number(historyStatus.longitude);
+    			arr.lat = Number(historyStatus.latitude);
+				arr.lng = Number(historyStatus.longitude);
 				plottedObj.lat = Number(historyStatus.latitude);
 				plottedObj.long = Number(historyStatus.longitude);
 				plottedObj.Velocity = historyStatus.velocity;
 				plottedObj.ts = historyStatus.timestamp;
-				obj.push(arr);
+				polyPathArray.push(arr);
 				$scope.plottedData.push(plottedObj);
 				lat_tot += Number(historyStatus.latitude);
 				lg_tot += Number(historyStatus.longitude);
@@ -215,55 +297,55 @@ batsGeneralHome.controller('vehicleHistory', function($scope, $http, $localStora
 				var historyStatus={"latitude":latitude,"longitude":longitude,"velocity":velocity,"timestamp":timestamp};
 				mapHistory(historyStatus);
 			//}
-			/*else{
-				console.log("less than 5");
-			}*/
+			//else{
+				//console.log("less than 5");
+			//}
 		}
-		console.log(JSON.stringify(obj));
-		console.log(JSON.stringify($scope.plottedData));
+		//console.log(JSON.stringify(obj));
+		/*console.log(JSON.stringify($scope.plottedData));*/
 		//console.log(JSON.stringify(coordinates));
 		
-		if(obj.length == 0){
+		if(polyPathArray.length == 0){
 			//console.log("chk");
 			$scope.yoData=false;
-			swal("No not available. Kindly check for another date");
+			//swal("No not available. Kindly check for another date");
 		}
-		
-		var obj_len = obj.length;
-		//console.log(obj);
-		/*lt_avg = lat_tot / hist_len;
-		lg_avg = lg_tot / hist_len;*/
-		lt_avg = lat_tot / obj_len;
-		lg_avg = lg_tot / obj_len;
-		console.log(lt_avg + " " + lg_avg);
-
-		$scope.historyMap = {
-			center : {
-				latitude : lt_avg,
-				longitude : lg_avg
-			},
-			zoom : 12
-		};
-		
-		
-		//polyline for the history path
-		$scope.historyMap.polylines = [];
-		$scope.historyMap.polylines.push({
-			id : 1,
-			path : obj,
-			stroke : {
-				color : '#000000',
-				weight : 3
-			},
-			editable : true,
-			draggable : true,
-			geodesic : true,
-			visible : true
-		});
-		
+		else{
+			console.log(JSON.stringify(polyPathArray));			
+			var poly_len = polyPathArray.length;
+			var iconsetngs = {
+		            path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
+		        };
+		        var polylineoptns = {
+		            path: polyPathArray,
+		            strokeOpacity: 0.8,
+		            strokeWeight: 3,
+		            map: map,		            
+		            icons: [{
+		                icon: iconsetngs,
+		                repeat:'35px',
+		                offset: '100%'}]
+		        };
+		      if(historypolyline!=null){
+		    	  historypolyline.setMap(null);
+		    	  historypolyline=null;
+		      }
+		      //console.log(historypolyline);
+		      historypolyline = new google.maps.Polyline(polylineoptns);
+		      var bounds = new google.maps.LatLngBounds();		      		    		
+		    	
+			    for(var j=0;j<poly_len;j++){
+			    	 var latlng = new google.maps.LatLng(polyPathArray[j].lat,polyPathArray[j].lng);
+			    	 bounds.extend(latlng);
+			    }
+			        map.fitBounds(bounds);	    
+		}
 	}
-	
-	
+	function SortByts(x,y) {
+		//console.log(x);
+		//console.log(y);
+		return ((x.ts == y.ts) ? 0 : ((x.ts > y.ts) ? 1 : -1 ));
+	}
 	$(document).ready(function() {
 		$.getScript('../assets/select_filter/select2.min.js', function() {
 			$("#selectGroup").select2({});
@@ -290,9 +372,10 @@ batsGeneralHome.controller('vehicleHistory', function($scope, $http, $localStora
 		var formattedTime = hours + ':'
 				+ minutes.substr(-2) + ':'
 				+ seconds.substr(-2);
-		return d.getDate() + "-" + monthVal + "-"
+		/*return d.getDate() + "-" + monthVal + "-"
 				+ d.getFullYear() + " / "
-				+ formattedTime;
+				+ formattedTime;*/
+		return formattedTime;
 	};
 	
 	
@@ -316,6 +399,6 @@ batsGeneralHome.controller('vehicleHistory', function($scope, $http, $localStora
 		        }
 		);
 	}
-	
+
 	
 });

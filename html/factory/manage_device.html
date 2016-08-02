@@ -1,80 +1,97 @@
 <div class="col-sm-10">
 
-<h2 class="heading_title">Manage Device</h2>
+	<h2 class="heading_title">Manage Device</h2>
 
-<div ng-controller='deviceController' ng-init="loadCustomer()">
-<div class="row">
-<div class="col-sm-12">
-<h4 class="select_heading">Select Customer to Allocate Devices</h4>
-</div>
-</div>	
-<div class="select_customer">			
-	<!-- Customer Name List -->
-	<!-- <input list="custlist" class="form-control" name="customerList"	ng-model="custname" ng-change="chk(custname)" id="custIdList"/>
+	<div ng-controller='deviceController' ng-init="loadCustomer()">
+		<div class="bgloading" ng-show="httpLoading">
+			<div class="bigbar">
+				<h1 class="titleClass">loading!...</h1>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<h4 class="select_heading">Select Customer to Allocate Devices</h4>
+			</div>
+		</div>
+		<div class="select_customer">
+			<!-- Customer Name List -->
+			<!-- <input list="custlist" class="form-control" name="customerList"	ng-model="custname" ng-change="chk(custname)" id="custIdList"/>
 	<datalist id="custlist"><option ng-repeat="x in customerName" value="{{ x }}">{{ x }}</option></datalist> -->
-	<select id="mySelect" class="form-control" name="customerList" ng-model="custname" ng-change="chk(custname)">
-			  <option value="" selected class="disable_select" ng-disabled="selectCustomer">- - Select Customer - -</option>
-	          <option ng-repeat="x in customerName" value="{{ x }}">{{x}}</option>
-	        </select>
-	<!-- ./Customer Name List -->
-</div>	
+			<select id="mySelect" class="form-control" name="customerList"
+				ng-model="custname" ng-change="chk(custname)">
+				<option value="" selected class="disable_select"
+					ng-disabled="selectCustomer">- - Select Customer - -</option>
+				<option ng-repeat="x in customerName" value="{{ x }}">{{x}}</option>
+			</select>
+			<!-- ./Customer Name List -->
+		</div>
 
-<br><br>			
-					<div class="row">
-						<div class="col-sm-6">
-							<h4 class="select_heading">Factory Stock</h4>
-							<!-- Un Alloted Device list part -->
-							<div class="row">
-								<div class="col-xs-12">
-								<div class="select_device">
-									<table class="table" ng-show="devicesTable">
-										<thead>
-											<tr>
-												<th>Slno</th>
-												<th>Device ID</th>
-												<th>Select</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr ng-repeat="rowContent in rows">
-												<td>{{$index+1}}</td>
-												<td>{{rowContent}}</td>
-												<td align="center"><input type="checkbox"
-													name="{{rowContent}}" ng-disabled="isSelected" ng-click="toggleSelection(rowContent)"/></td>
-											</tr>
-										</tbody>
-									</table>
-								 <h2 ng-show="noDevicesFactory">No Devices Available in Factory Stock</h2>
-								</div>
-								</div>
-							</div>
-							<!-- ./Un Alloted Device list part -->
-						</div>
-						<div class="col-sm-6">
-						<h4 class="select_heading">Allocated Device For Selected Customer</h4>
+		<br>
+		<br>
+		<div class="row">
+			<div class="col-sm-6">
+				<h4 class="select_heading">Factory Stock</h4>
+				<!-- Un Alloted Device list part -->
+				<div class="row">
+					<div class="col-xs-12">
 						<div class="select_device">
-								<ul class="assignedList">
-									<li ng-repeat="item in assignedList">{{item}}</li>
-								</ul>
-								<ul class="newassignedList">
-									<li ng-repeat="item in selection" ng-click="toggleSelection(item)">{{item}} <span>x</span></li>
-									<li ng-show="!selection.length && !assignedList.length">No Devices Selected</li> 
-								</ul>
-						  </div>
+							<table class="table" ng-show="devicesTable">
+								<thead>
+									<tr>
+										<th>Slno</th>
+										<th>Device ID</th>
+										<th>Select</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="rowContent in rows">
+										<td>{{$index+1}}</td>
+										<td>{{rowContent}}</td>
+										<td align="center"><input type="checkbox"
+											name="{{rowContent}}" ng-disabled="isSelected"
+											ng-click="toggleSelection(rowContent)" /></td>
+									</tr>
+								</tbody>
+							</table>
+							<h2 ng-show="noDevicesFactory">No Devices Available in
+								Factory Stock</h2>
 						</div>
 					</div>
-					<br><br>
-					<!-- Button Part -->
-						<div class="row">
-							<div class="col-sm-6 col-sm-offset-3" align="center">
-								<button class="btn btn-primary" ng-click="addDevice(custname)" ng-show="IsVisible && selection.length">Add Devices</button>
-								<button class="btn btn-primary" ng-click="modifyDevice(custname)" ng-show="modify && selection.length">Add More Devices</button>
-							</div>
-						</div>
-					<!-- ./Button Part -->
 				</div>
-				<!-- ./ng-controller ==> deviceController -->
+				<!-- ./Un Alloted Device list part -->
 			</div>
+			<div class="col-sm-6">
+				<h4 class="select_heading">Allocated Device For Selected
+					Customer</h4>
+				<div class="select_device">
+					<ul class="assignedList">
+						<li ng-repeat="item in assignedList">{{item}}</li>
+					</ul>
+					<ul class="newassignedList">
+						<li ng-repeat="item in selection" ng-click="toggleSelection(item)">{{item}}
+							<span>x</span>
+						</li>
+						<li ng-show="!selection.length && !assignedList.length">No
+							Devices Selected</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<br>
+		<br>
+		<!-- Button Part -->
+		<div class="row">
+			<div class="col-sm-6 col-sm-offset-3" align="center">
+				<button class="btn btn-primary" ng-click="addDevice(custname)"
+					ng-show="IsVisible && selection.length">Add Devices</button>
+				<button class="btn btn-primary" ng-click="modifyDevice(custname)"
+					ng-show="modify && selection.length">Add More Devices</button>
+			</div>
+		</div>
+		<!-- ./Button Part -->
+	</div>
+	<!-- ./ng-controller ==> deviceController -->
+</div>
 
-			
-			
+
+

@@ -4,7 +4,7 @@
 					$scope.token = $localStorage.data;
 					if(typeof $scope.token==="undefined"){
 						swal({ 
-							   title: "Un Authorized Acces",
+							   title: "Un Authorized Access",
 						  	   text: "Kindly Login!",   
 						  	   type: "warning",   
 						  	   confirmButtonColor: "#ff0000",   
@@ -170,10 +170,10 @@
 								obj.push($scope.device.contact_num)
 								delete $scope.device['contact_num'];
 								$scope.device.contact_num = obj;
-								var alive_frequency = $scope.device.alive_frequency;
-								console.log(JSON.stringify(alive_frequency));
-								$scope.device.alive_frequency = String(alive_frequency * 60);
-								console.log(JSON.stringify($scope.device.alive_frequency));
+								//var alive_frequency = $scope.device.alive_frequency;
+								//console.log(JSON.stringify(alive_frequency));
+								//$scope.device.alive_frequency = String(alive_frequency * 60);
+								//console.log(JSON.stringify($scope.device.alive_frequency));
 								console.log(JSON.stringify($scope.device));
 								$http({
 									method : 'POST',
@@ -183,7 +183,7 @@
 										'Content-Type' : 'application/json'
 									}
 								}).success(function(data) {
-									//console.log(JSON.stringify(data));
+									console.log(JSON.stringify(data));
 									swal({title: "Settings Changed Successfully",
 										   text: "Success!",   
 										   type: "success",   

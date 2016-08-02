@@ -1,23 +1,147 @@
-<div class="col-sm-10">
-	<h2 class="heading_title">Map</h2>
-	<div class="row">
+<div class="col-sm-10" style="margin-left: -80px; margin-top: 10px">
+	<div class="map_content" ng-controller='smartcontroller'
+		ng-init="initialize()">
+		<div class="bgloading" ng-show="httpLoading">
+			<div class="bigbar">
+				<h1 class="titleClass">loading!...</h1>
+			</div>
+		</div>
+		<div class="container-fluid" style="padding-left: 0px">
+			<div class="row">
+				<div class="col-sm-12">
+					<!-- Dropdown part -->
+					<section class="dropdownSection">
+						<div class="row">
+							<div class="col-sm-12" align="center">
+							<!-- <div class="col-sm-6 col-sm-offset-3" align="center"> -->
+								<div class="row">
+									<div class="col-sm-5" id="clearTextGroup">
+										<select id="selectGroup" class="form-control" name="groupList"
+											ng-model="groupname" ng-change="fetchDevicelist(groupname)">
+											<option value="" selected disabled class="disable_select">-
+												- Select Group - -</option>
+											<option ng-repeat="option in groupList"
+												value="{{ option.gid }}">{{option.gname}}</option>
+										</select>
+									</div>
+									<div class="col-sm-5" id="clearTextDevice">
+										<!-- <div ng-show="deviceloading"><img src="../../images/loading.gif" width="10px" height="10px"/></div> -->
+										<select id="selectDevice" class="form-control"
+											name="deviceList" ng-model="deviceId"
+											ng-change="fetchDeviceDetail(gid,deviceId)">
+											<option value="" selected disabled class="disable_select">-
+												- Select Device - -</option>
+											<option ng-repeat="option in deviceList" value="{{ option }}">{{option}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+					<!-- ./Dropdown part -->
+					<!-- table-speedOmeter-legend part-->
+					<section class="speedometerSection">
+						<div class="row">
+							<div class="col-md-12 speedo_meter">
+								<h5 class="speedTitle">Last Updated Speed of Vehicle</h5>
+								<table class="table mapTable" ng-show="multiDevice">
+									<thead>
+										<tr>
+											<td>Slno</td>
+											<td>Vehicle No</td>
+											<td>Speed<b>(kmph)</b></td>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="(devId,devSpeed) in devData">
+											<td>{{$index+1}}</td>
+											<td>{{devId}}</td>
+											<td>{{devSpeed}}</td>
+										</tr>
+									</tbody>
+								</table>
+								<div ng-show="singleDevice"
+									id="speedometer_highcharts-container">
+									<!-- <div class="speed-meter" style="width: 50%; float: left"></div> -->
+									<div id="container"></div>
+								</div>
+								<div class="legendSection">									
+									<ul class="legendlist">
+										<li><span class="wrap_type normalVehicle"></span>Normal
+											State</li>
+										<li><span class="wrap_type geo"></span>Crossed Geofence</li>
+										<li><span class="wrap_type speed"></span>Crossed Speed</li>
+										<li><span class="wrap_type geospeed"></span>Crossed
+											Geofence and Speed</li>
+										<li><span class="wrap_type aliveVehicle"></span>No-Response
+											State</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</section>
+					<!-- ./table-speedOmeter-legend part -->
+					<!-- Vehicle Count -->
+					<div class="row count_label">
+							<div class="col-sm-3">
+								<label>Car: <span>{{carCount}}</span></label>
+							</div>
+							<div class="col-sm-3">
+								<label>Bus: <span>{{busCount}}</span></label>
+							</div>
+							<div class="col-sm-3">
+								<label>Truck: <span>{{truckCount}}</span></label>
+							</div>
+							<div class="col-sm-3">
+								<label>Bike: <span>{{bikeCount}}</span></label>
+							</div>
+						</div>
+					<!-- ./Vehicle Count -->
+					<!-- Map part-->
+					<section>
+						<div class="row">
+							<div class="col-sm-12">
+								<div id="map_section">
+									<div id="map_canvas"></div>
+									<a class="traffic_layer_btn" ng-click="showTrafficLayer()"
+										ng-hide="showTrafficLayerBtn">Traffic Layer</a> <a
+										class="traffic_layer_btn select_traffic"
+										ng-click="hideTrafficLayer()" ng-hide="hideTrafficLayerBtn">Traffic
+										Layer</a>
+								</div>
+							</div>
+						</div>
+					</section>
+					<!-- ./Map part-->
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- <div class="row">
 		<div class="col-sm-12">
-			<!-- ng-controller='smartcontroller' Starts Here -->
+			ng-controller='smartcontroller' Starts Here
 			<div ng-controller='smartcontroller' ng-init="initialize()">
+				<div class="bgloading" ng-show="httpLoading">
+					<div class="bigbar">
+						<h1 class="titleClass">loading!...</h1>
+					</div>
+				</div>
+
 				<div class="row">
 					<div class="col-sm-4" id="clearTextGroup">
 						<select id="selectGroup" class="form-control" name="groupList"
 							ng-model="groupname" ng-change="fetchDevicelist(groupname)">
-							<option value="" selected disabled class="disable_select">- -
-								Select Group - -</option>
-							<option ng-repeat="option in groupList" value="{{ option.gid }}">{{option.gid}}</option>
+							<option value="" selected disabled class="disable_select">-
+								- Select Group - -</option>
+							<option ng-repeat="option in groupList" value="{{ option.gid }}">{{option.gname}}</option>
 						</select>
 					</div>
 					<div class="col-sm-4" id="clearTextDevice">
+						<div ng-show="deviceloading"><img src="../../images/loading.gif" width="10px" height="10px"/></div>
 						<select id="selectDevice" class="form-control" name="deviceList"
 							ng-model="deviceId" ng-change="fetchDeviceDetail(gid,deviceId)">
-							<option value="" selected disabled class="disable_select">- -
-								Select Device - -</option>
+							<option value="" selected disabled class="disable_select">-
+								- Select Device - -</option>
 							<option ng-repeat="option in deviceList" value="{{ option }}">{{option}}</option>
 						</select>
 					</div>
@@ -27,24 +151,30 @@
 						<div class="row mtop10">
 							<div class="col-sm-12">
 								<div id="map_canvas" style="width: 100%; height: 50vh;"></div>
+								<a class="traffic_layer_btn" ng-click="showTrafficLayer()"
+									ng-hide="showTrafficLayerBtn">Traffic Layer</a> <a
+									class="traffic_layer_btn select_traffic"
+									ng-click="hideTrafficLayer()" ng-hide="hideTrafficLayerBtn">Traffic
+									Layer</a>
 							</div>
 						</div>
 						<div ng-controller="ModalDemoCtrl"></div>
 						<span class="reCenter" ng-hide="isZoomed" ng-click="reCenter()">RE-CENTER</span>
-						<span class="reCenter" ng-hide="singleDeviceZoomed" ng-click="reCenterDevice()">RE-CENTER</span>						
+						<span class="reCenter" ng-hide="singleDeviceZoomed"
+							ng-click="reCenterDevice()">RE-CENTER</span>
 						<div class="row mtop10 count_label">
 							<div class="col-sm-3">
 
 								<label>Car: <span>{{carCount}}</span></label>
 							</div>
 							<div class="col-sm-3">
-								<label>Jeep: <span>{{jeepCount}}</span></label>
-							</div>
-							<div class="col-sm-3">
 								<label>Bus: <span>{{busCount}}</span></label>
 							</div>
 							<div class="col-sm-3">
 								<label>Truck: <span>{{truckCount}}</span></label>
+							</div>
+							<div class="col-sm-3">
+								<label>Bike: <span>{{bikeCount}}</span></label>
 							</div>
 						</div>
 						<div class="row legendBG">
@@ -66,12 +196,12 @@
 							</div>
 							<div class="col-sm-3 make20" align="center">
 								<div class="aliveVehicle"></div>
-								<p class="textColor">No-Response State</p> 
+								<p class="textColor">No-Response State</p>
 							</div>
 						</div>
 					</div>
 					<div class="col-sm-4 speedo_meter">
-						<h5 class="speedTitle">Current Speed of Vehicle</h5>
+						<h5 class="speedTitle">Last Updated Speed of Vehicle</h5>
 						<table class="table" ng-show="multiDevice">
 							<thead>
 								<tr>
@@ -88,14 +218,14 @@
 								</tr>
 							</tbody>
 						</table>
-						<div ng-show="singleDevice">
-							<!-- <div class="speed-meter" style="width: 50%; float: left"></div> -->
+						<div ng-show="singleDevice" id="speedometer_highcharts-container">
+							<div class="speed-meter" style="width: 50%; float: left"></div>
 							<div id="container"></div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<!-- ng-controller='smartcontroller' Ends Here -->
+			ng-controller='smartcontroller' Ends Here
 		</div>
-	</div>
+	</div> -->
 </div>

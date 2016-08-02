@@ -1,8 +1,9 @@
 /**
- * Filter Details
- * 1)Onselect of options from Dropdown Filter the Grid Details
- * 2)Filter Unique values and show in the dropdown*/ 
- 
+ * Filter Details 1)Onselect of options from Dropdown Filter the Grid Details
+ * 2)Filter Unique values and show in the dropdown
+ */
+
+//=====================filter multiple select dropdown=======================
 batsAdminHome.filter('filterMultiple',['$filter',function ($filter) {
 	return function (items, keyObj) {
 		var filterObj = {
@@ -34,31 +35,69 @@ batsAdminHome.filter('filterMultiple',['$filter',function ($filter) {
 								}
 							}
 				};
+
 		if(keyObj){
 			angular.forEach(keyObj,function(obj,key){
 				filterObj.applyFilter(obj,key);
 			});			
-		}		
+		}
+		
 		return filterObj.filteredData;
 	}
-}]);
+}]).filter('unique', function() {
+	   return function(collection, keyname) {
+		      var output = [], 
+		          keys = [];
 
-
-
-batsAdminHome.filter('unique', function() {
-		  return function(input, key) {
-			  //console.log(input);
-		      var unique = {};
-		      var uniqueList = [];
-		      for(var i = 0; i < input.length; i++){
-		          if(typeof unique[input[i][key]] == "undefined"){
-		              unique[input[i][key]] = "";
-		              uniqueList.push(input[i]);
+		      angular.forEach(collection, function(item) {
+		          var key = item[keyname];
+		          if(keys.indexOf(key) === -1) {
+		              keys.push(key);
+		              output.push(item);
 		          }
-		      }
-		      return uniqueList;
-		  };
+		      });
+
+		      return output;
+		   };
+		});
+
+
+/*
+ * batsAdminHome.filter('unique', function() { return function(input, key) {
+ * //console.log(input); var unique = {}; var uniqueList = []; for(var i = 0; i <
+ * input.length; i++){ if(typeof unique[input[i][key]] == "undefined"){
+ * unique[input[i][key]] = ""; uniqueList.push(input[i]); } } return uniqueList; };
+ * });
+ */
+batsAdminHome.filter('removeDups', function() {
+	return function(data) {
+		if (angular.isArray(data)) {
+			var result = [];
+			var key = {};
+			for ( var i = 0; i < data.length; i++) {
+				var val = data[i];
+				if (angular.isUndefined(key[val])) {
+					key[val] = val;
+					result.push(val);
+				}
+			}
+			if (result.length > 0) {
+				return result;
+			}
+		}
+		return data;
+	}
 });
 
 
-    
+//====================== Timestamp to Date Conversion =====================
+batsAdminHome.filter('timestampToDate', function () {
+    return function (timestamp) {
+        var date = new Date(timestamp);
+        var dateString = timeStamp_value.toLocaleDateString();
+        var timeString = timeStamp_value.toLocaleTimeString();
+        var dateObject = dateString +", "+ timeString;
+        return dateObject;
+    };
+});
+

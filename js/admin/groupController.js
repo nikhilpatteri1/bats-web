@@ -3,6 +3,7 @@
 batsAdminHome.controller('groupController', function($scope, $http, $localStorage) {
 	var posArray;
 	var geofence;
+	var centerVal = {lat: 21.0000, lng: 78.0000};
 	
 	$scope.token = $localStorage.data;
 	if(typeof $scope.token==="undefined"){
@@ -50,6 +51,40 @@ batsAdminHome.controller('groupController', function($scope, $http, $localStorag
 	        $scope.state = myNewOptions;
 		};
 		$scope.states = states;
+		
+		
+		/**------------------------------------------------------------------------------------------------------------------------
+		* 												Add Multiple Contact Numbers Begins Here
+	   ------------------------------------------------------------------------------------------------------------------------*/	
+		$scope.choices = [{}];
+		if($scope.choices.length == 1){
+			$scope.hide_remove = false;
+		}
+		if($scope.choices.length < 4){
+			  $scope.hide_btn = false;
+			  }
+		$scope.addNewChoice = function() {
+		  $scope.choices.push({});
+		  if($scope.choices.length == 4){
+		  $scope.hide_btn = true;
+		  }
+		  if($scope.choices.length > 1){
+				$scope.hide_remove = true;
+			}
+		};  
+		$scope.removeChoice = function() {
+		  var lastItem = $scope.choices.length-1;
+		  $scope.choices.splice(lastItem);
+		  if($scope.choices.length < 4){
+		  $scope.hide_btn = false;
+		  }
+		  if($scope.choices.length == 1){
+				$scope.hide_remove = false;
+			}
+		};
+		/**------------------------------------------------------------------------------------------------------------------------
+		* 												Add Multiple Contact Numbers Ends Here
+		------------------------------------------------------------------------------------------------------------------------*/
 		
 /**
 * Load Group list 
@@ -165,6 +200,56 @@ batsAdminHome.controller('groupController', function($scope, $http, $localStorag
 	    }
 	  };
 	  
+
+/**
+  * On typing of groupname in textbox of Form
+  * 1) Checks groupname is available or not*/
+	$scope.verifyGroup=function(groupName){
+			$scope.verifyGroupJson={};
+			$scope.verifyGroupJson.token=$scope.token;
+			$scope.verifyGroupJson.gname=angular.lowercase(groupName);
+			$http({
+			      method  : 'POST',		  
+			      url     : apiURL+'gname/available_check',
+				  data    : JSON.stringify($scope.verifyGroupJson), 
+				  headers : { 'Content-Type': 'application/json' }
+			     })
+				  .success(function(data) {
+					  //console.log(data);
+					  $scope.status=data.msg;
+					  console.log($scope.status);
+					  if(data.status == true){
+						  $scope.gname=false;
+						  $scope.error = {gname:false};
+					  }
+					  else{
+						  $scope.gname=true;
+						  $scope.error = {gname:true};
+					  }
+			      })
+			      .error(function(data, status, headers, config) {
+			    	  $scope.isSaving=true;
+			    	  //console.log(data);
+			    	  if(data.err == "Expired Session")
+	    			  {
+	            		  $('#createUserModal').modal('hide');
+	    			      expiredSession();
+	    			      $localStorage.$reset();
+	    			  }
+		        	  else if(data.err == "Invalid User"){
+		        		  $('#createUserModal').modal('hide');
+		        		  invalidUser();
+		    			  $localStorage.$reset();  
+		        	  }
+			    	  console.log(status);
+			    	  console.log(headers);
+			    	  console.log(config);
+				  });
+		};	  
+	  
+	  
+	  
+	  
 /**
  	* On Submit of Create Group Form
 */
@@ -190,14 +275,24 @@ batsAdminHome.controller('groupController', function($scope, $http, $localStorag
 		}
 	$scope.group.devlist=deviceList;
 	$scope.group.gname=angular.lowercase($scope.group.gname);
-	var cno = [];
+	/*var cno = [];
 	cno.push($scope.group.contact_num);
-	$scope.group.contact_num = cno;
-	var alive_frequency = $scope.groups.aliveFrequency;
-	console.log(JSON.stringify(alive_frequency));
-	$scope.group.alive_frequency = String(alive_frequency * 60);
-	console.log(JSON.stringify($scope.group.alive_frequency));
+	$scope.group.contact_num = cno;*/
+	//var alive_frequency = $scope.groups.aliveFrequency;
+	//console.log(JSON.stringify(alive_frequency));
+	//$scope.group.alive_frequency = String(alive_frequency * 60);
+	//console.log(JSON.stringify($scope.group.alive_frequency));
 	//console.log($scope.group.devlist);
+	var cont_num = $scope.choices;
+	console.log(JSON.stringify(cont_num));
+	var json_cont_num = [];
+	for (var key in cont_num) {
+	if (cont_num.hasOwnProperty(key)) {
+		json_cont_num.push(cont_num[key].contact_num);
+	}
+	}
+	//console.log(JSON.stringify(json_cont_num));
+	$scope.group.contact_num = json_cont_num;
 	console.log(JSON.stringify($scope.group));
 	$('#createGroupModal').modal('hide');
     $http({
@@ -207,6 +302,7 @@ batsAdminHome.controller('groupController', function($scope, $http, $localStorag
 	  headers : { 'Content-Type': 'application/json' }
      })
 	  .success(function(data) {
+		  console.log(JSON.stringify(data));
 		  swal({title: "Group Created Successfully",
 			   text: "Success!",   
 			   type: "success",   
@@ -243,6 +339,40 @@ batsAdminHome.controller('groupController', function($scope, $http, $localStorag
     * 3)Show Update Button & Hide Create Button
     * 4)Show Update Title & Hide Create Title*/
     $scope.submitEditGroup = function(gid) {
+    	
+    	/**------------------------------------------------------------------------------------------------------------------------
+		* 												Add Multiple Contact Numbers Begins Here
+	   ------------------------------------------------------------------------------------------------------------------------*/	
+		$scope.choices = [{}];
+		if($scope.choices.length == 1){
+			$scope.hide_remove = false;
+		}
+		if($scope.choices.length < 4){
+			  $scope.hide_btn = false;
+			  }
+		$scope.addNewChoice = function() {
+		  $scope.choices.push({});
+		  if($scope.choices.length == 4){
+		  $scope.hide_btn = true;
+		  }
+		  if($scope.choices.length > 1){
+				$scope.hide_remove = true;
+			}
+		};  
+		$scope.removeChoice = function() {
+		  var lastItem = $scope.choices.length-1;
+		  $scope.choices.splice(lastItem);
+		  if($scope.choices.length < 4){
+		  $scope.hide_btn = false;
+		  }
+		  if($scope.choices.length == 1){
+				$scope.hide_remove = false;
+			}
+		};
+		/**------------------------------------------------------------------------------------------------------------------------
+		* 												Add Multiple Contact Numbers Ends Here
+		------------------------------------------------------------------------------------------------------------------------*/
+		
             $scope.btn = {
                 update: false,
                 create: true
@@ -268,8 +398,31 @@ batsAdminHome.controller('groupController', function($scope, $http, $localStorag
 			  $scope.group = data;
               console.log(JSON.stringify($scope.group));
               $scope.selection = $scope.group.devlist;
+              var edit_cont_num = data.contact_num;
+              //console.log(JSON.stringify(edit_cont_num));
+	      		var edit_choices = [];
+	      		$scope.choices = edit_choices;
+	      		for (var i in edit_cont_num) {
+	      		if (edit_cont_num.hasOwnProperty(i)) {
+	      			edit_choices.push({
+	      		   'contact_num': edit_cont_num[i],
+	      		});
+	      		}
+	      		}
+	      		//console.log(JSON.stringify($scope.choices));
+	      		
               geofence = $scope.group.geofence;
-              //console.log(JSON.stringify(geofence));
+              var lat_tot = 0, lg_tot = 0, lat_avg = 0, lg_avg = 0;
+              for(inc=0;inc<geofence.length;inc++){
+				  	lat_tot += Number(geofence[inc].lat);
+					lg_tot +=  Number(geofence[inc].long);
+				  }
+				  lat_avg = lat_tot / geofence.length;
+				  lg_avg = lg_tot / geofence.length;
+				  //centerVal = lat_avg+","+lg_avg;
+				  centerVal = {lat: lat_avg, lng: lg_avg};
+              console.log(JSON.stringify(centerVal));
+				  
               /*var mobile_no = data.contact_num;
               var contact_number;
               for(i=0;i<mobile_no.length;i++){
@@ -279,11 +432,19 @@ batsAdminHome.controller('groupController', function($scope, $http, $localStorag
               var contact_num = contact_number.slice(3);
 			  //console.log(contact_num);
 			  $scope.group.contact_num = contact_num;*/
-              var update_alive_frequency = Number($scope.group.alive_frequency);
-              console.log(JSON.stringify(update_alive_frequency));
-              $scope.aliveFrequency = update_alive_frequency/60;
-              $scope.groups = {"aliveFrequency": $scope.aliveFrequency};
-              console.log(JSON.stringify($scope.groups.aliveFrequency));
+              //var update_alive_frequency = Number($scope.group.alive_frequency);
+              //console.log(JSON.stringify(update_alive_frequency));
+              //$scope.aliveFrequency = update_alive_frequency/60;
+              //$scope.groups = {"aliveFrequency": $scope.aliveFrequency};
+              //console.log(JSON.stringify($scope.groups.aliveFrequency));
+	      		/**
+	        	 * hide & show, add more & remove contact button */
+	        	if($scope.choices.length == 4){
+	    			  $scope.hide_btn = true;
+	    	    }
+	        	if($scope.choices.length > 1){
+					$scope.hide_remove = true;
+				}
           })
           .error(function(data, status, headers, config) {
         	  //console.log(data.err);
@@ -344,12 +505,19 @@ batsAdminHome.controller('groupController', function($scope, $http, $localStorag
         	else{
         		$scope.group.geofence = posArray;
         	}
-        	
-        	
-        	var alive_frequency = $scope.groups.aliveFrequency;
-        	console.log(JSON.stringify(alive_frequency));
-        	$scope.group.alive_frequency = String(alive_frequency * 60);
-        	console.log(JSON.stringify($scope.group.alive_frequency));
+        	//var alive_frequency = $scope.groups.aliveFrequency;
+        	//console.log(JSON.stringify(alive_frequency));
+        	//$scope.group.alive_frequency = String(alive_frequency * 60);
+        	//console.log(JSON.stringify($scope.group.alive_frequency));
+        	var cont_num = $scope.choices;
+    		console.log(JSON.stringify(cont_num));
+    		var json_cont_num = [];
+    		for (var key in cont_num) {
+    		if (cont_num.hasOwnProperty(key)) {
+    			json_cont_num.push(cont_num[key].contact_num);
+    		}
+    		}
+    		$scope.group.contact_num = json_cont_num;
         	console.log(JSON.stringify($scope.group));
             $http({
               method  : 'POST',		  
@@ -486,9 +654,26 @@ function showGeofenceMap(){
      *
      */
     $(document).ready(function () {
-    	var styleMap = [{"featureType":"water","stylers":[{"color":"#46bcec"},{"visibility":"on"}]},{"featureType":"landscape","stylers":[{"color":"#eeeeee"}]},{"featureType":"road","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"transit","stylers":[{"visibility":"off"}]},{"featureType":"poi","stylers":[{"visibility":"off"}]}];
+    	var styleMap = [{"featureType":"administrative","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"landscape","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"color":"#bee4f4"},{"visibility":"on"}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"geometry.fill","stylers":[{"visibility":"on"}]},{"featureType":"transit","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#46bcec"},{"visibility":"on"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"on"},{"color":"#000000"}]}];
+    	// Variables and definitions
+    	//console.log(centerVal);
+    	var map;
+    	var mapCanvasId = 'map-canvas';
+          var mapOptions = {
+            zoom: 4,
+            center: centerVal,
+            streetViewControl: false,
+            disableDefaultUI: true,
+			styles: styleMap,
+          };
+          map = new google.maps.Map(document.getElementById(mapCanvasId),
+              mapOptions);
+
+    	
+    	
+    	
       // Variables and definitions
-      var mapCanvasId = 'map-canvas',
+          /*var mapCanvasId = 'map-canvas',
           map = new google.maps.Map(document.getElementById(mapCanvasId), {
             center: new google.maps.LatLng(21.0000, 78.0000),
             streetViewControl: false,
@@ -499,7 +684,7 @@ function showGeofenceMap(){
               style: google.maps.ZoomControlStyle.LARGE,
               position: google.maps.ControlPosition.LEFT_CENTER
             }
-          }); 
+          }); */
       // Setup drawing manager
       var drawingManager = new google.maps.drawing.DrawingManager({
         drawingControl: true,
@@ -534,7 +719,7 @@ function showGeofenceMap(){
           strokeOpacity: 0.8,
           strokeWeight: 2,
           fillColor: '#FF0000',
-          fillOpacity: 0.35
+          fillOpacity: 0.10
         });
         myPolygon.setMap(map); 
       // Add custom clear button
@@ -636,6 +821,10 @@ $(document).on('click', '#lat_long_geofence', function(){
       	$('#show2').hide();
     	$('#show1').show();
  });
+$scope.back2Form=function(){
+	$('#show2').hide();
+	$('#show1').show();
+}
 });
 
 

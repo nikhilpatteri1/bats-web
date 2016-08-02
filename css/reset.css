@@ -216,8 +216,9 @@ textarea.form-control{resize:none;border:2px solid #ddd;border-radius:0;margin-t
 .modal-title {color:#03A9F4;text-align:center;font-size:30px;}
 .close_icon{position:absolute;right:20px;z-index: 100;font-size: 2.3em;text-align: center; color: #F44336;cursor: pointer;}
 
-.speedo_meter{background:#fff;height:400px;padding:0}
-.speedo_meter h5{background:#424242;color:#eee;padding:5px 20px;}
+.speedo_meter{background:#fff;height:auto;padding:0;}
+.speedo_meter h5{background:#424242;color:#fff;padding:5px 20px;}
+/* .mapTable tr td{ border-bottom:1pt solid black;} */
 
 
 /*============= Animated Logo ===============*/
@@ -286,3 +287,46 @@ a:focus{ outline: none; }
 .btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus{outline: none;}
 .btn.btn-primary.btn_anchor{font-size:20px;padding:10px 37px;border-radius:0;}
 
+
+
+
+/*================== DateTimePicker =================*/
+.bootstrap-datetimepicker-widget {background:#eee;position:absolute;top:34px;left:0;z-index:1000}
+.bootstrap-datetimepicker-widget table thead tr th {background:#eee;}
+
+/*================== Add Multiple Mobile Number =================*/
+.addfields{background:#03A9F4;color:#fff;padding:5px 10px 5px 10px;border-radius:4px;float:right;margin:25px 0px 0px 0px;}
+/* a.addfields:focus, a.addfields:hover {color:#fff;text-decoration:none;} */
+.remove{margin:-13px 0 10px 0;float:left;background:#03A9F4;color:#fff;padding:5px 10px 5px 10px;border-radius:4px;}
+.multiple_contact{}
+.multiple_contact.has-error .form-control{border-color: #555;}
+.multiple_contact.has-error input.ng-dirty.ng-invalid {border: solid 2px red;}
+
+/*================== added on 11-07-2016 Bug Fixing=================*/
+.group_name_span{width:100%;float:left;margin-bottom:6px;}
+.group_name_selected{width:90%;padding:2px 0 0 0;word-wrap:break-word;}
+
+
+/*================== Alarm Notifications =================*/
+.notify-row {float: right;margin-top: 30px;}
+ul.top-menu > li > a {color: #666666;font-size: 16px;border-radius: 4px;-webkit-border-radius: 4px;border: 1px solid #f0f0f8 !important;
+padding: 2px 6px;/* margin-right: 15px; */}
+.badge.bg-warning {background: #FCB322;}
+.notify-row .badge {position: absolute;right: -10px;top: -10px;z-index: 100;}
+.dropdown-menu.extended {max-width: 300px !important;min-width: 160px !important;top: 42px;right:0;left: inherit;
+width: 280px !important; padding: 0;box-shadow: 0 2px 5px rgba(0, 0, 0, 0.176) !important;border: none !important;
+border-radius: 4px;-webkit-border-radius: 4px;/* height: 400px;overflow: auto; */}
+.notify-arrow-yellow {border-color: transparent transparent #FCB322;border-bottom-color: #FCB322 !important;
+border-top-color: #FCB322 !important;}
+.notify-arrow {border-style: solid;border-width: 0 9px 9px;height: 0;margin-top: 0;opacity: 0;position: absolute;right: 20px;
+top: -19px;transition: all 0.25s ease 0s;width: 0;z-index: 10;margin-top: 10px;opacity: 1;}
+.dropdown-menu.extended li p.yellow {background-color: #fcb322;color: #fff;}
+.dropdown-menu.extended li p {background-color: #F1F2F7;color: #666666;margin: 0;padding: 10px;border-radius: 4px 4px 0px 0px;
+-webkit-border-radius: 4px 4px 0px 0px;}
+.dropdown-menu.extended li a {padding: 15px 10px !important;width: 100%;display: inline-block;}
+.dropdown-menu.extended li a {border-bottom: 1px solid #EBEBEB !important;font-size: 12px;list-style: none;line-height: 14px;}
+.dropdown-menu.extended .no_notifications{padding:10px}
+
+.notificationtxt{font-size: 16px;display: block;font-weight: bold;color: rgb(41, 150, 204);}
+.notify_values{padding: 10px 0 10px 0;}
+.label.label-danger.custom-label-danger{float: left;font-size: 12px;padding: 6px;margin: 0 8px 0 0;}

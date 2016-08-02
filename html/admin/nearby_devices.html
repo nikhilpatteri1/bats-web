@@ -1,0 +1,78 @@
+<div class="col-sm-10">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="bgloading" ng-show="httpLoading">
+				<div class="bigbar">
+					<h1 class="titleClass">loading!...</h1>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div align="center">
+						<h2 class="heading_title">Nearby Devices</h2>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-4" id="clearTextGroup">
+					<select id="selectGroup" class="form-control" name="groupList"
+						ng-model="hist.searchGroupModel"
+						ng-change="fetchDevicelist(hist.searchGroupModel)">
+						<option value="" selected disabled class="disable_select">-
+							- Select Group - -</option>
+						<option ng-repeat="option in groupList" value="{{ option.gid }}">{{option.gname}}</option>
+					</select>
+				</div>
+				<div class="col-sm-4" id="clearTextDevice">
+					<select id="selectDevice" class="form-control" name="deviceList"
+						ng-model="hist.searchDeviceModel"
+						ng-change="deviceSelected(hist.searchDeviceModel)">
+						<option value="" selected disabled class="disable_select">-
+							- Select Device - -</option>
+						<option ng-repeat="option in deviceList" value="{{ option }}">{{option}}</option>
+					</select>
+				</div>
+			</div>
+
+
+			<div ng-hide="noData">
+				<h1>Kindly Check For other Dates</h1>
+			</div>
+			<div ng-hide="noNearbyDevice">
+				<h1>No Nearby Devices Available For This Device</h1>
+			</div>
+			<div ng-if="yoData">
+				<div data-tap-disabled="true">
+					<ng-map id="nearbyId" zoom="{{nearByMap.zoom}}"
+						center="{{nearByMap.center}}"
+						styles="[{'featureType':'administrative','elementType':'labels.text.fill','stylers':[{'color':'#444444'}]},
+								{'featureType':'landscape','elementType':'all','stylers':[{'color':'#f2f2f2'}]},
+								{'featureType':'landscape','elementType':'labels','stylers':[{'visibility':'on'}]},
+								{'featureType':'poi','elementType':'all','stylers':[{'visibility':'off'}]},
+								{'featureType':'poi','elementType':'geometry.fill','stylers':[{'color':'#bee4f4'},{'visibility':'on'}]},
+								{'featureType':'poi','elementType':'labels','stylers':[{'visibility':'on'},{'hue':'#ff0000'}]},
+								{'featureType':'road','elementType':'all','stylers':[{'saturation':-100},{'lightness':45}]},
+								{'featureType':'road','elementType':'labels','stylers':[{'visibility':'on'},{'hue':'#ff0000'}]},
+								{'featureType':'road.highway','elementType':'all','stylers':[{'visibility':'simplified'}]},
+								{'featureType':'road.arterial','elementType':'labels.icon','stylers':[{'visibility':'off'}]},
+								{'featureType':'transit','elementType':'all','stylers':[{'visibility':'off'}]},
+								{'featureType':'transit','elementType':'geometry.fill','stylers':[{'visibility':'on'}]},
+								{'featureType':'transit','elementType':'labels','stylers':[{'visibility':'on'},{'hue':'#ff0000'}]},
+								{'featureType':'water','elementType':'all','stylers':[{'color':'#46bcec'},{'visibility':'on'}]},
+								{'featureType':'water','elementType':'labels','stylers':[{'visibility':'on'},{'color':'#000000'}]}]">
+					<marker ng-repeat="pos in nearByMap.devices"
+						position="[{{pos.lat}},{{pos.lg}}]" title="DeviceID:{{pos.devid}}"
+						icon="{url:'../images/{{pos.icon}}.png',
+												   scaledSize:[20,20],
+												   origin: [2,2],
+												   anchor: [16,16]}"
+						on-click="showInfo(event,pos)"> </marker> </ng-map>
+				</div>
+			</div>
+
+			<div class="space_bottom"></div>
+		</div>
+	</div>
+</div>
+
+

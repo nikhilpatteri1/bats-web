@@ -488,7 +488,7 @@ $scope.verifyUser=function(userName){
 				                          		});
 				                                 })
 				                                 .error(function(data, status, headers, config) {
-				                               	  //console.log(data.err);
+				                               	  console.log(data.err);
 				                               	  if(data.err == "Expired Session")
 				                       			  {
 				                               		  $('#editModal').modal('hide');

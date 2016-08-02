@@ -1,5 +1,6 @@
 //var apiURL="http://10.1.71.194:8040/";
-var apiURL="http://220.227.124.134:8050/";
+var apiURL="http://220.227.124.134:8050/";//dev server
+//var apiURL="http://220.227.124.134:8042/"; //crown plaza
 var reqTime=5;
 var maxSpeed=10;
 //var factoryToken="VQGIO34xB0V3ZSxo";
@@ -66,9 +67,20 @@ $(document).on('click', '.closeIconReload', function(){
 
 /**
  * Onload Browser Back/Front Icon Click & Keyboard Backspace Button Press
- * Hide Bootstrap Modal & got to previous screen*/ 
+ * Hide Bootstrap Modal & stay on same screen
+ * Hide select filter*/ 
 $(window).on('popstate', function() {
   //alert('Back button was pressed.');
-  $('.modal').hide();
-  $('.modal-backdrop').hide();
+  /*$('.modal').hide();
+  $('.modal-backdrop').hide();*/
+	if ($('.in').is(':visible')) {
+		window.history.forward();
+		$('.modal').hide();
+		$('.modal-backdrop').hide();
+		//alert("yes");
+	}
+	$(".select2-drop").css("display","none");
 }); 
+
+
+

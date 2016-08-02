@@ -1,6 +1,25 @@
 
 //==============Factory Home===============
+
 batsfactoryhome.controller('customerController', function($scope, $http, $localStorage) {
+	$scope.token = $localStorage.data;
+	if(typeof $scope.token==="undefined"){
+		swal({ 
+			   title: "Un Authorized Acces",
+		  	   text: "Kindly Login!",   
+		  	   type: "warning",   
+		  	   confirmButtonColor: "#ff0000",   
+		  	   closeOnConfirm: false }, 
+		  	   function(){  
+		  		 $localStorage.$reset();
+		  		 window.location = apiURL;
+		  });
+		 
+	}
+});
+
+
+batsfactoryhome.controller('customerControllerInner', function($scope, $http, $localStorage) {
 	/*
 	 * for back button navigation in angular
 	 * matching with current controller and making them staying on the same page
@@ -21,22 +40,10 @@ batsfactoryhome.controller('customerController', function($scope, $http, $localS
 	        }
 	        
 	    });*/
-	$scope.token = $localStorage.data;
+	
 //==============Factory Home After Load===============
-	if(typeof $scope.token==="undefined"){
-		swal({ 
-			   title: "Un Authorized Acces",
-		  	   text: "Kindly Login!",   
-		  	   type: "warning",   
-		  	   confirmButtonColor: "#ff0000",   
-		  	   closeOnConfirm: false }, 
-		  	   function(){  
-		  		 $localStorage.$reset();
-		  		 window.location = apiURL;
-		  });
-		 
-	}
-	else{
+	
+	//else{
 		$scope.customer = {};
 		//$(window).bind("load", function() {
 		$scope.customer.token = $scope.token;
@@ -50,7 +57,7 @@ batsfactoryhome.controller('customerController', function($scope, $http, $localS
 		 })
 		  .success(function(data) {
 		  $scope.home = data.clist;
-		  //console.log(JSON.stringify($scope.home));
+		  console.log(JSON.stringify($scope.home));
 		  if($scope.home.length == 0){
 			  $scope.noCustomer = true;
 			  }
@@ -71,7 +78,7 @@ batsfactoryhome.controller('customerController', function($scope, $http, $localS
 			  console.log(config);
 		  });
 		//});
-	}
+	//}
 	
 	/*
 	 Hardcoded Country & State Values
@@ -198,6 +205,8 @@ batsfactoryhome.controller('customerController', function($scope, $http, $localS
             
 
 });
+
+
 
 //==============Factory Home Submit Edit Customer Form===============   
 batsfactoryhome.controller('factoryEdit', function($scope, $http, $localStorage) {
@@ -446,61 +455,7 @@ batsfactoryhome.controller('factoryCreate', function($scope, $http, $localStorag
 });
 
 
-//=====================filter Country, State, Customer=======================
-batsfactoryhome.filter('filterMultiple',['$filter',function ($filter) {
-	return function (items, keyObj) {
-		var filterObj = {
-							data:items,
-							filteredData:[],
-							applyFilter : function(obj,key){
-								var fData = [];
-								if(this.filteredData.length == 0)
-									this.filteredData = this.data;
-								if(obj){
-									var fObj = {};
-									if(angular.isString(obj)){
-										fObj[key] = obj;
-										fData = fData.concat($filter('filter')(this.filteredData,fObj));
-									}else if(angular.isArray(obj)){
-										if(obj.length > 0){	
-											for(var i=0;i<obj.length;i++){
-												if(angular.isString(obj[i])){
-													fObj[key] = obj[i];
-													fData = fData.concat($filter('filter')(this.filteredData,fObj));	
-												}
-											}
-											
-										}										
-									}									
-									if(fData.length > 0){
-										this.filteredData = fData;
-									}
-								}
-							}
-				};
-
-		if(keyObj){
-			angular.forEach(keyObj,function(obj,key){
-				filterObj.applyFilter(obj,key);
-			});			
-		}
-		
-		return filterObj.filteredData;
-	}
-}]).filter('unique', function() {
-		  return function(input, key) {
-			  //console.log(input);
-		      var unique = {};
-		      var uniqueList = [];
-		      for(var i = 0; i < input.length; i++){
-		          if(typeof unique[input[i][key]] == "undefined"){
-		              unique[input[i][key]] = "";
-		              uniqueList.push(input[i]);
-		          }
-		      }
-		      return uniqueList;
-		  };
-});   
+   
 
 
 

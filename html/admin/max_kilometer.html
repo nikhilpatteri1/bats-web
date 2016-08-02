@@ -1,0 +1,99 @@
+<div class="col-sm-10">
+	<h2 class="heading_title">Kilometers Traveled</h2>
+	<div class="bgloading" ng-show="httpLoading">
+		<div class="bigbar">
+			<h1 class="titleClass">loading!...</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="row">
+				<div class="col-sm-4" id="clearTextGroup">
+					<select id="selectGroup" class="form-control" name="groupList"
+						ng-model="groupname" ng-change="fetchDevList(groupname)">
+						<option value="" selected disabled class="disable_select">-
+							- Select Group - -</option>
+						<option ng-repeat="option in groupList" value="{{ option.gid }}">{{option.gname}}</option>
+					</select>
+				</div>
+				<div class="col-sm-4" id="clearTextDevice">
+					<select id="selectDevice" class="form-control" name="devList"
+						ng-model="deviceId" ng-change="deviceSelectedMaxKm()">
+						<option value="" selected disabled class="disable_select">-
+							- Select Device - -</option>
+						<option ng-repeat="option in devList" value="{{ option.devid }}">{{option.devid}}</option>
+					</select>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<br>
+
+	<div class="row">
+		<section ng-hide="deviceSelectMaxKm">
+			<div class="col-sm-12">
+				<h5 class="label_Style">Start Date and Time</h5>
+				<div class="form-group">
+					<div class='input-group date' id='startDateMaxKmPicker'>
+						<input type='text' class="form-control" id="startDateMaxKm"
+							readonly="readonly" /> <span class="input-group-addon"> <span
+							class="glyphicon glyphicon-calendar"> </span>
+						</span>
+					</div>
+				</div>
+
+				<div class="showMinMaxErr" id="startDateMaxKmError">
+					<i class="ion-information-circled"></i> This field is required!
+				</div>
+			</div>
+
+			<div class="col-sm-12">
+				<h5 class="label_Style">End Date and Time</h5>
+				<div class="form-group">
+					<div class='input-group date' id='endDateMaxKmPicker'>
+						<input type='text' class="form-control" id="endDateMaxKm"
+							readonly="readonly" /> <span class="input-group-addon"> <span
+							class="glyphicon glyphicon-calendar"> </span>
+						</span>
+					</div>
+				</div>
+
+				<div class="showMinMaxErr" id="endDateMaxKmError">
+					<i class="ion-information-circled"></i> This field is required!
+				</div>
+			</div>
+
+			<div class="col-sm-6 col-sm-offset-3" align="center">
+				<button class="btn btn-primary" ng-click="submitMaxKm()">Submit</button>
+			</div>
+		</section>
+
+	</div>
+
+
+	<div class="row mtop10" id="highcharts_minmax">
+		<div class="col-sm-12">
+			<div class="row mtop10">
+				<div class="col-sm-12">
+					<div ng-if="showResultMaxKm">
+						<div ng-repeat="km in MaxKmResult" class="min_max_dev">
+							<h3 class="minmax_devid">Device Id: {{km.devid}}</h3>
+							<h3 class="minmax_devid">Max KM Covered: {{km.distance}} KM</h3>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+

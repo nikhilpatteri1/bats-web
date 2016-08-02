@@ -1,0 +1,69 @@
+<div class="col-sm-10">
+	<h2 class="heading_title">Latest Located Spot</h2>
+	<div class="row">
+		<div class="col-sm-12">
+			<!-- ng-controller='smartcontroller' Starts Here -->
+				<div class="bgloading" ng-show="httpLoading">
+					<div class="bigbar">
+						<h1 class="titleClass">loading!...</h1>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-4" id="clearTextGroup">
+						<select id="selectGroup" class="form-control" name="groupList"
+							ng-model="groupname" ng-change="fetchDevicelist(groupname)">
+							<option value="" selected disabled class="disable_select">- -
+								Select Group - -</option>
+							<option ng-repeat="option in groupList" value="{{ option.gid }}">{{option.gname}}</option>
+						</select>
+					</div>
+				</div>
+				<div class="row mtop10">
+					<div class="col-sm-12">
+						<div class="row mtop10">
+							<div class="col-sm-12">
+								<div class="map_wrap"  data-tap-disabled="true">
+							        <ng-map ng-repeat="mapos in position" center="{{mapos.lat}},{{mapos.long}}" zoom="{{mapos.zoom}}" 
+							        styles="[{'featureType':'administrative','elementType':'labels.text.fill','stylers':[{'color':'#444444'}]},
+											{'featureType':'landscape','elementType':'all','stylers':[{'color':'#f2f2f2'}]},
+											{'featureType':'landscape','elementType':'labels','stylers':[{'visibility':'on'}]},
+											{'featureType':'poi','elementType':'all','stylers':[{'visibility':'off'}]},
+											{'featureType':'poi','elementType':'geometry.fill','stylers':[{'color':'#bee4f4'},{'visibility':'on'}]},
+											{'featureType':'poi','elementType':'labels','stylers':[{'visibility':'on'},{'hue':'#ff0000'}]},
+											{'featureType':'road','elementType':'all','stylers':[{'saturation':-100},{'lightness':45}]},
+											{'featureType':'road','elementType':'labels','stylers':[{'visibility':'on'},{'hue':'#ff0000'}]},
+											{'featureType':'road.highway','elementType':'all','stylers':[{'visibility':'simplified'}]},
+											{'featureType':'road.arterial','elementType':'labels.icon','stylers':[{'visibility':'off'}]},
+											{'featureType':'transit','elementType':'all','stylers':[{'visibility':'off'}]},
+											{'featureType':'transit','elementType':'geometry.fill','stylers':[{'visibility':'on'}]},
+											{'featureType':'transit','elementType':'labels','stylers':[{'visibility':'on'},{'hue':'#ff0000'}]},
+											{'featureType':'water','elementType':'all','stylers':[{'color':'#46bcec'},{'visibility':'on'}]},
+											{'featureType':'water','elementType':'labels','stylers':[{'visibility':'on'},{'color':'#000000'}]}]"> 
+							          <marker ng-repeat="pos in marker" icon="../images/{{pos.devtype}}.png" position="{{pos.lat}},{{pos.long}}" on-click="showDeviceInfo(event, pos)"></marker>
+							         <shape name="polygon" ng-repeat="geofence in geofence" paths= "{{geofence}}" stroke-color="#FF0000" stroke-opacity="0.8"
+								       stroke-weight="2" fill-color="#FF0000" fill-opacity="0.10">
+								     </shape> 
+							        </ng-map> 
+							      </div>
+							</div>
+						</div>
+					</div>
+				</div>
+		</div>
+	</div>
+</div> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

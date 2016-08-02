@@ -1,0 +1,19 @@
+<div class="modal landscape_modal">
+        <header class="bar bar-header bar-positive">
+          <h1 class="title">{{model.title}}</h1>
+          <div class="button button-clear" ng-click="modalHide()"><span class="icon ion-close"></span></div>
+        </header>
+        <ion-content has-header="true">
+        
+        <div ng-if="noanalyticsData" align="center" class="analytics_landscape">
+			<h1>Currently Data Not Available</h1>
+		</div>
+        <div ng-if="speedAnalytics" class="analytics_landscape">
+			<highchart id="chart1" config="highchartsNG"></highchart>
+		</div>
+		<div ng-if="distanceanalytics" class="analytics_landscape">
+			<highchart id="chart2" config="highchartsDG"></highchart>
+		</div>
+				
+        </ion-content>
+      </div>

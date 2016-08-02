@@ -8,10 +8,10 @@ var batsfactoryhome = angular.module('batsfactoryhome', ['ngStorage', 'ngRoute',
 var reset = angular.module('resetPwd', []);
 
 //==============Admin Home===============
-var batsAdminHome = angular.module('batsAdminHome', ['ngStorage', 'ngRoute','ngAnimate', 'ui.bootstrap','ngMaterial', 'ngMessages', 'uiGmapgoogle-maps']);
+var batsAdminHome = angular.module('batsAdminHome', ['ngStorage', 'ngRoute','ngAnimate', 'ui.bootstrap','ngMaterial', 'ngMessages', 'uiGmapgoogle-maps', 'ngMap', 'highcharts-ng']);
 
 //==============General Home===============
-var batsGeneralHome = angular.module('batsGeneralHome', ['ngStorage', 'ngRoute', 'uiGmapgoogle-maps','ngAnimate', 'ui.bootstrap','ngMaterial', 'ngMessages']);
+var batsGeneralHome = angular.module('batsGeneralHome', ['ngStorage', 'ngRoute', 'uiGmapgoogle-maps','ngAnimate', 'ui.bootstrap','ngMaterial', 'ngMessages', 'highcharts-ng', 'ngMap']);
 
 var lt, lg;
 var markerArray = [];
@@ -72,23 +72,58 @@ batsAdminHome.config(function($routeProvider, $locationProvider,$mdDateLocalePro
     $routeProvider
         .when('/admin/map', {
             templateUrl : '/html/admin/map.html',
-            controller  : 'AdminController'
+            controller  : 'AdminController',
+            cache:false
         })
         .when('/admin/history', {
             templateUrl : '/html/admin/vehicle_history.html',
-            controller  : 'vehicleHistory'
+            controller  : 'vehicleHistory',
+            cache:false
+        })
+        .when('/admin/alarm', {
+            templateUrl : '/html/admin/vehicle_alarm.html',
+            controller  : 'vehicleAlarm',
+            cache:false
+        })
+        .when('/admin/latest_location', {
+            templateUrl : '/html/admin/latest_location.html',
+            controller  : 'LatestLocationCtrl',
+            cache:false
+        })
+        .when('/admin/min_max_speed', {
+            templateUrl : '/html/admin/min_max_speed.html',
+            controller  : 'MinMaxSpeedCtrl',
+            cache:false
+        })
+        .when('/admin/max_kilometer', {
+            templateUrl : '/html/admin/max_kilometer.html',
+            controller  : 'MaxKmCtrl',
+            cache:false
+        })
+        .when('/admin/analytics', {
+            templateUrl : '/html/admin/analytics.html',
+            controller  : 'batsAnalytics',
+            cache:false
+        })
+        .when('/admin/nearby_devices', {
+            templateUrl : '/html/admin/nearby_devices.html',
+            controller  : 'batsNearbyDevices',
+            cache:false	
         })
         .when('/admin/group', {
             templateUrl : '/html/admin/manage_group.html',
-            controller  : 'groupController'
+            controller  : 'groupController',
+            cache:false
         })
         .when('/admin/user', {
             templateUrl : '/html/admin/manage_user.html',
-            controller  : 'userController'
+            controller  : 'userController',
+            cache:false
         })
         .when('/admin/device', {
             templateUrl : '/html/admin/manage_device.html',
-            controller  : 'deviceController'
+            controller  : 'deviceController',
+            cache:false
         });
     $mdDateLocaleProvider.formatDate = function(date) {    	
     	if(date!=null && date!=""){    		
@@ -132,6 +167,30 @@ batsGeneralHome.config(function($routeProvider, $locationProvider,$mdDateLocaleP
         .when('/general/history', {
             templateUrl : '/html/general/vehicle_history.html',
             controller  : 'vehicleHistory'
+        })
+        .when('/general/alarm', {
+            templateUrl : '/html/general/vehicle_alarm.html',
+            controller  : 'vehicleAlarm'
+        })
+        .when('/general/latest_location', {
+            templateUrl : '/html/general/latest_location.html',
+            controller  : 'GeneralLatestLocationCtrl'
+        })
+        .when('/general/min_max_speed', {
+            templateUrl : '/html/general/min_max_speed.html',
+            controller  : 'GeneralMinMaxSpeedCtrl'
+        })
+        .when('/general/max_kilometer', {
+            templateUrl : '/html/general/max_kilometer.html',
+            controller  : 'GeneralMaxKmCtrl'
+        })
+        .when('/general/analytics', {
+            templateUrl : '/html/general/analytics.html',
+            controller  : 'batsAnalytics'
+        })
+        .when('/general/nearby_devices', {
+            templateUrl : '/html/general/nearby_devices.html',
+            controller  : 'batsNearbyDevices'
         });
     $mdDateLocaleProvider.formatDate = function(date) {    	
     	if(date!=null && date!=""){    		
