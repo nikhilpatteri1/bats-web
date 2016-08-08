@@ -55,6 +55,15 @@ batsGeneralHome.controller('batsAnalytics', function($scope, $http,$localStorage
 		// console.log(JSON.stringify($scope.glist));
 	}).error(function(data, status, headers, config) {
 		//alert("group list>>>>>"+data.err);
+		if (data.err == "Expired Session") {
+			$('#updateDeviceModal').modal('hide');
+			expiredSession();
+			$localStorage.$reset();
+		} else if (data.err == "Invalid User") {
+			$('#updateDeviceModal').modal('hide');
+			invalidUser();
+			$localStorage.$reset();
+		}
 		console.log(data.err);
 		console.log(status);
 		console.log(headers);
@@ -109,6 +118,15 @@ batsGeneralHome.controller('batsAnalytics', function($scope, $http,$localStorage
 		 	listDevice(data);
 		 }).error(function(data, status, headers, config) {
 		 	//alert("group/devlist>>>>>>>>>"+data.err);
+			 if (data.err == "Expired Session") {
+					$('#updateDeviceModal').modal('hide');
+					expiredSession();
+					$localStorage.$reset();
+				} else if (data.err == "Invalid User") {
+					$('#updateDeviceModal').modal('hide');
+					invalidUser();
+					$localStorage.$reset();
+				}
 		 	console.log(data);
 		 	console.log(status);
 		 	console.log(headers);
@@ -406,6 +424,15 @@ batsGeneralHome.controller('batsAnalytics', function($scope, $http,$localStorage
 	 				/*screen.lockOrientation('landscape');
 					$scope.modal.show();*/
 	 			}).error(function(data, status, headers, config) {
+	 				if (data.err == "Expired Session") {
+	 					$('#updateDeviceModal').modal('hide');
+	 					expiredSession();
+	 					$localStorage.$reset();
+	 				} else if (data.err == "Invalid User") {
+	 					$('#updateDeviceModal').modal('hide');
+	 					invalidUser();
+	 					$localStorage.$reset();
+	 				}
 	 				//alert("distance analysis>>>>>>>>>>>>>"+data.err);
 	 				console.log(data);
 	 				console.log(status);

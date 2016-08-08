@@ -179,11 +179,19 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 		 * */
 		if(typeof storedltlng.lat!='undefined'){
 			if(storedltlng.lat!=dataVal[0].values[0].lat){
-				console.log("--------------------Different lat lng------------------------------");
-				console.log("start : ",storedltlng.lat,"end :",dataVal[0].values[0].lat);
-				vehichleRouting(dataVal,storedltlng.lat,storedltlng.lng,dataVal[0].values[0].lat,dataVal[0].values[0].long);
-		        storedltlng.lat=dataVal[0].values[0].lat;
-				storedltlng.lng=dataVal[0].values[0].long;
+				if(dataVal[0].values[0].type==4){
+					console.log("--------------------Different lat lng of "+dataVal[0].values[0].type+" ------------------------------");
+					console.log("start : ",storedltlng.lat,"end :",dataVal[0].values[0].lat);
+					vehichleRouting(dataVal,storedltlng.lat,storedltlng.lng,storedltlng.lat,storedltlng.lng);
+				}
+				
+				else{
+					console.log("--------------------Different lat lng------------------------------");
+					console.log("start : ",storedltlng.lat,"end :",dataVal[0].values[0].lat);
+					vehichleRouting(dataVal,storedltlng.lat,storedltlng.lng,dataVal[0].values[0].lat,dataVal[0].values[0].long);
+			        storedltlng.lat=dataVal[0].values[0].lat;
+					storedltlng.lng=dataVal[0].values[0].long;
+				}
 			}
 			else{
 				var startLat=dataVal[0].values[0].lat;
@@ -566,10 +574,16 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 		//console.log(JSON.stringify(data));
 		listGroup(data);
 	}).error(function(data, status, headers, config) {
-		console.log(data);
+		if (data.err == "Expired Session") {
+			expiredSession();
+			$localStorage.$reset();
+		} else if (data.err == "Invalid User") {
+			invalidUser();
+			$localStorage.$reset();
+		}
 		console.log(status);
 		console.log(headers);
-		console.log(config);
+		console.log(config);		
 	});
 	/**
 	 * function to list the group id and name
@@ -637,6 +651,13 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 			console.log(status);
 			console.log(headers);
 			console.log(config);
+			if (data.err == "Expired Session") {
+				expiredSession();
+				$localStorage.$reset();
+			} else if (data.err == "Invalid User") {
+				invalidUser();
+				$localStorage.$reset();
+			}
 		}).finally(function(){		
 			$scope.httpLoading=false;
 		});
@@ -649,7 +670,9 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 		$scope.isZoomed = true;// reCenter button for group based
 		$scope.singleDeviceZoomed = true;// reCenter button for single device based		
 		$scope.devIDval = deviceId;
-		devIDval=deviceId;		
+		devIDval=deviceId;
+		$scope.multiDevice = false;
+		$scope.singleDevice = true;
 		if (angular.isDefined(multiDeviceInterval)) {
 			$interval.cancel(multiDeviceInterval);
 		} else if (angular.isDefined(singleDeviceInterval)) {
@@ -700,6 +723,13 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 			var geofence_plot = resultGeoJson;
 		    plotGeofence(geofence_plot);
 		}).error(function(data, status, headers, config) {
+			if (data.err == "Expired Session") {
+				expiredSession();
+				$localStorage.$reset();
+			} else if (data.err == "Invalid User") {
+				invalidUser();
+				$localStorage.$reset();
+			}
 			console.log(data);
 			console.log(status);
 			console.log(headers);
@@ -774,6 +804,13 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 			}
 			map.fitBounds(bounds);
 		}).error(function(data, status, headers, config) {
+			if (data.err == "Expired Session") {
+				expiredSession();
+				$localStorage.$reset();
+			} else if (data.err == "Invalid User") {
+				invalidUser();
+				$localStorage.$reset();
+			}
 			console.log(data);
 			console.log(status);
 			console.log(headers);
@@ -844,6 +881,13 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 			}
 								
 		}).error(function(data, status, headers, config) {
+			if (data.err == "Expired Session") {
+				expiredSession();
+				$localStorage.$reset();
+			} else if (data.err == "Invalid User") {
+				invalidUser();
+				$localStorage.$reset();
+			}
 			console.log(data);
 			console.log(status);
 			console.log(headers);
@@ -1112,6 +1156,13 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 				}
 			});
 		}).error(function(data, status, headers, config) {
+			if (data.err == "Expired Session") {
+				expiredSession();
+				$localStorage.$reset();
+			} else if (data.err == "Invalid User") {
+				invalidUser();
+				$localStorage.$reset();
+			}
 			console.log(data);
 			console.log(status);
 			console.log(headers);
@@ -1174,6 +1225,10 @@ batsAdminHome.controller('AdminController', function($scope, $interval, $http,
 			// console.log(JSON.stringify($scope.glist));
 		}).error(function(data, status, headers, config) {
 			// console.log(data.err);
+			console.log(data);
+			console.log(status);
+			console.log(headers);
+			console.log(config);
 			if (data.err == "Expired Session") {
 				expiredSession();
 				$localStorage.$reset();
@@ -1181,9 +1236,6 @@ batsAdminHome.controller('AdminController', function($scope, $interval, $http,
 				invalidUser();
 				$localStorage.$reset();
 			}
-			console.log(status);
-			console.log(headers);
-			console.log(config);
 		});
 
 	};
@@ -1293,6 +1345,13 @@ angular
 										}).error(
 										function(data, status, headers,
 												config) {
+											if (data.err == "Expired Session") {
+												expiredSession();
+												$localStorage.$reset();
+											} else if (data.err == "Invalid User") {
+												invalidUser();
+												$localStorage.$reset();
+											}
 											console.log(data);
 											console.log(status);
 											console.log(headers);
@@ -1333,6 +1392,13 @@ angular
 								.error(
 										function(data, status, headers,
 												config) {
+											if (data.err == "Expired Session") {
+												expiredSession();
+												$localStorage.$reset();
+											} else if (data.err == "Invalid User") {
+												invalidUser();
+												$localStorage.$reset();
+											}
 											console.log(data);
 											console.log(status);
 											console.log(headers);

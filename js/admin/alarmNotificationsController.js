@@ -95,6 +95,13 @@ batsAdminHome.controller('AlarmNotificationsControllerAdmin', function($scope, $
 					  }
 			      })
 			      .error(function(data, status, headers, config) {
+			    	  if (data.err == "Expired Session") {
+							expiredSession();
+							$localStorage.$reset();
+						} else if (data.err == "Invalid User") {
+							invalidUser();
+							$localStorage.$reset();
+						}
 			    	  console.log(data);
 			    	  console.log(status);
 			    	  console.log(headers);
@@ -193,12 +200,17 @@ batsAdminHome.controller('AlarmNotificationsControllerAdmin', function($scope, $
 		           if (responses && responses.length > 0) 
 		           {        
 		               //console.log(responses[0].formatted_address); 
+		               //$scope.address = responses[0].formatted_address;
+		        	  // $scope.address ="No Address Found. Check the <a href='http://maps.google.com/?q='"+lt+"','"+lg+"''>link</a>";
+		        	   $scope.addressFound=true;
 		               $scope.address = responses[0].formatted_address;
 		           } 
 		           else 
 		           {       
-		        	   //console.log("No Address Found. Check the Lat Long Values " + lt + ', ' + lg);  
-		        	   $scope.address = "No Address Found. Check the Lat Long Values " + lt + ', ' + lg;
+		        	   //console.log("No Address Found. Check the Lat Long Values " + lt + ', ' + lg);
+		        	   $scope.addressNotFound=true;
+		        	   $scope.latObj=lt;
+		        	   $scope.lngObj=lg;
 		           }   
 		        }
 		);

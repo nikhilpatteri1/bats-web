@@ -47,6 +47,15 @@
 								}
 							});
 						}).error(function(data, status, headers, config) {
+							if (data.err == "Expired Session") {
+								$('#updateDeviceModal').modal('hide');
+								expiredSession();
+								$localStorage.$reset();
+							} else if (data.err == "Invalid User") {
+								$('#updateDeviceModal').modal('hide');
+								invalidUser();
+								$localStorage.$reset();
+							}
 							console.log(data);
 							console.log(status);
 							console.log(headers);
@@ -154,6 +163,15 @@
 												}).error(
 												function(data, status, headers,
 														config) {
+													if (data.err == "Expired Session") {
+														$('#updateDeviceModal').modal('hide');
+														expiredSession();
+														$localStorage.$reset();
+													} else if (data.err == "Invalid User") {
+														$('#updateDeviceModal').modal('hide');
+														invalidUser();
+														$localStorage.$reset();
+													}
 													console.log(data);
 													console.log(status);
 													console.log(headers);
@@ -198,6 +216,15 @@
 										.error(
 												function(data, status, headers,
 														config) {
+													if (data.err == "Expired Session") {
+														$('#updateDeviceModal').modal('hide');
+														expiredSession();
+														$localStorage.$reset();
+													} else if (data.err == "Invalid User") {
+														$('#updateDeviceModal').modal('hide');
+														invalidUser();
+														$localStorage.$reset();
+													}
 													console.log(data);
 													console.log(status);
 													console.log(headers);

@@ -55,6 +55,13 @@ batsAdminHome.controller('batsAnalytics', function($scope, $http,$localStorage) 
 		// console.log(JSON.stringify($scope.glist));
 	}).error(function(data, status, headers, config) {
 		//alert("group list>>>>>"+data.err);
+		if (data.err == "Expired Session") {
+			expiredSession();
+			$localStorage.$reset();
+		} else if (data.err == "Invalid User") {
+			invalidUser();
+			$localStorage.$reset();
+		}
 		console.log(data.err);
 		console.log(status);
 		console.log(headers);
@@ -109,6 +116,13 @@ batsAdminHome.controller('batsAnalytics', function($scope, $http,$localStorage) 
 		 	listDevice(data);
 		 }).error(function(data, status, headers, config) {
 		 	//alert("group/devlist>>>>>>>>>"+data.err);
+			 if (data.err == "Expired Session") {
+					expiredSession();
+					$localStorage.$reset();
+				} else if (data.err == "Invalid User") {
+					invalidUser();
+					$localStorage.$reset();
+			}
 		 	console.log(data);
 		 	console.log(status);
 		 	console.log(headers);
@@ -304,6 +318,13 @@ batsAdminHome.controller('batsAnalytics', function($scope, $http,$localStorage) 
 			$scope.modal.show();*/
 		 }).error(function(data, status, headers, config) {
 		 	//alert("speed analysis>>>>>>>>"+data.err);
+			 if (data.err == "Expired Session") {
+					expiredSession();
+					$localStorage.$reset();
+				} else if (data.err == "Invalid User") {
+					invalidUser();
+					$localStorage.$reset();
+				}
 		 	console.log(data);
 		 	console.log(status);
 		 	console.log(headers);
@@ -409,6 +430,13 @@ batsAdminHome.controller('batsAnalytics', function($scope, $http,$localStorage) 
 					$scope.modal.show();*/
 	 			}).error(function(data, status, headers, config) {
 	 				//alert("distance analysis>>>>>>>>>>>>>"+data.err);
+	 				  if (data.err == "Expired Session") {
+							expiredSession();
+							$localStorage.$reset();
+						} else if (data.err == "Invalid User") {
+							invalidUser();
+							$localStorage.$reset();
+						}
 	 				console.log(data);
 	 				console.log(status);
 	 				console.log(headers);

@@ -173,11 +173,19 @@
 			 * */
 			if(typeof storedltlng.lat!='undefined'){
 				if(storedltlng.lat!=dataVal[0].values[0].lat){
-					console.log("--------------------Different lat lng------------------------------");
-					console.log("start : ",storedltlng.lat,"end :",dataVal[0].values[0].lat);
-					vehichleRouting(dataVal,storedltlng.lat,storedltlng.lng,dataVal[0].values[0].lat,dataVal[0].values[0].long);
-			        storedltlng.lat=dataVal[0].values[0].lat;
-					storedltlng.lng=dataVal[0].values[0].long;
+					if(dataVal[0].values[0].type==4){
+						console.log("--------------------Different lat lng of "+dataVal[0].values[0].type+" ------------------------------");
+						console.log("start : ",storedltlng.lat,"end :",dataVal[0].values[0].lat);
+						vehichleRouting(dataVal,storedltlng.lat,storedltlng.lng,storedltlng.lat,storedltlng.lng);
+					}
+					
+					else{
+						console.log("--------------------Different lat lng------------------------------");
+						console.log("start : ",storedltlng.lat,"end :",dataVal[0].values[0].lat);
+						vehichleRouting(dataVal,storedltlng.lat,storedltlng.lng,dataVal[0].values[0].lat,dataVal[0].values[0].long);
+				        storedltlng.lat=dataVal[0].values[0].lat;
+						storedltlng.lng=dataVal[0].values[0].long;
+					}
 				}
 				else{
 					var startLat=dataVal[0].values[0].lat;
@@ -560,6 +568,15 @@
 			console.log(JSON.stringify(data));
 			listGroup(data);
 		}).error(function(data, status, headers, config) {
+			if (data.err == "Expired Session") {
+				$('#updateDeviceModal').modal('hide');
+				expiredSession();
+				$localStorage.$reset();
+			} else if (data.err == "Invalid User") {
+				$('#updateDeviceModal').modal('hide');
+				invalidUser();
+				$localStorage.$reset();
+			}
 			console.log(data);
 			console.log(status);
 			console.log(headers);
@@ -627,6 +644,15 @@
 				//multiDeviceInterval = $interval(plotDevices, reqTime * 1000);
 				//console.log(multiDeviceInterval);
 			}).error(function(data, status, headers, config) {
+				if (data.err == "Expired Session") {
+					$('#updateDeviceModal').modal('hide');
+					expiredSession();
+					$localStorage.$reset();
+				} else if (data.err == "Invalid User") {
+					$('#updateDeviceModal').modal('hide');
+					invalidUser();
+					$localStorage.$reset();
+				}
 				console.log(data);
 				console.log(status);
 				console.log(headers);
@@ -696,6 +722,15 @@
 				var geofence_plot = resultGeoJson;
 			    plotGeofence(geofence_plot);
 			}).error(function(data, status, headers, config) {
+				if (data.err == "Expired Session") {
+					$('#updateDeviceModal').modal('hide');
+					expiredSession();
+					$localStorage.$reset();
+				} else if (data.err == "Invalid User") {
+					$('#updateDeviceModal').modal('hide');
+					invalidUser();
+					$localStorage.$reset();
+				}
 				console.log(data);
 				console.log(status);
 				console.log(headers);
@@ -763,6 +798,15 @@
 				}
 				map.fitBounds(bounds);
 			}).error(function(data, status, headers, config) {
+				if (data.err == "Expired Session") {
+					$('#updateDeviceModal').modal('hide');
+					expiredSession();
+					$localStorage.$reset();
+				} else if (data.err == "Invalid User") {
+					$('#updateDeviceModal').modal('hide');
+					invalidUser();
+					$localStorage.$reset();
+				}
 				console.log(data);
 				console.log(status);
 				console.log(headers);
@@ -831,6 +875,15 @@
 					swal('Device of id '+data[0].devid+' is not updating kindly check it');
 				}
 			}).error(function(data, status, headers, config) {
+				if (data.err == "Expired Session") {
+					$('#updateDeviceModal').modal('hide');
+					expiredSession();
+					$localStorage.$reset();
+				} else if (data.err == "Invalid User") {
+					$('#updateDeviceModal').modal('hide');
+					invalidUser();
+					$localStorage.$reset();
+				}
 				console.log(data);
 				console.log(status);
 				console.log(headers);
@@ -1095,6 +1148,15 @@
 					}
 				});
 			}).error(function(data, status, headers, config) {
+				if (data.err == "Expired Session") {
+					$('#updateDeviceModal').modal('hide');
+					expiredSession();
+					$localStorage.$reset();
+				} else if (data.err == "Invalid User") {
+					$('#updateDeviceModal').modal('hide');
+					invalidUser();
+					$localStorage.$reset();
+				}
 				console.log(data);
 				console.log(status);
 				console.log(headers);
@@ -1210,6 +1272,15 @@
 											}).error(
 											function(data, status, headers,
 													config) {
+												if (data.err == "Expired Session") {
+													$('#updateDeviceModal').modal('hide');
+													expiredSession();
+													$localStorage.$reset();
+												} else if (data.err == "Invalid User") {
+													$('#updateDeviceModal').modal('hide');
+													invalidUser();
+													$localStorage.$reset();
+												}
 												console.log(data);
 												console.log(status);
 												console.log(headers);

@@ -48,6 +48,15 @@ batsAdminHome.controller('batsNearbyDevices',function($scope,$http,NgMap,
 	}).success(function(data) {
 		listGroup(data);
 	}).error(function(data, status, headers, config) {
+		if (data.err == "Expired Session") {
+			$('#updateDeviceModal').modal('hide');
+			expiredSession();
+			$localStorage.$reset();
+		} else if (data.err == "Invalid User") {
+			$('#updateDeviceModal').modal('hide');
+			invalidUser();
+			$localStorage.$reset();
+		}
 		// alert(data.err);
 		console.log(data.err);
 		console.log(status);
@@ -96,6 +105,15 @@ batsAdminHome.controller('batsNearbyDevices',function($scope,$http,NgMap,
 			// console.log(JSON.stringify(data));
 			listDevice(data);
 		}).error(function(data, status, headers, config) {
+			if (data.err == "Expired Session") {
+				$('#updateDeviceModal').modal('hide');
+				expiredSession();
+				$localStorage.$reset();
+			} else if (data.err == "Invalid User") {
+				$('#updateDeviceModal').modal('hide');
+				invalidUser();
+				$localStorage.$reset();
+			}
 			// alert(data.err);
 			console.log(data);
 			console.log(status);
@@ -145,6 +163,15 @@ batsAdminHome.controller('batsNearbyDevices',function($scope,$http,NgMap,
 				displayNearbyDevices();
 			}
 		}).error(function(data, status, headers, config) {
+			if (data.err == "Expired Session") {
+				$('#updateDeviceModal').modal('hide');
+				expiredSession();
+				$localStorage.$reset();
+			} else if (data.err == "Invalid User") {
+				$('#updateDeviceModal').modal('hide');
+				invalidUser();
+				$localStorage.$reset();
+			}
 			alert(data.err);
 			console.log(status);
 			console.log(headers);

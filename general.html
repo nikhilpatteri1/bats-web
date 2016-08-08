@@ -159,7 +159,8 @@
 								<div class="col-sm-12">
 									<div class="form-group">
 										<label class="notificationtxt">Location</label>
-										<h5 class="notify_values">{{address}}</h5>
+										<h5 class="notify_values" ng-if="addressFound">{{address}}</h5>
+										<h5 class="notify_values" ng-if="addressNotFound">Address not found click this <a href="http://maps.google.com/?q={{latObj}},{{lngObj}}" target="_blank">link</a> to see the location</h5>
 									</div>
 								</div>
 							</div>

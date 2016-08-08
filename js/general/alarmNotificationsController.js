@@ -95,6 +95,15 @@ batsGeneralHome.controller('AlarmNotificationsController', function($scope, $htt
 				  }
 		      })
 		      .error(function(data, status, headers, config) {
+		    	  if (data.err == "Expired Session") {
+						$('#updateDeviceModal').modal('hide');
+						expiredSession();
+						$localStorage.$reset();
+					} else if (data.err == "Invalid User") {
+						$('#updateDeviceModal').modal('hide');
+						invalidUser();
+						$localStorage.$reset();
+					}
 		    	  console.log(data);
 		    	  console.log(status);
 		    	  console.log(headers);
@@ -192,13 +201,16 @@ function latlongToAddress(lt,lg){
 	        {     
 	           if (responses && responses.length > 0) 
 	           {        
-	               //console.log(responses[0].formatted_address); 
+	               //console.log(responses[0].formatted_address);
+	        	   $scope.addressFound=true;
 	               $scope.address = responses[0].formatted_address;
 	           } 
 	           else 
 	           {       
-	        	   //console.log("No Address Found. Check the Lat Long Values " + lt + ', ' + lg);  
-	        	   $scope.address = "No Address Found. Check the Lat Long Values " + lt + ', ' + lg;
+	        	   //console.log("No Address Found. Check the Lat Long Values " + lt + ', ' + lg);
+	        	   $scope.addressNotFound=true;
+	        	   $scope.latObj=lt;
+	        	   $scope.lngObj=lg;
 	           }   
 	        }
 	);
