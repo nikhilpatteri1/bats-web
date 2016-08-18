@@ -21,7 +21,7 @@
 						ng-model="deviceId" ng-change="deviceSelectedMaxKm()">
 						<option value="" selected disabled class="disable_select">-
 							- Select Device - -</option>
-						<option ng-repeat="option in devList" value="{{ option.devid }}">{{option.devid}}</option>
+						<option ng-repeat="option in devList" value="{{ option.devid }}">{{option.vehicle_num.length>0?option.vehicle_num:option.devid}}</option>
 					</select>
 				</div>
 			</div>
@@ -78,7 +78,8 @@
 				<div class="col-sm-12">
 					<div ng-if="showResultMaxKm">
 						<div ng-repeat="km in MaxKmResult" class="min_max_dev">
-							<h3 class="minmax_devid">Device Id: {{km.devid}}</h3>
+							<!-- <h3 class="minmax_devid">Device Id: {{km.devid}}</h3> -->
+							<h3 class="minmax_devid">Vehicle Number: {{km.vehicle_num}}</h3>
 							<h3 class="minmax_devid">Max KM Covered: {{km.distance}} KM</h3>
 						</div>
 					</div>

@@ -330,3 +330,9 @@ top: -19px;transition: all 0.25s ease 0s;width: 0;z-index: 10;margin-top: 10px;o
 .notificationtxt{font-size: 16px;display: block;font-weight: bold;color: rgb(41, 150, 204);}
 .notify_values{padding: 10px 0 10px 0;}
 .label.label-danger.custom-label-danger{float: left;font-size: 12px;padding: 6px;margin: 0 8px 0 0;}
+.dynamicBlockHeading{padding: 3px 15px;font-size:12px;font-weight:700}
+.dynamicBlockInput{height:40px !important}
+.dynamicBlockText{height:50px !important;margin-top:0px !important;}
+.dynamicBlockInput::-webkit-input-placeholder {font-size:12px;}
+.dynamicBlockBody{padding:4px 18px;}
+.dynamicBlockHelp{font-size:10px;}

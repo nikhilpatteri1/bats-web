@@ -1,6 +1,6 @@
 <div class="col-sm-10" style="margin-left: -80px; margin-top: 10px">
 <div class="map_content" ng-controller='GeneralController'
-		ng-init="initialize()">
+		ng-init="initialize();activeFull='0'">
 		<div class="bgloading" ng-show="httpLoading">
 			<div class="bigbar">
 				<h1 class="titleClass">loading!...</h1>
@@ -30,9 +30,13 @@
 											name="deviceList" ng-model="deviceId"
 											ng-change="fetchDeviceDetail(gid,deviceId)">
 											<option value="" selected disabled class="disable_select">-
-												- Select Device - -</option>
-											<option ng-repeat="option in deviceList" value="{{ option }}">{{option}}</option>
+												- Select Vehicle No/Device - -</option>
+											<option ng-repeat="option in devlistObject" value="{{ option.devid }}">{{option.vehicle_num.length>0?option.vehicle_num:option.devid}}</option>
 										</select>
+									</div>
+									<div class="col-sm-2">							
+										<img alt="" src="../../images/fullscreen.png" ng-click="activeFull='1'" ng-show="activeFull!='1'" width="50px" height="50px">										 											
+										<img alt="" src="../../images/close.png" ng-click="activeFull='0'" ng-show="activeFull!='0'" width="40px" height="40px">
 									</div>
 								</div>
 							</div>
@@ -101,7 +105,7 @@
 					<section>
 						<div class="row">
 							<div class="col-sm-12">
-								<div id="map_section">
+								<div id="map_section" ng-class="{fullMap:activeFull==='1'}">
 									<div id="map_canvas"></div>
 									<a class="traffic_layer_btn" ng-click="showTrafficLayer()"
 										ng-hide="showTrafficLayerBtn">Traffic Layer</a> <a

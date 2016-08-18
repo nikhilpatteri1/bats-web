@@ -20,8 +20,8 @@
 					<select id="selectDevice" class="form-control" name="devList"
 						ng-model="deviceId" ng-change="deviceSelectedMinMax()">
 						<option value="" selected disabled class="disable_select">-
-							- Select Device - -</option>
-						<option ng-repeat="option in devList" value="{{ option.devid }}">{{option.devid}}</option>
+							- Select  Vehicle No/Device - -</option>
+						<option ng-repeat="option in devList" value="{{ option.devid }}">{{option.vehicle_num.length>0?option.vehicle_num:option.devid}}</option>
 					</select>
 				</div>
 			</div>
@@ -79,7 +79,8 @@
 					<div ng-if="showResult">
 						<div ng-repeat="speed in MinMaxResult" class="min_max_dev">
 
-							<h3 class="minmax_devid">Device Id: {{speed.dev_id}}</h3>
+							<!-- <h3 class="minmax_devid">Device Id: {{speed.dev_id}}</h3> -->
+							<h3 class="minmax_devid">Vehicle Number: {{speed.vehicle_num}}</h3>
 							<highchart id="chart1" config="minSpeedChart"></highchart>
 							<br>
 							<highchart id="chart2" config="maxSpeedChart"></highchart>

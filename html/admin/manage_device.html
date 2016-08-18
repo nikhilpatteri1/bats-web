@@ -49,7 +49,7 @@
 						<select id="selectDevice" class="form-control" name="deviceList"
 							ng-model="deviceId" ng-change="sortDeviceId()">
 							<option value="" selected disabled class="disable_select">-
-								- Select Device - -</option>
+								- Select Vehicle No/Device - -</option>
 							<option ng-repeat="option in deviceList" value="{{ option }}">{{option}}</option>
 						</select>
 					</div>
@@ -60,7 +60,7 @@
 						<input type="checkbox" ng-model="master" ng-change="isSelectAll()">
 					</div>
 				</div>
-				<div class="filteredDevice paddingTB05">
+				<div ng-hide="noDevicesAllocated" class="filteredDevice paddingTB05">
 					<div class="panel panel-default panel-bottom"
 						ng-repeat="devicedet in allocated | filter:groupname | filter:deviceId | filter:statusId">
 						<div class="panel-heading checkDevice">
@@ -68,24 +68,30 @@
 								<div class="col-sm-2">
 									<label>Device Status</label>
 									<!-- <p ng-class="{dev_active:green,dev_inactive:red,dev_pending:grey}">{{getStatus(devicedet.status)}}</p> -->
-									<p
-										ng-class="{dev_inactive:devicedet.status==='Inactive',dev_pending:devicedet.status==='Pending',dev_active:devicedet.status==='Activated'}">{{devicedet.status}}</p>
+									<p ng-class="{dev_inactive:devicedet.status==='Inactive',dev_pending:devicedet.status==='Pending',dev_active:devicedet.status==='Activated'}"  class="paddingTB05">
+									{{devicedet.status}}
+									<img src="../../images/loading_icon.gif" ng-show="{{devicedet.status==='Pending'?true:false}}" style="width:25px;height:25px"/>
+									</p>
 								</div>
 								<div class="col-sm-2">
 									<label>Group Name:</label>
-									<p>{{devicedet.gname}}</p>
+									<p class="paddingTB05">{{devicedet.gname}}</p>
 								</div>
 								<div class="col-sm-2">
 									<label>Device Id:</label>
-									<p>{{devicedet.devid}}</p>
+									<p class="paddingTB05">{{devicedet.devid}}</p>
 								</div>
-								<div class="col-sm-3">
-									<label>Device SIM Number:</label>
+								<div class="col-sm-2">
+									<label>Vehicle No</label>
+									<p class="paddingTB05">{{devicedet.vehicle_num}}</p>
+								</div>	
+								<div class="col-sm-2">
+									<label>Device SIM:</label>
 									<p
-										ng-class="{{devicedet.device_sim_cn.length!=0?'{normalText:devicedet.device_sim_cn}':'{redText:true}'}}">{{devicedet.device_sim_cn.length!=0?devicedet.device_sim_cn:"device
-										sim number missing"}}</p>
+										ng-class="{{devicedet.device_sim_cn.length!=0?'{normalText:devicedet.device_sim_cn}':'{redText:true}'}}" class="paddingTB05">{{devicedet.device_sim_cn.length!=0?devicedet.device_sim_cn:"device
+										sim number missing"}} </p>
 								</div>
-								<div class="col-sm-2 paddingTB05" align="center">
+								<div class="col-sm-2 paddingTB05" align="center" style="width:7.666667%">
 									<a href="#" class="edit_icon_device"
 										ng-click="submitUpdateDevice(devicedet.devid)"
 										data-toggle="modal" data-target="#updateDeviceModal"><i
@@ -172,8 +178,7 @@
 										{{device.values.devtype}} <select ng-model="device.devtype"
 											name="devtype"
 											class="form-control floatlabel floatlabel_select" required>
-											<option selected disabled value="">- - Select Device
-												Type - -</option>
+											<option selected disabled value="">- - Select Device Type - -</option>
 											<option>bike</option>
 											<option>bus</option>
 											<option>car</option>
@@ -182,6 +187,41 @@
 										<p
 											ng-show="updateDeviceForm.devtype.$invalid && !updateDeviceForm.devtype.$pristine"
 											class="help-block">Device Type is required.</p>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+								<div class="form-group floatlabel"
+										ng-class="{ 'has-error' : updateDeviceForm.device_sim_num.$invalid && !updateDeviceForm.device_sim_num.$pristine }">
+										<label ng-show="device.device_sim_cn"
+											class="floatlabeltxt show-hide">Device SIM Number</label>
+										<div class="row">
+											<div class="col-sm-12">
+												<input type="text" ng-model="device.device_sim_cn"
+													numbers-only name="device_sim_cn" class="form-control"
+													string-to-number placeholder="Enter Device SIM number"
+													ng-minlength="10" ng-maxlength="10" required ng-disabled="device.device_sim_cn.length>0" />
+											</div>
+										</div>
+										<p
+											ng-show="updateDeviceForm.device_sim_num.$invalid && !updateDeviceForm.device_sim_num.$pristine"
+											class="help-block">Enter Valid Mobile Number.</p>
+										<p
+											ng-show="updateDeviceForm.device_sim_num.$error.minlength && updateDeviceForm.device_sim_num.$error.maxlength"
+											class="help-block">Mobile Number max 10 numbers.</p>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group"
+										ng-class="{ 'has-error' : updateDeviceForm.sr_num.$invalid && !updateDeviceForm.sr_num.$pristine }">
+										<label ng-show="device.sr_num" class="floatlabeltxt show-hide">Serial
+											Number</label> <input type="text" ng-model="device.sr_num"
+											name="sr_num" class="form-control"
+											placeholder="Serial Number" readonly required />
+										<p
+											ng-show="updateDeviceForm.sr_num.$invalid && !updateDeviceForm.sr_num.$pristine"
+											class="help-block">Serial Number is required.</p>
 									</div>
 								</div>
 							</div>
@@ -202,16 +242,13 @@
 									</div>
 								</div>
 								<div class="col-sm-6">
-									<div class="form-group"
-										ng-class="{ 'has-error' : updateDeviceForm.sr_num.$invalid && !updateDeviceForm.sr_num.$pristine }">
-										<label ng-show="device.sr_num" class="floatlabeltxt show-hide">Serial
-											Number</label> <input type="text" ng-model="device.sr_num"
-											name="sr_num" class="form-control"
-											placeholder="Serial Number" readonly required />
-										<p
-											ng-show="updateDeviceForm.sr_num.$invalid && !updateDeviceForm.sr_num.$pristine"
-											class="help-block">Serial Number is required.</p>
+									<!-- Vehicle Model field added 08/08/2016 for cp release-->
+									<div class="form-group">
+										<label ng-show="device.vehicle_model" class="floatlabeltxt show-hide">Vehicle Model</label>
+										<input type="text" ng-model="device.vehicle_model" name="vehicle_model" class="form-control" placeholder="Vehicle Model" required/>
+										<p ng-show="updateDeviceForm.vehicle_model.$invalid && !updateDeviceForm.vehicle_model.$pristine">Vehicle Model is Required</p>										
 									</div>
+									<!-- ./Vehicle Model field added 08/08/2016 for cp release -->
 								</div>
 							</div>
 							<div class="row">
@@ -247,33 +284,10 @@
 							<div class="row">
 								<div class="col-sm-12">
 									<div class="form-group floatlabel"
-										ng-class="{ 'has-error' : updateDeviceForm.device_sim_num.$invalid && !updateDeviceForm.device_sim_num.$pristine }">
-										<label ng-show="device.device_sim_cn"
-											class="floatlabeltxt show-hide">Device SIM Number</label>
-										<div class="row">
-											<div class="col-sm-12">
-												<input type="text" ng-model="device.device_sim_cn"
-													numbers-only name="device_sim_cn" class="form-control"
-													string-to-number placeholder="Enter Device SIM number"
-													ng-minlength="10" ng-maxlength="10" required />
-											</div>
-										</div>
-										<p
-											ng-show="updateDeviceForm.device_sim_num.$invalid && !updateDeviceForm.device_sim_num.$pristine"
-											class="help-block">Enter Valid Mobile Number.</p>
-										<p
-											ng-show="updateDeviceForm.device_sim_num.$error.minlength && updateDeviceForm.device_sim_num.$error.maxlength"
-											class="help-block">Mobile Number max 10 numbers.</p>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-sm-12">
-									<div class="form-group floatlabel"
 										ng-class="{ 'has-error' : updateDeviceForm.desc.$invalid && !updateDeviceForm.desc.$pristine }">
 										<label ng-show="device.desc" class="floatlabeltxt show-hide">Description</label>
 										<textarea ng-model="device.desc" name="desc"
-											class="form-control" required></textarea>
+											class="form-control" placeholder="Description" required></textarea>
 										<p
 											ng-show="updateDeviceForm.desc.$invalid && !updateDeviceForm.desc.$pristine"
 											class="help-block">Description is required.</p>

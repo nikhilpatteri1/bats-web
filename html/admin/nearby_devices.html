@@ -28,8 +28,8 @@
 						ng-model="hist.searchDeviceModel"
 						ng-change="deviceSelected(hist.searchDeviceModel)">
 						<option value="" selected disabled class="disable_select">-
-							- Select Device - -</option>
-						<option ng-repeat="option in deviceList" value="{{ option }}">{{option}}</option>
+							- Select Vehicl No/Device - -</option>
+						<option ng-repeat="option in groupDevice" value="{{ option.devid }}">{{option.vehicle_num.length>0?option.vehicle_num:option.devid}}</option>
 					</select>
 				</div>
 			</div>

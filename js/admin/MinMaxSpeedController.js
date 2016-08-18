@@ -66,7 +66,7 @@ batsAdminHome.controller("MinMaxSpeedCtrl",function($http,$scope,$filter,$localS
 	$scope.fetchDevList = function(groupID) {
 		$scope.httpLoading=true;
 	$('#clearTextDevice span.select2-chosen').empty();  
-	$('#clearTextDevice span.select2-chosen').text("- - Select Device - -"); 
+	$('#clearTextDevice span.select2-chosen').text("- - Select Vehicle No/Device - -"); 
 	$scope.sel_group_device = false;
 	//$scope.hist.searchDeviceModel = "";
 	$scope.deviceSelectMinMax=true;
@@ -171,7 +171,8 @@ else{
 							var resultDevlist = [];
 							for(i=0;i<deviceList.length;i++){
 								var deviceID = deviceList[i].dev_id;
-								var finalDevStatus ={"dev_id":deviceID};
+								var vehicleNum = deviceList[i].vehicle_num;
+								var finalDevStatus ={"dev_id":deviceID,"vehicle_num":vehicleNum};
 								resultDevlist.push(finalDevStatus);
 								$scope.MinMaxResult = resultDevlist;
 							}
@@ -224,12 +225,36 @@ function startDate(getStartDateMinMax){
 	//console.log(sts);
 	sts.setDate(dateArray[0]);
 	sts.setMonth(dateArray[1]-1);
-	sts.setHours(tsArr[0]);
-	sts.setMinutes(tsArr[1]);
-	//console.log(sts);
-	startTimeStamp = sts.getTime();
-	//console.log(startTimeStamp);
+	if(strArra[2] == "pm"){
+		if(tsArr[0] == "12"){
+			sts.setHours(tsArr[0]);
+			sts.setMinutes(tsArr[1]);
+			startTimeStamp = sts.getTime();
+		}
+		else{
+			sts.setHours(Number(tsArr[0]) + 12);
+			sts.setMinutes(tsArr[1]);
+			//console.log("if " + sts);
+			startTimeStamp = sts.getTime();
+			//console.log(startTimeStamp);
+		}
+	}
+	else{
+		if(tsArr[0] == "12"){
+			sts.setHours(Number(tsArr[0]) - 12);
+			sts.setMinutes(tsArr[1]);
+			startTimeStamp = sts.getTime();
+		}
+		else{
+			sts.setHours(tsArr[0]);
+			sts.setMinutes(tsArr[1]);
+			//console.log("else " + sts);
+			startTimeStamp = sts.getTime();
+			//console.log(startTimeStamp);
+		}
+	}
 }
+
 function endDate(getEndDateMinMax){
 	var datetimeVal = getEndDateMinMax;
 	var strArra=datetimeVal.split(" ");
@@ -243,12 +268,36 @@ function endDate(getEndDateMinMax){
 	//console.log(sts);
 	sts.setDate(dateArray[0]);
 	sts.setMonth(dateArray[1]-1);
-	sts.setHours(tsArr[0]);
-	sts.setMinutes(tsArr[1]);
-	//console.log(sts);
-	endTimeStamp = sts.getTime();
-	//console.log(endTimeStamp);
+	if(strArra[2] == "pm"){
+		if(tsArr[0] == "12"){
+			sts.setHours(tsArr[0]);
+			sts.setMinutes(tsArr[1]);
+			endTimeStamp = sts.getTime();
+		}
+		else{
+			sts.setHours(Number(tsArr[0]) + 12);
+			sts.setMinutes(tsArr[1]);
+			//console.log("if " + sts);
+			endTimeStamp = sts.getTime();
+			//console.log(endTimeStamp);	
+		}
+	}
+	else{
+		if(tsArr[0] == "12"){
+			sts.setHours(Number(tsArr[0]) - 12);
+			sts.setMinutes(tsArr[1]);
+			endTimeStamp = sts.getTime();
+		}
+		else{
+			sts.setHours(tsArr[0]);
+			sts.setMinutes(tsArr[1]);
+			//console.log("else " + sts);
+			endTimeStamp = sts.getTime();
+			//console.log(endTimeStamp);
+		}
+	}
 }
+
 function min_speed(minSpeedVal){
     $scope.minSpeedChart = {
             options: {
@@ -436,7 +485,7 @@ function max_speed(maxSpeedVal){
 			$("#selectGroup").select2({});
 			$("#selectDevice").select2({});
 			$('#clearTextGroup span.select2-chosen').text("- - Select Group - -");
-			$('#clearTextDevice span.select2-chosen').text("- - Select Device - -");
+			$('#clearTextDevice span.select2-chosen').text("- - Select Vehicle No/Device - -");
 		});// script
 	});
 
@@ -453,13 +502,12 @@ function max_speed(maxSpeedVal){
 	                showClose : true,
 	                defaultDate:'now',
 	                maxDate: 'now',
-	                format: 'DD/MM/YYYY HH:mm'
+	                format: 'DD/MM/YYYY hh:mm a'
 	            }).on("dp.change",function (e) {
-	            	//$('.bootstrap-datetimepicker-widget').hide();
-	            	$("#startDateMinMax").blur(); 
-	            	closeResult();
+	            	//$("#startDateMinMax").blur(); 
+	            	//closeResult();
 	            });
-		startDateMinMaxError.style.display = 'none';
+		//startDateMinMaxError.style.display = 'none';
 	}); 
 	$(document).on('click', '#endDateMinMaxPicker', function(){
 		$('#endDateMinMaxPicker').datetimepicker({
@@ -470,13 +518,12 @@ function max_speed(maxSpeedVal){
 	                showClose : true,
 	                defaultDate:'now',
 	                maxDate: 'now',
-	                format: 'DD/MM/YYYY HH:mm'
+	                format: 'DD/MM/YYYY hh:mm a'
 	            }).on("dp.change",function (e) {
-	            	//$('.bootstrap-datetimepicker-widget').hide();
-	            	$("#endDateMinMax").blur(); 
-	            	closeResult();
+	            	//$("#endDateMinMax").blur(); 
+	            	//closeResult();
 	            });
-		endDateMinMaxError.style.display = 'none';
+		//endDateMinMaxError.style.display = 'none';
 	});
 	
 	function closeResult(){

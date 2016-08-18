@@ -59,18 +59,16 @@
 				ng-repeat="customer in home | filterMultiple:{country:selectedcountry,state:selectedstate,uname:selectedunames}">
 				<div class="panel-heading">
 					<div class="row">
-						<div class="col-sm-2">
+						<div class="col-sm-3">
 							<label>Customer Name:</label>
+							<p>{{customer.uname}}</p>
 						</div>
 						<div class="col-sm-3">
-							<p>{{customer.uname}}</p>
-							<!-- <input type="text" value="{{customer.country}}" />
-												<input type="text" value="{{customer.state}}" /> -->
+							<label>Customer Contact:</label>
+							<p>{{customer.contact_no}}</p>
 						</div>
-						<div class="col-sm-2">
+						<div class="col-sm-3">
 							<label>Device Count:</label>
-						</div>
-						<div class="col-sm-2">
 							<p>{{customer.device_count}}</p>
 						</div>
 						<div class="col-sm-3">
@@ -277,6 +275,20 @@
 										</div>
 									</div>
 								</div>
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="form-group floatlabel"
+											ng-class="{ 'has-error' : createForm.desc.$invalid && !createForm.desc.$pristine }">
+											<label ng-show="customer.desc"
+												class="floatlabeltxt show-hide">Description</label>
+											<textarea ng-model="customer.desc" name="desc"
+												placeholder="Description" class="form-control" required></textarea>
+											<p
+												ng-show="createForm.desc.$invalid && !createForm.desc.$pristine"
+												class="help-block">Description is required.</p>
+										</div>
+									</div>
+								</div>
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-6 col-sm-offset-3" align="center">
@@ -428,6 +440,17 @@
 											<p
 												ng-show="editForm.user_acc_limit.$invalid && !editForm.user_acc_limit.$pristine"
 												class="help-block">Enter User Count.</p>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="form-group"
+											ng-class="{ 'has-error' : editForm.desc.$invalid && !editForm.desc.$pristine }">
+											<label ng-show="edit.desc" class="floatlabeltxt show-hide">Description</label>
+											<textarea ng-model="edit.desc" name="desc"
+												placeholder="Description" class="form-control floatlabel" style="margin-top:0px;height:72px;border: none;border-bottom: 2px solid #ddd;" required></textarea>
+											<p
+												ng-show="editForm.desc.$invalid && !editForm.desc.$pristine"
+												class="help-block">Description is required.</p>
 										</div>
 									</div>
 								</div>

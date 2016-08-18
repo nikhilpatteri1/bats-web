@@ -60,7 +60,11 @@ batsfactoryhome.run(function($rootScope, $route, $location,$localStorage){
 	        
 	    });
 	});
-
+batsfactoryhome.service('CalcService', function(MathService){
+    this.square = function(a) {
+        return MathService.multiply(a,a);
+     }
+  });
 
 //====================== Configure routes for Admin User=====================
 batsAdminHome.config(function($routeProvider, $locationProvider,$mdDateLocaleProvider) {

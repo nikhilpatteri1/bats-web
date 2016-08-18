@@ -59,12 +59,12 @@ batsfactoryhome.controller('deviceController', function($scope,$http,$localStora
 		  headers : { 'Content-Type': 'application/json' }
 	     })
 		  .success(function(data) {
-		   //console.log(JSON.stringify(data));
+		  console.log(JSON.stringify(data));
 		   $scope.rows=[];
 		   var dev_len=data.stocklist.length;
 		   for(var inc=0;inc<dev_len;inc++){
 			  // console.log(data.stocklist[inc]);
-			   $scope.rows.push(data.stocklist[inc]);
+			   $scope.rows.push(data.stocklist[inc].devid);
 		   }
 		   
 		   var stockList = data.stocklist;

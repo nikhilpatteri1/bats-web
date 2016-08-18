@@ -93,8 +93,13 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 		        strokeColor: '#FF0000',
 		        strokeWeight: 0
 		    });
-		  }; 
-	function createMarker(latlng, deviceID, html,type) {
+		  };
+    $scope.resizeMap = function(){
+    	console.log("resize");
+    	google.maps.event.trigger(map, 'resize');
+    	map.setZoom(map.getZoom());
+    }
+	function createMarker(latlng, deviceID,vehNo,vehModel, html,type) {
 		//console.log(deviceID+"=="+type);
 		var contentString; 
 		if(type==0){icon.fillColor='#f44336';}
@@ -113,7 +118,7 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 		        	   if(html.length==0){
 		        		   //console.log(html.length);
 		        		   html=responses[0].formatted_address;
-		        		   contentString  = '<b>'+deviceID+'</b><br><br>'+html+'<br><br><button class="btn btn-primary btn-sm" id="infoClick" data-deviceID="'+deviceID+'">show detail</button>';	
+		        		   contentString  = '<b><label>Device ID:</label> '+deviceID+'</b><br><br><b><label>Vehicle No:</label> '+vehNo+'</b><br><br><b><label>Vehicle No:</label> '+vehModel+'</b><br><br>'+html+'<br><br><button class="btn btn-primary btn-sm" id="infoClick" data-deviceID="'+deviceID+'">show detail</button>';	
 		        	   }		        	   		                    
 		           } 
 		           else 
@@ -123,7 +128,7 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 		        }
 		);
 		if(html.length!=0){
-			contentString  = '<b>'+deviceID+'</b><br><br>'+html+'<br><br><button class="btn btn-primary btn-sm" id="infoClick" data-deviceID="'+deviceID+'">show detail</button>';
+			contentString  = '<b><label>Device ID:</label> '+deviceID+'</b><br><br><b><label>Vehicle No:</label> '+vehNo+'</b><br><br><br><br><b><label>Vehicle No:</label> '+vehModel+'</b>'+html+'<br><br><button class="btn btn-primary btn-sm" id="infoClick" data-deviceID="'+deviceID+'">show detail</button>';
 		}
 		
 		    
@@ -272,8 +277,8 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
                     if (i === 0) {
                         //console.log(JSON.stringify(legs[i].start_location));
                         startLocation.latlng = legs[i].start_location;
-                        startLocation.address = legs[i].start_address;
-                          marker = createMarker(legs[i].start_location, dataVal[i].devid, legs[i].start_address,dataVal[i].values[0].type);
+                        startLocation.address = legs[i].start_address;												   
+                          marker = createMarker(legs[i].start_location,dataVal[i].devid,dataVal[i].vehicle_num,dataVal[i].vehicle_model,legs[i].start_address,dataVal[i].values[0].type);
                       }
                       endLocation.latlng = legs[i].end_location;
                       endLocation.address = legs[i].end_address;
@@ -289,7 +294,7 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
                 }
                 polyline.setMap(map);
                 map.fitBounds(bounds);
-                map.setZoom(18);
+                map.setZoom(map.getZoom());
                 startAnimation();
             }
         });
@@ -638,6 +643,7 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 			$scope.busCount = $scope.groupDevice.buscount;
 			$scope.truckCount = $scope.groupDevice.truckcount;
 			var dev_len = $scope.groupDevice.devlist.length;
+			$scope.devlistObject=$scope.groupDevice.devlist
 			var devlist = $scope.groupDevice.devlist;
 			$scope.deviceList=[];
 			for ( var i = 0; i < dev_len; i++) {
@@ -666,6 +672,7 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 	 *  fetch device information
 	 * */
 	$scope.fetchDeviceDetail = function(gid, deviceId) {
+		//console.log(deviceId)
 		$scope.initialize();
 		$scope.isZoomed = true;// reCenter button for group based
 		$scope.singleDeviceZoomed = true;// reCenter button for single device based		
@@ -766,6 +773,7 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 				'Content-Type' : 'application/json'
 			}
 		}).success(function(data) {
+		        console.log(JSON.stringify(data));
 				geofenceAPI($scope.groupdevicejson);			
 				$scope.multiDevice = true;				
 				$scope.singleDevice = false;
@@ -794,7 +802,7 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 					   icon.path = markerIcon;
 				   }
 			if(data[i].values.length>0){
-				createMarker(new google.maps.LatLng(data[i].values[0].lat, data[i].values[0].long),data[i].devid,"",data[i].values[0].type);			 
+				createMarker(new google.maps.LatLng(data[i].values[0].lat, data[i].values[0].long),data[i].devid,data[i].vehicle_num,data[i].vehicle_model,"",data[i].values[0].type);			 
 				bounds.extend(new google.maps.LatLng(data[i].values[0].lat, data[i].values[0].long));						    
 			}
 			else{
@@ -834,7 +842,7 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 				'Content-Type' : 'application/json'
 			}
 		}).success(function(data) {	
-			//console.log(JSON.stringify(data[0].values.length));
+			//console.log(JSON.stringify(data));
 				$scope.multiDevice = false;
 				if(data[0].values.length>0){				
 					$scope.singleDevice = true;		
@@ -1094,7 +1102,7 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 			$("#selectGroup").select2({});
 			$("#selectDevice").select2({});
 			$('#clearTextGroup span.select2-chosen').text("- - Select Group - -");
-			$('#clearTextDevice span.select2-chosen').text("- - Select Device - -");
+			$('#clearTextDevice span.select2-chosen').text("- - Select Vehicle No / Device - -");
 		});// script
 		$('.select2-input').on('input',function(){
 			console.log("check");

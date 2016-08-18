@@ -31,11 +31,7 @@ batsAdminHome.controller('deviceController', function($scope, $http,$interval,
 	 * user list grid
 	 */
 	$scope.listDevices=function(){
-		if($scope.pendingArray.length==0){
-			//console.log($scope.pendingArray.length);
-			$interval.cancel(pageRefresh);
-		}
-		//console.log("listDevices");
+		console.log("listDevices");
 		$scope.user = {
 				"token" : $scope.token
 			};
@@ -49,8 +45,21 @@ batsAdminHome.controller('deviceController', function($scope, $http,$interval,
 				}
 			}).success(function(data) {
 				$scope.dlist = data;
-				// console.log(JSON.stringify($scope.dlist));				
+				//console.log(JSON.stringify($scope.dlist));				
 				possible2Activate(data.allocated);
+				console.log($scope.pendingArray.length);
+				if($scope.pendingArray.length==0){
+					console.log($scope.pendingArray.length);
+					$interval.cancel(pageRefresh);
+				}
+				else{
+					if(typeof pageRefresh=='undefined'){
+						pageRefresh=$interval(function(){
+							 console.log("call listing devices");
+							 $scope.listDevices();
+						 },10*1000);
+					}					
+				}
 				$scope.allocated = $scope.dlist.allocated;	
 				$scope.listGroup();
 				if ($scope.allocated.length == 0) {
@@ -82,7 +91,8 @@ batsAdminHome.controller('deviceController', function($scope, $http,$interval,
 	 * 2)availablity of device sim cn*/
 	function possible2Activate(data){
 		angular.forEach(data,function(item){
-			//console.log(item);
+			$scope.pendingArray=[];
+			console.log(JSON.stringify(item));
 			if(item.status=="Inactive" && item.device_sim_cn!=""){
 				$scope.ready2activate.push(item);				
 			}
@@ -117,14 +127,19 @@ batsAdminHome.controller('deviceController', function($scope, $http,$interval,
 		$scope.deviceId='';
 		$scope.statusId='';
 		$('#clearTextDevice span.select2-chosen').empty();  
-		$('#clearTextDevice span.select2-chosen').text("- - Select Device - -"); 
+		$('#clearTextDevice span.select2-chosen').text("- - Select Vehicle No/Device - -"); 
 		$('#clearTextDeviceStatus span.select2-chosen').empty();  
 		$('#clearTextDeviceStatus span.select2-chosen').text("- - Device Status - -");		
 		$scope.deviceList=[];
 		var deviceArray=_.filter($scope.allocated,{'gid':gid});
 		var devlen=deviceArray.length;
 		for(var inc=0;inc<devlen;inc++){
-			$scope.deviceList.push(deviceArray[inc].devid);
+			if(deviceArray[inc].vehicle_num!=""){
+				$scope.deviceList.push(deviceArray[inc].vehicle_num);
+			}
+			else{
+				$scope.deviceList.push(deviceArray[inc].devid);
+			}
 		}
 		//console.log(JSON.stringify($scope.allocated));
 	}
@@ -232,10 +247,10 @@ batsAdminHome.controller('deviceController', function($scope, $http,$interval,
 				 //console.log($scope.selectedDevice);
 				 callActivationAPI($scope.selectedDevice);
 				 //console.log($scope.flag);
-				 $timeout(function () {					 
+				 pageRefresh=$interval(function(){
+					 console.log("call listing devices");
 					 $scope.listDevices();
-					 }, 0);
-				 pageRefresh=$interval($scope.listDevices,1000);
+				 },10*1000);				 
 			 }	 
 		 else{
 			 swal({title:"Select atleast one device",type:"warning"})
@@ -264,9 +279,9 @@ batsAdminHome.controller('deviceController', function($scope, $http,$interval,
 					text : "Success!",
 					type : "success",
 					confirmButtonColor : "#9afb29",
-					closeOnConfirm : false
+					closeOnConfirm : true
 				}, function() {					
-					location.reload();
+					/*location.reload();*/
 				});
 			}).error(function(data,status,headers,config){
 				console.log(data.err);
@@ -384,7 +399,7 @@ batsAdminHome.controller('deviceController', function($scope, $http,$interval,
 			}
 		}).success(function(data) {
 			$scope.device = data;
-			//console.log(JSON.stringify(data));
+			console.log(JSON.stringify(data));
 		}).error(function(data, status, headers, config) {
 			// console.log(data.err);
 			if (data.err == "Expired Session") {
@@ -412,6 +427,7 @@ batsAdminHome.controller('deviceController', function($scope, $http,$interval,
 		var devid = device_details.devid;
 		var devtype = device_details.devtype;
 		var vehicle_num = device_details.vehicle_num;
+		var vehicle_model = device_details.vehicle_model;
 		var sr_num = device_details.sr_num;
 		var driver_name = device_details.driver_name;
 		var driver_licence = device_details.driver_licence;
@@ -421,6 +437,7 @@ batsAdminHome.controller('deviceController', function($scope, $http,$interval,
 			"token" : token,
 			"devid" : devid,
 			"devtype" : devtype,
+			"vehicle_model":vehicle_model,
 			"vehicle_num" : vehicle_num,
 			"sr_num" : sr_num,
 			"driver_name" : driver_name,
@@ -477,7 +494,7 @@ batsAdminHome.controller('deviceController', function($scope, $http,$interval,
 							$('#clearTextGroup span.select2-chosen').text(
 									"- - Select Group - -");
 							$('#clearTextDevice span.select2-chosen').text(
-									"- - Select Device - -");
+									"- - Select Vehicle No/Device - -");
 							$('#clearTextDeviceStatus span.select2-chosen').text(
 							"- - Device Status - -");
 						});// script

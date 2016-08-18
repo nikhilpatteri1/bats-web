@@ -92,7 +92,7 @@
 			        strokeWeight: 0
 			    });
 			  }; 
-		function createMarker(latlng, deviceID, html,type) {
+		function createMarker(latlng, deviceID,vehNo,vehModel,html,type) {
 			//console.log(deviceID+"=="+type);
 			var contentString; 
 			if(type==0){icon.fillColor='#f44336';}
@@ -111,7 +111,7 @@
 			        	   if(html.length==0){
 			        		   //console.log(html.length);
 			        		   html=responses[0].formatted_address;
-			        		   contentString  = '<b>'+deviceID+'</b><br><br>'+html+'<br><br><button class="btn btn-primary btn-sm" id="infoClick" data-deviceID="'+deviceID+'">show detail</button>';	
+			        		   contentString  = '<b><label>Device ID:</label> '+deviceID+'</b><br><br><b><label>Vehicle No:</label> '+vehNo+'</b><br><br><b><label>Vehicle No:</label> '+vehModel+'</b><br><br>'+html+'<br><br><button class="btn btn-primary btn-sm" id="infoClick" data-deviceID="'+deviceID+'">show detail</button>';	
 			        	   }		        	   		                    
 			           } 
 			           else 
@@ -121,7 +121,7 @@
 			        }
 			);
 			if(html.length!=0){
-				contentString  = '<b>'+deviceID+'</b><br><br>'+html+'<br><br><button class="btn btn-primary btn-sm" id="infoClick" data-deviceID="'+deviceID+'">show detail</button>';
+				contentString  = '<b><label>Device ID:</label> '+deviceID+'</b><br><br><b><label>Vehicle No:</label> '+vehNo+'</b><br><br><br><br><b><label>Vehicle No:</label> '+vehModel+'</b>'+html+'<br><br><button class="btn btn-primary btn-sm" id="infoClick" data-deviceID="'+deviceID+'">show detail</button>';
 			}
 			
 			    
@@ -267,7 +267,7 @@
 	                        //console.log(JSON.stringify(legs[i].start_location));
 	                        startLocation.latlng = legs[i].start_location;
 	                        startLocation.address = legs[i].start_address;
-	                          marker = createMarker(legs[i].start_location, dataVal[i].devid, legs[i].start_address,dataVal[i].values[0].type);
+	                          marker = createMarker(legs[i].start_location, dataVal[i].devid,dataVal[i].vehicle_num,data[i].vehicle_model, legs[i].start_address,dataVal[i].values[0].type);
 	                      }
 	                      endLocation.latlng = legs[i].end_location;
 	                      endLocation.address = legs[i].end_address;
@@ -600,7 +600,7 @@
 		$scope.fetchDevicelist = function(groupID) {
 			$scope.httpLoading=true;
 		    $('#clearTextDevice span.select2-chosen').empty();  
-		    $('#clearTextDevice span.select2-chosen').text("- - Select Device - -"); 
+		    $('#clearTextDevice span.select2-chosen').text("- - Select  Vehicle No/Device - -"); 
 			storage_arr=[];//clearing the matched array on change of group id dropdown
 			$scope.initialize();
 			$scope.isZoomed = true;// reCenter button for group based
@@ -635,6 +635,7 @@
 				$scope.busCount = $scope.groupDevice.buscount;
 				$scope.truckCount = $scope.groupDevice.truckcount;
 				var dev_len = $scope.groupDevice.devlist.length;
+				$scope.devlistObject=$scope.groupDevice.devlist
 				var devlist = $scope.groupDevice.devlist;
 				$scope.deviceList=[];
 				for ( var i = 0; i < dev_len; i++) {
@@ -789,7 +790,7 @@
 						   icon.path = markerIcon;
 					   }
 						if(data[i].values.length>0){
-							createMarker(new google.maps.LatLng(data[i].values[0].lat, data[i].values[0].long),data[i].devid,"",data[i].values[0].type);			 
+							createMarker(new google.maps.LatLng(data[i].values[0].lat, data[i].values[0].long),data[i].devid,data[i].vehicle_num,data[i].vehicle_model,"",data[i].values[0].type);			 
 							bounds.extend(new google.maps.LatLng(data[i].values[0].lat, data[i].values[0].long));						    
 						}
 						else{
@@ -1087,7 +1088,7 @@
 				$("#selectGroup").select2({});
 				$("#selectDevice").select2({});
 				$('#clearTextGroup span.select2-chosen').text("- - Select Group - -");
-				$('#clearTextDevice span.select2-chosen').text("- - Select Device - -");
+				$('#clearTextDevice span.select2-chosen').text("- - Select Vehicle No/Device - -");
 			});// script
 			$('.select2-input').on('input',function(){
 				console.log("check");

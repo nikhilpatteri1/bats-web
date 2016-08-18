@@ -82,7 +82,7 @@ batsGeneralHome.controller('batsNearbyDevices', function($scope, $http, NgMap,
 		$scope.httpLoading=true;
 		// console.log(groupID);
 		$('#clearTextDevice span.select2-chosen').empty();  
-		$('#clearTextDevice span.select2-chosen').text("- - Select Device - -"); 
+		$('#clearTextDevice span.select2-chosen').text("- - Select Vehicle No/Device - -"); 
 		$scope.hist.searchDeviceModel = "";
 		$scope.yoData = false;
 		$scope.noNearbyDevice = true;
@@ -143,7 +143,7 @@ batsGeneralHome.controller('batsNearbyDevices', function($scope, $http, NgMap,
 		$scope.nearbyJSON = {};
 		$scope.nearbyJSON.token = $scope.token;
 		$scope.nearbyJSON.devid = deviceId;
-		// console.log(JSON.stringify($scope.nearbyJSON));
+		//console.log(JSON.stringify($scope.nearbyJSON));
 		$http({
 			method : 'POST',
 			url : apiURL + 'app/get_nearby_devices',
@@ -152,7 +152,7 @@ batsGeneralHome.controller('batsNearbyDevices', function($scope, $http, NgMap,
 				'Content-Type' : 'application/json'
 			}
 		}).success(function(data) {
-			 console.log(JSON.stringify(data));
+			// console.log(JSON.stringify(data));
 			var length_nearby = data.res_data.length;
 			$scope.nearbyData = data;
 			if (length_nearby == 0) {
@@ -163,6 +163,7 @@ batsGeneralHome.controller('batsNearbyDevices', function($scope, $http, NgMap,
 				displayNearbyDevices();
 			}
 		}).error(function(data, status, headers, config) {
+			console.log("R");
 			if (data.err == "Expired Session") {
 				$('#updateDeviceModal').modal('hide');
 				expiredSession();
@@ -173,10 +174,13 @@ batsGeneralHome.controller('batsNearbyDevices', function($scope, $http, NgMap,
 				$localStorage.$reset();
 			}
 			//alert(data.err);
+			swal({title:data.data});
+			console.log(data);
 			console.log(status);
 			console.log(headers);
 			console.log(config);
-		}).finally(function(){		
+		}).finally(function(){	
+			//console.log($scope.httpLoading);
 			$scope.httpLoading=false;
 		});
 		/**
@@ -202,6 +206,8 @@ batsGeneralHome.controller('batsNearbyDevices', function($scope, $http, NgMap,
 				arr.lat = Number(nearData[inc].lat);
 				arr.lg = Number(nearData[inc].long);
 				arr.devid = nearData[inc].devid;
+				arr.vehicle_num=nearData[inc].vehicle_num;
+				arr.veh_model=nearData[inc].vehicle_model;
 				arr.icon = "near";
 				arr.dist = nearData[inc].km;
 				nearObj.push(arr);
@@ -226,18 +232,29 @@ batsGeneralHome.controller('batsNearbyDevices', function($scope, $http, NgMap,
 			}
 	    		    			    		          
 			 NgMap.getMap({id : 'nearbyId'}).then(function(map) {
-				 console.log(bounds.getCenter());
+				 //console.log(bounds.getCenter());
 			      map.setCenter(bounds.getCenter());
 			      map.fitBounds(bounds);
 			    });
 		}
 	};
+	/*$scope.showInfo=function(event,dev){
+		infowindow = new google.maps.InfoWindow();
+		infowindow.setContent("<h3> It's your device</h3>");
+		var center = new google.maps.LatLng(dev.lat, dev.lg);
+		infowindow.setPosition(center);
+		infowindow.open($scope.map);
+		infowindows.push(infowindow);
+		console.log("check");
+		$scope.map.showInfoWindow('myInfoWindow',this);
+	}*/
 	$scope.showInfo = function(event, dev) {
-		// console.log(JSON.stringify(dev));
+		infowindows=[];
+		//console.log(JSON.stringify(dev));
 		infowindow = new google.maps.InfoWindow();
 		var center = new google.maps.LatLng(dev.lat, dev.lg);
 		if (dev.dist == "Your Device") {
-			infowindow.setContent("<h3> Dude It's your device</h3>");
+			infowindow.setContent("<h3> It's your device</h3>");
 		} else {
 			$scope.destlt = dev.lat;
 			$scope.destlg = dev.lg;
@@ -253,8 +270,10 @@ batsGeneralHome.controller('batsNearbyDevices', function($scope, $http, NgMap,
 				if (status == google.maps.GeocoderStatus.OK) {
 					if (data[0] != null) {
 						// alert("address is: " + data[0].formatted_address);
-						console.log(data[0].formatted_address);
+						//console.log(data[0].formatted_address);
 						infowindow.setContent('<label>Device ID:' + dev.devid
+								+ '</label><br/><label>Vehicle No:' + dev.vehicle_num
+								+ '</label><br/><label>Vehicle Model:' + dev.veh_model
 								+ '</label><br/><p>Distance :'
 								+ Math.ceil(dev.dist)
 								+ 'Km</p><br/><label>Address</label><p>'
@@ -266,11 +285,14 @@ batsGeneralHome.controller('batsNearbyDevices', function($scope, $http, NgMap,
 				}
 			});
 		}
-
-		infowindow.setPosition(center);
-		infowindow.open($scope.map);
-		infowindows.push(infowindow);
-		// console.log(infowindows);
+		NgMap.getMap({
+			id : 'nearbyId'
+		}).then(function(map) {
+			infowindow.setPosition(center);
+			infowindow.open($scope.map);		
+			infowindows.push(infowindow);
+		});
+		//console.log(infowindows);		
 	};
 	function calcRoute() {
 		NgMap.getMap({
@@ -317,7 +339,7 @@ batsGeneralHome.controller('batsNearbyDevices', function($scope, $http, NgMap,
 	 * On URL change clear map infowindow and path
 	 */
 	$scope.$on('$locationChangeStart', function() {
-		// alert("test");
+		 alert("test");
 		directionsDisplay.setDirections({
 			routes : []
 		});
@@ -331,7 +353,7 @@ batsGeneralHome.controller('batsNearbyDevices', function($scope, $http, NgMap,
 				$("#selectGroup").select2({});
 				$("#selectDevice").select2({});
 				$('#clearTextGroup span.select2-chosen').text("- - Select Group - -");
-				$('#clearTextDevice span.select2-chosen').text("- - Select Device - -");
+				$('#clearTextDevice span.select2-chosen').text("- - Select Vehicle No/Device - -");
 			});// script
 		});
 

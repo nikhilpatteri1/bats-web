@@ -58,7 +58,7 @@ batsAdminHome.controller('vehicleAlarm',function($scope, $http, $localStorage){
 	$scope.fetchDevList = function(groupID) {
 	$scope.httpLoading=true;
 	$('#clearTextDevice span.select2-chosen').empty();  
-	$('#clearTextDevice span.select2-chosen').text("- - Select Device - -"); 
+	$('#clearTextDevice span.select2-chosen').text("- - Select Vehicle No/Device - -"); 
 	$scope.deviceSelectAlarm=false;
 	$scope.showResultTable = false;
 	$scope.noResultTable = false;
@@ -245,7 +245,7 @@ $scope.givelt=function(lt,lg){
 				$("#selectGroup").select2({});
 				$("#selectDevice").select2({});
 				$('#clearTextGroup span.select2-chosen').text("- - Select Group - -");
-				$('#clearTextDevice span.select2-chosen').text("- - Select Device - -");
+				$('#clearTextDevice span.select2-chosen').text("- - Select Vehicle No/Device - -");
 			});// script
 		});	
 	

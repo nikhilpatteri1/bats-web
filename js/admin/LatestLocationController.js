@@ -83,7 +83,7 @@ batsAdminHome.controller('LatestLocationCtrl', function($scope, $http, $localSto
 							var resultDevices =[];
 							var devlist = data.devlist;
 							for(i=0;i<devlist.length;i++){
-								var device_list = {"devid":devlist[i].devid,"lat":devlist[i].lat,"long":devlist[i].long,"devtype":devlist[i].devtype};
+								var device_list = {"devid":devlist[i].devid,"vehicle_num":devlist[i].vehicle_num,"lat":devlist[i].lat,"long":devlist[i].long,"devtype":devlist[i].devtype};
 								resultDevices.push(device_list);
 							} 
 							$scope.marker = resultDevices;
@@ -175,12 +175,16 @@ var request = {
 geocoder.geocode(request, function(data, status) {
 	if (status == google.maps.GeocoderStatus.OK) {
 		if (data[0] != null) {
-		var content = "<b>Devid :</b> " + device.devid + "<br> <b>Address :</b> " + data[0].formatted_address + "<br>";
+		var content = "<b>Vehicle Number :</b> " + device.vehicle_num + "<br> <b>Address :</b> " + data[0].formatted_address + "<br>";
 		infowindow.setContent(content);
 		} else {
-		var content = "<b>Devid :</b> " + device.devid + "<br> <b>Address :</b> No address available";
+		var content = "<b>Vehicle Number :</b> " + device.vehicle_num + "<br> <b>Address :</b> No address available";
 		infowindow.setContent(content);
 		}
+	}
+	else{
+		var content = "<b>Vehicle Number :</b> " + device.vehicle_num + "<br> <b>Address :</b> No address available";
+		infowindow.setContent(content);
 	}
 });
 						      

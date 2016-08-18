@@ -115,7 +115,7 @@ batsAdminHome.controller('vehicleHistory', function($scope, $http, $localStorage
 		$scope.noData = false;
 		$scope.showTimeSlot=false;
 		$('#clearTextDevice span.select2-chosen').empty();  
-	    $('#clearTextDevice span.select2-chosen').text("- - Select Device - -");
+	    $('#clearTextDevice span.select2-chosen').text("- - Select Vehicle No/Device - -");
 		// document.getElementById("groupNamelist").blur();
 		//console.log(groupID);
 	    $scope.initialize();
@@ -136,6 +136,7 @@ batsAdminHome.controller('vehicleHistory', function($scope, $http, $localStorage
 			}
 		}).success(function(data) {			
 			$scope.groupDevice = data;
+			$scope.devlistObject=$scope.groupDevice.devlist;
 			$scope.deviceList = [];
 			var dev_len = $scope.groupDevice.devlist.length;
 			var devlist = $scope.groupDevice.devlist;
@@ -175,18 +176,57 @@ batsAdminHome.controller('vehicleHistory', function($scope, $http, $localStorage
 	};
 	
 	$scope.myDateChange=function(myDate){
-		//console.log(new Date(myDate).getTime());
-		/*var sts=new Date(myDate).getTime();
-		var d=new Date(myDate);
-		d.setHours(23);
-		d.setMinutes(59);
-		d.setSeconds(59);
-		var ets=d.getTime();
-		historyApiCall(sts,ets);*/
+		$scope.httpLoading=true;
 		$scope.initialize();
 		$scope.showTimeSlot=true;
-		historyApiCall(getTimestamp(0,0,0),getTimestamp(5,59,0));		
+		//check for vehicle history available slots
+		$scope.slotCheckjson={};
+		$scope.slotCheckjson.token=$scope.token;
+		$scope.slotCheckjson.devid=dev.devid;
+		$scope.slotCheckjson.slots=[];
+		
+		$scope.slotCheckjson.slots.push({"sts":getTimestamp(0,0,0),"ets":getTimestamp(5,59,0)},
+										{"sts":getTimestamp(6,0,0),"ets":getTimestamp(11,59,0)},
+										{"sts":getTimestamp(12,0,0),"ets":getTimestamp(17,59,0)},
+										{"sts":getTimestamp(18,0,0),"ets":getTimestamp(23,59,0)});
+		$http({
+			method:'POST',
+			url:apiURL+'device/history_data_exist',
+			data:JSON.stringify($scope.slotCheckjson),	
+			headers:{'Content-Type' : 'application/json'}
+		}).success(function(data) {
+				//console.log(data.values);	
+				$scope.slotA=data.values[0].data ? '1' : '0';
+				$scope.slotB=data.values[1].data ? '1' : '0';
+				$scope.slotC=data.values[2].data ? '1' : '0';
+				$scope.slotD=data.values[3].data ? '1' : '0';
+					if(data.values[0].data!=true && data.values[1].data!=true&&data.values[2].data!=true&&data.values[3].data!=true){						
+						$scope.showTimeSlot=false;
+						swal({title:"No history available for the selected date"});
+					}
+					else{
+						$scope.showTimeSlot=true;
+					}
+		}).error(function(data, status, headers,config) {
+					if (data.err == "Expired Session") {
+						$('#updateDeviceModal').modal('hide');
+						expiredSession();
+						$localStorage.$reset();
+					} else if (data.err == "Invalid User") {
+						$('#updateDeviceModal').modal('hide');
+						invalidUser();
+						$localStorage.$reset();
+					}
+					console.log(data);
+					console.log(status);
+					console.log(headers);
+					console.log(config);
+		}).finally(function(){		
+			$scope.httpLoading=false;
+		});
+		
 	};
+	
 	/**
 	 * 1 for 00:00 - 05:59
 	 * 2 for 06:00 - 11:59
@@ -379,31 +419,22 @@ batsAdminHome.controller('vehicleHistory', function($scope, $http, $localStorage
 			$("#selectGroup").select2({});
 			$("#selectDevice").select2({});
 			$('#clearTextGroup span.select2-chosen').text("- - Select Group - -");
-			$('#clearTextDevice span.select2-chosen').text("- - Select Device - -");
+			$('#clearTextDevice span.select2-chosen').text("- - Select Vehicle No/Device - -");
 		});// script
 	});
 	/**
 	 * get Date formatted date based on TIMESTAMP
 	 -----------------------------------------------------------------------*/
-	$scope.getDate = function(ts) {
-		var d = new Date(Number(ts));
-		// console.log(d.getDate()+"-"+d.getMonth()+"-"+d.getFullYear());
-		var monthVal = d.getMonth() + 1;
-		// Hours part from the timestamp
-		var hours = d.getHours();
-		// Minutes part from the timestamp
-		var minutes = "0" + d.getMinutes();
-		// Seconds part from the timestamp
-		var seconds = "0" + d.getSeconds();
-
-		// Will display time in 10:30:23 format
-		var formattedTime = hours + ':'
-				+ minutes.substr(-2) + ':'
-				+ seconds.substr(-2);
-		/*return d.getDate() + "-" + monthVal + "-"
-				+ d.getFullYear() + " / "
-				+ formattedTime;*/
-		return formattedTime;
+	$scope.showTime = function(ts) {
+		 var d = new Date(Number(ts));	 	
+	 	  var hours = d.getHours();
+	 	  var minutes = d.getMinutes();
+	 	  var ampm = hours >= 12 ? 'pm' : 'am';
+	 	  hours = hours % 12;
+	 	  hours = hours ? hours : 12; // the hour '0' should be '12'
+	 	  minutes = minutes < 10 ? '0'+minutes : minutes;
+	 	  var strTime = hours + ':' + minutes + ' ' + ampm;
+	 	  return strTime;
 	};
 	
 	

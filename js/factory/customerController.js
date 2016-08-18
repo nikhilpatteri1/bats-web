@@ -412,6 +412,7 @@ batsfactoryhome.controller('factoryCreate', function($scope, $http, $localStorag
 	$scope.customer.token = $scope.token;
 	$scope.customer.country=angular.lowercase($scope.customer.country);
 	$scope.customer.state=angular.lowercase($scope.customer.state);
+	$scope.customer.org_id=angular.lowercase($scope.customer.org_id);
 	//$scope.customer.contact_no = '+91'+$scope.customer.contact_no;
 	console.log(JSON.stringify($scope.customer));
 	$('#createModal').modal('hide');
@@ -434,7 +435,7 @@ batsfactoryhome.controller('factoryCreate', function($scope, $http, $localStorag
 		});
       })
       .error(function(data, status, headers, config) {
-    	  //swal(data);
+    	  swal(data.msg);
     	  console.log(data);
     	  if(data.err == "Expired Session")
 		  {

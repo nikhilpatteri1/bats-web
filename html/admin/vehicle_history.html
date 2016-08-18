@@ -28,7 +28,7 @@
 						ng-change="fetchDeviceDetailHistory(deviceId);activeMenu = '5'">
 						<option value="" selected disabled class="disable_select">-
 							- Select Device - -</option>
-						<option ng-repeat="option in deviceList" value="{{ option }}">{{option}}</option>
+						<option ng-repeat="option in devlistObject" value="{{ option.devid }}">{{option.vehicle_num.length>0?option.vehicle_num:option.devid}}</option>
 					</select>
 				</div>
 			</div>
@@ -39,15 +39,24 @@
 							<div class="form-group">
 								<md-content> <md-datepicker ng-model="myDate"
 									md-placeholder="Enter date"
-									ng-change="myDateChange(myDate);activeMenu = '1'"></md-datepicker>
-
+									ng-change="myDateChange(myDate);"></md-datepicker>
 								</md-content>
+								<section class="legendHist">
+								<p class="slotlegend" style="float:right;">
+									<span class="fa-stack fa-1x encirclelegend encircleavailable" style="border-color:#000">
+									<strong class="fa-stack-1x calendar-text">1</strong>
+									</span><label class="legendlabel">Available Slots</label></p>
+								<p class="slotlegend" style="float:right;">
+								<span class="fa-stack fa-1x encirclelegend encircleactive" style="border-color:#fff">
+								<strong class="fa-stack-1x calendar-text">1</strong>
+								</span><label class="legendlabel">Selected Slots</label></p>
+								</section>
 							</div>
-							<div class="row" ng-show="showTimeSlot">
+							<div class="row" ng-show="showTimeSlot">							
 								<div class="col-sm-3" align="center"
 									ng-click="slotHistory(1);activeMenu = '1'">
 									<span class="fa-stack fa-1x encircle"
-										ng-class="{encircleactive:activeMenu==='1'}"> <strong
+										ng-class="{encircleactive:activeMenu==='1',encircleavailable:slotA==='1'}"> <strong
 										class="fa-stack-1x calendar-text">1</strong>
 									</span>
 									<p>00:00 to 05:59</p>
@@ -55,7 +64,7 @@
 								<div class="col-sm-3" align="center"
 									ng-click="slotHistory(2);activeMenu = '2'">
 									<span class="fa-stack fa-1x encircle"
-										ng-class="{encircleactive:activeMenu==='2'}"> <strong
+										ng-class="{encircleactive:activeMenu==='2',encircleavailable:slotB==='1'}"> <strong
 										class="fa-stack-1x calendar-text">2</strong>
 									</span>
 									<p>06:00 to 11:59</p>
@@ -63,7 +72,7 @@
 								<div class="col-sm-3" align="center"
 									ng-click="slotHistory(3);activeMenu = '3'">
 									<span class="fa-stack fa-1x encircle"
-										ng-class="{encircleactive:activeMenu==='3'}"> <strong
+										ng-class="{encircleactive:activeMenu==='3',encircleavailable:slotC==='1'}"> <strong
 										class="fa-stack-1x calendar-text">3</strong>
 									</span>
 									<p>12:00 to 17:59</p>
@@ -71,7 +80,7 @@
 								<div class="col-sm-3" align="center"
 									ng-click="slotHistory(4);activeMenu = '4'">
 									<span class="fa-stack fa-1x encircle"
-										ng-class="{encircleactive:activeMenu==='4'}"> <strong
+										ng-class="{encircleactive:activeMenu==='4',encircleavailable:slotD==='1'}"> <strong
 										class="fa-stack-1x calendar-text">4</strong>
 									</span>
 									<p>18:00 to 23:59</p>
@@ -131,7 +140,7 @@
 																<span>{{x.lat}}, {{x.long}}</span>
 														</a></td>
 														<td>{{x.Velocity}}</td>
-														<td>{{getDate(x.ts)}}</td>
+														<td>{{showTime(x.ts)}}</td>
 													</tr>
 												</tbody>
 											</table>

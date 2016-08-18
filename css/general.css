@@ -334,6 +334,7 @@ select {
 .count_label{
 	margin-top:10px;
 	padding:0px 0px 10px 10px;
+	text-align:center;
 }
 .count_label span {
 	font-size:24px;
@@ -561,6 +562,12 @@ select.select_group,select.select_device {
 .encircle{border: 2px solid #000;width: 40px;height: 40px;border-radius: 20px;line-height: 37px;text-align: center;}
 .encircle:hover{cursor:pointer}
 .encircleactive{border-color:#fff;background-color:#03A9F4;color:#fff;}
+.encircleavailable{background-color:#03A9F4;}
+/* .slotlegend{float: left;position: absolute;left: 7%;z-index: 1000;} */
+/* .slotlegend{float: right;position: absolute;top:0%;right: 7%;z-index: 1000;} */
+.legendlabel{padding:10px;font-size:12px;}
+.legendHist{background-color: #ddd;z-index: 1000;position: absolute;top: 0;right: 1.8%;padding: 4px 10px;}
+.encirclelegend{border:2px solid #000;width: 30px;height: 30px;border-radius: 20px;line-height: 27px;text-align: center;}
 .bgloading{
 	z-index: 1000;
     border: none;
@@ -640,6 +647,17 @@ font-family:Roboto, Arial, sans-serif;font-size: 11px;border-radius:2px;box-shad
 	left: 0;
 	position: absolute;
 	z-index: 200;
+}
+.fullMap {
+	position: fixed;
+	top:0 !important;
+	left:0 !important;
+	width: 100% !important;
+	height: 100% !important;
+	-webkit-transition: top 2s; Safari
+    -webkit-transition-timing-function: linear; Safari
+    transition: top 2s;
+    transition-timing-function: linear;
 }
 
 #map_section {

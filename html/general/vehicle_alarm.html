@@ -20,8 +20,8 @@
 					<select id="selectDevice" class="form-control" name="devList"
 						ng-model="deviceId" ng-change="deviceSelectedAlarm()">
 						<option value="" selected disabled class="disable_select">-
-							- Select Device - -</option>
-						<option ng-repeat="option in devList" value="{{ option.devid }}">{{option.devid}}</option>
+							- Select Vehicle No/Device - -</option>
+						<option ng-repeat="option in devList" value="{{ option.devid }}">{{option.vehicle_num.length>0?option.vehicle_num:option.devid}}</option>
 					</select>
 				</div>
 			</div>

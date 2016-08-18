@@ -16,17 +16,17 @@
 		<div class="panel panel-default" ng-repeat="user in ulist">
 			<div class="panel-heading">
 				<div class="row">
-					<div class="col-sm-2">
-						<label>Username:</label>
-					</div>
 					<div class="col-sm-3">
+						<label>Username:</label>
 						<p>{{user.uname}}</p>
 					</div>
-					<div class="col-sm-2">
+					<div class="col-sm-3">
 						<label>Group List:</label>
-					</div>
-					<div class="col-sm-2">
 						<p ng-repeat="user1 in user.glist">{{user1.gname}}</p>
+					</div>
+					<div class="col-sm-3">
+						<label>Contact No</label>
+						<p>{{user.contact_no}}</p>
 					</div>
 					<div class="col-sm-3">
 						<a href="#" class="edit_icon"
@@ -153,6 +153,19 @@
 								</div>
 							</div>
 							<div class="row">
+								<div class="col-sm-12">
+									<div class="form-group floatlabel"
+										ng-class="{ 'has-error' : createUserForm.desc.$invalid && !createUserForm.desc.$pristine }">
+										<label ng-show="user.desc" class="floatlabeltxt show-hide">Description</label>
+										<textarea ng-model="user.desc" name="desc"
+											class="form-control" placeholder="Description" required></textarea>
+										<p
+											ng-show="createUserForm.desc.$invalid && !createUserForm.desc.$pristine"
+											class="help-block">Description is required.</p>
+									</div>
+								</div>
+							</div>
+							<div class="row">
 								<div class="col-sm-6">
 									<!-- <label>Select Group</label> <br> -->
 									<!-- <select id="myselection" multiple="true" ng-model="selectedGroups" ng-change="selValue"
@@ -259,6 +272,19 @@
 																</div>
 															</div>
 														</div> -->
+
+									<div class="form-group"
+										ng-class="{ 'has-error' : updateUserForm.desc.$invalid && !updateUserForm.desc.$pristine }">
+										<label ng-show="userUpdate.desc" class="floatlabeltxt show-hide">Description</label>
+										<textarea ng-model="userUpdate.desc" name="desc"
+											placeholder="Description" class="form-control floatlabel"
+											style="margin-top: 0px; height: 72px; border: none; border-bottom: 2px solid #ddd;"
+											required></textarea>
+										<p
+											ng-show="updateUserForm.desc.$invalid && !updateUserForm.desc.$pristine"
+											class="help-block">Description is required.</p>
+									</div>
+
 								</div>
 							</div>
 							<div class="row">

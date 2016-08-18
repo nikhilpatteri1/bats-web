@@ -82,7 +82,7 @@ batsAdminHome.controller('batsNearbyDevices',function($scope,$http,NgMap,
 		$scope.httpLoading=true;
 		// console.log(groupID);
 		$('#clearTextDevice span.select2-chosen').empty();  
-		$('#clearTextDevice span.select2-chosen').text("- - Select Device - -"); 
+		$('#clearTextDevice span.select2-chosen').text("- - Select Vehicle No/Device - -"); 
 		$scope.hist.searchDeviceModel = "";
 		$scope.yoData = false;
 		$scope.noNearbyDevice = true;
@@ -115,6 +115,7 @@ batsAdminHome.controller('batsNearbyDevices',function($scope,$http,NgMap,
 				$localStorage.$reset();
 			}
 			// alert(data.err);
+			swal({title:data.data});
 			console.log(data);
 			console.log(status);
 			console.log(headers);
@@ -172,7 +173,8 @@ batsAdminHome.controller('batsNearbyDevices',function($scope,$http,NgMap,
 				invalidUser();
 				$localStorage.$reset();
 			}
-			alert(data.err);
+			swal({title:data.data});
+			console.log(data);
 			console.log(status);
 			console.log(headers);
 			console.log(config);
@@ -202,6 +204,8 @@ batsAdminHome.controller('batsNearbyDevices',function($scope,$http,NgMap,
 				arr.lat = Number(nearData[inc].lat);
 				arr.lg = Number(nearData[inc].long);
 				arr.devid = nearData[inc].devid;
+				arr.vehicle_num=nearData[inc].vehicle_num;
+				arr.veh_model=nearData[inc].vehicle_model;
 				arr.icon = "near";
 				arr.dist = nearData[inc].km;
 				nearObj.push(arr);
@@ -237,7 +241,7 @@ batsAdminHome.controller('batsNearbyDevices',function($scope,$http,NgMap,
 		infowindow = new google.maps.InfoWindow();
 		var center = new google.maps.LatLng(dev.lat, dev.lg);
 		if (dev.dist == "Your Device") {
-			infowindow.setContent("<h3> Dude It's your device</h3>");
+			infowindow.setContent("<h3> It's your Vehicle</h3>");
 		} else {
 			$scope.destlt = dev.lat;
 			$scope.destlg = dev.lg;
@@ -255,6 +259,8 @@ batsAdminHome.controller('batsNearbyDevices',function($scope,$http,NgMap,
 						// alert("address is: " + data[0].formatted_address);
 						console.log(data[0].formatted_address);
 						infowindow.setContent('<label>Device ID:' + dev.devid
+								+ '</label><br/><label>Vehicle No:' + dev.vehicle_num
+								+ '</label><br/><label>Vehicle Model:' + dev.veh_model
 								+ '</label><br/><p>Distance :'
 								+ Math.ceil(dev.dist)
 								+ 'Km</p><br/><label>Address</label><p>'
@@ -267,10 +273,13 @@ batsAdminHome.controller('batsNearbyDevices',function($scope,$http,NgMap,
 			});
 		}
 
-		infowindow.setPosition(center);
-		infowindow.open($scope.map);
-		infowindows.push(infowindow);
-		// console.log(infowindows);
+		NgMap.getMap({
+			id : 'nearbyId'
+		}).then(function(map) {
+			infowindow.setPosition(center);
+			infowindow.open($scope.map);		
+			infowindows.push(infowindow);
+		});
 	};
 	function calcRoute() {
 		NgMap.getMap({
@@ -331,7 +340,7 @@ batsAdminHome.controller('batsNearbyDevices',function($scope,$http,NgMap,
 				$("#selectGroup").select2({});
 				$("#selectDevice").select2({});
 				$('#clearTextGroup span.select2-chosen').text("- - Select Group - -");
-				$('#clearTextDevice span.select2-chosen').text("- - Select Device - -");
+				$('#clearTextDevice span.select2-chosen').text("- - Select Vehicle No/Device - -");
 			});// script
 		});
 

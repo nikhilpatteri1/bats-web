@@ -265,7 +265,7 @@ $scope.verifyUser=function(userName){
 				 })
 				  .success(function(data) {
 				  $scope.ulist = data;
-				  //console.log(JSON.stringify($scope.ulist));
+				 console.log(JSON.stringify($scope.ulist));
 				  if(data.length == 0){
 					  $scope.noUsers = true;
 				  }

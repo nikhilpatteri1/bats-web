@@ -307,6 +307,7 @@ batsGeneralHome.controller('batsAnalytics', function($scope, $http,$localStorage
 	 function speedAnalysis(){
 		 //var devid=["BATS-09"]
 		 		$scope.analysis.devlist = devicelist;
+		 		$scope.analysis.gid=$scope.searchGroupModel;
 		 		//console.log(JSON.stringify($scope.analysis));
 	 			$http({
 	 				method : 'POST',
@@ -350,7 +351,16 @@ batsGeneralHome.controller('batsAnalytics', function($scope, $http,$localStorage
 		                  title: {
 		                    text: 'Snow depth (m)'
 		                  },
-		                  min: 0
+		                  min: 0,
+		                  plotLines: [{
+		                      value: 70,
+		                      color: 'green',
+		                      dashStyle: 'shortdash',
+		                      width: 2,
+		                      label: {
+		                          text: 'SPEED LIMIT FOR GROUP'
+		                      }
+		                  }]
 		                },
 		                title: {
 		                  text: 'Date'
@@ -368,12 +378,14 @@ batsGeneralHome.controller('batsAnalytics', function($scope, $http,$localStorage
 		        };
 			var series=[];
 			var flag=false;
+			var speed_limit;
 		for(var inc=0;inc<dataVal.length;inc++){
 			var perDevice={};
 			var data=[];
 			//console.log(dataVal[inc].dev_id);
-				perDevice.id=dataVal[inc].dev_id;
-				perDevice.name=dataVal[inc].dev_id;
+				perDevice.id=dataVal[inc].vehicle_num;
+				perDevice.name=dataVal[inc].vehicle_num;
+				speed_limit=dataVal[inc].speed_limit;
 				var values=dataVal[inc].values;
 				for(var j=0;j<values.length;j++){
 					var speedTSVal=[];
@@ -401,6 +413,7 @@ batsGeneralHome.controller('batsAnalytics', function($scope, $http,$localStorage
 			console.log(flag);
 			$scope.highchartsNG.title.text="SPEED Analysis"
 			$scope.highchartsNG.options.yAxis.title.text="Velocity in KMpH";
+			$scope.highchartsNG.options.yAxis.plotLines[0].value=speed_limit;
 			$scope.highchartsNG.series=series;
 	}
 	 		/*
@@ -535,7 +548,7 @@ batsGeneralHome.controller('batsAnalytics', function($scope, $http,$localStorage
 					if(series.length){
 				        for(var n =0; n < dataVal[inc].values.length; n++){
 				          for(var k = 0; k < series.length; k++){
-				            if(series[k].name == dataVal[inc].values[n].devid){
+				            if(series[k].name == dataVal[inc].values[n].vehicle_num){
 				              series[k].data.push( Number(dataVal[inc].values[n].distance));
 				            }
 
@@ -544,7 +557,7 @@ batsGeneralHome.controller('batsAnalytics', function($scope, $http,$localStorage
 
 				      } else {
 				        for(var j = 0 ; j < dataVal[inc].values.length; j++){
-				          var obj = {"name": dataVal[inc].values[j].devid, "data":[Number(dataVal[inc].values[j].distance)]};
+				          var obj = {"name": dataVal[inc].values[j].vehicle_num, "data":[Number(dataVal[inc].values[j].distance)]};
 				          series.push(obj);
 				        //console.log(JSON.stringify(series));
 				      }

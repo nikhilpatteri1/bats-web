@@ -137,7 +137,7 @@ batsAdminHome.controller('groupController', function($scope, $http, $localStorag
 	     })
 		  .success(function(data) {
 		  $scope.customerDevices = data.un_allocated;
-		  //console.log(JSON.stringify($scope.customerDevices));
+		  console.log(JSON.stringify($scope.customerDevices));
 		  $scope.presentStock = true;
 		  if(data.un_allocated.length == 0){
 			  $scope.noDevices = true;
@@ -171,24 +171,32 @@ batsAdminHome.controller('groupController', function($scope, $http, $localStorag
 		
 		$scope.noDevices = false;
 		$scope.presentStock = true;
-		
-	    var idx = $scope.selection.indexOf(deviceID);
+		var selArr=eval($scope.selection);
+		var idx =-1;
+		for(var inc=0;inc<selArr.length;inc++){			
+			if(selArr[inc].devid===deviceID){
+				idx=inc;
+				break;
+			}
+		}
+	    //var idx = $scope.selection.indexOf(deviceID);
 	    // is currently selected
 	    if (idx > -1) {
+	      $scope.customerDevices.push(_.findWhere($scope.selection,{"devid":deviceID}));
 	      $scope.selection.splice(idx, 1);
 	      //console.log($scope.selection);
-	      $scope.customerDevices.push(deviceID);
 	    }
 
 	    // is newly selected
-	    else {
-	      $scope.selection.push(deviceID);
-	      //console.log($scope.selection);
+	    else {	    	
+	      $scope.selection.push(_.findWhere($scope.customerDevices,{"devid":deviceID}));
+	      console.log(JSON.stringify($scope.selection));
+	      console.log(JSON.stringify($scope.customerDevices));
 	      var index = -1;		
 			var comArr = eval( $scope.customerDevices );
 			//console.log($scope.rows);
 			for( var i = 0; i < comArr.length; i++ ) {
-				if( comArr[i] === deviceID ) {
+				if( comArr[i].devid === deviceID ) {
 					index = i;
 					break;
 				}
@@ -197,6 +205,7 @@ batsAdminHome.controller('groupController', function($scope, $http, $localStorag
 				alert( "Something gone wrong" );
 			}
 			$scope.customerDevices.splice( index, 1 );		
+			//console.log(JSON.stringify($scope.customerDevices));
 	    }
 	  };
 	  
@@ -271,7 +280,7 @@ batsAdminHome.controller('groupController', function($scope, $http, $localStorag
 	var deviceList=[];
 		var dev_len=$scope.selection.length;
 		for(var inc=0;inc<dev_len;inc++){
-			deviceList.push($scope.selection[inc]);
+			deviceList.push($scope.selection[inc].devid);
 		}
 	$scope.group.devlist=deviceList;
 	$scope.group.gname=angular.lowercase($scope.group.gname);
@@ -285,14 +294,18 @@ batsAdminHome.controller('groupController', function($scope, $http, $localStorag
 	//console.log($scope.group.devlist);
 	var cont_num = $scope.choices;
 	console.log(JSON.stringify(cont_num));
-	var json_cont_num = [];
+	$scope.group.contacts = [];
+	var contactObject = {};
 	for (var key in cont_num) {
 	if (cont_num.hasOwnProperty(key)) {
-		json_cont_num.push(cont_num[key].contact_num);
+		contactObject.name=cont_num[key].contact_name;
+		contactObject.phone=cont_num[key].contact_num;
+		contactObject.email=cont_num[key].contact_email;
+		contactObject.description=cont_num[key].contact_desc;
+		$scope.group.contacts.push(contactObject);
 	}
 	}
 	//console.log(JSON.stringify(json_cont_num));
-	$scope.group.contact_num = json_cont_num;
 	console.log(JSON.stringify($scope.group));
 	$('#createGroupModal').modal('hide');
     $http({
@@ -403,21 +416,25 @@ batsAdminHome.controller('groupController', function($scope, $http, $localStorag
     	  data    : JSON.stringify($scope.group), 
     	  headers : { 'Content-Type': 'application/json' }
          })
-    	  .success(function(data) {
+    	  .success(function(data) {    		  
 			  $scope.group = data;
               console.log(JSON.stringify($scope.group));
               $scope.selection = $scope.group.devlist;
-              var edit_cont_num = data.contact_num;
-              //console.log(JSON.stringify(edit_cont_num));
+              var edit_cont_num = data.contacts;
+              //lconsole.log(JSON.stringify(edit_cont_num));
 	      		var edit_choices = [];
 	      		$scope.choices = edit_choices;
-	      		for (var i in edit_cont_num) {
+	      		for (var i in edit_cont_num) {	      			
 	      		if (edit_cont_num.hasOwnProperty(i)) {
 	      			edit_choices.push({
-	      		   'contact_num': edit_cont_num[i],
+	      			'contact_name': edit_cont_num[i].name,
+	      			'contact_email': edit_cont_num[i].email,
+	      		    'contact_num': edit_cont_num[i].phone,
+	      		    'contact_desc':edit_cont_num[i].description
+	      		    
 	      		});
 	      		}
-	      		}
+	      		} 		
 	      		//console.log(JSON.stringify($scope.choices));
 	      		
               geofence = $scope.group.geofence;
@@ -430,7 +447,7 @@ batsAdminHome.controller('groupController', function($scope, $http, $localStorag
 				  lg_avg = lg_tot / geofence.length;
 				  //centerVal = lat_avg+","+lg_avg;
 				  centerVal = {lat: lat_avg, lng: lg_avg};
-              console.log(JSON.stringify(centerVal));
+              //console.log(JSON.stringify(centerVal));
 				  
               /*var mobile_no = data.contact_num;
               var contact_number;
@@ -499,11 +516,11 @@ batsAdminHome.controller('groupController', function($scope, $http, $localStorag
         	$scope.group.token = $scope.token;
         	$scope.group.gid = $scope.group.gid;
         	$scope.group.gname=angular.lowercase($scope.group.gname);
-        	 if(Object.prototype.toString.call( $scope.group.contact_num ) != '[object Array]'){
+        	 /*if(Object.prototype.toString.call( $scope.group.contact_num ) != '[object Array]'){
         		 var cno = [];
         		 cno.push($scope.group.contact_num);
         		 $scope.group.contact_num = cno;
-        	 }
+        	 }*/
         	//console.log($scope.group.contact_num);
         	//$scope.group.contact_num=[$scope.group.contact_num];
         	//$scope.group.geofence = posArray;
@@ -517,16 +534,25 @@ batsAdminHome.controller('groupController', function($scope, $http, $localStorag
         	//var alive_frequency = $scope.groups.aliveFrequency;
         	//console.log(JSON.stringify(alive_frequency));
         	//$scope.group.alive_frequency = String(alive_frequency * 60);
-        	//console.log(JSON.stringify($scope.group.alive_frequency));
+        	//console.log(JSON.stringify($scope.group.alive_frequency));        	
+        	$scope.group.devlist=[];        	
+        	for(var inc=0;inc<$scope.selection.length;inc++){        		
+        		$scope.group.devlist.push($scope.selection[inc].devid)
+        	}
         	var cont_num = $scope.choices;
-    		console.log(JSON.stringify(cont_num));
-    		var json_cont_num = [];
+    		$scope.group.contacts = [];
+    		var contactObject = {};
     		for (var key in cont_num) {
     		if (cont_num.hasOwnProperty(key)) {
-    			json_cont_num.push(cont_num[key].contact_num);
+    			contactObject.name=cont_num[key].contact_name;
+    			contactObject.phone=cont_num[key].contact_num;
+    			contactObject.email=cont_num[key].contact_email;
+    			contactObject.description=cont_num[key].contact_desc;
+    			$scope.group.contacts.push(contactObject);
     		}
     		}
-    		$scope.group.contact_num = json_cont_num;
+        	delete $scope.group.alive_frequency;
+        	delete $scope.group.time_interval;
         	console.log(JSON.stringify($scope.group));
             $http({
               method  : 'POST',		  
@@ -562,6 +588,7 @@ batsAdminHome.controller('groupController', function($scope, $http, $localStorag
             	  else if(data.err == "Email Exist"){
             		  swal("Email Id already exists. Enter different mail id."); 
             	  }
+            	  console.log(data);
             	  console.log(status);
             	  console.log(headers);
             	  console.log(config);
