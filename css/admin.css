@@ -687,9 +687,9 @@ font-family:Roboto, Arial, sans-serif;font-size: 11px;border-radius:2px;box-shad
 }
 #map_section{
 	position: fixed;
-	top:20%;	
-	height: 80%;
-	width: 83%;
+	top:18%;	
+	height: 82%;
+	width: 84%;
 } 
 .map_content:hover .dropdownSection {
 	top: 20%; /* This moves it to the top (only on hover) */

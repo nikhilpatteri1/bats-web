@@ -32,7 +32,7 @@ batsAdminHome.controller('AlarmNotificationsControllerAdmin', function($scope, $
 				  headers : { 'Content-Type': 'application/json' }
 			     })
 				  .success(function(data) {
-					  //console.log(JSON.stringify(data));
+					  console.log(JSON.stringify(data));
 					  if($localStorage.notification == undefined){
 						  //alert("1");
 						  $scope.noNotification = true;
@@ -114,7 +114,7 @@ batsAdminHome.controller('AlarmNotificationsControllerAdmin', function($scope, $
 	function showNotifications(notifications){
 		var resultStatus = [];
 		for(i=0;i<notifications.length;i++){
-			  executeStatus(notifications[i].devid,notifications[i].ts,notifications[i].alarm_type,notifications[i].lat,notifications[i].long,notifications[i].Velocity, function(statusExecuted){
+			  executeStatus(notifications[i].devid,notifications[i].vehicle_num,notifications[i].ts,notifications[i].alarm_type,notifications[i].lat,notifications[i].long,notifications[i].Velocity, function(statusExecuted){
 			  resultStatus.push(statusExecuted); 
 			  });
 		  }    
@@ -122,9 +122,10 @@ batsAdminHome.controller('AlarmNotificationsControllerAdmin', function($scope, $
 		  $scope.notifyStatus = resultStatus;
 	}
 
-	function executeStatus(devid,ts,alarm,lat,long,velocity, alarmStatusNotify){
+	function executeStatus(devid,vehicleNum,ts,alarm,lat,long,velocity, alarmStatusNotify){
 		var finalStatus={};
 		  finalStatus.devid = devid;
+		  finalStatus.vehicle_num = vehicleNum;
 		  finalStatus.ts = ts;
 		  finalStatus.alarm_type = alarm;
 		  finalStatus.lat = lat;
@@ -160,6 +161,10 @@ batsAdminHome.controller('AlarmNotificationsControllerAdmin', function($scope, $
 		      case  6:
 		    	statusOne = "S";
 		    	statusTwo = "Sanity Alarm";
+		    	  break;
+		      case  7:
+			    	statusOne = "P";
+			    	statusTwo = "Power Interrupt Alarm";
 		  }
 		  finalStatus.alarm_type_One = statusOne;
 		  finalStatus.alarm_type_Two = statusTwo;

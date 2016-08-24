@@ -267,7 +267,7 @@
 	                        //console.log(JSON.stringify(legs[i].start_location));
 	                        startLocation.latlng = legs[i].start_location;
 	                        startLocation.address = legs[i].start_address;
-	                          marker = createMarker(legs[i].start_location, dataVal[i].devid,dataVal[i].vehicle_num,data[i].vehicle_model, legs[i].start_address,dataVal[i].values[0].type);
+	                          marker = createMarker(legs[i].start_location, dataVal[i].devid,dataVal[i].vehicle_num,dataVal[i].vehicle_model, legs[i].start_address,dataVal[i].values[0].type);
 	                      }
 	                      endLocation.latlng = legs[i].end_location;
 	                      endLocation.address = legs[i].end_address;

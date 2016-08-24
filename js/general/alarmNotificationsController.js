@@ -116,7 +116,7 @@ batsGeneralHome.controller('AlarmNotificationsController', function($scope, $htt
 function showNotifications(notifications){
 	var resultStatus = [];
 	for(i=0;i<notifications.length;i++){
-		  executeStatus(notifications[i].devid,notifications[i].ts,notifications[i].alarm_type,notifications[i].lat,notifications[i].long,notifications[i].Velocity, function(statusExecuted){
+		  executeStatus(notifications[i].devid,notifications[i].vehicle_num,notifications[i].ts,notifications[i].alarm_type,notifications[i].lat,notifications[i].long,notifications[i].Velocity, function(statusExecuted){
 		  resultStatus.push(statusExecuted); 
 		  });
 	  }    
@@ -124,9 +124,10 @@ function showNotifications(notifications){
 	  $scope.notifyStatus = resultStatus;
 }
 
-function executeStatus(devid,ts,alarm,lat,long,velocity, alarmStatusNotify){
+function executeStatus(devid,vehicleNum,ts,alarm,lat,long,velocity, alarmStatusNotify){
 	var finalStatus={};
 	  finalStatus.devid = devid;
+	  finalStatus.vehicle_num = vehicleNum;
 	  finalStatus.ts = ts;
 	  finalStatus.alarm_type = alarm;
 	  finalStatus.lat = lat;
@@ -162,6 +163,10 @@ function executeStatus(devid,ts,alarm,lat,long,velocity, alarmStatusNotify){
 	      case  6:
 	    	statusOne = "S";
 	    	statusTwo = "Sanity Alarm";
+	    	  break;
+	      case  7:
+		    statusOne = "P";
+		    statusTwo = "Power Interrupt Alarm";
 	  }
 	  finalStatus.alarm_type_One = statusOne;
 	  finalStatus.alarm_type_Two = statusTwo;

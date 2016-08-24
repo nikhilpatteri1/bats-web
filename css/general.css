@@ -618,7 +618,7 @@ font-family:Roboto, Arial, sans-serif;font-size: 11px;border-radius:2px;box-shad
 
 .dropdownSection {
 	position: fixed;
-	top: 20%; /* This moves it to the bottom (initial state) */
+	top: -20%; /* This moves it to the bottom (initial state) */
 	left:35%;
 	width:600px;	
 	transition: top 1s;
@@ -627,7 +627,7 @@ font-family:Roboto, Arial, sans-serif;font-size: 11px;border-radius:2px;box-shad
 .speedometerSection{
 	position: fixed;
 	top:30%;
-	left: 75%; /* This moves it to the bottom (initial state) */	
+	left: 125%; /* This moves it to the bottom (initial state) */	
 	width:300px;	
 	transition: left 1s;
 	z-index:100;
@@ -662,8 +662,9 @@ font-family:Roboto, Arial, sans-serif;font-size: 11px;border-radius:2px;box-shad
 
 #map_section {
 	position: fixed;
-	height: 80%;
-	width: 83%;
+	top:18%;	
+	height: 82%;
+	width: 84%;
 }
 .legendSection{padding:10px;}
 .legendlist li{list-style: none;padding: 4px 0px 4px 0px;font-size:12px;font-weight:900}

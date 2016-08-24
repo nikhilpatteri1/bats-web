@@ -1,4 +1,4 @@
-<div class="col-sm-10" style="margin-left: -80px; margin-top: 10px">
+<div class="col-sm-10">
 	<div class="map_content" ng-controller='smartcontroller'
 		ng-init="initialize();activeFull='0'">
 		<div class="bgloading" ng-show="httpLoading">
@@ -6,12 +6,11 @@
 				<h1 class="titleClass">loading!...</h1>
 			</div>
 		</div>
-		<div class="container-fluid" style="padding-left: 0px">
 			<div class="row">
 				<div class="col-sm-12">
 					<!-- Dropdown part -->
 					<section class="dropdownSection">
-						<div class="row">
+						<div class="row"">
 							<div class="col-sm-12" align="center">
 								<!-- <div class="col-sm-6 col-sm-offset-3" align="center"> -->
 								<div class="row">
@@ -104,7 +103,7 @@
 					<!-- ./Vehicle Count -->
 					<!-- Map part-->
 					<section>
-						<div class="row">
+						<div class="row" style="margin: 0 -15px 0 -38px">
 							<div class="col-sm-12">
 								<div id="map_section" ng-class="{fullMap:activeFull==='1'}">
 									<div id="map_canvas"></div>
@@ -120,7 +119,6 @@
 					<!-- ./Map part-->
 				</div>
 			</div>
-		</div>
 	</div>
 	<!-- <div class="row">
 		<div class="col-sm-12">

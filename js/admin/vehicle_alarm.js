@@ -196,21 +196,18 @@ $scope.getDate = function(ts) {
 	var d = new Date(Number(ts));
 	// console.log(d.getDate()+"-"+d.getMonth()+"-"+d.getFullYear());
 	var monthVal = d.getMonth() + 1;
-	// Hours part from the timestamp
 	var hours = d.getHours();
-	// Minutes part from the timestamp
-	var minutes = "0" + d.getMinutes();
-	// Seconds part from the timestamp
-	var seconds = "0" + d.getSeconds();
-
-	// Will display time in 10:30:23 format
-	var formattedTime = hours + ':'
-			+ minutes.substr(-2) + ':'
-			+ seconds.substr(-2);
+	  var minutes = d.getMinutes();
+	  var ampm = hours >= 12 ? 'pm' : 'am';
+	  hours = hours % 12;
+	  hours = hours ? hours : 12; // the hour '0' should be '12'
+	  minutes = minutes < 10 ? '0'+minutes : minutes;
+	  var strTime = hours + ':' + minutes + ' ' + ampm;
 	return d.getDate() + "-" + monthVal + "-"
 			+ d.getFullYear() + " / "
-			+ formattedTime;
+			+ strTime;
 };
+
 
 /**
  * get address based on lat,long
