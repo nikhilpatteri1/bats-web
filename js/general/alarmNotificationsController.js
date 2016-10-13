@@ -1,6 +1,6 @@
 batsGeneralHome.controller('AlarmNotificationsController', function($scope, $http, $localStorage, $interval) {
 	
-	var requestTime = 60;
+	var requestTime = 10;
 	$scope.token = $localStorage.data;
 	var token = $scope.token;
 	if (typeof $scope.token === "undefined") {

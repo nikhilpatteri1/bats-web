@@ -78,25 +78,37 @@ batsAdminHome.controller('LatestLocationCtrl', function($scope, $http, $localSto
 							var lat_tot = 0, lg_tot = 0, lat_avg = 0, lg_avg = 0;
 							var deviceList = data.devlist;
 							//console.log(JSON.stringify(deviceList));
-							//var chk = data.devlist;
-							//console.log(JSON.stringify(chk));
-							var resultDevices =[];
-							var devlist = data.devlist;
-							for(i=0;i<devlist.length;i++){
-								var device_list = {"devid":devlist[i].devid,"vehicle_num":devlist[i].vehicle_num,"lat":devlist[i].lat,"long":devlist[i].long,"devtype":devlist[i].devtype};
-								resultDevices.push(device_list);
-							} 
-							$scope.marker = resultDevices;
-							//console.log(JSON.stringify(resultDevices));
-							for(inc=0;inc<deviceList.length;inc++){
-							  	lat_tot += Number(deviceList[inc].lat);
-								lg_tot +=  Number(deviceList[inc].long);
-							  }
-							  lat_avg = lat_tot / deviceList.length;
-							  lg_avg = lg_tot / deviceList.length;
-							  centerVal=lat_avg+","+lg_avg;
-							  $scope.position = [{"lat":lat_avg,"long":lg_avg,"zoom":12}];
-							  $scope.httpLoading=false;
+							if(deviceList.length == 0){
+								alert("No active devices available");
+								$scope.position = [{"lat":"21.0000","long":"78.0000","zoom":4}];
+								$scope.marker = {};
+							}
+							else{
+								//var chk = data.devlist;
+								//console.log(JSON.stringify(chk));
+								var resultDevices =[];
+								var devlist = data.devlist;
+								for(i=0;i<devlist.length;i++){
+									if(devlist[i].devtype == ""){
+										var device_list = {"devid":devlist[i].devid,"vehicle_num":devlist[i].vehicle_num,"lat":devlist[i].lat,"long":devlist[i].long,"devtype":"marker"};
+									}
+									else{
+										var device_list = {"devid":devlist[i].devid,"vehicle_num":devlist[i].vehicle_num,"lat":devlist[i].lat,"long":devlist[i].long,"devtype":devlist[i].devtype};
+									}
+									resultDevices.push(device_list);
+								} 
+								$scope.marker = resultDevices;
+								//console.log(JSON.stringify(resultDevices));
+								for(inc=0;inc<deviceList.length;inc++){
+								  	lat_tot += Number(deviceList[inc].lat);
+									lg_tot +=  Number(deviceList[inc].long);
+								  }
+								  lat_avg = lat_tot / deviceList.length;
+								  lg_avg = lg_tot / deviceList.length;
+								  centerVal=lat_avg+","+lg_avg;
+								  $scope.position = [{"lat":lat_avg,"long":lg_avg,"zoom":12}];
+								  $scope.httpLoading=false;
+							}
 						}).error(function(data, status, headers, config) {
 							console.log(data.err);
 							  if(data.err == "Expired Session")

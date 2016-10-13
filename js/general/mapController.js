@@ -1,6 +1,6 @@
 /*================== Map Script ===================*/
 	batsGeneralHome.controller('GeneralController', function($scope, $interval, $http,$rootScope,$uibModal,
-		$localStorage,$window) {
+		$localStorage,$window,$timeout) {
 		var reqTime = 12;
 		$scope.token = $localStorage.data;
 		$scope.showTrafficLayerBtn = false;
@@ -22,7 +22,8 @@
 	    var directionDisplay;
 	    var directionsService;
 	    var stepDisplay;
-	    var markerArray = [];
+	    var markers = [];
+	    var myPolygon;
 	    var position; 
 	    var marker = null;
 	    var polyline = null;
@@ -50,11 +51,14 @@
 		    fillColor: '#f44336',
 		    offset: '5%',
 		    // rotation: parseInt(heading[i]),
-		    anchor: new google.maps.Point(10, 25) // orig 10,50 back of car, 10,0 front of car, 10,25 center of car
+		    anchor: new google.maps.Point(10, 25) // orig 10,50 back of car,
+													// 10,0 front of car, 10,25
+													// center of car
 		};
 		
-		  //function initialize(){
-		  $scope.initialize=function () {    
+		  // function initialize(){
+		  $scope.initialize=function () {
+			  var $map = $('#map_canvas');
 			  infowindow = new google.maps.InfoWindow(
 			    { 
 			      size: new google.maps.Size(150,50)
@@ -65,10 +69,10 @@
 			      styles: styleMap,
 			      mapTypeId: google.maps.MapTypeId.ROADMAP
 			    };
-			    //console.log(document.getElementById("map_canvas"));
+			    // console.log(document.getElementById("map_canvas"));
 			    map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 			    address = 'India';
-			    //address = 'Trinidad and Tobago'
+			    // address = 'Trinidad and Tobago'
 			    geocoder = new google.maps.Geocoder();
 			    geocoder.geocode( { 'address': address}, function(results, status) {
 			     map.fitBounds(results[0].geometry.viewport);
@@ -91,9 +95,54 @@
 			        strokeColor: '#FF0000',
 			        strokeWeight: 0
 			    });
-			  }; 
+			    /*
+				 * google map default zoom_changed event
+				 */
+			    $scope.zoomlevel=0;
+				google.maps.event.addListener(map, 'zoom_changed', function() {
+				    $scope.zoomlevel = map.getZoom();    			    
+				});
+				function wheelEvent( event ) {
+					// console.log($scope.zoomlevel);
+					if(typeof $scope.deviceId !='undefined'){
+					if ($scope.zoomlevel < 18 || $scope.zoomlevel > 21) {					
+						$scope.singleDeviceZoomed = false;
+						if (angular.isDefined(singleDeviceInterval)) {
+							$interval.cancel(singleDeviceInterval);
+						} else if (angular.isDefined(multiDeviceInterval)) {
+							$interval.cancel(multiDeviceInterval);
+						}
+					}
+					}
+					
+			    }
+			    
+			    $map[0].addEventListener( 'mousewheel', wheelEvent, true );
+			    $map[0].addEventListener( 'DOMMouseScroll', wheelEvent, true );
+			  };
+			  $scope.resizeMap = function(){
+			    	$("#map_canvas").css("position", 'fixed').
+			        css('top', 0).
+			        css('left', 0).
+			        css("width", '100%').
+			        css("height", '100%');			       
+			    	console.log("resize");
+			    	google.maps.event.trigger(map, 'resize');
+			    	map.setZoom(map.getZoom());
+			    }
+			    
+			    
+			    $scope.shrinkMap=function(){
+			    	$("#map_canvas").css("position", 'absolute').
+			        css('top', 0).
+			        css('left', 0).
+			        css("width", '100%').
+			        css("height", '100%');			        
+			    	google.maps.event.trigger(map, 'resize');
+			    	map.setZoom(map.getZoom());
+			    }
 		function createMarker(latlng, deviceID,vehNo,vehModel,html,type) {
-			//console.log(deviceID+"=="+type);
+			// console.log(deviceID+"=="+type);
 			var contentString; 
 			if(type==0){icon.fillColor='#f44336';}
 			else if(type==1){icon.fillColor='#ffde01';}
@@ -109,19 +158,20 @@
 			           if (responses && responses.length > 0) 
 			           {     	   
 			        	   if(html.length==0){
-			        		   //console.log(html.length);
+			        		   // console.log(html.length);
 			        		   html=responses[0].formatted_address;
-			        		   contentString  = '<b><label>Device ID:</label> '+deviceID+'</b><br><br><b><label>Vehicle No:</label> '+vehNo+'</b><br><br><b><label>Vehicle No:</label> '+vehModel+'</b><br><br>'+html+'<br><br><button class="btn btn-primary btn-sm" id="infoClick" data-deviceID="'+deviceID+'">show detail</button>';	
+			        		   contentString  = '<b><label>Device ID:</label> '+deviceID+'</b><br><br><b><label>Vehicle No:</label> '+vehNo+'</b><br><br><b><label>Vehicle Model:</label> '+vehModel+'</b><br><br>'+html+'<br><br><button class="btn btn-primary btn-sm" id="infoClick" data-deviceID="'+deviceID+'">show detail</button>';	
 			        	   }		        	   		                    
 			           } 
 			           else 
 			           {       
-			             //swal('Not getting Any address for given latitude and longitude.');     
+			             // swal('Not getting Any address for given latitude
+							// and longitude.');
 			           }   
 			        }
 			);
 			if(html.length!=0){
-				contentString  = '<b><label>Device ID:</label> '+deviceID+'</b><br><br><b><label>Vehicle No:</label> '+vehNo+'</b><br><br><br><br><b><label>Vehicle No:</label> '+vehModel+'</b>'+html+'<br><br><button class="btn btn-primary btn-sm" id="infoClick" data-deviceID="'+deviceID+'">show detail</button>';
+				contentString  = '<b><label>Device ID:</label> '+deviceID+'</b><br><br><b><label>Vehicle No:</label> '+vehNo+'</b><br><br><b><label>Vehicle Model:</label> '+vehModel+'</b><br><br>'+html+'<br><br><button class="btn btn-primary btn-sm" id="infoClick" data-deviceID="'+deviceID+'">show detail</button>';
 			}
 			
 			    
@@ -133,14 +183,16 @@
 			        zIndex: Math.round(latlng.lat()*-100000)<<5
 			        });
 			        marker.myname = deviceID;
+			        markers.push(marker);
 
 
 			    google.maps.event.addListener(marker, 'click', function() {
-			    	 /* calling map modal controller function from here using $emit
-		        	  * ref links
-		        	  * http://stackoverflow.com/questions/29467339/how-to-call-function-in-another-controller-in-angularjs
-		        	  * http://stackoverflow.com/questions/21346565/how-to-pass-an-object-using-rootscope
-		        	  */	        	
+			    	 /*
+						 * calling map modal controller function from here using
+						 * $emit ref links
+						 * http://stackoverflow.com/questions/29467339/how-to-call-function-in-another-controller-in-angularjs
+						 * http://stackoverflow.com/questions/21346565/how-to-pass-an-object-using-rootscope
+						 */	        	
 			        infowindow.setContent(contentString); 
 			        infowindow.open(map,marker);
 			       // $rootScope.$emit("deviceDetailModal",lg,deviceID);
@@ -148,6 +200,16 @@
 			        });
 			    return marker;
 			}
+		// Sets the map on all markers in the array.
+	    function setMapOnAll(map) {
+	    	console.log(map);
+	      for (var i = 0; i < markers.length; i++) {
+	        markers[i].setMap(map);
+	      }
+	    }
+	    function setPolygonNull(){
+	    	myPolygon.setMap(null);
+	    }
 		$(document).on('click','#infoClick',function(event){
 			event.stopImmediatePropagation();			
 			if(typeof $scope.deviceId=='undefined'){
@@ -159,18 +221,20 @@
 		});
 		
 		/*
-		 * -----------------------------------------code for vehicle icon movement---------------------------------------------------------------
+		 * -----------------------------------------code for vehicle icon
+		 * movement---------------------------------------------------------------
 		 * 
-		 * */
+		 */
 		
 		$scope.calcRoute = function(dataVal) {
 			/**
-			 * check for storedltlng object is initialized or not
-			 * if initalized follow the next step else intialize the storedltlng
-			 * check for storedltlng key "lat" value is not equal to current data values lat
-			 * if not allow movement of vehichle operation
-			 * else update start and end with same current data lat and lng ex: dataVal[0].values.lat and .lng for both start and end 
-			 * */
+			 * check for storedltlng object is initialized or not if initalized
+			 * follow the next step else intialize the storedltlng check for
+			 * storedltlng key "lat" value is not equal to current data values
+			 * lat if not allow movement of vehichle operation else update start
+			 * and end with same current data lat and lng ex:
+			 * dataVal[0].values.lat and .lng for both start and end
+			 */
 			if(typeof storedltlng.lat!='undefined'){
 				if(storedltlng.lat!=dataVal[0].values[0].lat){
 					if(dataVal[0].values[0].type==4){
@@ -211,7 +275,7 @@
 		};
 
 		function vehichleRouting(dataVal,startLat,startLng,endLat,endLng){
-			//console.log(startLat,startLng,endLat,endLng);
+			// console.log(startLat,startLng,endLat,endLng);
 			if (timerHandle) {
 	            clearTimeout(timerHandle);
 	        }
@@ -237,8 +301,8 @@
 	        };
 	        directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
 
-	        var start = new google.maps.LatLng({lat: Number(startLat), lng: Number(startLng)}); //document.getElementById("start").value;
-	        var end = new google.maps.LatLng({lat: Number(endLat), lng: Number(endLng)}); //document.getElementById("end").value;
+	        var start = new google.maps.LatLng({lat: Number(startLat), lng: Number(startLng)}); // document.getElementById("start").value;
+	        var end = new google.maps.LatLng({lat: Number(endLat), lng: Number(endLng)}); // document.getElementById("end").value;
 	        var travelMode = google.maps.DirectionsTravelMode.DRIVING;
 
 	        var request = {
@@ -250,9 +314,9 @@
 	        // Route the directions and pass the response to a
 	        // function to create markers for each step.
 	        directionsService.route(request, function (response, status) {
-	            //console.log(response.routes[0]);
+	            // console.log(response.routes[0]);
 	            if (status == google.maps.DirectionsStatus.OK) {
-	                //directionsDisplay.setDirections(response);
+	                // directionsDisplay.setDirections(response);
 
 	                var bounds = new google.maps.LatLngBounds();
 	                var route = response.routes[0];
@@ -264,7 +328,7 @@
 	                var legs = response.routes[0].legs;
 	                for (i = 0; i < legs.length; i++) {
 	                    if (i === 0) {
-	                        //console.log(JSON.stringify(legs[i].start_location));
+	                        // console.log(JSON.stringify(legs[i].start_location));
 	                        startLocation.latlng = legs[i].start_location;
 	                        startLocation.address = legs[i].start_address;
 	                          marker = createMarker(legs[i].start_location, dataVal[i].devid,dataVal[i].vehicle_num,dataVal[i].vehicle_model, legs[i].start_address,dataVal[i].values[0].type);
@@ -272,7 +336,7 @@
 	                      endLocation.latlng = legs[i].end_location;
 	                      endLocation.address = legs[i].end_address;
 	                      var steps = legs[i].steps;
-	                    //console.log(JSON.stringify(steps));
+	                    // console.log(JSON.stringify(steps));
 	                    for (j = 0; j < steps.length; j++) {
 	                        var nextSegment = steps[j].path;
 	                        for (k = 0; k < nextSegment.length; k++) {
@@ -283,7 +347,8 @@
 	                }
 	                polyline.setMap(map);
 	                map.fitBounds(bounds);
-	                map.setZoom(18);
+	                console.log(map.getZoom());
+	                map.setZoom(map.getZoom());
 	                startAnimation();
 	            }
 	        });
@@ -297,9 +362,10 @@
 		var speed = "";
 		var lastVertex = 1;
 
-		//=============== animation functions ======================
+		// =============== animation functions ======================
 		function updatePoly(d) {
-		    // Spawn a new polyline every 20 vertices, because updating a 100-vertex poly is too slow
+		    // Spawn a new polyline every 20 vertices, because updating a
+			// 100-vertex poly is too slow
 		    if (poly2.getPath().getLength() > 20) {
 		        poly2 = new google.maps.Polyline([polyline.getPath().getAt(lastVertex - 1)]);
 		        // map.addOverlay(poly2)
@@ -316,7 +382,7 @@
 		}
 
 		$scope.animate = function(d) {
-		  //  console.log(d);
+		  // console.log(d);
 		  if (d > eol) {        
 		    map.panTo(endLocation.latlng);
 		    marker.setPosition(endLocation.latlng);
@@ -330,7 +396,7 @@
 		icon.rotation = heading;
 		marker.setIcon(icon);
 		updatePoly(d);
-		    //timerHandle = setTimeout("animate(" + (d + step) + ")", tick);
+		    // timerHandle = setTimeout("animate(" + (d + step) + ")", tick);
 		    
 		    timerHandle = setTimeout(function() {
 		        $scope.animate(d + step);
@@ -340,11 +406,10 @@
 		function startAnimation() {
 		    eol = polyline.Distance();
 		    map.setCenter(polyline.getPath().getAt(0));
-		   /*marker = new google.maps.Marker({
-		        position: polyline.getPath().getAt(0),
-		        map: map,
-		        icon: icon
-		    });*/
+		   /*
+			 * marker = new google.maps.Marker({ position:
+			 * polyline.getPath().getAt(0), map: map, icon: icon });
+			 */
 
 		    poly2 = new google.maps.Polyline({
 		        path: [polyline.getPath().getAt(0)],
@@ -352,7 +417,8 @@
 		        strokeWeight: 0
 		    });
 		    // map.addOverlay(poly2);
-		    //setTimeout("animate(50)", 2000); // Allow time for the initial map display
+		    // setTimeout("animate(50)", 2000); // Allow time for the initial
+			// map display
 		    
 		    setTimeout(function() {
 		        $scope.animate(50);
@@ -360,66 +426,38 @@
 		    
 
 		}
-		//----------------------------------------------------------------------------    
-		//=============== ~animation funcitons =====================
-		/*********************************************************************\
-		*                                                                     *
-		* epolys.js                                          by Mike Williams *
-		* updated to API v3                                  by Larry Ross    *
-		*                                                                     *
-		* A Google Maps API Extension                                         *
-		*                                                                     *
-		* Adds various Methods to google.maps.Polygon and google.maps.Polyline *
-		*                                                                     *
-		* .Contains(latlng) returns true is the poly contains the specified   *
-		*                   GLatLng                                           *
-		*                                                                     *
-		* .Area()           returns the approximate area of a poly that is    *
-		*                   not self-intersecting                             *
-		*                                                                     *
-		* .Distance()       returns the length of the poly path               *
-		*                                                                     *
-		* .Bounds()         returns a GLatLngBounds that bounds the poly      *
-		*                                                                     *
-		* .GetPointAtDistance() returns a GLatLng at the specified distance   *
-		*                   along the path.                                   *
-		*                   The distance is specified in metres               *
-		*                   Reurns null if the path is shorter than that      *
-		*                                                                     *
-		* .GetPointsAtDistance() returns an array of GLatLngs at the          *
-		*                   specified interval along the path.                *
-		*                   The distance is specified in metres               *
-		*                                                                     *
-		* .GetIndexAtDistance() returns the vertex number at the specified    *
-		*                   distance along the path.                          *
-		*                   The distance is specified in metres               *
-		*                   Returns null if the path is shorter than that      *
-		*                                                                     *
-		* .Bearing(v1?,v2?) returns the bearing between two vertices          *
-		*                   if v1 is null, returns bearing from first to last *
-		*                   if v2 is null, returns bearing from v1 to next    *
-		*                                                                     *
-		*                                                                     *
-		***********************************************************************
-		*                                                                     *
-		*   This Javascript is provided by Mike Williams                      *
-		*   Blackpool Community Church Javascript Team                        *
-		*   http://www.blackpoolchurch.org/                                   *
-		*   http://econym.org.uk/gmap/                                        *
-		*                                                                     *
-		*   This work is licenced under a Creative Commons Licence            *
-		*   http://creativecommons.org/licenses/by/2.0/uk/                    *
-		*                                                                     *
-		***********************************************************************
-		*                                                                     *
-		* Version 1.1       6-Jun-2007                                        *
-		* Version 1.2       1-Jul-2007 - fix: Bounds was omitting vertex zero *
-		*                                add: Bearing                         *
-		* Version 1.3       28-Nov-2008  add: GetPointsAtDistance()           *
-		* Version 1.4       12-Jan-2009  fix: GetPointsAtDistance()           *
-		* Version 3.0       11-Aug-2010  update to v3                         *
-		*                                                                     *
-		\*********************************************************************/
+		// ----------------------------------------------------------------------------
+		// =============== ~animation funcitons =====================
+		/***********************************************************************
+		 * *******************************************************************\ *
+		 * epolys.js by Mike Williams * updated to API v3 by Larry Ross * * A
+		 * Google Maps API Extension * * Adds various Methods to
+		 * google.maps.Polygon and google.maps.Polyline * * .Contains(latlng)
+		 * returns true is the poly contains the specified * GLatLng * * .Area()
+		 * returns the approximate area of a poly that is * not
+		 * self-intersecting * * .Distance() returns the length of the poly path * *
+		 * .Bounds() returns a GLatLngBounds that bounds the poly * *
+		 * .GetPointAtDistance() returns a GLatLng at the specified distance *
+		 * along the path. * The distance is specified in metres * Reurns null
+		 * if the path is shorter than that * * .GetPointsAtDistance() returns
+		 * an array of GLatLngs at the * specified interval along the path. *
+		 * The distance is specified in metres * * .GetIndexAtDistance() returns
+		 * the vertex number at the specified * distance along the path. * The
+		 * distance is specified in metres * Returns null if the path is shorter
+		 * than that * * .Bearing(v1?,v2?) returns the bearing between two
+		 * vertices * if v1 is null, returns bearing from first to last * if v2
+		 * is null, returns bearing from v1 to next * * *
+		 * ********************************************************************** *
+		 * This Javascript is provided by Mike Williams * Blackpool Community
+		 * Church Javascript Team * http://www.blackpoolchurch.org/ *
+		 * http://econym.org.uk/gmap/ * * This work is licenced under a Creative
+		 * Commons Licence * http://creativecommons.org/licenses/by/2.0/uk/ * *
+		 * ********************************************************************** *
+		 * Version 1.1 6-Jun-2007 * Version 1.2 1-Jul-2007 - fix: Bounds was
+		 * omitting vertex zero * add: Bearing * Version 1.3 28-Nov-2008 add:
+		 * GetPointsAtDistance() * Version 1.4 12-Jan-2009 fix:
+		 * GetPointsAtDistance() * Version 3.0 11-Aug-2010 update to v3 * * \
+		 **********************************************************************/
 
 		// === first support methods that don't (yet) exist in v3
 		google.maps.LatLng.prototype.distanceFrom = function (newLatLng) {
@@ -453,8 +491,10 @@
 		    return dist;
 		}
 
-		// === A method which returns a GLatLng of a point a given distance along the path ===
-		// === Returns null if the path is shorter than the specified distance ===
+		// === A method which returns a GLatLng of a point a given distance
+		// along the path ===
+		// === Returns null if the path is shorter than the specified distance
+		// ===
 		google.maps.Polygon.prototype.GetPointAtDistance = function (metres) {
 		    // some awkward special cases
 		    if (metres == 0) return this.getPath().getAt(0);
@@ -476,7 +516,8 @@
 		    return new google.maps.LatLng(p1.lat() + (p2.lat() - p1.lat()) * m, p1.lng() + (p2.lng() - p1.lng()) * m);
 		}
 
-		// === A method which returns an array of GLatLngs of points a given interval along the path ===
+		// === A method which returns an array of GLatLngs of points a given
+		// interval along the path ===
 		google.maps.Polygon.prototype.GetPointsAtDistance = function (metres) {
 		    var next = metres;
 		    var points = [];
@@ -499,8 +540,10 @@
 		    return points;
 		}
 
-		// === A method which returns the Vertex number at a given distance along the path ===
-		// === Returns null if the path is shorter than the specified distance ===
+		// === A method which returns the Vertex number at a given distance
+		// along the path ===
+		// === Returns null if the path is shorter than the specified distance
+		// ===
 		google.maps.Polygon.prototype.GetIndexAtDistance = function (metres) {
 		    // some awkward special cases
 		    if (metres == 0) return this.getPath().getAt(0);
@@ -524,15 +567,17 @@
 		google.maps.Polyline.prototype.GetIndexAtDistance = google.maps.Polygon.prototype.GetIndexAtDistance;
 		
 		/*
-		 * -----------------------------------------the end for vehicle icon movement---------------------------------------------------------------
+		 * -----------------------------------------the end for vehicle icon
+		 * movement---------------------------------------------------------------
 		 * 
-		 * */
+		 */
 			
-		$scope.singleDeviceZoomLevel=18;
+		$scope.singleDeviceZoomLevel=21;
 		$scope.multipleDeviceZoomLevel=3;
 		$scope.mars = 10;
 		$scope.isZoomed = true;// reCenter button for group based
-		$scope.singleDeviceZoomed = true;// reCenter button for single device based
+		$scope.singleDeviceZoomed = true;// reCenter button for single device
+											// based
 		$scope.deviceList = [];
 		var speedValue=0;									
 		var devIDval="";
@@ -565,19 +610,16 @@
 				'Content-Type' : 'application/json'
 			}
 		}).success(function(data) {
-			console.log(JSON.stringify(data));
+			// console.log(JSON.stringify(data));
 			listGroup(data);
 		}).error(function(data, status, headers, config) {
 			if (data.err == "Expired Session") {
-				$('#updateDeviceModal').modal('hide');
 				expiredSession();
 				$localStorage.$reset();
 			} else if (data.err == "Invalid User") {
-				$('#updateDeviceModal').modal('hide');
 				invalidUser();
 				$localStorage.$reset();
 			}
-			console.log(data);
 			console.log(status);
 			console.log(headers);
 			console.log(config);
@@ -601,10 +643,16 @@
 			$scope.httpLoading=true;
 		    $('#clearTextDevice span.select2-chosen').empty();  
 		    $('#clearTextDevice span.select2-chosen').text("- - Select  Vehicle No/Device - -"); 
-			storage_arr=[];//clearing the matched array on change of group id dropdown
-			$scope.initialize();
+			storage_arr=[];// clearing the matched array on change of group id
+							// dropdown
+			setMapOnAll(null);			
+			if(myPolygon){
+				setPolygonNull();
+			}
+			// $scope.initialize();
 			$scope.isZoomed = true;// reCenter button for group based
-			$scope.singleDeviceZoomed = true;// reCenter button for single device
+			$scope.singleDeviceZoomed = true;// reCenter button for single
+												// device
 												// based
 			// document.getElementById("groupNamelist").blur();
 			// console.log(groupID);
@@ -629,9 +677,9 @@
 					$interval.cancel(singleDeviceInterval);
 				}
 				$scope.groupDevice = data;
-				//console.log(JSON.stringify($scope.groupDevice));
+				// console.log(JSON.stringify($scope.groupDevice));
 				$scope.carCount = $scope.groupDevice.carcount;
-				$scope.bikeCount = $scope.groupDevice.jeepcount;
+				$scope.bikeCount = $scope.groupDevice.bikecount;
 				$scope.busCount = $scope.groupDevice.buscount;
 				$scope.truckCount = $scope.groupDevice.truckcount;
 				var dev_len = $scope.groupDevice.devlist.length;
@@ -642,15 +690,13 @@
 					$scope.deviceList.push(devlist[i].devid);
 				}
 				plotDevices();
-				//multiDeviceInterval = $interval(plotDevices, reqTime * 1000);
-				//console.log(multiDeviceInterval);
+				// multiDeviceInterval = $interval(plotDevices, reqTime * 1000);
+				// console.log(multiDeviceInterval);
 			}).error(function(data, status, headers, config) {
 				if (data.err == "Expired Session") {
-					$('#updateDeviceModal').modal('hide');
 					expiredSession();
 					$localStorage.$reset();
 				} else if (data.err == "Invalid User") {
-					$('#updateDeviceModal').modal('hide');
 					invalidUser();
 					$localStorage.$reset();
 				}
@@ -663,12 +709,13 @@
 			});
 		};
 		/**
-		 *  fetch device information
-		 * */
+		 * fetch device information
+		 */
 		$scope.fetchDeviceDetail = function(gid, deviceId) {	
 			$scope.initialize();
 			$scope.isZoomed = true;// reCenter button for group based
-			$scope.singleDeviceZoomed = true;// reCenter button for single device based		
+			$scope.singleDeviceZoomed = true;// reCenter button for single
+												// device based
 			$scope.devIDval = deviceId;
 			devIDval=deviceId;		
 			$scope.multiDevice = false;
@@ -683,15 +730,19 @@
 			$scope.selectedgroupdevicejson.gid = $scope.groupdevicejson.gid;			
 			storedltlng={};		
 			geofenceAPI($scope.selectedgroupdevicejson);
+			map.setZoom($scope.singleDeviceZoomLevel);
+			setMapOnAll(null);
 			plotDevice();
-			//plotDevice();
+			// plotDevice();
 			singleDeviceInterval = $interval(plotDevice,reqTime * 1000);		
 		};
 		
-		/**----------------------------------------------------------------------------------------------------------------------------------------------------
+		/**
+		 * ----------------------------------------------------------------------------------------------------------------------------------------------------
 		 * 
-		 * 													plot group based device on the map
-		 ---------------------------------------------------------------------------------------------------------------------------------------------------*/
+		 * plot group based device on the map
+		 * ---------------------------------------------------------------------------------------------------------------------------------------------------
+		 */
 		function geofenceAPI(groupdevicejson){
 			/*
 			 * get device info based on group ID
@@ -704,8 +755,8 @@
 					'Content-Type' : 'application/json'
 				}
 			}).success(function(data) {			
-				//console.log(data);			 
-				//reqTime = data.time_interval;
+				// console.log(data);
+				// reqTime = data.time_interval;
 				maxSpeed = data.speed_limit;
 
 				var geoJson = data.geofence;			
@@ -719,16 +770,14 @@
 						});
 					}
 				}
-				//console.log(JSON.stringify(resultGeoJson));			
+				// console.log(JSON.stringify(resultGeoJson));
 				var geofence_plot = resultGeoJson;
 			    plotGeofence(geofence_plot);
 			}).error(function(data, status, headers, config) {
 				if (data.err == "Expired Session") {
-					$('#updateDeviceModal').modal('hide');
 					expiredSession();
 					$localStorage.$reset();
 				} else if (data.err == "Invalid User") {
-					$('#updateDeviceModal').modal('hide');
 					invalidUser();
 					$localStorage.$reset();
 				}
@@ -739,13 +788,13 @@
 			});
 		}
 		function plotGeofence(geofence_plot){
-			//alert("Geofence");
-			//alert(geofence_plot);	
-			//console.log(JSON.stringify(geofence_plot));
+			// alert("Geofence");
+			// alert(geofence_plot);
+			// console.log(JSON.stringify(geofence_plot));
 			myPolygon = new google.maps.Polygon({
 		        paths: geofence_plot,
-		        //draggable: true, // turn off if it gets annoying
-		        //editable: true,
+		        // draggable: true, // turn off if it gets annoying
+		        // editable: true,
 		        strokeColor: '#FF0000',
 		        strokeOpacity: 0.8,
 		        strokeWeight: 2,
@@ -756,7 +805,7 @@
 		}
 		function plotDevices(){
 			console.log("group");
-			//console.log($scope.deviceList.length);
+			// console.log($scope.deviceList.length);
 			$scope.devicejson = {};
 			$scope.devicejson.token = $scope.token;	
 			$scope.devicejson.devlist = $scope.deviceList;
@@ -800,11 +849,9 @@
 				map.fitBounds(bounds);
 			}).error(function(data, status, headers, config) {
 				if (data.err == "Expired Session") {
-					$('#updateDeviceModal').modal('hide');
 					expiredSession();
 					$localStorage.$reset();
 				} else if (data.err == "Invalid User") {
-					$('#updateDeviceModal').modal('hide');
 					invalidUser();
 					$localStorage.$reset();
 				}
@@ -816,6 +863,16 @@
 			
 		}
 		function plotDevice(){
+			/*
+			 * console.log("single"+map.zoom); if (map.zoom < 18 || map.zoom >
+			 * 21) {
+			 * 
+			 * $scope.singleDeviceZoomed = false; if
+			 * (angular.isDefined(singleDeviceInterval)) {
+			 * $interval.cancel(singleDeviceInterval); } else if
+			 * (angular.isDefined(multiDeviceInterval)) {
+			 * $interval.cancel(multiDeviceInterval); } } else {
+			 */
 			console.log("single");
 			$scope.deviceJson = {};
 			$scope.deviceJson.token = $scope.token;
@@ -830,14 +887,15 @@
 				headers : {
 					'Content-Type' : 'application/json'
 				}
-			}).success(function(data) {	
+			}).success(function(data) {
+				// console.log(JSON.stringify(data));
 				$scope.multiDevice = false;
 				if(data[0].values.length>0){				
 					$scope.singleDevice = true;		
 					speedValue=data[0].values[0].Velocity;					
 					speedlimit=data[0].speed_limit;				
-					//request for geofence plotting			
-					//vechile count updation based on type
+					// request for geofence plotting
+					// vechile count updation based on type
 					$scope.carCount = 0;
 					$scope.bikeCount = 0;
 					$scope.busCount = 0;
@@ -862,9 +920,10 @@
 					$scope.truckCount = 0;
 					icon.path = markerIcon;
 					}
-					updateSpeed();				
-					//storedltlng.lat=data[0].values[0].lat;
-					/*vehichleRouting(data,data[0].values[0].lat,data[0].values[0].long,data[0].values[0].lat,data[0].values[0].long);*/
+					
+					updateSpeed(data[0].vehicle_num,data[0].values[0].Velocity,data[0].speed_limit,getDateTime(data[0].values[0].ts));				
+					// storedltlng.lat=data[0].values[0].lat;
+					/* vehichleRouting(data,data[0].values[0].lat,data[0].values[0].long,data[0].values[0].lat,data[0].values[0].long); */
 					$scope.calcRoute(data);
 				}
 				else{
@@ -877,11 +936,9 @@
 				}
 			}).error(function(data, status, headers, config) {
 				if (data.err == "Expired Session") {
-					$('#updateDeviceModal').modal('hide');
 					expiredSession();
 					$localStorage.$reset();
 				} else if (data.err == "Invalid User") {
-					$('#updateDeviceModal').modal('hide');
 					invalidUser();
 					$localStorage.$reset();
 				}
@@ -890,6 +947,26 @@
 				console.log(headers);
 				console.log(config);
 			});
+		// }
+		}
+		function getDateTime(ts){
+			var d = new Date(Number(ts));
+			// console.log(d.getDate()+"-"+d.getMonth()+"-"+d.getFullYear());
+			var monthVal = d.getMonth() + 1;
+			// Hours part from the timestamp
+			var hours = d.getHours();
+			// Minutes part from the timestamp
+			var minutes = "0" + d.getMinutes();
+			// Seconds part from the timestamp
+			var seconds = "0" + d.getSeconds();
+
+			// Will display time in 10:30:23 format
+			var formattedTime = hours + ':'
+					+ minutes.substr(-2) + ':'
+					+ seconds.substr(-2);
+			return d.getDate() + "-" + monthVal + "-"
+					+ d.getFullYear() + " / "
+					+ formattedTime;
 		}
 		/**
 		 * function for recenter to re intiate the live tracking or request for
@@ -905,25 +982,26 @@
 		 */
 		$scope.reCenterDevice = function() {
 			console.log("Single Device Re Center");
-			map.zoom = $scope.singleDeviceZoomLevel;
+			map.setZoom($scope.singleDeviceZoomLevel);
+			map.panTo(marker.getPosition());
 			$scope.singleDeviceZoomed = true;
 			if (angular.isDefined(singleDeviceInterval)) {
 				$interval.cancel(singleDeviceInterval);
 			} else if (angular.isDefined(multiDeviceInterval)) {
 				$interval.cancel(multiDeviceInterval);
 			}
-			singleDeviceInterval = $interval(plotSelectedDevice, reqTime * 1000);
+			singleDeviceInterval = $interval(plotDevice, reqTime * 1000);
 		};
 		
 		/**
-		 * function to display current speed of all devices in the selected group
-		 * and display it in the table
+		 * function to display current speed of all devices in the selected
+		 * group and display it in the table
 		 */
 		function displayData(deviceData) {
-			//console.log(JSON.stringify(deviceData));
+			// console.log(JSON.stringify(deviceData));
 			$scope.devData = {};
 			for ( var inc = 0; inc < deviceData.length; inc++) {
-				 //console.log(JSON.stringify(deviceData));
+				 // console.log(JSON.stringify(deviceData));
 				var devId = deviceData[inc].devid;
 				if(deviceData[inc].values.length>0){
 					var devSpeed = deviceData[inc].values[0].Velocity;
@@ -945,12 +1023,13 @@
 		/**
 		 * function to update the speedometer
 		 */
-		function updateSpeed() {	
-			//console.log("sas");
-			$('#container').highcharts().setTitle({text: "<label>Device ID:</label><p>" + devIDval
+		function updateSpeed(vehNo,speed,speed_limit,ts) {	
+			// console.log("sas");
+			$('#container').highcharts().setTitle({text: "<label>Vehicle No:</label><p>" + vehNo
 				+ "</p><br/><br/><label>Speed Limit:</label><p><b>"
-				+ speedlimit + "<b>KmpH</p>"});
-			$('#container').highcharts().series[0].points[0].update(Number(speedValue));		
+				+ speed_limit + "<b>KmpH</p><br/><br/><label>DateTime:</label><b>"
+				+ts+"</b>"});
+			$('#container').highcharts().series[0].points[0].update(Number(speed));		
 		}
 		 $('#container').highcharts({
 			 
@@ -1054,8 +1133,8 @@
 		    function (chart) {	    	
 		        if (!chart.renderer.forExport && chart.length>0) {
 		            setInterval(function () {
-		            	//console.log(speedlimit);
-		            	chart.setTitle({text: "<label>Device ID:</label><p>" + devIDval
+		            	// console.log(speedlimit);
+		            	chart.setTitle({text: "<label>Device ID:</label><p>" + vehNo
 		    				+ "</p><br/><br/><label>Speed Limit:</label><p><b>"
 		    				+ speedlimit + "<b>KmpH</p>"});
 		                var point = chart.series[0].points[0],
@@ -1079,10 +1158,11 @@
 		 *------------------------------------------------------------------------------------------------------------------------ */
 
 		/**
-		 * On load of customer name 1)Filter customer name 2)Select customer name
+		 * On load of customer name 1)Filter customer name 2)Select customer
+		 * name
 		 */
 		// var tagsData = cname;
-		// init jquery functions and plugins	
+		// init jquery functions and plugins
 		$(document).ready(function() {
 			$.getScript('../assets/select_filter/select2.min.js', function() {
 				$("#selectGroup").select2({});
@@ -1090,14 +1170,29 @@
 				$('#clearTextGroup span.select2-chosen').text("- - Select Group - -");
 				$('#clearTextDevice span.select2-chosen').text("- - Select Vehicle No/Device - -");
 			});// script
-			$('.select2-input').on('input',function(){
-				console.log("check");
+			$(document).on('input','.select2-input',function(){
+				console.log("input");
+				$('.dropdownSection').css('top','20%');				
+			});
+			$(document).on('keyup','.select2-input',function(){
+				console.log("keyup");
+				$('.dropdownSection').css('top','20%');				
+			});
+			$(document).on('keydown','.select2-input',function(){
+				console.log("keydown");
+				$('.dropdownSection').css('top','20%');				
+			});
+			$(document).on('mouseenter','.map_content',function(){		
+				$('.dropdownSection').css('top','20%');				
+			});
+			$(document).on('mouseleave','.map_content',function(){		
+				$('.dropdownSection').css('top','-20%');				
 			});
 		});
 
 		/**
-		* Refresh map for particular time interval cancels on location change 
-		*/
+		 * Refresh map for particular time interval cancels on location change
+		 */
 		$scope.$on('$locationChangeStart', function(){
 			if (angular.isDefined(multiDeviceInterval)) {
 				$interval.cancel(multiDeviceInterval);
@@ -1106,22 +1201,25 @@
 			}
 		});
 		/*
-		* Show/Hide Traffic Layer on map
-		*/
+		 * Show/Hide Traffic Layer on map
+		 */
 		$scope.showTrafficLayer = function(){
-			//alert("show traffic layer");
+			// alert("show traffic layer");
 			trafficLayer.setMap(map);
 			$scope.showTrafficLayerBtn = true;
 			$scope.hideTrafficLayerBtn = false;
 		}
 		$scope.hideTrafficLayer = function(){
-			//alert("hide traffic layer");
+			// alert("hide traffic layer");
 			trafficLayer.setMap(null);
 			$scope.showTrafficLayerBtn = false;
 			$scope.hideTrafficLayerBtn = true;
 		}
-		/**------------------------------------------------------------------------------------------------------------------------------------
-		 *-------------------------------------------------------- device detail modal --------------------------------------------------------*/
+		/**
+		 * ------------------------------------------------------------------------------------------------------------------------------------
+		 * -------------------------------------------------------- device
+		 * detail modal --------------------------------------------------------
+		 */
 		$scope.open = function(size, deviceId) {		
 			$scope.deviceInfojson = {};
 			$scope.deviceInfojson.token = $scope.token;
@@ -1149,12 +1247,10 @@
 					}
 				});
 			}).error(function(data, status, headers, config) {
-				if (data.err == "Expired Session") {
-					$('#updateDeviceModal').modal('hide');
+				if (data.err == "Expired Session") {					
 					expiredSession();
 					$localStorage.$reset();
 				} else if (data.err == "Invalid User") {
-					$('#updateDeviceModal').modal('hide');
 					invalidUser();
 					$localStorage.$reset();
 				}
@@ -1171,10 +1267,11 @@
 	
 	/**
 	 * ------------------------------------------------------------------------------------------------------------------------------------------
-	 * 																ModalInstanceCtrl
+	 * ModalInstanceCtrl
 	 * ------------------------------------------------------------------------------------------------------------------------------------------
-	 * */
-	//Please note that $modalInstance represents a modal window (instance) dependency.
+	 */
+	// Please note that $modalInstance represents a modal window (instance)
+	// dependency.
 	// It is not the same as the $uibModal service used above.
 
 	angular
@@ -1196,7 +1293,8 @@
 						};
 						/**
 						 * get Date formatted date based on TIMESTAMP
-						 -----------------------------------------------------------------------*/
+						 * -----------------------------------------------------------------------
+						 */
 						$scope.getDate = function(ts) {
 							var d = new Date(Number(ts));
 							// console.log(d.getDate()+"-"+d.getMonth()+"-"+d.getFullYear());
@@ -1217,8 +1315,9 @@
 									+ formattedTime;
 						}
 						/**
-						Change Image of Device based on device Type
-						-----------------------------------------------------------------------------*/
+						 * Change Image of Device based on device Type
+						 * -----------------------------------------------------------------------------
+						 */
 						$scope.whatVehicle = function() {
 							if ($scope.dev.devtype == "car") {
 								$scope.url = 'https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQnBx8Czkt93BZhCcIWGh-3eHuv8CH613GrTCpah6RP9b7LyxIJjw';
@@ -1231,8 +1330,9 @@
 							}
 						}
 						/**
-						API Call for Device History 
-						---------------------------------------------------------------------------*/
+						 * API Call for Device History
+						 * ---------------------------------------------------------------------------
+						 */
 						$scope.myDate = new Date();
 						$scope.minDate = new Date($scope.myDate.getFullYear(),
 								$scope.myDate.getMonth() - 2, $scope.myDate
@@ -1246,7 +1346,9 @@
 						};
 						
 						/**
-						Current Data API Call from here-------------------------------------------*/
+						 * Current Data API Call from
+						 * here-------------------------------------------
+						 */
 						$scope.showCurrentData = function() {
 							
 							$scope.deviceCurrentDatajson = {};
@@ -1254,9 +1356,9 @@
 							$scope.deviceCurrentDatajson.token = $scope.token;
 							$scope.devIdobj.push(dev.devid);
 							$scope.deviceCurrentDatajson.devlist = $scope.devIdobj;
-							//$scope.deviceCurrentDatajson.devlist = dev.devid;
+							// $scope.deviceCurrentDatajson.devlist = dev.devid;
 							$scope.deviceCurrentDatajson.count = 10;
-							//console.log($scope.deviceCurrentDatajson);
+							// console.log($scope.deviceCurrentDatajson);
 							$http(
 									{
 										method : 'POST',
@@ -1274,11 +1376,9 @@
 											function(data, status, headers,
 													config) {
 												if (data.err == "Expired Session") {
-													$('#updateDeviceModal').modal('hide');
 													expiredSession();
 													$localStorage.$reset();
 												} else if (data.err == "Invalid User") {
-													$('#updateDeviceModal').modal('hide');
 													invalidUser();
 													$localStorage.$reset();
 												}

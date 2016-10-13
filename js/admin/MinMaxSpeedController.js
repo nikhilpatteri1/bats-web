@@ -125,7 +125,6 @@ batsAdminHome.controller("MinMaxSpeedCtrl",function($http,$scope,$filter,$localS
   * Onsubmit of Min/Max Speed from values 
 */
 $scope.submitMinMaxSpeed = function() {
-	$scope.httpLoading=true;
 	//alert("Yes");
 	var startDateMinMax = document.getElementById('startDateMinMax').value;
 	var endDateMinMax = document.getElementById('endDateMinMax').value;
@@ -145,6 +144,9 @@ else if(endDateMinMax == ""){
 	//alert("3");
 }
 else{
+	$scope.httpLoading=true;
+	startDateMinMaxError.style.display = 'none';
+	endDateMinMaxError.style.display = 'none';
 	//alert("4");
 	startDate(startDateMinMax);
 	endDate(endDateMinMax);
@@ -198,6 +200,13 @@ else{
 						  		swal({ 
 									   title: "Start time is greater than end time",
 								  	   text: "Change the start date and try!",   
+								  	   closeOnConfirm: true }, 
+								  	   function(){   
+								  }); 
+						  	  }
+						  	else if(data.err == "sts should not be greater than current time"){
+						  		swal({ 
+									   title: "Start time is greater than Current time",								  	      
 								  	   closeOnConfirm: true }, 
 								  	   function(){   
 								  }); 

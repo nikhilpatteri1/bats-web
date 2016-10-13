@@ -1,4 +1,13 @@
-
+var user_emailChk;
+/*
+Hardcoded Country & State Values
+*/
+	var countries = ['India'];
+	var states = ['Andaman and Nicobar Islands', 'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chandigarh', 
+	                'Chhattisgarh', 'Dadra and Nagar Haveli', 'Daman and Diu', 'Delhi', 'Goa', 'Gujarat', 'Haryana', 
+	                'Himachal Pradesh', 'Jammu and Kashmir', 'Jharkhand', 'Karnataka', 'Kerala', 'Lakshadweep', 'Madhya Pradesh', 
+	                'Maharashtra', 'Manipur', '	Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Puducherry', 'Punjab', 'Rajasthan', 
+	                'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal'];
 //==============Factory Home===============
 
 batsfactoryhome.controller('customerController', function($scope, $http, $localStorage) {
@@ -83,17 +92,12 @@ batsfactoryhome.controller('customerControllerInner', function($scope, $http, $l
 	/*
 	 Hardcoded Country & State Values
 	 */
-		var countries = ['India'];
-		var states = ['Andaman and Nicobar Islands', 'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chandigarh', 
-		                'Chhattisgarh', 'Dadra and Nagar Haveli', 'Daman and Diu', 'Delhi', 'Goa', 'Gujarat', 'Haryana', 
-		                'Himachal Pradesh', 'Jammu and Kashmir', 'Jharkhand', 'Karnataka', 'Kerala', 'Lakshadweep', 'Madhya Pradesh', 
-		                'Maharashtra', 'Manipur', '	Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Puducherry', 'Punjab', 'Rajasthan', 
-		                'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal'];
 		$scope.country = countries;
 		$scope.state = [];
 		$scope.onSelectCountry = function () {
 	        var myNewOptions = states;
 	        $scope.state = myNewOptions;
+	        console.log(JSON.stringify($scope.state));
 		};
 		$scope.states = states;
 		
@@ -179,6 +183,7 @@ batsfactoryhome.controller('customerControllerInner', function($scope, $http, $l
     			  //var mobile_no = data.contact_no.slice(3);
     			  $scope.edit = data;
     			  //$scope.edit.contact_no = mobile_no;
+    			  user_emailChk = data.uname;
                   console.log(JSON.stringify($scope.edit));
               })
               .error(function(data, status, headers, config) {
@@ -237,7 +242,7 @@ $scope.saveEditForm = function() {
 		});
       })
       .error(function(data, status, headers, config) {
-    	  //swal(data);
+    	  swal(data.err);
     	  console.log(data.err);
     	  if(data.err == "Expired Session")
 		  {
@@ -258,21 +263,120 @@ $scope.saveEditForm = function() {
     	  console.log(config);
 	  });
     }; 
+    
+    $scope.verifyEmail=function(customerEmail){
+		console.log(customerEmail);
+		$scope.verifyEmailJson={};
+		$scope.verifyEmailJson.token=$localStorage.data;
+		$scope.verifyEmailJson.email=customerEmail;
+		$scope.verifyEmailJson.uname = user_emailChk;
+		//console.log(JSON.stringify($scope.verifyEmailJson));
+		$http({
+		      method  : 'POST',		  
+		      url     : apiURL+'user/emailcheck',
+			  data    : JSON.stringify($scope.verifyEmailJson), 
+			  headers : { 'Content-Type': 'application/json' }
+		     })
+			  .success(function(data) {
+				  console.log(data.msg);
+				  $scope.statusMail=data.msg;
+				  if(data.status == true){
+					  $scope.cmail=true;
+					  $scope.error_mail = {cmail:false};
+				  }
+				  else{
+					  $scope.cmail=false;
+					  $scope.error_mail = {cmail:true};
+				  }
+		      })
+		      .error(function(data, status, headers, config) {
+		    	  //$scope.isSaving=true;
+		    	  console.log(data);
+		    	  if(data.err == "Expired Session")
+    			  {
+            		  $('#createModal').modal('hide');
+    			      expiredSession();
+    			      $localStorage.$reset();
+    			  }
+	        	  else if(data.err == "Invalid User"){
+	        		  $('#createModal').modal('hide');
+	        		  invalidUser();
+	    			  $localStorage.$reset();  
+	        	  }
+		    	  console.log(status);
+		    	  console.log(headers);
+		    	  console.log(config);
+			  });
+	};
+	
+	$scope.verifyOrgname=function(orgName){
+		$scope.verifyOrgnameJson={};
+		$scope.verifyOrgnameJson.token=$localStorage.data;
+		$scope.verifyOrgnameJson.org_id=angular.lowercase(orgName);
+		console.log(JSON.stringify($scope.verifyOrgnameJson));
+		$http({
+		      method  : 'POST',		  
+		      url     : apiURL+'user/orgidcheck',
+			  data    : JSON.stringify($scope.verifyOrgnameJson), 
+			  headers : { 'Content-Type': 'application/json' }
+		     })
+			  .success(function(data) {
+				  console.log(data);
+				  $scope.status=data.msg;
+				  console.log($scope.status);
+				  if(data.status == true){
+					  $scope.orgname=true;
+					  $scope.error = {orgname:false};
+				  }
+				  else{
+					  $scope.orgname=false;
+					  $scope.error = {orgname:true};
+				  }
+		      })
+		      .error(function(data, status, headers, config) {
+		    	  //$scope.isSaving=true;
+		    	  console.log(data);
+		    	  if(data.err == "Expired Session")
+    			  {
+            		  $('#createModal').modal('hide');
+    			      expiredSession();
+    			      $localStorage.$reset();
+    			  }
+	        	  else if(data.err == "Invalid User"){
+	        		  $('#createModal').modal('hide');
+	        		  invalidUser();
+	    			  $localStorage.$reset();  
+	        	  }
+		    	  console.log(status);
+		    	  console.log(headers);
+		    	  console.log(config);
+			  });
+	};
+	
+	$scope.hideErrorCustEditEmail=function(){
+    	$scope.error_mail = {cmail:false};
+    }
+	
 });
 
 
 
 //==============Factory User Create Form===============
 batsfactoryhome.controller('factoryCreate', function($scope, $http, $localStorage) {
+	$scope.onSelectCountry = function () {
+        $scope.state = states;
+	};
 	$scope.reset=function(){
 		$scope.customer={};
 		$scope.customer.password="";
 		$scope.customer.email="";
 		$scope.customer.contact_no="";
 		$scope.error = {cname:false};
-		$scope.createForm.$setPristine();
+		$scope.createForm.$setPristine();  
+		$scope.error_mail = {cmail:false};
+		$scope.state = [];
 	};
-	$scope.verifyUser=function(customerName){
+	$scope.verifyUser=function(customerName){ 
 		$scope.verifyUserJson={};
 		$scope.verifyUserJson.token=$localStorage.data;
 		$scope.verifyUserJson.uname=angular.lowercase(customerName);
@@ -316,10 +420,12 @@ batsfactoryhome.controller('factoryCreate', function($scope, $http, $localStorag
 	};
 	
 	$scope.verifyEmail=function(customerEmail){
+		console.log(customerEmail);
 		$scope.verifyEmailJson={};
 		$scope.verifyEmailJson.token=$localStorage.data;
 		$scope.verifyEmailJson.email=customerEmail;
-		//console.log(JSON.stringify($scope.verifyEmailJson));
+		$scope.verifyEmailJson.uname = null;
+		console.log(JSON.stringify($scope.verifyEmailJson));
 		$http({
 		      method  : 'POST',		  
 		      url     : apiURL+'user/emailcheck',
@@ -453,6 +559,18 @@ batsfactoryhome.controller('factoryCreate', function($scope, $http, $localStorag
     	  console.log(config);
 	  });
     };
+    
+    $scope.hideErrorCustName=function(){
+    	//console.log("yes");
+    	$scope.error = {cname:false};
+    }
+    $scope.hideErrorCustEmail=function(){
+    	$scope.error_mail = {cmail:false};
+    }
+    $scope.hideErrorOrgName=function(){
+    	$scope.error = {orgname:false};
+    }
+    
 });
 
 

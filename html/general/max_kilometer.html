@@ -11,16 +11,16 @@
 				<div class="col-sm-4" id="clearTextGroup">
 					<select id="selectGroup" class="form-control" name="groupList"
 						ng-model="groupname" ng-change="fetchDevList(groupname)">
-						<option value="" selected disabled class="disable_select">-
-							- Select Group - -</option>
+						<option ng-if="groupList.length" value="" selected disabled class="disable_select">-- Select Group - -</option>
+						<option ng-if="!groupList.length"  selected disabled>No Group Available</option>
 						<option ng-repeat="option in groupList" value="{{ option.gid }}">{{option.gname}}</option>
 					</select>
 				</div>
 				<div class="col-sm-4" id="clearTextDevice">
 					<select id="selectDevice" class="form-control" name="devList"
 						ng-model="deviceId" ng-change="deviceSelectedMaxKm()">
-						<option value="" selected disabled class="disable_select">-
-							- Select Vehicle No/Device - -</option>
+						<option ng-if="devList.length" value="" selected disabled class="disable_select">-- Select Vehicle No/Device --</option>
+						<option ng-if="!devList.length" selected disabled> No Device Available</option>
 						<option ng-repeat="option in devList" value="{{ option.devid }}">{{option.vehicle_num.length>0?option.vehicle_num:option.devid}}</option>
 					</select>
 				</div>

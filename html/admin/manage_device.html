@@ -39,8 +39,8 @@
 					<div class="col-sm-4" id="clearTextGroup" align="center">
 						<select id="selectGroup" class="form-control" name="groupList"
 							ng-model="groupname" ng-change="listDevice(groupname)">
-							<option value="" selected disabled class="disable_select">-
-								- Select Group - -</option>
+							<option ng-if="groupList.length" value="" selected disabled class="disable_select">-- Select Group - -</option>
+							<option ng-if="!groupList.length"  selected disabled>No Group Available</option>
 							<option ng-repeat="option in groupList | unique:'gid'"
 								value="{{ option.gid }}">{{option.gname}}</option>
 						</select>
@@ -48,8 +48,8 @@
 					<div class="col-sm-4" id="clearTextDevice" align="center">
 						<select id="selectDevice" class="form-control" name="deviceList"
 							ng-model="deviceId" ng-change="sortDeviceId()">
-							<option value="" selected disabled class="disable_select">-
-								- Select Vehicle No/Device - -</option>
+							<option ng-if="devlistObject.length" value="" selected disabled class="disable_select">-- Select Vehicle No/Device --</option>
+							<option ng-if="!devlistObject.length" selected disabled> No Device Available</option>
 							<option ng-repeat="option in deviceList" value="{{ option }}">{{option}}</option>
 						</select>
 					</div>
@@ -102,7 +102,7 @@
 									<input type="checkbox" id="{{devicedet.devid}}"
 										ng-model="devicedet.selected"
 										ng-change="isLabelChecked(devicedet.devid)"
-										ng-disabled="getDisabledByStatus(devicedet.status) || getDisabledBySimno(devicedet.device_sim_cn)" />
+										ng-disabled="getDisabledByStatus(devicedet.status) || getDisabledBySimno(devicedet.device_sim_cn)" />										
 
 								</div>
 							</div>
@@ -117,12 +117,18 @@
 					<div class="panel panel-default" ng-repeat="dev_un in un_allocated">
 						<div class="panel-heading">
 							<div class="row">
-								<div class="col-sm-3">
+								<div class="col-sm-4">
 									<label>Device Id:</label>
+									<p>{{dev_un.devid}}</p>
 								</div>
-								<div class="col-sm-3">
-									<p>{{dev_un}}</p>
+								<!-- <div class="col-sm-4">
+									<label>Vehicle No</label>
+									<p>{{dev_un.vehicle_num}}</p>
 								</div>
+								<div class="col-sm-4">
+									<label>Vehicle Model</label>
+									<p>{{dev_un.vehicle_model}}</p>
+								</div> -->
 							</div>
 						</div>
 					</div>
@@ -193,7 +199,7 @@
 							<div class="row">
 								<div class="col-sm-6">
 								<div class="form-group floatlabel"
-										ng-class="{ 'has-error' : updateDeviceForm.device_sim_num.$invalid && !updateDeviceForm.device_sim_num.$pristine }">
+										ng-class="{ 'has-error' : updateDeviceForm.device_sim_cn.$invalid && !updateDeviceForm.device_sim_cn.$pristine }">
 										<label ng-show="device.device_sim_cn"
 											class="floatlabeltxt show-hide">Device SIM Number</label>
 										<div class="row">
@@ -202,13 +208,14 @@
 													numbers-only name="device_sim_cn" class="form-control"
 													string-to-number placeholder="Enter Device SIM number"
 													ng-minlength="10" ng-maxlength="10" required ng-disabled="device.device_sim_cn.length>0" />
+													<span class="warningText" ng-if="!device.device_sim_cn.length"><strong class="fs24px">&#9888;</strong> Enter correct sim number else close and re-open modal dialog</span>
 											</div>
 										</div>
 										<p
-											ng-show="updateDeviceForm.device_sim_num.$invalid && !updateDeviceForm.device_sim_num.$pristine"
+											ng-show="updateDeviceForm.device_sim_cn.$invalid && !updateDeviceForm.device_sim_cn.$pristine"
 											class="help-block">Enter Valid Mobile Number.</p>
 										<p
-											ng-show="updateDeviceForm.device_sim_num.$error.minlength && updateDeviceForm.device_sim_num.$error.maxlength"
+											ng-show="updateDeviceForm.device_sim_cn.$error.minlength && updateDeviceForm.device_sim_cn.$error.maxlength"
 											class="help-block">Mobile Number max 10 numbers.</p>
 									</div>
 								</div>

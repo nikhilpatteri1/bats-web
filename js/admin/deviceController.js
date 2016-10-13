@@ -31,7 +31,7 @@ batsAdminHome.controller('deviceController', function($scope, $http,$interval,
 	 * user list grid
 	 */
 	$scope.listDevices=function(){
-		console.log("listDevices");
+		//console.log("listDevices");
 		$scope.user = {
 				"token" : $scope.token
 			};
@@ -45,17 +45,17 @@ batsAdminHome.controller('deviceController', function($scope, $http,$interval,
 				}
 			}).success(function(data) {
 				$scope.dlist = data;
-				//console.log(JSON.stringify($scope.dlist));				
+				console.log(JSON.stringify($scope.dlist));				
 				possible2Activate(data.allocated);
-				console.log($scope.pendingArray.length);
+				//console.log($scope.pendingArray.length);
 				if($scope.pendingArray.length==0){
-					console.log($scope.pendingArray.length);
+					//console.log($scope.pendingArray.length);
 					$interval.cancel(pageRefresh);
 				}
 				else{
 					if(typeof pageRefresh=='undefined'){
 						pageRefresh=$interval(function(){
-							 console.log("call listing devices");
+							 //console.log("call listing devices");
 							 $scope.listDevices();
 						 },10*1000);
 					}					
@@ -67,7 +67,7 @@ batsAdminHome.controller('deviceController', function($scope, $http,$interval,
 					
 				}
 				$scope.un_allocated = $scope.dlist.un_allocated;
-				// console.log(JSON.stringify($scope.un_allocated));
+				console.log(JSON.stringify($scope.un_allocated));
 				if ($scope.un_allocated == 0) {
 					$scope.noDevicesUnAllocated = true;
 				}
@@ -92,7 +92,7 @@ batsAdminHome.controller('deviceController', function($scope, $http,$interval,
 	function possible2Activate(data){
 		angular.forEach(data,function(item){
 			$scope.pendingArray=[];
-			console.log(JSON.stringify(item));
+			//console.log(JSON.stringify(item));
 			if(item.status=="Inactive" && item.device_sim_cn!=""){
 				$scope.ready2activate.push(item);				
 			}
@@ -247,12 +247,17 @@ batsAdminHome.controller('deviceController', function($scope, $http,$interval,
 				 //console.log($scope.selectedDevice);
 				 callActivationAPI($scope.selectedDevice);
 				 //console.log($scope.flag);
+				 $scope.selectedDevice=[];
+				 if($scope.master){
+					 $scope.master=false;
+				 }
 				 pageRefresh=$interval(function(){
 					 console.log("call listing devices");
 					 $scope.listDevices();
 				 },10*1000);				 
 			 }	 
 		 else{
+			 console.log($scope.master);
 			 swal({title:"Select atleast one device",type:"warning"})
 		 }
 	 }  
@@ -282,6 +287,7 @@ batsAdminHome.controller('deviceController', function($scope, $http,$interval,
 					closeOnConfirm : true
 				}, function() {					
 					/*location.reload();*/
+					 $scope.listDevices();
 				});
 			}).error(function(data,status,headers,config){
 				console.log(data.err);

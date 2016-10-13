@@ -4,6 +4,7 @@ batsGeneralHome.controller('vehicleHistory',function($scope, $http, $localStorag
 	$scope.showDatepicker=true;
 	$scope.showTimeSlot=false;
 	$scope.token = $localStorage.data;
+	$scope.todayDate=new Date();
 	var dev={};
 	var maploadedInterval;
 	var directionDisplay;
@@ -176,6 +177,7 @@ batsGeneralHome.controller('vehicleHistory',function($scope, $http, $localStorag
 	
 	$scope.myDateChange=function(myDate){
 		$scope.initialize();
+		$scope.yoData=false;
 		$scope.showTimeSlot=true;
 		$scope.slotCheckjson={};
 		$scope.slotCheckjson.token=$scope.token;
@@ -228,8 +230,9 @@ batsGeneralHome.controller('vehicleHistory',function($scope, $http, $localStorag
 	 * 3 for 12:00 - 17:59
 	 * 4 for 18:00 - 23:59
 	 * */
-	$scope.slotHistory=function(slot_num){
-		if(slot_num==1){			
+	$scope.slotHistory=function(slot_num,noDataVal){
+		if(noDataVal!=0){
+			if(slot_num==1){			
 			historyApiCall(getTimestamp(0,0,0),getTimestamp(5,59,0));
 		}
 		else if(slot_num==2){			
@@ -239,8 +242,11 @@ batsGeneralHome.controller('vehicleHistory',function($scope, $http, $localStorag
 			historyApiCall(getTimestamp(12,0,0),getTimestamp(17,59,0));
 		}
 		else if(slot_num==4){			
+			console.log(getTimestamp(18,0,0),getTimestamp(23,59,0));
 			historyApiCall(getTimestamp(18,0,0),getTimestamp(23,59,0));
 		}
+			}
+		else{swal("Kindly check for available slot(s)");}
 	};
 	function getTimestamp(hr,mins,sec){		
 		var d=new Date($scope.myDate);
@@ -287,7 +293,7 @@ batsGeneralHome.controller('vehicleHistory',function($scope, $http, $localStorag
 				//$("#loading_icon").hide();	
 				$scope.yoData=false;
 				//$scope.noData=true;
-				swal("Kindly check for other slot");
+				swal("Kindly check for available slot(s)");
 				$scope.activeMenu=5;
 			}
 		})

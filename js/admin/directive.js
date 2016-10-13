@@ -136,6 +136,40 @@ batsAdminHome.directive('numbersOnly', function () {
         }
     };
 });
+//validate numbers only
+batsAdminHome.directive('setlimit', function () {
+    return {
+        require: 'ngModel',
+        link: function (scope, element, attr, ngModelCtrl) {
+            function fromUser(text) {
+            	var transformedInput = text.replace(/[^0-9]/g, '');
+                if (transformedInput !== text) {
+                    ngModelCtrl.$setViewValue(transformedInput);
+                    ngModelCtrl.$render();
+                    scope.isNotNumber=true;                    
+                }
+                else{
+                	scope.isNotNumber=false;
+                	if(parseInt(text) <= 200 && parseInt(text) >= 10){
+                		ngModelCtrl.$setValidity('setlimit', true);
+                		console.log(text);
+                		scope.isNotLimit=false;
+                        return text;
+                      } else {
+                    	  console.log(text);
+                    	  scope.isNotLimit=true;
+                    	  ngModelCtrl.$setValidity('setlimit', false);
+                        return ngModelCtrl.$modelValue;
+                      }
+
+                }
+            	
+                return undefined;
+            }
+            ngModelCtrl.$parsers.push(fromUser);
+        }
+    };
+});
 //match password
 batsAdminHome.directive('sameAs', function() {
 	  return {

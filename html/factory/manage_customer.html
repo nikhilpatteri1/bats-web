@@ -123,12 +123,13 @@
 												type="text" name="custname" class="form-control"
 												ng-model="customer.uname"
 												ng-blur="verifyUser(customer.uname)"
+												ng-change="hideErrorCustName()"
 												placeholder="Customer Name"
 												style="text-transform: lowercase" required />
 											<p
 												ng-show="createForm.custname.$invalid && !createForm.custname.$pristine"
 												class="help-block">Customer name is required.</p>
-											<p class="help-block chk_frm_server" ng-show="error.cname">{{status}}</p>
+											<p class="help-block chk_frm_server" ng-hide="(createForm.custname.$invalid && !createForm.custname.$pristine) || !error.cname">{{status}}</p>
 										</div>
 									</div>
 									<div class="col-sm-6">
@@ -165,14 +166,14 @@
 												class="floatlabeltxt show-hide">Customer Email</label> <input
 												type="email" ng-model="customer.email"
 												ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
-												ng-blur="verifyEmail(customer.email)" name="useremail"
+												ng-blur="verifyEmail(customer.email)" ng-change="hideErrorCustEmail()" name="useremail"
 												class="form-control floatlabel" placeholder="Customer Email"
 												required />
 											<p
 												ng-show="createForm.useremail.$invalid && !createForm.useremail.$pristine"
 												class="help-block">Enter a valid email.</p>
-											<p class="help-block chk_frm_server"
-												ng-show="error_mail.cmail">{{statusMail}}</p>
+											<p class="help-block chk_frm_server" 
+											ng-hide="(createForm.useremail.$invalid && !createForm.useremail.$pristine) || !error_mail.cmail">{{statusMail}}</p>
 										</div>
 									</div>
 									<div class="col-sm-6">
@@ -253,12 +254,13 @@
 												class="floatlabeltxt show-hide">Organization Name</label> <input
 												type="text" ng-model="customer.org_id" name="orgName"
 												ng-blur="verifyOrgname(customer.org_id)"
+												ng-change="hideErrorOrgName()"
 												class="form-control floatlabel"
 												placeholder="Organization Name" required />
 											<p
 												ng-show="createForm.orgName.$invalid && !createForm.orgName.$pristine"
 												class="help-block">Enter Organization Name.</p>
-											<p class="help-block chk_frm_server" ng-show="error.orgname">{{status}}</p>
+											<p class="help-block chk_frm_server" ng-hide="(createForm.orgName.$invalid && !createForm.orgName.$pristine) || !error.orgname">{{status}}</p>
 										</div>
 									</div>
 									<div class="col-sm-6">
@@ -345,17 +347,17 @@
 									</div>
 									<div class="col-sm-6">
 										<div class="form-group"
-											ng-class="{ 'has-error' : editForm.email.$invalid && !editForm.email.$pristine }">
+											ng-class="{ 'has-error' : editForm.useremail.$invalid && !editForm.useremail.$pristine }">
 											<label ng-show="edit.email" class="floatlabeltxt show-hide">Edit
 												Email</label> <input type="email" ng-model="edit.email"
 												ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
-												ng-blur="verifyEmail(edit.email)" name="email"
+												ng-blur="verifyEmail(edit.email)" ng-change="hideErrorCustEditEmail()" name="useremail"
 												class="form-control" placeholder="Edit Email" required />
 											<p
-												ng-show="editForm.email.$invalid && !editForm.email.$pristine"
+												ng-show="editForm.useremail.$invalid && !editForm.useremail.$pristine"
 												class="help-block">Enter a valid email.</p>
 											<p class="help-block chk_frm_server"
-												ng-show="error_mail.cmail">{{statusMail}}</p>
+											ng-hide="(editForm.useremail.$invalid && !editForm.useremail.$pristine) || !error_mail.cmail">{{statusMail}}</p>
 										</div>
 									</div>
 								</div>

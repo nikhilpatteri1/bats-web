@@ -72,9 +72,9 @@ batsAdminHome.controller('groupController', function($scope, $http, $localStorag
 				$scope.hide_remove = true;
 			}
 		};  
-		$scope.removeChoice = function() {
-		  var lastItem = $scope.choices.length-1;
-		  $scope.choices.splice(lastItem);
+		$scope.removeChoice = function(val) {
+			console.log(val);	  
+		  $scope.choices.splice(val);
 		  if($scope.choices.length < 4){
 		  $scope.hide_btn = false;
 		  }
@@ -298,6 +298,7 @@ batsAdminHome.controller('groupController', function($scope, $http, $localStorag
 	var contactObject = {};
 	for (var key in cont_num) {
 	if (cont_num.hasOwnProperty(key)) {
+		contactObject = {};
 		contactObject.name=cont_num[key].contact_name;
 		contactObject.phone=cont_num[key].contact_num;
 		contactObject.email=cont_num[key].contact_email;
@@ -381,9 +382,11 @@ batsAdminHome.controller('groupController', function($scope, $http, $localStorag
 				$scope.hide_remove = true;
 			}
 		};  
-		$scope.removeChoice = function() {
-		  var lastItem = $scope.choices.length-1;
-		  $scope.choices.splice(lastItem);
+		$scope.removeChoice = function(val) {
+			console.log(val);
+			console.log($scope.choices);
+		  //var lastItem = $scope.choices.length-1;
+		  $scope.choices.splice(val);
 		  if($scope.choices.length < 4){
 		  $scope.hide_btn = false;
 		  }
@@ -439,14 +442,19 @@ batsAdminHome.controller('groupController', function($scope, $http, $localStorag
 	      		
               geofence = $scope.group.geofence;
               var lat_tot = 0, lg_tot = 0, lat_avg = 0, lg_avg = 0;
-              for(inc=0;inc<geofence.length;inc++){
-				  	lat_tot += Number(geofence[inc].lat);
-					lg_tot +=  Number(geofence[inc].long);
-				  }
-				  lat_avg = lat_tot / geofence.length;
-				  lg_avg = lg_tot / geofence.length;
-				  //centerVal = lat_avg+","+lg_avg;
-				  centerVal = {lat: lat_avg, lng: lg_avg};
+              if(geofence.length == 0){
+          		centerVal = {lat: 21.0000, lng: 78.0000};
+          	  }
+              else{
+            	  for(inc=0;inc<geofence.length;inc++){
+  				  	lat_tot += Number(geofence[inc].lat);
+  					lg_tot +=  Number(geofence[inc].long);
+  				  }
+  				  lat_avg = lat_tot / geofence.length;
+  				  lg_avg = lg_tot / geofence.length;
+  				  //centerVal = lat_avg+","+lg_avg;
+  				  centerVal = {lat: lat_avg, lng: lg_avg};  
+              }
               //console.log(JSON.stringify(centerVal));
 				  
               /*var mobile_no = data.contact_num;
@@ -544,6 +552,8 @@ batsAdminHome.controller('groupController', function($scope, $http, $localStorag
     		var contactObject = {};
     		for (var key in cont_num) {
     		if (cont_num.hasOwnProperty(key)) {
+    			contactObject = {}
+    			//console.log(cont_num[key].contact_name);
     			contactObject.name=cont_num[key].contact_name;
     			contactObject.phone=cont_num[key].contact_num;
     			contactObject.email=cont_num[key].contact_email;
@@ -692,6 +702,7 @@ function showGeofenceMap(){
     $(document).ready(function () {
     	var styleMap = [{"featureType":"administrative","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"landscape","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"color":"#bee4f4"},{"visibility":"on"}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"geometry.fill","stylers":[{"visibility":"on"}]},{"featureType":"transit","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#46bcec"},{"visibility":"on"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"on"},{"color":"#000000"}]}];
     	// Variables and definitions
+    	//console.log(geofence.length);
     	//console.log(centerVal);
     	var map;
     	var mapCanvasId = 'map-canvas';
@@ -857,6 +868,10 @@ $(document).on('click', '#lat_long_geofence', function(){
       	$('#show2').hide();
     	$('#show1').show();
  });
+$(document).on('click', '.clickable', function(){
+	    var effect = $(this).data('effect');
+	        $(this).closest('.panel')[effect]();
+	});
 $scope.back2Form=function(){
 	$('#show2').hide();
 	$('#show1').show();

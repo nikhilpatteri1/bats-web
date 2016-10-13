@@ -6,6 +6,7 @@ batsGeneralHome.controller('vehicleAlarm',function($scope, $http, $localStorage)
 	$scope.myDate = {"start":todayDate,"end":todayDate};
 	$scope.showResultTable = false;
 	$scope.noResultTable = false;
+	$scope.todayDate=new Date();
 	var startTimeStamp;
 	var endTimeStamp;
 	if(typeof $scope.token==="undefined"){

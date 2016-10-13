@@ -6,7 +6,9 @@
 	/** Demo styles for mdCalendar. */
 	
 }
-
+.md-datepicker-invalid {
+    border-bottom-color: #ddd !important;
+}
 .datepickerdemoBasicUsage md-content {
 	
 }
@@ -622,7 +624,7 @@ font-family:Roboto, Arial, sans-serif;font-size: 11px;border-radius:2px;box-shad
 	left:35%;
 	width:600px;	
 	transition: top 1s;
-	z-index:100;
+	z-index:1000;
 }
 .speedometerSection{
 	position: fixed;
@@ -630,7 +632,7 @@ font-family:Roboto, Arial, sans-serif;font-size: 11px;border-radius:2px;box-shad
 	left: 125%; /* This moves it to the bottom (initial state) */	
 	width:300px;	
 	transition: left 1s;
-	z-index:100;
+	z-index:1000;
 }
 .map_content:hover .dropdownSection {
 	top: 20%; /* This moves it to the top (only on hover) */
@@ -674,4 +676,5 @@ font-family:Roboto, Arial, sans-serif;font-size: 11px;border-radius:2px;box-shad
 .geospeed {background-color:#e59305;}
 .normalVehicle {background-color:#043a08;}
 .aliveVehicle {background-color:#0540E5;}
+.loadingImage{width:20px;height:20px}
 /*./Map Screen*/

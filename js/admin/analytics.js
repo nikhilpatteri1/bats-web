@@ -238,7 +238,13 @@ batsAdminHome.controller('batsAnalytics', function($scope, $http,$localStorage) 
 			$scope.analysis.ets=getETS(lastDay);//end timestamp for month set with 12:59PM 
 
 			$scope.analysis.gran=1;
-			distanceAnalysis();
+			if($scope.analysis.sts>$scope.analysis.ets){
+				swal({title:"Kindly select start month less than end Month"});
+			}
+			else{
+				distanceAnalysis();
+			}
+			
 		}
 		
 	};
@@ -314,7 +320,7 @@ batsAdminHome.controller('batsAnalytics', function($scope, $http,$localStorage) 
 	 					'Content-Type' : 'application/json'
 	 				}
 	 			}).success(function(data) {
-		 	//console.log(JSON.stringify(data));
+		 	console.log(JSON.stringify(data));
 		 	plotSpeedGraph(data);
 		 	/*screen.lockOrientation('landscape');
 			$scope.modal.show();*/
@@ -392,7 +398,7 @@ batsAdminHome.controller('batsAnalytics', function($scope, $http,$localStorage) 
 					perDevice.id=dataVal[inc].vehicle_num;
 					perDevice.name=dataVal[inc].vehicle_num;
 					speed_limit=dataVal[inc].speed_limit;
-					var values=dataVal[inc].values;
+					var values=dataVal[inc].values.sort(SortByts);
 					for(var j=0;j<values.length;j++){
 						var speedTSVal=[];
 						speedTSVal.push(values[j].ts,values[j].Velocity);
@@ -410,7 +416,8 @@ batsAdminHome.controller('batsAnalytics', function($scope, $http,$localStorage) 
 						
 				}
 				else{
-					$scope.noanalyticsData=true;
+					//$scope.noanalyticsData=true;
+					swal({title:"Currently Speed Analytics Data Not Available"});
 					$scope.speedAnalytics=false;
 					$scope.distanceanalytics=false;
 					}
@@ -438,11 +445,17 @@ batsAdminHome.controller('batsAnalytics', function($scope, $http,$localStorage) 
 	 					'Content-Type' : 'application/json'
 	 				}
 	 			}).success(function(data) {
+	 				$scope.httpLoading=false;
 	 				console.log(JSON.stringify(data));
 	 				plotDistanceGraph(data);
 	 				/*screen.lockOrientation('landscape');
 					$scope.modal.show();*/
 	 			}).error(function(data, status, headers, config) {
+	 				console.log(data);
+	 				if(data.err=="start time stamp is greater than end time stamp."){
+	 					swal({title:"Kindly select start month less than end Month"});
+	 				}
+	 				$scope.httpLoading=false;
 	 				//alert("distance analysis>>>>>>>>>>>>>"+data.err);
 	 				  if (data.err == "Expired Session") {
 							expiredSession();
@@ -455,7 +468,8 @@ batsAdminHome.controller('batsAnalytics', function($scope, $http,$localStorage) 
 	 				console.log(status);
 	 				console.log(headers);
 	 				console.log(config);
-	 			}).finally(function(){		
+	 			}).finally(function(){
+	 				console.log("finally");
 	 				$scope.httpLoading=false;
 	 			});
 	 }
@@ -579,7 +593,8 @@ batsAdminHome.controller('batsAnalytics', function($scope, $http,$localStorage) 
 				//console.log(JSON.stringify($scope.highchartsDG));
 			}
 			else{
-				$scope.noanalyticsData=true;
+				//$scope.noanalyticsData=true;
+				swal({title:"Currently Distance Analytics Data Not Available"});
 				$scope.speedAnalytics=false;
 				$scope.distanceanalytics=false;
 			}
@@ -612,6 +627,11 @@ batsAdminHome.controller('batsAnalytics', function($scope, $http,$localStorage) 
 			var dt=new Date(ets);
 			var dateVal=dt.getDate();
 			return dateVal;
+		}
+		function SortByts(x,y) {
+			/*console.log(x);
+			console.log(y);*/
+			return ((x.ts == y.ts) ? 0 : ((x.ts > y.ts) ? 1 : -1 ));
 		}
 		// Load the fonts
 		Highcharts.createElement('link', {

@@ -209,7 +209,16 @@ batsfactoryhome.directive('trackActive', function($location) {
 	}
 	return {link: link};
 });
-
-
+/*batsfactoryhome.directive('ngBlur', ['$parse',function($parse){
+	 return function(scope, element, attr) {
+		 	console.log("chec");
+	        var fn = $parse(attr['ngBlur']);
+	        element.on('blur', function(event) {
+	            scope.$apply(function() {
+	                fn(scope, {$event:event});
+	            });
+	        });
+	    };
+}]);*/
 
 

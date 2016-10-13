@@ -18,8 +18,8 @@
 					<select id="selectGroup" class="form-control" name="groupList"
 						ng-model="hist.searchGroupModel"
 						ng-change="fetchDevicelist(hist.searchGroupModel)">
-						<option value="" selected disabled class="disable_select">-
-							- Select Group - -</option>
+						<option ng-if="groupList.length" value="" selected disabled class="disable_select">-- Select Group - -</option>
+						<option ng-if="!groupList.length"  selected disabled>No Group Available</option>
 						<option ng-repeat="option in groupList" value="{{ option.gid }}">{{option.gname}}</option>
 					</select>
 				</div>
@@ -27,21 +27,21 @@
 					<select id="selectDevice" class="form-control" name="deviceList"
 						ng-model="hist.searchDeviceModel"
 						ng-change="deviceSelected(hist.searchDeviceModel)">
-						<option value="" selected disabled class="disable_select">-
-							- Select Vehicle No/Device - -</option>
+						<option ng-if="groupDevice.length" value="" selected disabled class="disable_select">-- Select Vehicle No/Device --</option>
+						<option ng-if="!groupDevice.length" selected disabled> No Device Available</option>
 						<option ng-repeat="option in groupDevice" value="{{ option.devid }}">{{option.vehicle_num.length>0?option.vehicle_num:option.devid}}</option>
 					</select>
 				</div>
 			</div>
 
 
-			<div ng-hide="noData">
+			<div ng-hide="noData" class="mtop10">
 				<h1>Kindly Check For other Dates</h1>
 			</div>
-			<div ng-hide="noNearbyDevice">
+			<div ng-hide="noNearbyDevice" class="mtop10">
 				<h1>No Nearby Devices Available For This Device</h1>
 			</div>
-			<div ng-if="yoData">
+			<div ng-if="yoData" class="mtop10">
 				<div data-tap-disabled="true">
 					<ng-map id="nearbyId" zoom="{{nearByMap.zoom}}"
 						center="{{nearByMap.center}}"

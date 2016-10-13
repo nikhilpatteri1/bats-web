@@ -12,8 +12,8 @@
 					<div class="col-sm-4" id="clearTextGroup">
 						<select id="selectGroup" class="form-control" name="groupList"
 							ng-model="groupname" ng-change="fetchDevicelist(groupname)">
-							<option value="" selected disabled class="disable_select">- -
-								Select Group - -</option>
+							<option ng-if="groupList.length" value="" selected disabled class="disable_select">-- Select Group - -</option>
+							<option ng-if="!groupList.length"  selected disabled>No Group Available</option>
 							<option ng-repeat="option in groupList" value="{{ option.gid }}">{{option.gname}}</option>
 						</select>
 					</div>

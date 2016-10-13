@@ -17,8 +17,8 @@
 				<div class="col-sm-6" id="clearTextGroup">
 					<select id="selectGroup" class="form-control" name="groupList"
 						ng-model="groupname" ng-change="fetchDevicelistHistory(groupname)">
-						<option value="" selected disabled class="disable_select">-
-							- Select Group - -</option>
+						<option ng-if="groupList.length" value="" selected disabled class="disable_select">-- Select Group - -</option>
+						<option ng-if="!groupList.length"  selected disabled>No Group Available</option>
 						<option ng-repeat="option in groupList" value="{{ option.gid }}">{{option.gname}}</option>
 					</select>
 				</div>
@@ -26,8 +26,8 @@
 					<select id="selectDevice" class="form-control" name="deviceList"
 						ng-model="deviceId"
 						ng-change="fetchDeviceDetailHistory(deviceId);activeMenu = '5'">
-						<option value="" selected disabled class="disable_select">-
-							- Select Vehicle No/Device - -</option>
+						<option ng-if="devlistObject.length" value="" selected disabled class="disable_select">-- Select Vehicle No/Device --</option>
+						<option ng-if="!devlistObject.length" selected disabled> No Device Available</option>
 						<option ng-repeat="option in devlistObject" value="{{ option.devid }}">{{option.vehicle_num.length>0?option.vehicle_num:option.devid}}</option>
 					</select>
 				</div>
@@ -39,7 +39,8 @@
 							<div class="form-group">
 								<md-content> <md-datepicker ng-model="myDate"
 									md-placeholder="Enter date"
-									ng-change="myDateChange(myDate);"></md-datepicker>
+									ng-change="myDateChange(myDate);activeMenu = '5'"
+									md-max-date="todayDate"></md-datepicker>
 								</md-content>
 								<section class="legendHist">
 								<p class="slotlegend" style="float:right;">
@@ -52,35 +53,35 @@
 								</span><label class="legendlabel">Selected Slots</label></p>
 								</section>
 							</div>
-							<div class="row" ng-show="showTimeSlot">
+							<div class="row" ng-show="showTimeSlot">							
 								<div class="col-sm-3" align="center"
-									ng-click="slotHistory(1);activeMenu = '1'">
+									ng-click="slotHistory(1,slotA);activeMenu = '1'">
 									<span class="fa-stack fa-1x encircle"
-										ng-class="{encircleactive:activeMenu==='1',encircleavailable:slotA==='1'}"> <strong
+										ng-class="{encircleactive:activeMenu==='1'&&slotB==='1',encircleavailable:slotA==='1'}"> <strong
 										class="fa-stack-1x calendar-text">1</strong>
 									</span>
 									<p>00:00 to 05:59</p>
 								</div>
 								<div class="col-sm-3" align="center"
-									ng-click="slotHistory(2);activeMenu = '2'">
+									ng-click="slotHistory(2,slotB);activeMenu = '2'">
 									<span class="fa-stack fa-1x encircle"
-										ng-class="{encircleactive:activeMenu==='2',encircleavailable:slotB==='1'}"> <strong
+										ng-class="{encircleactive:activeMenu==='2'&&slotB==='1',encircleavailable:slotB==='1'}"> <strong
 										class="fa-stack-1x calendar-text">2</strong>
 									</span>
 									<p>06:00 to 11:59</p>
 								</div>
 								<div class="col-sm-3" align="center"
-									ng-click="slotHistory(3);activeMenu = '3'">
+									ng-click="slotHistory(3,slotC);activeMenu = '3'">
 									<span class="fa-stack fa-1x encircle"
-										ng-class="{encircleactive:activeMenu==='3',encircleavailable:slotC==='1'}"> <strong
+										ng-class="{encircleactive:activeMenu==='3'&&slotC==='1',encircleavailable:slotC==='1'}"> <strong
 										class="fa-stack-1x calendar-text">3</strong>
 									</span>
 									<p>12:00 to 17:59</p>
 								</div>
 								<div class="col-sm-3" align="center"
-									ng-click="slotHistory(4);activeMenu = '4'">
+									ng-click="slotHistory(4,slotD);activeMenu = '4'">
 									<span class="fa-stack fa-1x encircle"
-										ng-class="{encircleactive:activeMenu==='4',encircleavailable:slotD==='1'}"> <strong
+										ng-class="{encircleactive:activeMenu==='4'&&slotD==='1',encircleavailable:slotD==='1'}"> <strong
 										class="fa-stack-1x calendar-text">4</strong>
 									</span>
 									<p>18:00 to 23:59</p>

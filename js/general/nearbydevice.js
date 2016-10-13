@@ -25,7 +25,7 @@ batsGeneralHome.controller('batsNearbyDevices', function($scope, $http, NgMap,
 		"searchGroupModel" : ""
 	};
 	$scope.hist.searchDeviceModel = "";
-	//$scope.token = token;
+	// $scope.token = token;
 	$scope.noData = true;
 	$scope.yoData = false;
 	$scope.noNearbyDevice = true;
@@ -135,7 +135,7 @@ batsGeneralHome.controller('batsNearbyDevices', function($scope, $http, NgMap,
 	}
 	$scope.deviceSelected = function(deviceId) {
 		$scope.httpLoading=true;
-		//console.log(deviceId);
+		// console.log(deviceId);
 		closeInfoWindows();
 		directionsDisplay.setDirections({
 			routes : []
@@ -143,7 +143,7 @@ batsGeneralHome.controller('batsNearbyDevices', function($scope, $http, NgMap,
 		$scope.nearbyJSON = {};
 		$scope.nearbyJSON.token = $scope.token;
 		$scope.nearbyJSON.devid = deviceId;
-		//console.log(JSON.stringify($scope.nearbyJSON));
+		// console.log(JSON.stringify($scope.nearbyJSON));
 		$http({
 			method : 'POST',
 			url : apiURL + 'app/get_nearby_devices',
@@ -173,14 +173,14 @@ batsGeneralHome.controller('batsNearbyDevices', function($scope, $http, NgMap,
 				invalidUser();
 				$localStorage.$reset();
 			}
-			//alert(data.err);
+			// alert(data.err);
 			swal({title:data.data});
 			console.log(data);
 			console.log(status);
 			console.log(headers);
 			console.log(config);
 		}).finally(function(){	
-			//console.log($scope.httpLoading);
+			// console.log($scope.httpLoading);
 			$scope.httpLoading=false;
 		});
 		/**
@@ -216,85 +216,107 @@ batsGeneralHome.controller('batsNearbyDevices', function($scope, $http, NgMap,
 			}
 			lt_avg = lat_tot / nearData.length;
 			lg_avg = lg_tot / nearData.length;
-			/*var centerVal = lt_avg + "," + lg_avg;
-			$scope.nearByMap = {
-				center : centerVal,
-				zoom : 12
-			};*/
+			/*
+			 * var centerVal = lt_avg + "," + lg_avg; $scope.nearByMap = {
+			 * center : centerVal, zoom : 12 };
+			 */
 			$scope.nearByMap.devices = nearObj;
-			//console.log(JSON.stringify($scope.nearByMap.devices));
+			// console.log(JSON.stringify($scope.nearByMap.devices));
 			var bounds = new google.maps.LatLngBounds();
 			var dev_count=$scope.nearByMap.devices.length;
 			for(var j=0;j<dev_count;j++){
-				//console.log($scope.nearByMap.devices[j].lat);
+				// console.log($scope.nearByMap.devices[j].lat);
 				 var latlng = new google.maps.LatLng($scope.nearByMap.devices[j].lat,$scope.nearByMap.devices[j].lg);
 				 bounds.extend(latlng);
 			}
 	    		    			    		          
 			 NgMap.getMap({id : 'nearbyId'}).then(function(map) {
-				 //console.log(bounds.getCenter());
+				 // console.log(bounds.getCenter());
 			      map.setCenter(bounds.getCenter());
 			      map.fitBounds(bounds);
 			    });
 		}
 	};
-	/*$scope.showInfo=function(event,dev){
-		infowindow = new google.maps.InfoWindow();
-		infowindow.setContent("<h3> It's your device</h3>");
-		var center = new google.maps.LatLng(dev.lat, dev.lg);
-		infowindow.setPosition(center);
-		infowindow.open($scope.map);
-		infowindows.push(infowindow);
-		console.log("check");
-		$scope.map.showInfoWindow('myInfoWindow',this);
-	}*/
+	/*
+	 * $scope.showInfo=function(event,dev){ infowindow = new
+	 * google.maps.InfoWindow(); infowindow.setContent("<h3> It's your device</h3>");
+	 * var center = new google.maps.LatLng(dev.lat, dev.lg);
+	 * infowindow.setPosition(center); infowindow.open($scope.map);
+	 * infowindows.push(infowindow); console.log("check");
+	 * $scope.map.showInfoWindow('myInfoWindow',this); }
+	 */
 	$scope.showInfo = function(event, dev) {
-		infowindows=[];
-		//console.log(JSON.stringify(dev));
+		closeInfoWindows();
+		// console.log(JSON.stringify(dev));
 		infowindow = new google.maps.InfoWindow();
-		var center = new google.maps.LatLng(dev.lat, dev.lg);
-		if (dev.dist == "Your Device") {
-			infowindow.setContent("<h3> It's your device</h3>");
-		} else {
 			$scope.destlt = dev.lat;
 			$scope.destlg = dev.lg;
-			calcRoute();
-			var geocoder = new google.maps.Geocoder();
-			var latlng = new google.maps.LatLng(dev.lat, dev.lg);
-			var formatted_address = '';
-			var flag = 0;
-			var request = {
-				latLng : latlng
-			};
-			geocoder.geocode(request, function(data, status) {
-				if (status == google.maps.GeocoderStatus.OK) {
+			var source=$scope.startlt+","+$scope.startlg;
+			var destination=$scope.destlt+","+$scope.destlg;			
+			calcDistance(source,destination,function(){
+				// console.log($scope.distance);
+				if(dev.dist == "Your Device"){setInfoWindow(dev,0);}
+				else{setInfoWindow(dev,1);}
+				var vehicleDistance=$scope.distance;
+				if(vehicleDistance>2){
+					/*----------
+					 * 		showing the distance with driving mode if more than 2 KM distance
+					 * 		between two devices/vehicles	
+					 * -------------*/
+					calcRoute("DRIVING");
+				}
+				else{
+					/*----------
+					 * 		showing the distance with walking mode if less than 2 KM distance
+					 * 		between two devices/vehicles	
+					 * -------------*/
+					calcRoute("WALKING");
+				}
+			});	
+				
+	};
+	function setInfoWindow(dev,count){
+		var geocoder = new google.maps.Geocoder();
+		var center = new google.maps.LatLng(dev.lat, dev.lg);
+		var latlng = new google.maps.LatLng(dev.lat, dev.lg);
+		var formatted_address = '';
+		var flag = 0;
+		var request = {
+			latLng : latlng
+		};
+		geocoder.geocode(request, function(data, status) {
+			if (status == google.maps.GeocoderStatus.OK) {
+				if(count>0){
 					if (data[0] != null) {
 						// alert("address is: " + data[0].formatted_address);
-						//console.log(data[0].formatted_address);
+						// console.log(data[0].formatted_address);
 						infowindow.setContent('<label>Device ID:' + dev.devid
 								+ '</label><br/><label>Vehicle No:' + dev.vehicle_num
 								+ '</label><br/><label>Vehicle Model:' + dev.veh_model
 								+ '</label><br/><p>Distance :'
-								+ Math.ceil(dev.dist)
-								+ 'Km</p><br/><label>Address</label><p>'
+								+ $scope.distance
+								+ '</p><br/><label>Address</label><p>'
 								+ data[0].formatted_address + '</p>');
 					} else {
 						// alert("No address available");
 						cb(formatted_address = "No address available");
 					}
 				}
-			});
-		}
-		NgMap.getMap({
-			id : 'nearbyId'
-		}).then(function(map) {
-			infowindow.setPosition(center);
-			infowindow.open($scope.map);		
-			infowindows.push(infowindow);
+				else{
+					infowindow.setContent('<label>Its Your Vehicle</label>');
+				}
+				
+				NgMap.getMap({
+					id : 'nearbyId'
+				}).then(function(map) {
+					infowindow.setPosition(center);
+					infowindow.open($scope.map);
+					infowindows.push(infowindow);
+				});
+			}
 		});
-		//console.log(infowindows);		
-	};
-	function calcRoute() {
+	}
+	function calcRoute(travel_mode) {
 		NgMap.getMap({
 			id : 'nearbyId'
 		}).then(function(map) {
@@ -305,16 +327,43 @@ batsGeneralHome.controller('batsNearbyDevices', function($scope, $http, NgMap,
 				routes : []
 			});
 			directionsDisplay.setMap($scope.map);
-			displayDirection(directionsService, directionsDisplay);
+			displayDirection(directionsService, directionsDisplay,travel_mode);
 		});
 	}
-	function displayDirection(directionsService, directionsDisplay) {
+	 function calcDistance(source,destination,callback){
+ 		 // *********DISTANCE AND DURATION**********************//
+ 		console.log(source,destination);
+ 		var distance;
+ 	    var service = new google.maps.DistanceMatrixService();
+ 	    service.getDistanceMatrix({
+ 	        origins: [source],
+ 	        destinations: [destination],
+ 	        travelMode: google.maps.TravelMode.DRIVING,
+ 	        unitSystem: google.maps.UnitSystem.METRIC,
+ 	        avoidHighways: false,
+ 	        avoidTolls: false
+ 	    }, function (response, status) {
+ 	        if (status == google.maps.DistanceMatrixStatus.OK && response.rows[0].elements[0].status != "ZERO_RESULTS") {
+ 	            distance = response.rows[0].elements[0].distance.text;       
+ 	           // alert( distance);
+ 	           $scope.distance=distance;
+ 	          console.log($scope.distance);
+ 	         callback();
+ 	        } else {
+ 	            // alert("Unable to find the distance via road.");
+ 	           $scope.distance="Unable to find the distance via road.";
+ 	          callback();
+ 	        }
+ 	    });
+ 	    
+ 	}
+	function displayDirection(directionsService, directionsDisplay,travel_mode) {
 		var start = $scope.startlt + "," + $scope.startlg;
 		var end = $scope.destlt + "," + $scope.destlg;
 		directionsService.route({
 			origin : start,
 			destination : end,
-			travelMode : google.maps.TravelMode.DRIVING
+			travelMode : google.maps.TravelMode[travel_mode]
 		}, function(response, status) {
 			if (status === google.maps.DirectionsStatus.OK) {
 				directionsDisplay.setOptions({
@@ -322,7 +371,7 @@ batsGeneralHome.controller('batsNearbyDevices', function($scope, $http, NgMap,
 				});
 				directionsDisplay.setDirections(response);
 			} else {
-				window.alert('Directions request failed due to ' + status);
+				alert('Directions request failed due to ' + status);
 			}
 		});
 	}
@@ -339,15 +388,15 @@ batsGeneralHome.controller('batsNearbyDevices', function($scope, $http, NgMap,
 	 * On URL change clear map infowindow and path
 	 */
 	$scope.$on('$locationChangeStart', function() {
-		 alert("test");
+		 // alert("test");
 		directionsDisplay.setDirections({
 			routes : []
 		});
 		closeInfoWindows();
 	});
 	/**
-	 * Select Group/Device dropdown based on jquery 
-	* */	
+	 * Select Group/Device dropdown based on jquery
+	 */	
 		$(document).ready(function() {
 			$.getScript('../assets/select_filter/select2.min.js', function() {
 				$("#selectGroup").select2({});

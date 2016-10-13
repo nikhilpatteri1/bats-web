@@ -43,7 +43,7 @@ batsGeneralHome.controller("GeneralMaxKmCtrl",function($http,$scope,$filter,$loc
 	 })
 	  .success(function(data) {
 	  $scope.groupList = data.glist;
-	  console.log(JSON.stringify($scope.groupList));
+	  //console.log(JSON.stringify($scope.groupList));
 	  })
 	  .error(function(data, status, headers, config) {
 		  console.log(data.err);
@@ -137,6 +137,8 @@ else if(endDateMaxKm == ""){
 }
 else {
 	$scope.httpLoading=true;
+	startDateMaxKmError.style.display = 'none';
+	endDateMaxKmError.style.display = 'none';
 	startDate(startDateMaxKm);
 	endDate(endDateMaxKm);
 	                    $scope.devIdJson = {};
@@ -184,6 +186,13 @@ else {
 						  		swal({ 
 									   title: "Start time is greater than end time",
 								  	   text: "Change the start date and try!",   
+								  	   closeOnConfirm: true }, 
+								  	   function(){   
+								  }); 
+						  	  }
+						  	else if(data.err == "sts should not be greater than current time"){
+						  		swal({ 
+									   title: "Start time is greater than Current time",								  	      
 								  	   closeOnConfirm: true }, 
 								  	   function(){   
 								  }); 

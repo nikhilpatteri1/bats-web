@@ -1,3 +1,4 @@
+var general_emailChk;
 /** Group Creation Controller 
 */
 batsAdminHome.controller('userController', function($scope, $http, $localStorage) {
@@ -74,7 +75,8 @@ $scope.verifyUser=function(userName){
 		$scope.verifyEmailJson={};
 		$scope.verifyEmailJson.token=$scope.token;
 		$scope.verifyEmailJson.email=userEmail;
-		//console.log(JSON.stringify($scope.verifyEmailJson));
+		$scope.verifyEmailJson.uname = general_emailChk;
+		console.log(JSON.stringify($scope.verifyEmailJson));
 		$http({
 		      method  : 'POST',		  
 		      url     : apiURL+'user/emailcheck',
@@ -141,7 +143,7 @@ $scope.verifyUser=function(userName){
     $scope.reset=function(){
     	$scope.user={};
     	$scope.createUserForm.$setPristine();
-    	//$scope.selection = {}; 
+    	$scope.selection = {}; 
     	$('.showUpdateUser').hide();
     	$scope.error_mail = {"umail":false};
     };
@@ -422,6 +424,7 @@ $scope.verifyUser=function(userName){
 				                      })
 				                 	  .success(function(data) {
 				             			  $scope.userUpdate = data;
+				             			  general_emailChk = data.uname;
 				                          //console.log(JSON.stringify($scope.userUpdate));
 				                          var editGroupList = data.glist;
 				                          var Result_editGroupList = [];
@@ -534,6 +537,7 @@ $scope.verifyUser=function(userName){
 	 * 2)Show Create Title & Hide Update Title
 	 * 3)Show password field*/      
 		$scope.showCreateBtn = function() {
+		general_emailChk = "";
 		  $scope.btn = {
 			create: true,
 			update: false

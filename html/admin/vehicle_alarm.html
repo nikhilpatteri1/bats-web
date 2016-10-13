@@ -11,16 +11,16 @@
 				<div class="col-sm-6" id="clearTextGroup">
 					<select id="selectGroup" class="form-control" name="groupList"
 						ng-model="groupname" ng-change="fetchDevList(groupname)">
-						<option value="" selected disabled class="disable_select">-
-							- Select Group - -</option>
+						<option ng-if="groupList.length" value="" selected disabled class="disable_select">-- Select Group - -</option>
+						<option ng-if="!groupList.length"  selected disabled>No Group Available</option>
 						<option ng-repeat="option in groupList" value="{{ option.gid }}">{{option.gname}}</option>
 					</select>
 				</div>
 				<div class="col-sm-6" id="clearTextDevice">
 					<select id="selectDevice" class="form-control" name="devList"
 						ng-model="deviceId" ng-change="deviceSelectedAlarm()">
-						<option value="" selected disabled class="disable_select">-
-							- Select Vehicle No/Device - -</option>
+						<option ng-if="devList.length" value="" selected disabled class="disable_select">-- Select Vehicle No/Device --</option>
+						<option ng-if="!devList.length" selected disabled> No Device Available</option>
 						<option ng-repeat="option in devList" value="{{ option.devid }}">{{option.vehicle_num.length>0?option.vehicle_num:option.devid}}</option>
 					</select>
 				</div>
@@ -35,14 +35,14 @@
 				<h5 class="label_Style">Start Date</h5>
 				<div class="form-group">
 					<md-content> <md-datepicker ng-model="myDate.start"
-						md-placeholder="Enter date"></md-datepicker> </md-content>
+						md-placeholder="Enter date" md-max-date="todayDate"></md-datepicker> </md-content>
 				</div>
 			</div>
 			<div class="col-sm-6">
 				<h5 class="label_Style">End Date</h5>
 				<div class="form-group">
 					<md-content> <md-datepicker ng-model="myDate.end"
-						md-placeholder="Enter date"></md-datepicker> </md-content>
+						md-placeholder="Enter date" md-max-date="todayDate"></md-datepicker> </md-content>
 				</div>
 			</div>
 

@@ -4,13 +4,14 @@ batsAdminHome.controller('vehicleHistory', function($scope, $http, $localStorage
 	$scope.showDatepicker=true;
 	$scope.showTimeSlot=false;
 	$scope.token = $localStorage.data;
+	$scope.todayDate=new Date();
 	var dev={};
 	var maploadedInterval;
 	var directionDisplay;
     var directionsService;
 	var map;
 	var historypolyline = null;
-	//$("#loading_icon").hide();
+	// $("#loading_icon").hide();
 	if(typeof $scope.token==="undefined"){
 		swal({ 
 			   title: "Un Authorized Access",
@@ -24,7 +25,7 @@ batsAdminHome.controller('vehicleHistory', function($scope, $http, $localStorage
 		  });
 		 
 	}
-	//function initialize() {
+	// function initialize() {
 	$scope.initialize=function () {		
 		var styleMap = [{"featureType":"administrative","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"landscape","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"color":"#bee4f4"},{"visibility":"on"}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"geometry.fill","stylers":[{"visibility":"on"}]},{"featureType":"transit","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#46bcec"},{"visibility":"on"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"on"},{"color":"#000000"}]}];
 	    var myOptions = {
@@ -33,7 +34,7 @@ batsAdminHome.controller('vehicleHistory', function($scope, $http, $localStorage
 	        mapTypeId: google.maps.MapTypeId.ROADMAP
 	    };
 	    address = 'India';
-	    //address = 'Trinidad and Tobago'
+	    // address = 'Trinidad and Tobago'
 	    geocoder = new google.maps.Geocoder();
 	    geocoder.geocode( { 'address': address}, function(results, status) {
 	     map.fitBounds(results[0].geometry.viewport);
@@ -43,30 +44,30 @@ batsAdminHome.controller('vehicleHistory', function($scope, $http, $localStorage
 	            myOptions);
 	    google.maps.event.addListenerOnce(map, 'idle', function(){
 	        // do something only the first time the map is loaded
-	    	//console.log("map loaded");
+	    	// console.log("map loaded");
 	    });
 	    google.maps.event.addListenerOnce(map, 'tilesloaded', function(){
-	        //this part runs when the mapobject is created and rendered
-	    	//console.log("Map Loaded");
+	        // this part runs when the mapobject is created and rendered
+	    	// console.log("Map Loaded");
 	        google.maps.event.addListenerOnce(map, 'tilesloaded', function(){
-	            //this part runs when the mapobject shown for the first time
-	        	//console.log("Map with tiles and polylines loaded one time");        	
+	            // this part runs when the mapobject shown for the first time
+	        	// console.log("Map with tiles and polylines loaded one time");
 	        	
-	        	//console.log("Hide Loading");
+	        	// console.log("Hide Loading");
 	        });
 	    });
 	    google.maps.event.addListener(map, 'tilesloaded', function() {
 	    	  // Visible tiles loaded!
-	    	//console.log("map loaded with tiles every time");
-	    	//$("#loading_icon").hide();
-	    	//$scope.httpLoading=true;
+	    	// console.log("map loaded with tiles every time");
+	    	// $("#loading_icon").hide();
+	    	// $scope.httpLoading=true;
 	    	});
 	}
 	
 
 	/**
 	 * on load fetch and fill group drop down menu
-	 * */
+	 */
 	$scope.admingroup = {};
 	$scope.admingroup.token = $scope.token;
 	// console.log($scope.admingroup);
@@ -117,7 +118,7 @@ batsAdminHome.controller('vehicleHistory', function($scope, $http, $localStorage
 		$('#clearTextDevice span.select2-chosen').empty();  
 	    $('#clearTextDevice span.select2-chosen').text("- - Select Vehicle No/Device - -");
 		// document.getElementById("groupNamelist").blur();
-		//console.log(groupID);
+		// console.log(groupID);
 	    $scope.initialize();
 	    $scope.yoData=false;
 		$scope.groupdevicejson = {};
@@ -143,7 +144,7 @@ batsAdminHome.controller('vehicleHistory', function($scope, $http, $localStorage
 			for ( var i = 0; i < dev_len; i++) {
 				$scope.deviceList.push(devlist[i].devid);
 			}
-			//console.log($scope.deviceList);
+			// console.log($scope.deviceList);
 		}).error(function(data, status, headers, config) {
 			if (data.err == "Expired Session") {
 				$('#updateDeviceModal').modal('hide');
@@ -164,7 +165,7 @@ batsAdminHome.controller('vehicleHistory', function($scope, $http, $localStorage
 	};
 	/**
 	 * add selected device for fetching history
-	 * */
+	 */
 	$scope.fetchDeviceDetailHistory=function(devID){
 		$scope.showDatepicker=false;
 		$scope.showTimeSlot=false;
@@ -176,10 +177,11 @@ batsAdminHome.controller('vehicleHistory', function($scope, $http, $localStorage
 	};
 	
 	$scope.myDateChange=function(myDate){
+		$scope.yoData=false;
 		$scope.httpLoading=true;
 		$scope.initialize();
 		$scope.showTimeSlot=true;
-		//check for vehicle history available slots
+		// check for vehicle history available slots
 		$scope.slotCheckjson={};
 		$scope.slotCheckjson.token=$scope.token;
 		$scope.slotCheckjson.devid=dev.devid;
@@ -195,7 +197,7 @@ batsAdminHome.controller('vehicleHistory', function($scope, $http, $localStorage
 			data:JSON.stringify($scope.slotCheckjson),	
 			headers:{'Content-Type' : 'application/json'}
 		}).success(function(data) {
-				//console.log(data.values);	
+				console.log(data.values);
 				$scope.slotA=data.values[0].data ? '1' : '0';
 				$scope.slotB=data.values[1].data ? '1' : '0';
 				$scope.slotC=data.values[2].data ? '1' : '0';
@@ -228,13 +230,12 @@ batsAdminHome.controller('vehicleHistory', function($scope, $http, $localStorage
 	};
 	
 	/**
-	 * 1 for 00:00 - 05:59
-	 * 2 for 06:00 - 11:59
-	 * 3 for 12:00 - 17:59
-	 * 4 for 18:00 - 23:59
-	 * */
-	$scope.slotHistory=function(slot_num){
-		if(slot_num==1){			
+	 * 1 for 00:00 - 05:59 2 for 06:00 - 11:59 3 for 12:00 - 17:59 4 for 18:00 -
+	 * 23:59
+	 */
+	$scope.slotHistory=function(slot_num,noDataVal){
+		if(noDataVal!=0){
+			if(slot_num==1){			
 			historyApiCall(getTimestamp(0,0,0),getTimestamp(5,59,0));
 		}
 		else if(slot_num==2){			
@@ -244,8 +245,12 @@ batsAdminHome.controller('vehicleHistory', function($scope, $http, $localStorage
 			historyApiCall(getTimestamp(12,0,0),getTimestamp(17,59,0));
 		}
 		else if(slot_num==4){			
+			console.log(getTimestamp(18,0,0),getTimestamp(23,59,0));
 			historyApiCall(getTimestamp(18,0,0),getTimestamp(23,59,0));
 		}
+			}
+		else{swal("Kindly check for available slot(s)");}
+		
 	};
 	function getTimestamp(hr,mins,sec){		
 		var d=new Date($scope.myDate);
@@ -265,7 +270,7 @@ batsAdminHome.controller('vehicleHistory', function($scope, $http, $localStorage
 	};
 	function historyApiCall(sts,ets){
 		$scope.httpLoading=true;
-		//$("#loading_icon").show();			
+		// $("#loading_icon").show();
 		$scope.deviceHistoryjson = {};
 		$scope.deviceHistoryjson.token = $scope.token;
 		$scope.deviceHistoryjson.devid = dev.devid;
@@ -282,18 +287,18 @@ batsAdminHome.controller('vehicleHistory', function($scope, $http, $localStorage
 					}
 				}).success(function(data) {
 			$scope.histData = data;
-			//console.log(JSON.stringify(data.values));
+			console.log(JSON.stringify(data.values));
 			if($scope.histData.values.length>=1){
 				$scope.httpLoading=false;
 				displayHistory();				
 			}
 			else{
 				$scope.httpLoading=false;
-				//$("#loading_icon").hide();	
+				// $("#loading_icon").hide();
 				$scope.yoData=false;
-				//$scope.noData=true;
+				// $scope.noData=true;
 				$scope.initialize();
-				swal("Kindly check for other slot (or) date");
+				swal("Kindly check for available slot(s)");
 				$scope.activeMenu=5;
 			}
 		})
@@ -326,9 +331,9 @@ batsAdminHome.controller('vehicleHistory', function($scope, $http, $localStorage
 		}
 	}
 	/**
-	1) Plot on Map History Path
-	2) Display on Table
-	-----------------------------------------------------------------------*/
+	 * 1) Plot on Map History Path 2) Display on Table
+	 * -----------------------------------------------------------------------
+	 */
 	function displayHistory() {
 		$scope.yoData=true;
 		$scope.noData=false;
@@ -343,7 +348,7 @@ batsAdminHome.controller('vehicleHistory', function($scope, $http, $localStorage
 		for(var inc = 0; inc < hist_len; inc++){
 		  	executeHisory(histData[inc].lat,histData[inc].long,histData[inc].Velocity,histData[inc].ts,
 		  			function(historyStatus){
-                //console.log(JSON.stringify(historyStatus));
+                // console.log(JSON.stringify(historyStatus));
                 var arr = {};
     			var plottedObj={};
     			arr.lat = Number(historyStatus.latitude);
@@ -360,22 +365,21 @@ batsAdminHome.controller('vehicleHistory', function($scope, $http, $localStorage
 		  	
 		  }
 		function executeHisory(latitude,longitude,velocity,timestamp,mapHistory){
-			//if(velocity>5){
+			// if(velocity>5){
 				var historyStatus={"latitude":latitude,"longitude":longitude,"velocity":velocity,"timestamp":timestamp};
 				mapHistory(historyStatus);
-			/*}
-			else{
-				console.log("less than 5");
-			}*/
+			/*
+			 * } else{ console.log("less than 5"); }
+			 */
 		}
-		//console.log(JSON.stringify(obj));
-		/*console.log(JSON.stringify($scope.plottedData));*/
-		//console.log(JSON.stringify(coordinates));
+		// console.log(JSON.stringify(obj));
+		/* console.log(JSON.stringify($scope.plottedData)); */
+		// console.log(JSON.stringify(coordinates));
 		
 		if(polyPathArray.length == 0){
-			//console.log("chk");
+			// console.log("chk");
 			$scope.yoData=false;
-			//swal("No not available. Kindly check for another date");
+			// swal("No not available. Kindly check for another date");
 		}
 		else{
 			console.log(JSON.stringify(polyPathArray));
@@ -397,7 +401,7 @@ batsAdminHome.controller('vehicleHistory', function($scope, $http, $localStorage
 		    	  historypolyline.setMap(null);
 		    	  historypolyline=null;
 		      }
-		      //console.log(historypolyline);
+		      // console.log(historypolyline);
 		      historypolyline = new google.maps.Polyline(polylineoptns);	      
 		      
 		    var bounds = new google.maps.LatLngBounds();		      		    		
@@ -410,8 +414,8 @@ batsAdminHome.controller('vehicleHistory', function($scope, $http, $localStorage
 		}
 	}
 	function SortByts(x,y) {
-		//console.log(x);
-		//console.log(y);
+		// console.log(x);
+		// console.log(y);
 		return ((x.ts == y.ts) ? 0 : ((x.ts > y.ts) ? 1 : -1 ));
 	}
 	$(document).ready(function() {
@@ -424,7 +428,8 @@ batsAdminHome.controller('vehicleHistory', function($scope, $http, $localStorage
 	});
 	/**
 	 * get Date formatted date based on TIMESTAMP
-	 -----------------------------------------------------------------------*/
+	 * -----------------------------------------------------------------------
+	 */
 	$scope.showTime = function(ts) {
 		 var d = new Date(Number(ts));	 	
 	 	  var hours = d.getHours();
@@ -439,7 +444,7 @@ batsAdminHome.controller('vehicleHistory', function($scope, $http, $localStorage
 	
 	
 	$scope.givelt=function(lt,lg){
-		//alert("success");
+		// alert("success");
 		var geocoder = new google.maps.Geocoder();
 		var latLng = new google.maps.LatLng(lt,lg);
 		geocoder.geocode({       

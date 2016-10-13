@@ -18,8 +18,8 @@
 									<div class="col-sm-5" id="clearTextGroup">
 										<select id="selectGroup" class="form-control" name="groupList"
 											ng-model="groupname" ng-change="fetchDevicelist(groupname)">
-											<option value="" selected disabled class="disable_select">-
-												- Select Group - -</option>
+											<option ng-if="groupList.length" value="" selected disabled class="disable_select">-- Select Group - -</option>
+											<option ng-if="!groupList.length"  selected disabled>No Group Available</option>
 											<option ng-repeat="option in groupList"
 												value="{{ option.gid }}">{{option.gname}}</option>
 										</select>
@@ -29,14 +29,14 @@
 										<select id="selectDevice" class="form-control"
 											name="deviceList" ng-model="deviceId"
 											ng-change="fetchDeviceDetail(gid,deviceId)">
-											<option value="" selected disabled class="disable_select">-
-												- Select Vehicle No/Device - -</option>
+											<option ng-if="devlistObject.length" value="" selected disabled class="disable_select">-- Select Vehicle No/Device --</option>
+											<option ng-if="!devlistObject.length" selected disabled> No Device Available</option>
 											<option ng-repeat="option in devlistObject" value="{{ option.devid }}">{{option.vehicle_num.length>0?option.vehicle_num:option.devid}}</option>
 										</select>
 									</div>
 									<div class="col-sm-2">							
-										<img alt="" src="../../images/fullscreen.png" ng-click="activeFull='1'" ng-show="activeFull!='1'" width="50px" height="50px">										 											
-										<img alt="" src="../../images/close.png" ng-click="activeFull='0'" ng-show="activeFull!='0'" width="40px" height="40px">
+										<img alt="" src="../../images/fullscreen.png" ng-click="resizeMap();activeFull='1'" ng-show="activeFull!='1'" width="50px" height="50px">										 											
+										<img alt="" src="../../images/close.png" ng-click="shrinkMap();activeFull='0'" ng-show="activeFull!='0'" width="40px" height="40px">
 									</div>
 								</div>
 							</div>
@@ -112,6 +112,7 @@
 										class="traffic_layer_btn select_traffic"
 										ng-click="hideTrafficLayer()" ng-hide="hideTrafficLayerBtn">Traffic
 										Layer</a>
+									<span class="reCenter" ng-hide="singleDeviceZoomed"	ng-click="reCenterDevice()">RE - CENTER</span>
 								</div>
 							</div>
 						</div>

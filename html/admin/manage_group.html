@@ -181,11 +181,15 @@
 											class="floatlabeltxt show-hide">Speed Limit in Kmph.</label>
 										<input type="text" ng-model="group.speed_limit"
 											pattern="(100|([1-9][0-9][0-9])|([1-9][0-9])|[1-9])"
-											name="speed_limit" class="form-control" numbers-only
+											name="speed_limit" class="form-control" numbers-only setlimit
 											placeholder="Speed Limit in Kmph" required />
-										<p
+										<!-- <p
 											ng-show="createGroupForm.speed_limit.$invalid && !createGroupForm.speed_limit.$pristine"
-											class="help-block">Speed Limit is required in number.</p>
+											class="help-block">Speed Limit is required in number.</p> -->
+										<div ng-messages="deviceSettings.speedlimit.$error" style="color:maroon" role="alert">
+											<div ng-if="isNotNumber">Kindly enter numbers only</div>
+											<div ng-if="isNotLimit">Kindly set speed limit starting 10 kmph till 200 Kmph </div>
+										</div>	
 									</div>
 								</div>
 							</div>
@@ -214,8 +218,13 @@
 							<div class="row">
 								<div class="col-sm-12" data-ng-repeat="group in choices">
 									<div class="panel panel-default">
-										<div class="panel-heading dynamicBlockHeading">Group Contact Person
-											{{$index+1}}</div>
+										<div class="panel-heading dynamicBlockHeading">
+											 <h3 class="panel-title">Group Contact Person {{$index+1}}
+											 <span class="pull-right clickable" data-effect="fadeOut" ng-click="removeChoice($index)"><i class="fa fa-times"></i></span>
+											 </h3>
+                    								<!-- Watch Out: Here We must use the effect name in the data tag-->
+                    						
+										</div>
 										<div class="panel-body dynamicBlockBody">
 											<div class="row">
 												<div class="col-sm-4">
@@ -291,14 +300,14 @@
 											</div>
 										</div>
 									</div>
-									<a href="" class="remove" ng-show="$last && hide_remove"
-										ng-click="removeChoice()">Remove</a>
+									<!-- <a href="" class="remove" ng-show="$last && hide_remove"
+										ng-click="removeChoice()">Remove</a> -->
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-sm-6 col-sm-offset-6">
 									<a href="" class="addfields" ng-hide="hide_btn"
-										ng-click="addNewChoice()">Add another mobile number</a>
+										ng-click="addNewChoice()">Add another contact detail</a>
 								</div>
 							</div>
 							<div class="row">
@@ -355,7 +364,7 @@
 										ng-model="geoChoiceRadio" class="form-control" />No
 								</div>
 							</div>
-							<div class="row" ng-show="IsgeoFence('1')">
+							<div class="row" ng-if="IsgeoFence('1')">
 								<div class="col-sm-6 col-sm-offset-3" align="center">
 									<div class="form-group">
 										<a class="btn btn-primary btn_anchor" id="showMap"
@@ -363,8 +372,8 @@
 											map</a>
 									</div>
 								</div>
-							</div>
-							<div class="row" ng-show="IsgeoFence('2')">
+							</div>							
+							<div class="row" ng-if="IsgeoFence('2')">
 								<div class="col-sm-12">
 									<div class="form-group">
 										<div class="row">

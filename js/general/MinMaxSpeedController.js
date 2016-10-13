@@ -125,7 +125,7 @@ batsGeneralHome.controller("GeneralMinMaxSpeedCtrl",function($http,$scope,$filte
   * Onsubmit of Min/Max Speed from values 
 */
 $scope.submitMinMaxSpeed = function() {
-	$scope.httpLoading=true;
+	//$scope.httpLoading=true;
 	//alert("Yes");
 	var startDateMinMax = document.getElementById('startDateMinMax').value;
 	var endDateMinMax = document.getElementById('endDateMinMax').value;
@@ -146,6 +146,9 @@ else if(endDateMinMax == ""){
 }
 else{
 	//alert("4");
+	$scope.httpLoading=true;
+	startDateMinMaxError.style.display = 'none';
+	endDateMinMaxError.style.display = 'none';
 	startDate(startDateMinMax);
 	endDate(endDateMinMax);
 	                    $scope.devIdJson = {};
@@ -184,6 +187,7 @@ else{
 							max_speed(maxSpeed);
 						})
 						 .error(function(data, status, headers, config) {
+							 $scope.httpLoading=false;
 							 console.log(data.err);
 							  if(data.err == "Expired Session")
 							  {
@@ -202,10 +206,19 @@ else{
 								  	   function(){   
 								  }); 
 						  	  }
+						  	else if(data.err == "sts should not be greater than current time"){
+						  		swal({ 
+									   title: "Start time is greater than Current time",								  	      
+								  	   closeOnConfirm: true }, 
+								  	   function(){   
+								  }); 
+						  	  }
 							console.log(status);
 							console.log(headers);
 							console.log(config);
-						 });
+						 }).finally(function(){		
+								$scope.httpLoading=false;
+							});
 }
 };
 
