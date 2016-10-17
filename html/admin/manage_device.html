@@ -28,7 +28,7 @@
 				<div class="row margin40">
 					<div class="col-sm-3" id="clearTextDeviceStatus" align="center">
 						<select id="selectStatus" class="form-control" name="statusList"
-							ng-model="statusId">
+							ng-model="statusId" ng-change="listDevice()">
 							<option value="" selected disabled class="disable_select">-
 								- - Device Staus - -</option>
 							<option value="Activated">Activated Devices</option>
@@ -48,8 +48,8 @@
 					<div class="col-sm-4" id="clearTextDevice" align="center">
 						<select id="selectDevice" class="form-control" name="deviceList"
 							ng-model="deviceId" ng-change="sortDeviceId()">
-							<option ng-if="devlistObject.length" value="" selected disabled class="disable_select">-- Select Vehicle No/Device --</option>
-							<option ng-if="!devlistObject.length" selected disabled> No Device Available</option>
+							<option ng-if="deviceList.length" value="" selected disabled class="disable_select">-- Select Vehicle No/Device --</option>
+							<option ng-if="!deviceList.length" selected disabled> No Device Available</option>
 							<option ng-repeat="option in deviceList" value="{{ option }}">{{option}}</option>
 						</select>
 					</div>
@@ -107,7 +107,8 @@
 								</div>
 							</div>
 						</div>
-					</div>
+					</div>	
+					<h1 ng-if="deviceNotAvailable">No device Available for this selection !...</h1>				
 				</div>
 				<h2 ng-show="noDevicesAllocated">No Devices Allocated</h2>
 			</div>
