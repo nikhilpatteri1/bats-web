@@ -1,0 +1,1160 @@
+<div class="col-sm-10">
+	<h2 class="heading_title">Manage Driver</h2>
+	<div class="bgloading" ng-show="httpLoading">
+		<div class="bigbar">
+			<h1 class="titleClass">loading!...</h1>
+		</div>
+	</div>
+	<div class="row" ng-init="listDrivers()">
+		<div class="col-sm-12">
+			<h4 class="search_heading">Driver List</h4>
+		</div>
+	</div>
+	<div class="search_customer_results">
+		<div class="row">
+			<div class="col-sm-12">
+				<!-- search driver -->
+				<div class="row makeMB20">
+					<div class="col-sm-12">
+						<h3>Search Driver<span class="help-txt">(based on phone or name)</span></h3>
+						<input type="text" class="form-control" ng-model="searchDriver" ng-blur="countChild()" placeholder="Search by name or phone number"/>
+					</div>
+				</div>
+				<!-- ./search driver -->
+				<!-- listing driver -->
+				<div class="row">
+					<div class="col-sm-12">
+						<ul id="driverUlist" class="driverlist" ng-repeat="driverdetail in driverlist | driverFilter:searchDriver">		
+						<!-- http://jsfiddle.net/mrajcok/mwrLc/ -->
+							<li>
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<div class="row">
+											<!-- image of driver/avatar -->
+											<div class="col-sm-2">
+												<img src="{{driverdetail.image_src.length>0?driverdetail.image_src:'../images/driver.png'}}"
+													class="img-responsive img-circle img-thumbnail iconImageSm" />
+											</div>
+											<!-- ./image of driver/avatar -->
+											<!-- Driver Name -->
+											<div class="col-sm-3">
+												<label>Driver Name</label>
+												<p>{{driverdetail.name}}</p>
+											</div>
+											<!-- ./Driver Name -->
+											<!-- Driver Phone -->
+											<div class="col-sm-3">
+												<label>Driver Phone</label>
+												<p>{{driverdetail.contact_no}}</p>
+											</div>
+											<!-- Driver Phone -->
+											<!-- Driver Edit -->
+											<div class="col-sm-3">
+												<p class="alignIcons">
+													<a href="#" class="edit_icon"
+														ng-click="fetchdriverInfo(driverdetail.driver_id)" data-toggle="modal"
+														data-target="#updateUserModal"><i class="fa fa-pencil"></i></a>
+													<a href="#" class="delete_icon"
+														ng-click="deleteDriver(driverdetail.driver_id)"><i
+														class="fa fa-trash"></i></a>
+												</p>
+											</div>
+											<!-- Driver Delete -->
+										</div>
+									</div>
+								</div>
+							</li>							
+						</ul>
+						<div ng-if="!dataAvailable && searchCriteria.length" class="help-warning">No drivers available for this search criteria !!!</div>
+						<p ng-show="!driverlist.length" class="help-warning">No driver created yet</p>
+					</div>
+				</div>
+				<!-- ./listing driver -->
+			</div>
+		</div>
+		<a href="#" class="btn btn-primary add_new_driver" data-toggle="modal"
+			data-target="#driverCreateModal"> <i class="fa fa-plus"></i></a>
+	</div>
+</div>
+
+
+
+<!-- Create Driver Modal -->
+<div id="driverCreateModal" class="modal fade" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-body">
+				<form id="driverCreateform" name="driverform" class="form driverformInput">
+					<div class="col-sm-2 col-sm-offset-10" align="right">
+						<a class="close" ng-disabled="driverform.$invalid" ng-click="reset()" data-dismiss="modal">&times;</a>
+					</div>
+					<h1 class="titleHead">Create New Driver</h1>
+					<div class="row">
+						<div class="col-sm-12">
+							<!-- Driver Info -->
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<label>Driver Info</label>
+								</div>
+								<div class="panel-body">
+									<div class="row">
+										<div class="col-sm-3">
+											<div class="image-upload">
+												<div ng-hide="imagepath" class="hoverImage">
+													<i class="fa fa-upload" aria-hidden="true"
+														ng-click="triggerInput()"></i>
+												</div>
+												<div ng-show="imagepath" class="hoverImage">
+													<i class="fa fa-refresh" aria-hidden="true"
+														ng-click="triggerInput()"></i>
+												</div>
+												<img src="../../images/loading_icon.gif" ng-show="imageUploading" class="loading_icon img-responsive img-circle img-thumbnail"/>												
+												<img ng-hide="imageUploading" ng-src="{{driver.image_src.length>0?driver.image_src:'../images/driver.png'}}" class="img-responsive img-circle img-thumbnail uploadImage"/>
+												<!-- <label for="file-input"> <img
+													ng-src="{{imagepath.length>0?imagepath:'../images/driver.png'}}"
+													class="img-responsive img-circle img-thumbnail uploadImage" />
+												</label> -->
+												<!-- <input id="file-input" type="file"/>  -->
+												<input accept="image/*" type="file" name="file"
+													id="imageInput"
+													onchange="angular.element(this).scope().uploadFile(this.files)" />
+												<p ng-show="onlyImage" class="help-block error-help">Only image files allowed !...</p>	
+												<p ng-show="onlyFiletype" class="help-block error-help">Only file type ('.jpg','.jpeg','.png')</p>
+												<p class="help-block">Only file type ('.jpg','.jpeg','.png') are allowed</p>
+											</div>
+										</div>
+										<div class="col-sm-9">
+											<div class="row">
+												<!-- Driver Name -->
+												<div class="col-sm-6">
+													<div class="form-group requiredfield"
+														ng-class="{ 'has-error' : driverform.driverName.$invalid && !driverform.driverName.$pristine }">
+														<label ng-show="driver.name"
+															class="floatlabeltxt show-hide">Enter Driver Name</label>
+														<input type="text" class="form-control" name="driverName"
+															ng-model="driver.name" placeholder="Enter Driver Name"
+															ng-maxlength="25"
+															required />
+														<p
+															ng-show="driverform.driverName.$touched && driverform.driverName.$invalid"
+															class="help-block error-help">Driver name is
+															required.</p>
+														<p
+															ng-show="driverform.driverName.$error.maxlength && !driverform.driverName.$pristine"
+															class="help-block">Max length 25</p>	
+														
+													</div>
+												</div>
+												<!-- Driver Contact -->
+												<div class="col-sm-6">
+													<div class="form-group requiredfield"
+														ng-class="{ 'has-error' : driverform.driverContact.$invalid && !driverform.driverContact.$pristine}">
+														<label ng-show="driver.contact"
+															class="floatlabeltxt show-hide">Enter Driver
+															Contact</label> <input type="text" class="form-control"
+															ng-model="driver.contact" name="driverContact"
+															ng-blur="verifyContact('new',driver.contact)"
+															ng-minlength="10" ng-maxlength="10" numbers-only
+															placeholder="Enter Driver Contact" required="required" />															
+														<p
+															ng-show="driverform.driverContact.$touched && driverform.driverContact.$invalid"
+															class="help-block error-help">Driver Contact is
+															required.</p>														
+														<p
+															ng-show="driverform.driverContact.$error.minlength && !driverform.driverContact.$pristine"
+															class="help-block">Min digits 10</p>
+														<p
+															ng-show="driverform.driverContact.$error.maxlength && !driverform.driverContact.$pristine"
+															class="help-block">Max digits 10</p>
+														<p
+															ng-show="driverform.driverContact.$error.contAvailable && !driverform.driverContact.$pristine"
+															class="help-block">Contact already associated with other driver</p>		
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<!-- Driver License -->
+												<div class="col-sm-6">
+													<div class="form-group requiredfield" ng-class="{'has-error':driverform.driverlicense.$invalid && !driverform.driverlicense.$pristine}">
+														<label ng-show="driver.license"
+															class="floatlabeltxt show-hide">Enter Driving
+															License No</label> <input type="text" class="form-control" name="driverlicense"															
+															ng-model="driver.license"
+															ng-minlength="15"
+															ng-maxlength="15"
+															ng-blur="verifyDL('new',driver.license)"
+															placeholder="Enter Driver License" required/>
+														<p ng-show="driverform.driverlicense.$touched && driverform.driverlicense.$invalid" class="help-block error-help">Driver License is required </p>
+														<p ng-show="driverform.driverlicense.$error.minlength && !driverform.driverlicense.$pristine" class="help-block">Min '15' Alpha Numeric required!...</p>
+														<p ng-show="driverform.driverlicense.$error.maxlength && !driverform.driverlicense.$pristine" class="help-block">Max '15' Alpha Numeric required!...</p>
+														<p ng-show="driverform.driverlicense.$error.dlavailable" class="help-block error-help">Driver License is already associated</p>
+															
+													</div>
+												</div>
+												<!-- DOB -->
+												<div class="col-sm-6" ng-class="{'has-error':minorAge}">
+													<!-- <label ng-show="driver.dob"
+														class="floatlabeltxt show-hide">Select Date (date of birth)</label>
+													<input type="date" class="form-control" ng-model="driver.dob"
+														placeholder="DOB" /> -->
+													<div class='input-group date' id='dobPicker'>
+														<input type='text' class="form-control" id="dobPicker"
+															ng-model="driver.dob" readonly="readonly" ng-required="false" placeholder="DOB"/> <span
+															id="dobAddon" class="input-group-addon"> <span
+															class="glyphicon glyphicon-calendar"> </span>
+														</span>
+													</div>
+													<div ng-if="minorAge" class="help-block">Age of
+														driver is minor</div>
+
+												</div>
+											</div>
+											<div class="row makeMB10">
+												<!-- Driver Password -->
+												<div class="col-sm-6">
+												<!-- http://stackoverflow.com/questions/19605150/regex-for-password-must-be-contain-at-least-8-characters-least-1-number-and-bot -->
+												<div class="form-group requiredfield" ng-class="{'has-error':driverform.driverPassword.$invalid && !driverform.driverPassword.$pristine}">
+													<label ng-show="driver.password"
+														class="floatlabeltxt show-hide">Enter Password</label> <input
+														name="driverPassword"
+														type="password" class="form-control"
+														ng-model="driver.password"
+														ng-pattern="/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/"
+														placeholder="Enter Driver Password" required/>
+													<p ng-show="driverform.driverPassword.$touched && driverform.driverPassword.$invalid" class="help-block error-help">Driver Password is required </p>	
+													<div ng-show="driverform.driverPassword.$error.pattern" class="help-block error-help">Password help
+													<ul class="helplist"><li>At least <strong>one letter,</strong></li><li>At least <strong>one number,</strong></li><li>At least <strong>8 characters long.</strong></li></ul> 
+													</div>													
+												</div>
+												</div>
+												<!-- Driver Salary -->
+												<div class="col-sm-6">
+												<div class="form-group" ng-class="{'has-error':driverform.driverSalary.$invalid && !driverform.driverSalary.$pristine}">
+													<label ng-show="driver.salary"														
+														class="floatlabeltxt show-hide">Enter Salary</label> <input
+														type="text" class="form-control" ng-model="driver.salary"
+														name="driverSalary" numbers-only
+														placeholder="Enter Driver Salary" ng-required="false"/>													
+												</div>
+														
+												</div>
+											</div>
+											<div class="row">
+												<!-- Driver Languages Known -->
+												<div class="col-sm-12"
+													ng-class="{'has-error':alreadySelected || max5language}">
+													<div class="langSection">
+														<select id="langSelect" ng-model="selectedLanguage"
+															ng-change="formObj(selectedLanguage)"
+															class="form-control" ng-required="false">
+															<option selected disabled>Select language</option>
+															<option ng-repeat="option in lang">{{option.name}}</option>
+														</select>
+													</div>
+													<div ng-if="alreadySelected" class="help-block">Already
+														Selected</div>		
+													<div ng-if="max5language" class="help-block">Max 5
+														Languages</div>
+													<div class="form-control selectionSpace">
+														<div class="selectedItem" ng-repeat="item in langArray">
+															{{item}}<span ng-click="removeSelected(item)"> x</span>
+														</div>
+													</div>
+													<!-- 	<label ng-show="driver.languages"
+														class="floatlabeltxt show-hide">Enter Languages
+														Known</label>
+													<textarea class="form-control" ng-model="driver.languages"
+														placeholder="Enter Languages Known">
+														</textarea> -->
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- ./Driver Info -->
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<!-- Basic Info -->
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<label>Basic Info</label>
+								</div>
+								<div class="panel-body extraPadding">
+									<div class="row">
+										<div class="col-sm-12">
+											<div class="row">
+												<!-- Employment Type -->
+												<div class="col-sm-6 txtRight">
+													<label class="driveChoice requiredfield">Employment Type</label>
+												</div>
+												<!-- Employment Type Choices -->
+												<div class="col-sm-6">
+													<div class="form-group" ng-class="{'has-error':driverform.eType.$invalid && !driverform.eType.$pristine}">
+														<label class="radio-inline">
+														<input type="radio"
+														name="eType" class="" value="Permanent"
+														ng-model="driver.etype" checked="checked" required/><span
+														class="msgTxt">Permanent</span></label> <label
+														class="radio-inline"><input type="radio"
+														name="eType" class="" value="Contract"
+														ng-model="driver.etype" required/><span class="msgTxt">Contract</span></label>
+														<p ng-show="driverform.eType.$touched && driverform.eType.$invalid" class="help-block error-help">Employee type is required</p>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<!-- Driver Blood Group -->
+												<div class="col-sm-6">
+												<div class="form-group requiredfield" ng-class="{'has-error':driverform.driverbloodgp.$invalid && !driverform.driverbloodgp.$pristine}">
+													<label ng-show="driver.blood"
+														class="floatlabeltxt show-hide">Enter Bloop Group</label>
+													<input type="text" class="form-control"
+														name="driverbloodgp"
+														ng-maxlength="6"
+														ng-model="driver.blood" placeholder="Enter Bloop Group" required/>
+													<p ng-show="driverform.driverbloodgp.$touched && driverform.driverbloodgp.$invalid" class="help-block error-help">Blood group is required</p>
+													<p ng-if="driverform.driverbloodgp.$error.maxlength && !driverform.driverbloodgp.$pristine" class="help-block">Max 10 charcters</p>
+												</div>
+												</div>
+												<!-- Driver Aadhar No -->
+												<div class="col-sm-6">
+												<div class="form-group" ng-class="{'has-error':driverform.driverAadhaar.$invalid && !driverform.driverAadhaar.$pristine}">
+													<label ng-show="driver.aadhar"
+														class="floatlabeltxt show-hide">Enter Aadhaar Card
+														No</label> <input type="text" class="form-control"
+														name="driverAadhaar"
+														ng-maxlength="12"
+														ng-model="driver.aadhar" placeholder="Enter Aadhar No" ng-required="false"/>													
+													<p ng-if="driverform.driverAadhaar.$error.maxlength && !driverform.driverAadhaar.$pristine" class="help-block">Max 12 charcters</p>
+												</div>
+												</div>
+											</div>
+											<div class="row">
+												<!-- Driver Emergencey Contact -->
+												<div class="col-sm-6">
+													<div class="form-group requiredfield" ng-class="{'has-error':driverform.driverEmergency.$invalid && !driverform.driverEmergency.$pristine}">
+														<label ng-show="driver.emergency_cn"
+														class="floatlabeltxt show-hide">Enter Emergency
+														Contact</label> <input type="text" class="form-control"
+														name="driverEmergency"
+														ng-model="driver.emergency_cn"
+														ng-minlength="10" ng-maxlength="10" numbers-only
+														placeholder="Enter Emergency Contact No" required/>
+														<p ng-show="driverform.driverEmergency.$touched && driverform.driverEmergency.$invalid" class="help-block error-help">Emergency Contact is required </p>														
+														<p
+															ng-show="driverform.driverEmergency.$error.minlength && !driverform.driverEmergency.$pristine"
+															class="help-block">Min digits 10</p>
+														<p
+															ng-show="driverform.driverEmergency.$error.maxlength && !driverform.driverEmergency.$pristine"
+															class="help-block">Max digits 10</p>
+													</div>
+													
+												</div>
+												<!-- Driver Education -->
+												<div class="col-sm-6">
+												<div class="form-group requiredfield" ng-class="{'has-error':driverform.driverEducation.$invalid && !driverform.driverEducation.$pristine}">
+												<label ng-show="driver.education"
+														class="floatlabeltxt show-hide">Enter Education
+														Details</label> <input type="text" class="form-control"
+														name="driverEducation"
+														ng-model="driver.education"
+														ng-maxlength="10"
+														placeholder="Enter Highest Education " ng-required="false"/>
+														<p
+															ng-show="driverform.driverEducation.$error.maxlength && !driverform.driverEducation.$pristine"
+															class="help-block">Max characters 10</p>
+												</div>													
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- ./Basic Info -->
+						</div>
+						<div class="col-sm-6">
+							<!-- Present Address -->
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<label>Driver Present Address</label>
+									<p>
+										<input type="checkbox" id="confirmAddress"
+											name="confirmAddress" ng-model="driver.confirmAddress"
+											ng-click="usePresentAddress(driver.confirmAddress)" /><span
+											class="msgTxt">Check if present / permanent address
+											are same</span>
+									</p>
+								</div>
+								<div class="panel-body">
+									<div class="row">
+										<div class="col-sm-12">
+											<div class="row">
+												<!-- Driver Street -->
+												<div class="col-sm-12">
+													<div class="form-group requiredfield" ng-class="{'has-error':driverform.driverStreet.$invalid && !driverform.driverStreet.$pristine}">
+														<label ng-show="driver.street"
+														class="floatlabeltxt show-hide">Enter Street
+														Details</label> <input type="text" class="form-control"
+														name="driverStreet"
+														ng-maxlength="100"
+														ng-model="driver.street"
+														placeholder="Enter Street Details" required	/>
+														<p ng-show="driverform.driverStreet.$touched && driverform.driverStreet.$invalid" class="help-block error-help">Street details required</p>
+														<p ng-show="driverform.driverStreet.$error.maxlength && !driverform.driverStreet.$pristine" class="help-block">Max characters 100</p>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<!-- Driver City -->
+												<div class="col-sm-6">
+												<div class="form-group requiredfield" ng-class="{'has-error':driverform.driverCity.$invalid && !driverform.driverCity.$pristine}">
+													<label ng-show="driver.city"
+														class="floatlabeltxt show-hide">Enter City</label> <input
+														name="driverCity"
+														ng-maxlength="50"
+														type="text" class="form-control" ng-model="driver.city"
+														placeholder="Enter City" required/>
+													<p ng-show="driverform.driverCity.$error.maxlength && !driverform.driverCity.$pristine" class="help-block">Max characters 50</p>
+													<p ng-show="driverform.driverCity.$touched && driverform.driverCity.$invalid" class="help-block error-help">City is required</p>
+												</div>
+													
+												</div>
+												<!-- Driver Pincode -->
+												<div class="col-sm-6">
+													<div class="form-group requiredfield" ng-class="{'has-error':driverform.driverPincode.$invalid && !driverform.driverPincode.$pristine}">
+														<label ng-show="driver.pincode"
+														class="floatlabeltxt show-hide">Enter Pincode</label> <input
+														type="text" class="form-control"
+														name="driverPincode" 
+														ng-model="driver.pincode"
+														placeholder="Enter Pincode"
+														ng-maxlength="6" 
+														numbers-only
+														required/>
+														<p ng-show="driverform.driverPincode.$touched && driverform.driverPincode.$invalid" class="help-block error-help">Pincode is requried</p>
+														<p ng-show="driverform.driverPincode.$error.maxlength && !driverform.driverPincode.$pristine" class="help-block">Max digits 6</p>
+													</div>
+													
+												</div>
+											</div>
+											<div class="row">
+												<!-- Driver Country -->
+												<!-- <div class="col-sm-6">
+													<label ng-show="driver.country"
+														class="floatlabeltxt show-hide">Enter Country</label> <input
+														type="text" class="form-control" ng-model="driver.country"
+														placeholder="Enter Country" />
+												</div> -->
+												<div class="col-sm-6">
+													<div class="form-group requiredfield" ng-class="{'has-error':driverform.driverCountry.$invalid && !driverform.driverCountry.$pristine}">
+														<label ng-show="driver.country"
+															class="floatlabeltxt show-hide">Country</label> <select
+															ng-model="driver.country" name="driverCountry"
+															class="form-control floatlabel floatlabel_select"
+															ng-change="onSelectCountry()" required>
+															<option selected disabled value="">- - Select
+																Country - -</option>
+															<option selected value="{{driver.country}}" ng-show>{{driver.country}}</option>
+															<option ng-repeat="c in country" value="{{c}}">{{c}}</option>
+														</select>
+														<p ng-show="driverform.driverCountry.$touched && driverform.driverCountry.$invalid" class="help-block error-help">Country is requried</p>
+													</div>
+												</div>
+												<!-- Driver State -->
+												<!-- <div class="col-sm-6">
+													<label ng-show="driver.state"
+														class="floatlabeltxt show-hide">Enter State</label> <input
+														type="text" class="form-control" ng-model="driver.state"
+														placeholder="Enter State" />
+												</div> -->
+												<div class="col-sm-6">
+													<div class="form-group requiredfield" ng-class="{'has-error':driverform.driverState.$invalid && !driverform.driverState.$pristine}">
+														<label ng-show="driver.state"
+															class="floatlabeltxt show-hide">State</label> <select
+															ng-model="driver.state" name="driverState"
+															class="form-control floatlabel floatlabel_select"
+															required>
+															<option selected disabled value="">- - Select
+																State - -</option>
+															<option ng-repeat="s in states" value="{{s}}">{{s}}</option>
+														</select>
+														<p ng-show="driverform.driverState.$touched && driverform.driverState.$invalid" class="help-block error-help">State is requried</p>														
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- ./Present Address -->
+						</div>
+					</div>
+					<div id="permanentAddr">
+						<div class="row animate-show" ng-hide="driver.confirmAddress">
+							<div class="col-sm-12">
+								<!-- Permanent Address -->
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<label>Driver Permanent Address</label>
+									</div>
+									<div class="panel-body">
+										<div class="row">
+											<div class="col-sm-12">
+												<div class="row">
+													<!-- Driver Street -->
+													<div class="col-sm-12">
+													<div class="form-group" ng-class="{'has-error':driverform.driverpStreet.$invalid && !driverform.driverpStreet.$pristine}">
+															<label ng-show="driver.pstreet"
+															class="floatlabeltxt show-hide">Enter Street
+															Details</label> <input type="text" class="form-control"
+															name="driverpStreet"
+															ng-model="driver.pstreet"
+															ng-maxlength="100"
+															placeholder="Enter Street Details" ng-required="false"/>
+															<p ng-show="driverform.driverpStreet.$error.maxlength && !driverform.driverpStreet.$pristine" class="help-block">Max characters 100</p>
+													</div>
+														
+													</div>
+												</div>
+												<div class="row">
+													<!-- Driver City -->
+													<div class="col-sm-6">
+													<div class="form-group" ng-class="{'has-error':driverform.driverpCity.$invalid && !driverform.driverpCity.$pristine}">
+														<label ng-show="driver.pcity"
+															class="floatlabeltxt show-hide">Enter City</label> <input
+															type="text" class="form-control" ng-model="driver.pcity"
+															name="driverpCity"
+															ng-maxlength="50"
+															placeholder="Enter City" ng-required="false"/>
+															<p ng-show="driverform.driverpCity.$error.maxlength && !driverform.driverpCity.$pristine" class="help-block">Max characters 50</p>
+													</div>
+													</div>
+													<!-- Driver Pincode -->
+													<div class="col-sm-6">
+													<div class="form-group" ng-class="{'has-error':driverform.driverpPincode.$invalid && !driverform.driverpPincode.$pristine}">
+														<label ng-show="driver.ppincode"
+															class="floatlabeltxt show-hide">Enter Pincode</label> <input
+															type="text" class="form-control"
+															ng-model="driver.ppincode"
+															name="driverpPincode"
+															ng-maxlength="6"
+															numbers-only
+															placeholder="Enter Pincode" ng-required="false"/>
+															<p ng-show="driverform.driverpPincode.$error.maxlength && !driverform.driverpPincode.$pristine" class="help-block">Max digits 6</p>
+														</div>	
+													</div>
+												</div>
+												<div class="row">
+													<!-- Driver Country -->
+													<div class="col-sm-6">													
+														<div class="form-group">
+															<label ng-show="driver.pcountry"
+																class="floatlabeltxt show-hide">Country</label> <select
+																ng-model="driver.pcountry" name="pcountry"
+																class="form-control floatlabel floatlabel_select"
+																ng-change="onSelectCountry()" ng-required="false">
+																<option selected disabled value="">- - Select
+																	Country - -</option>
+																<option ng-repeat="c in country" value="{{c}}">{{c}}</option>
+															</select>
+														</div>
+														<!-- <label ng-show="driver.pcountry"
+															class="floatlabeltxt show-hide">Enter Country</label> <input
+															type="text" class="form-control"
+															ng-model="driver.pcountry"
+															ng-bind="driver.confirmAddress ? driver.country : driver.pcountry"
+															placeholder="Enter Country" /> -->
+													</div>
+
+													<!-- Driver State -->
+													<div class="col-sm-6">
+														<div class="form-group">
+															<label ng-show="driver.pstate"
+																class="floatlabeltxt show-hide">State</label> <select
+																ng-model="driver.pstate" name="pstate"
+																class="form-control floatlabel floatlabel_select"
+																ng-required="false">
+																<option selected disabled value="">- - Select
+																	State - -</option>
+																<option ng-repeat="s in states" value="{{s}}">{{s}}</option>
+															</select>
+														</div>
+														<!-- <label ng-show="driver.pstate"
+															class="floatlabeltxt show-hide">Enter State</label> <input
+															type="text" class="form-control" ng-model="driver.pstate"
+															ng-bind="driver.confirmAddress ? driver.state : driver.pstate"
+															placeholder="Enter State" /> -->
+													</div>
+												</div>
+
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- ./Permanent Address -->
+							</div>
+						</div>
+					</div>
+					<!-- Create driver button -->
+					<div><p ng-if="driverform.$invalid" class="requirefield help-block error-help">* fields are mandatory</p></div>
+					<div class="row">
+						<div class="col-sm-12 txtCenter">
+							<button class="btn btn-primary btn-lg"
+								ng-click="submitCreateDriverForm()"
+								ng-disabled="driverform.$invalid">Create</button>
+						</div>
+					</div>
+					<!-- ./Create driver button -->
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- ./Create Driver Modal -->
+<!-- Update Driver Modal -->
+<div id="driverUpdateModal" class="modal fade" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-body">
+				<form name="driverupdateform" class="form driverformInput">
+					<div class="col-sm-2 col-sm-offset-10" align="right">
+						<a class="close" ng-click="reset()" data-dismiss="modal">&times;</a>
+
+					</div>
+					<h1 class="titleHead">Update Driver</h1>
+					<div class="row">
+						<div class="col-sm-12">
+							<!-- Driver Info -->
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<label>Driver Info</label>
+								</div>
+								<div class="panel-body">
+									<div class="row">
+										<div class="col-sm-3">
+											<div class="image-upload">
+												<div ng-hide="imagepath" class="hoverImage">
+													<i class="fa fa-upload" aria-hidden="true"
+														ng-click="triggerInput()"></i>
+												</div>
+												<div ng-show="imagepath" class="hoverImage">
+													<i class="fa fa-refresh" aria-hidden="true"
+														ng-click="triggerInput()"></i>
+												</div>
+												
+												<label for="file-input"> 
+												<img src="../../images/loading_icon.gif" ng-show="imageUploading" class="loading_icon img-responsive img-circle img-thumbnail"/>												
+												<img ng-hide="imageUploading"ng-src="{{driver.image_src.length>0?driver.image_src:'../images/driver.png'}}" class="img-responsive img-circle img-thumbnail uploadImage"/>																								
+												</label>
+												<!-- <input id="file-input" type="file"/>  -->
+												<input accept="image/*" type="file" name="file"
+													id="imageInput"
+													onchange="angular.element(this).scope().uploadFile(this.files)" />
+												<p ng-show="onlyImage" class="help-block error-help">Only image files allowed !...</p>	
+												<p ng-show="onlyFiletype" class="help-block error-help">Only file type ('.jpg','.jpeg','.png')</p>
+												<p class="help-block">Only file type ('.jpg','.jpeg','.png') are allowed</p>	
+											</div>
+										</div>
+										<div class="col-sm-9">
+											<div class="row">
+												<!-- Driver Name -->
+												<div class="col-sm-6">
+													<div class="form-group requiredfield"
+														ng-class="{ 'has-error' : driverupdateform.driverName.$invalid && !driverupdateform.driverName.$pristine }">
+														<label ng-show="driver.name"
+															class="floatlabeltxt show-hide">Enter Driver Name</label>
+														<input type="text" class="form-control" name="driverName"
+															ng-model="driver.name" placeholder="Enter Driver Name"
+															ng-maxlength="25"
+															required />
+															<input type="hidden" ng-model="driver.driver_id"/>
+														<p
+															ng-show="driverupdateform.driverName.$touched && driverupdateform.driverName.$invalid"
+															class="help-block error-help">Driver name is
+															required.</p>
+														<p
+															ng-show="driverupdateform.driverName.$error.maxlength && !driverupdateform.driverName.$pristine"
+															class="help-block">Max length 25</p>		
+													</div>
+												</div>
+												<!-- Driver Contact -->
+												<div class="col-sm-6">
+													<div class="form-group requiredfield"
+														ng-class="{ 'has-error' : driverupdateform.driverContact.$invalid && !driverupdateform.driverContact.$pristine}">
+														<label ng-show="driver.contact"
+															class="floatlabeltxt show-hide">Enter Driver
+															Contact</label> <input type="text" class="form-control"
+															ng-model="driver.contact" name="driverContact"
+															ng-minlength="10" ng-maxlength="10" numbers-only
+															ng-blur="verifyContact(driver.driver_id,driver.contact)"
+															placeholder="Enter Driver Contact" required="required" />
+														<p
+															ng-show="driverupdateform.driverContact.$touched && driverupdateform.driverContact.$invalid"
+															class="help-block error-help">Driver Contact is
+															required.</p>													
+														<p
+															ng-show="driverupdateform.driverContact.$error.minlength && !driverupdateform.driverContact.$pristine"
+															class="help-block">Min digits 10</p>
+														<p
+															ng-show="driverupdateform.driverContact.$error.maxlength && !driverupdateform.driverContact.$pristine"
+															class="help-block">Max digits 10</p>
+														<p
+															ng-show="driverupdateform.driverContact.$error.contAvailable && !driverupdateform.driverContact.$pristine"
+															class="help-block">Contact already associated with other driver</p>		
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<!-- Driver License -->
+												<div class="col-sm-6">
+													<div class="form-group requiredfield" ng-class="{'has-error':driverupdateform.driverlicense.$invalid && !driverupdateform.driverlicense.$pristine}">
+														<label ng-show="driver.license"
+															class="floatlabeltxt show-hide">Enter Driving
+															License No</label> <input type="text" class="form-control" name="driverlicense"
+															ng-model="driver.license"
+															ng-minlength="15"
+															ng-maxlength="15"
+															ng-blur="verifyDL(driver.driver_id,driver.license)"
+															placeholder="Enter Driver License" required/>
+														<p ng-show="driverupdateform.driverlicense.$touched && driverupdateform.driverlicense.$invalid" class="help-block error-help">Driver License is required </p>
+														<p ng-show="driverupdateform.driverlicense.$error.minlength && !driverupdateform.driverlicense.$pristine" class="help-block">Min '15' Alpha Numeric required!...</p>
+														<p ng-show="driverupdateform.driverlicense.$error.maxlength && !driverupdateform.driverlicense.$pristine" class="help-block">Max '15' Alpha Numeric required!...</p>
+														<p ng-show="driverform.driverlicense.$error.dlavailable" class="help-block error-help">Driver License is already associated</p>		
+													</div>
+												</div>
+												<!-- DOB -->
+												<div class="col-sm-6" ng-class="{'has-error':minorAge}">
+													<!-- <label ng-show="driver.dob"
+														class="floatlabeltxt show-hide">Select Date (date of birth)</label>
+													<input type="date" class="form-control" ng-model="driver.dob"
+														placeholder="DOB" /> -->
+													<div class='input-group date' id='dobPicker'>
+														<input type='text' class="form-control" id="dobPicker"
+															ng-model="driver.dob" readonly="readonly" ng-required="false" placeholder="DOB"/> <span
+															id="dobAddon" class="input-group-addon"> <span
+															class="glyphicon glyphicon-calendar"> </span>
+														</span>
+													</div>
+													<div ng-if="minorAge" class="help-block">Age of
+														driver is minor</div>
+
+												</div>
+											</div>
+											<div class="row makeMB10">
+												<!-- Driver Password -->
+												<!-- <div class="col-sm-6">
+													<label ng-show="driver.password"
+														class="floatlabeltxt show-hide">Enter Password</label> <input
+														type="password" class="form-control"
+														ng-model="driver.password"
+														placeholder="Enter Driver Password" ng-required="false"/>
+												</div> -->
+												<!-- Driver Salary -->
+												<div class="col-sm-12">
+													<label ng-show="driver.salary"
+														class="floatlabeltxt show-hide">Enter Salary</label> <input
+														type="text" class="form-control" ng-model="driver.salary"
+														numbers-only
+														placeholder="Enter Driver Salary" ng-required="false"/>
+												</div>
+											</div>
+											<div class="row">
+												<!-- Driver Languages Known -->
+												<div class="col-sm-12"
+													ng-class="{'has-error':alreadySelected || max5language}">
+													<div class="langSection">
+														<select id="updatelangSelect" ng-model="selectedLanguage"
+															ng-change="formObj(selectedLanguage)"
+															class="form-control" ng-required="false">
+															<option selected disabled>Select language</option>
+															<option ng-repeat="option in lang">{{option.name}}</option>
+														</select>
+													</div>
+													<div ng-if="alreadySelected" class="help-block">Already
+														Selected</div>
+													<div ng-if="max5language" class="help-block">Max 5
+														Languages</div>
+													<div class="form-control selectionSpace">
+														<div class="selectedItem" ng-repeat="item in langArray">
+															{{item}} <span ng-click="removeSelected(item)">x</span>
+														</div>
+													</div>
+													<!-- 	<label ng-show="driver.languages"
+														class="floatlabeltxt show-hide">Enter Languages
+														Known</label>
+													<textarea class="form-control" ng-model="driver.languages"
+														placeholder="Enter Languages Known">
+														</textarea> -->
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- ./Driver Info -->
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<!-- Basic Info -->
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<label>Basic Info</label>
+								</div>
+								<div class="panel-body extraPadding">
+									<div class="row">
+										<div class="col-sm-12">
+											<div class="row">
+												<!-- Employment Type -->
+												<div class="col-sm-6 txtRight">
+													<label class="driveChoice requiredfield">Employment Type</label>
+												</div>
+												<!-- Employment Type Choices -->
+												<div class="col-sm-6">
+													<div class="form-group" ng-class="{'has-error':driverupdateform.eType.$invalid && !driverupdateform.eType.$pristine}">
+														<label class="radio-inline">
+														<input type="radio"
+														name="eType" class="" value="Permanent"
+														ng-model="driver.etype" checked="checked" required/><span
+														class="msgTxt">Permanent</span></label> <label
+														class="radio-inline"><input type="radio"
+														name="eType" class="" value="Contract"
+														ng-model="driver.etype" required/><span class="msgTxt">Contract</span></label>
+														<p ng-show="driverupdateform.eType.$touched && driverupdateform.eType.$invalid" class="help-block error-help">Employee type is required</p>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<!-- Driver Blood Group -->
+												<div class="col-sm-6">
+												<div class="form-group requiredfield" ng-class="{'has-error':driverupdateform.driverbloodgp.$invalid && !driverupdateform.driverbloodgp.$pristine}">
+													<label ng-show="driver.blood"
+														class="floatlabeltxt show-hide">Enter Bloop Group</label>
+													<input type="text" class="form-control"
+														name="driverbloodgp"
+														ng-maxlength="6"
+														ng-model="driver.blood" placeholder="Enter Bloop Group" required/>
+													<p ng-show="driverupdateform.driverbloodgp.$touched && driverupdateform.driverbloodgp.$invalid" class="help-block error-help">Blood group is required</p>
+													<p ng-if="driverupdateform.driverbloodgp.$error.maxlength && !driverupdateform.driverbloodgp.$pristine" class="help-block">Max 10 charcters</p>
+												</div>
+												</div>
+												<!-- Driver Aadhar No -->
+												<div class="col-sm-6">
+												<div class="form-group" ng-class="{'has-error':driverupdateform.driverAadhaar.$invalid && !driverupdateform.driverAadhaar.$pristine}">
+													<label ng-show="driver.aadhar"
+														class="floatlabeltxt show-hide">Enter Aadhaar Card
+														No</label> <input type="text" class="form-control"
+														name="driverAadhaar"
+														ng-maxlength="12"
+														ng-model="driver.aadhar" placeholder="Enter Aadhar No" ng-required="false"/>
+														<p ng-if="driverupdateform.driverAadhaar.$error.maxlength && !driverupdateform.driverAadhaar.$pristine" class="help-block">Max 12 charcters</p>
+												</div>
+												</div>
+											</div>
+											<div class="row">
+												<!-- Driver Emergencey Contact -->
+												<div class="col-sm-6">
+													<div class="form-group requiredfield" ng-class="{'has-error':driverupdateform.driverEmergency.$invalid && !driverupdateform.driverEmergency.$pristine}">
+														<label ng-show="driver.emergency_cn"
+														class="floatlabeltxt show-hide">Enter Emergency
+														Contact</label> <input type="text" class="form-control"
+														name="driverEmergency"
+														ng-model="driver.emergency_cn"
+														ng-minlength="10" ng-maxlength="10" numbers-only
+														placeholder="Enter Emergency Contact No" required/>
+														<p ng-show="driverupdateform.driverEmergency.$touched && driverupdateform.driverEmergency.$invalid" class="help-block error-help">Emergency Contact is required </p>													
+														<p
+															ng-show="driverupdateform.driverEmergency.$error.minlength && !driverupdateform.driverEmergency.$pristine"
+															class="help-block">Min digits 10</p>
+														<p
+															ng-show="driverupdateform.driverEmergency.$error.maxlength && !driverupdateform.driverEmergency.$pristine"
+															class="help-block">Max digits 10</p>
+													</div>
+													
+												</div>
+												<!-- Driver Education -->
+												<div class="col-sm-6">
+												<div class="form-group requiredfield" ng-class="{'has-error':driverupdateform.driverEducation.$invalid && !driverupdateform.driverEducation.$pristine}">
+													<label ng-show="driver.education"
+														class="floatlabeltxt show-hide">Enter Education
+														Details</label> <input type="text" class="form-control"
+														name="driverEducation"
+														ng-model="driver.education"
+														ng-maxlength="10"
+														placeholder="Enter Highest Education " ng-required="false"/>
+														<p
+															ng-show="driverupdateform.driverEducation.$error.maxlength && !driverupdateform.driverEducation.$pristine"
+															class="help-block">Max characters 10</p>
+														</div>	
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- ./Basic Info -->
+						</div>
+						<div class="col-sm-6">
+							<!-- Present Address -->
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<label>Driver Present Address</label>
+									<p>
+										<input type="checkbox" id="confirmAddress"
+											name="confirmAddress" ng-model="driver.confirmAddress"
+											ng-click="usePresentAddress(driver.confirmAddress)" /><span
+											class="msgTxt">Check if present / permanent address
+											are same</span>
+									</p>
+								</div>
+								<div class="panel-body">
+									<div class="row">
+										<div class="col-sm-12">
+											<div class="row">
+												<!-- Driver Street -->
+												<div class="col-sm-12">
+													<div class="form-group requiredfield" ng-class="{'has-error':driverupdateform.driverStreet.$invalid && !driverupdateform.driverStreet.$pristine}">
+														<label ng-show="driver.street"
+														class="floatlabeltxt show-hide">Enter Street
+														Details</label> <input type="text" class="form-control"
+														name="driverStreet"
+														ng-maxlength="100"
+														ng-model="driver.street"
+														placeholder="Enter Street Details" required	/>
+														<p ng-show="driverupdateform.driverStreet.$touched && driverupdateform.driverStreet.$invalid" class="help-block error-help">Street details required</p>
+														<p ng-show="driverupdateform.driverStreet.$error.maxlength && !driverupdateform.driverStreet.$pristine" class="help-block">Max characters 100</p>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<!-- Driver City -->
+												<div class="col-sm-6">
+												<div class="form-group requiredfield" ng-class="{'has-error':driverupdateform.driverCity.$invalid && !driverupdateform.driverCity.$pristine}">
+													<label ng-show="driver.city"
+														class="floatlabeltxt show-hide">Enter City</label> <input
+														name="driverCity"
+														ng-maxlength="50"
+														type="text" class="form-control" ng-model="driver.city"
+														placeholder="Enter City" required/>
+													<p ng-show="driverupdateform.driverCity.$touched && driverupdateform.driverCity.$invalid" class="help-block error-help">City is required</p>
+													<p ng-show="driverupdateform.driverCity.$error.maxlength && !driverupdateform.driverCity.$pristine" class="help-block">Max characters 50</p>
+												</div>
+													
+												</div>
+												<!-- Driver Pincode -->
+												<div class="col-sm-6">
+													<div class="form-group requiredfield" ng-class="{'has-error':driverupdateform.driverPincode.$invalid && !driverupdateform.driverPincode.$pristine}">
+														<label ng-show="driver.pincode"
+														class="floatlabeltxt show-hide">Enter Pincode</label> <input
+														type="text" class="form-control"
+														name="driverPincode" 
+														ng-model="driver.pincode"
+														ng-maxlength="6" 
+														numbers-only
+														placeholder="Enter Pincode" 
+														required/>
+														<p ng-show="driverupdateform.driverPincode.$touched && driverupdateform.driverPincode.$invalid" class="help-block error-help">Pincode is requried</p>
+														<p ng-show="driverupdateform.driverPincode.$error.maxlength && !driverupdateform.driverPincode.$pristine" class="help-block">Max digits 6</p>
+													</div>
+													
+												</div>
+											</div>
+											<div class="row">
+												<!-- Driver Country -->
+												<!-- <div class="col-sm-6">
+													<label ng-show="driver.country"
+														class="floatlabeltxt show-hide">Enter Country</label> <input
+														type="text" class="form-control" ng-model="driver.country"
+														placeholder="Enter Country" />
+												</div> -->
+												<div class="col-sm-6">
+													<div class="form-group requiredfield" ng-class="{'has-error':driverupdateform.driverCountry.$invalid && !driverupdateform.driverCountry.$pristine}">
+														<label ng-show="driver.country"
+															class="floatlabeltxt show-hide">Country</label> <select
+															ng-model="driver.country" name="driverCountry"
+															class="form-control floatlabel floatlabel_select"
+															ng-change="onSelectCountry()" required>
+															<option selected disabled value="">- - Select
+																Country - -</option>
+															<option ng-show="editformselect" selected >{{driver.country}}</option>
+															<option ng-repeat="c in country" value="{{c}}">{{c}}</option>
+														</select>
+														<p ng-show="driverupdateform.driverCountry.$touched && driverupdateform.driverCountry.$invalid" class="help-block error-help">Country is requried</p>
+													</div>
+												</div>
+												<!-- Driver State -->
+												<!-- <div class="col-sm-6">
+													<label ng-show="driver.state"
+														class="floatlabeltxt show-hide">Enter State</label> <input
+														type="text" class="form-control" ng-model="driver.state"
+														placeholder="Enter State" />
+												</div> -->
+												<div class="col-sm-6">
+													<div class="form-group requiredfield" ng-class="{'has-error':driverupdateform.driverState.$invalid && !driverupdateform.driverState.$pristine}">
+														<label ng-show="driver.state"
+															class="floatlabeltxt show-hide">State</label> <select
+															ng-model="driver.state" name="driverState"
+															class="form-control floatlabel floatlabel_select"
+															required>
+															<option selected disabled value="">- - Select
+																State - -</option>
+															<option ng-show="editformselect" selected >{{driver.state}}</option>
+															<option ng-repeat="s in states" value="{{s}}">{{s}}</option>
+														</select>
+														<p ng-show="driverupdateform.driverState.$touched && driverupdateform.driverState.$invalid" class="help-block error-help">State is requried</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- ./Present Address -->
+						</div>
+					</div>
+					<div id="permanentAddr">
+						<div class="row animate-show" ng-hide="driver.confirmAddress">
+							<div class="col-sm-12">
+								<!-- Permanent Address -->
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<label>Driver Permanent Address</label>
+									</div>
+									<div class="panel-body">
+										<div class="row">
+											<div class="col-sm-12">
+												<div class="row">
+													<!-- Driver Street -->
+													<div class="col-sm-12">
+													<div class="form-group" ng-class="{'has-error':driverupdateform.driverpStreet.$invalid && !driverupdateform.driverpStreet.$pristine}">
+													<label ng-show="driver.pstreet"
+															class="floatlabeltxt show-hide">Enter Street
+															Details</label> <input type="text" class="form-control"
+															name="driverpStreet"
+															ng-model="driver.pstreet"
+															ng-maxlength="100"
+															placeholder="Enter Street Details" ng-required="false"/>
+															<p ng-show="driverupdateform.driverpStreet.$error.maxlength && !driverupdateform.driverpStreet.$pristine" class="help-block">Max characters 100</p>
+													</div>														
+													</div>
+												</div>
+												<div class="row">
+													<!-- Driver City -->
+													<div class="col-sm-6">
+													<div class="form-group" ng-class="{'has-error':driverupdateform.driverpCity.$invalid && !driverupdateform.driverpCity.$pristine}">
+														<label ng-show="driver.pcity"
+															class="floatlabeltxt show-hide">Enter City</label> <input
+															type="text" class="form-control" ng-model="driver.pcity"
+															name="driverpCity"
+															ng-maxlength="50"
+															placeholder="Enter City" ng-required="false"/>
+															<p ng-show="driverupdateform.driverpCity.$error.maxlength && !driverupdateform.driverpCity.$pristine" class="help-block">Max characters 50</p>
+													</div>
+													</div>
+													<!-- Driver Pincode -->
+													<div class="col-sm-6">
+													<div class="form-group" ng-class="{'has-error':driverupdateform.driverpPincode.$invalid && !driverupdateform.driverpPincode.$pristine}">
+													<label ng-show="driver.ppincode"
+															class="floatlabeltxt show-hide">Enter Pincode</label> <input
+															type="text" class="form-control"
+															name="driverpPincode"
+															ng-maxlength="6"
+															ng-model="driver.ppincode"
+															placeholder="Enter Pincode" ng-required="false"/>
+															<p ng-show="driverupdateform.driverpPincode.$error.maxlength && !driverupdateform.driverpPincode.$pristine" class="help-block">Max digits 6</p>
+													</div>
+													</div>
+												</div>
+												<div class="row">
+													<!-- Driver Country -->
+													<div class="col-sm-6">
+														<div class="form-group">
+															<label ng-show="driver.pcountry"
+																class="floatlabeltxt show-hide">Country</label> <select
+																ng-model="driver.pcountry" name="pcountry"
+																class="form-control floatlabel floatlabel_select"
+																ng-change="onSelectCountry()" ng-required="false">
+																<option selected disabled value="">- - Select
+																	Country - -</option>
+																<option ng-show="editformselect" selected >{{driver.pcountry}}</option>	
+																<option ng-repeat="c in country" value="{{c}}">{{c}}</option>
+															</select>
+														</div>
+														<!-- <label ng-show="driver.pcountry"
+															class="floatlabeltxt show-hide">Enter Country</label> <input
+															type="text" class="form-control"
+															ng-model="driver.pcountry"
+															ng-bind="driver.confirmAddress ? driver.country : driver.pcountry"
+															placeholder="Enter Country" /> -->
+													</div>
+
+													<!-- Driver State -->
+													<div class="col-sm-6">
+														<div class="form-group">
+															<label ng-show="driver.pstate"
+																class="floatlabeltxt show-hide">State</label> <select
+																ng-model="driver.pstate" name="pstate"
+																class="form-control floatlabel floatlabel_select"
+																ng-required="false">
+																<option selected disabled value="">- - Select
+																	State - -</option>
+																<option ng-show="editformselect" selected >{{driver.pstate}}</option>
+																<option ng-repeat="s in states" value="{{s}}">{{s}}</option>
+															</select>
+														</div>
+														<!-- <label ng-show="driver.pstate"
+															class="floatlabeltxt show-hide">Enter State</label> <input
+															type="text" class="form-control" ng-model="driver.pstate"
+															ng-bind="driver.confirmAddress ? driver.state : driver.pstate"
+															placeholder="Enter State" /> -->
+													</div>
+												</div>
+
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- ./Permanent Address -->
+							</div>
+						</div>
+					</div>
+					<!-- Create driver button -->
+					<div><p ng-if="driverupdateform.$invalid" class="requirefield help-block error-help">* fields are mandatory</p></div>
+					<div class="row">
+						<div class="col-sm-12 txtCenter">
+							<button class="btn btn-primary btn-lg"
+								ng-click="submitUpdateDriverForm()"
+								ng-disabled="driverupdateform.$invalid">Update</button>
+						</div>
+					</div>
+					<!-- ./Create driver button -->
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- ./Update Driver Modal -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

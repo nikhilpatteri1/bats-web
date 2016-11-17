@@ -336,3 +336,45 @@ top: -19px;transition: all 0.25s ease 0s;width: 0;z-index: 10;margin-top: 10px;o
 .dynamicBlockInput::-webkit-input-placeholder {font-size:12px;}
 .dynamicBlockBody{padding:4px 18px;}
 .dynamicBlockHelp{font-size:10px;}
+.help-block{font-size:10px;font-weight:900}
+.form-control{font-size:12px;}
+/*=======================================>>>>>>>>>>>> bats 1.4 <<<<<<<<<<<<<<==========================================*/
+.circling{
+	 border-top-color: #0eb7da;
+  border-right-color: #0eb7da;
+  border-bottom-color: #0eb7da;
+  -webkit-transition: border-top-color 0.15s linear, border-right-color 0.15s linear 0.1s, border-bottom-color 0.15s linear 0.2s;
+  transition: border-top-color 0.15s linear, border-right-color 0.15s linear 0.1s, border-bottom-color 0.15s linear 0.2s;
+}
+.circlinga{
+	border-radius:100%;
+    border-style: solid;
+    border-width: 2px;
+    border-color:#03A9F4 blue green orange;   
+    -webkit-animation-name: rotate; 
+    -webkit-animation-duration: 2s; 
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    -moz-animation-name: rotate; 
+    -moz-animation-duration: 2s; 
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: linear;
+    animation-name: rotate; 
+    animation-duration: 2s; 
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+@-webkit-keyframes rotate {
+    from {-webkit-transform: rotate(0deg);}
+    to {-webkit-transform: rotate(360deg);}
+}
+
+@-moz-keyframes rotate {
+    from {-moz-transform: rotate(0deg);}
+    to {-moz-transform: rotate(360deg);}
+}
+
+@keyframes rotate {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(360deg);}
+}

@@ -197,7 +197,7 @@ form.ng-invalid .btn[disabled],form.ng-valid .btn {
 	padding: 20px 0;
 } */
 input {
-	width: 166px
+	/* width: 166px */
 }
 
 .form-horizontal .control-label {
@@ -272,7 +272,6 @@ select {
 }
 .edit_icon,.delete_icon {
 	border: 1px solid #03A9F4;
-	padding: 5px;
 	border-radius: 20px;
 	padding: 3px 7px 3px 7px;
 	margin: 0 0 0 15px; 
@@ -560,6 +559,7 @@ select.select_group,select.select_device {
 .helplist {
 	-webkit-padding-start: 0px;
 	 padding: 10px;
+	 color:#858594 !important;
 }
 
 .helplist li {
@@ -680,8 +680,8 @@ font-family:Roboto, Arial, sans-serif;font-size: 11px;border-radius:2px;box-shad
 	left:0 !important;
 	width: 100% !important;
 	height: 100% !important;
-	-webkit-transition: top 2s; Safari
-    -webkit-transition-timing-function: linear; Safari
+	-webkit-transition: top 2s; 
+    -webkit-transition-timing-function: linear; 
     transition: top 2s;
     transition-timing-function: linear;
 }
@@ -709,3 +709,47 @@ font-family:Roboto, Arial, sans-serif;font-size: 11px;border-radius:2px;box-shad
 .warningText{font-size:10px;font-weight:900;color:#ff000f;}
 .fs24px{font-size:24px;}
 /*./Map Screen*/
+
+/* **
+---------------------------------------------------BATS v 1.4 ------------------------------------------------------------------------
+
+*****/
+.iconImage{width:20px;height:20px;margin-top:-3px;}
+.driverlist {-webkit-padding-start: 0px}
+.driverlist li {list-style-type: none}
+.iconImageSm {width: 35px;height: 35px;}
+.uploadImage {width: 100px;height: 100px;}
+.add_new_driver {position: absolute;bottom: 10px;right: 40px;width: 75px;height: 75px;border-radius: 50%;padding: 18px 0 0 0;}
+.add_new_driver i {font-size: 40px;}
+.makeMB10{margin-bottom:10px;}
+.makeMB20{margin-bottom:20px;}
+.driverPanel{padding:2px;}
+.alignIcons{margin:10px}
+.driverformInput input[type="radio"]{height:10px}
+.driverformInput input[type="checkbox"]{height:10px}
+.driverformInput input {border: none;border-bottom: 2px solid #ddd;border-radius: 0px;-webkit-box-shadow: none;box-shadow: none;-webkit-transition: none;transition: none;height: 40px;}
+.driverformInput .floatlabel_select{height:40px;}
+.driverformInput button{font-size:20px;padding:10px 37px;border-radius:0px;}
+.driverformInput input:FOCUS {border-color: transparent;-webkit-box-shadow: none;box-shadow: none;border: none;border-bottom: 2px solid #9C9A9A;}
+.msgTxt{font-size:10px;font-weight:900;}
+.driverformInput textarea{height:40px;}
+.driveChoice{font-size:12px;}
+.txtRight{text-align:right;}
+.txtCenter{text-align: center;}
+#dobPicker{background-color: transparent;}
+#dobAddon{border-top-color: transparent;border-right-color: transparent;border-bottom: 2px solid;}
+/* .selectedItem{display: inline-block;margin: 3px;padding: 2px;background: #ccc;font-size: 10px;font-weight: 900;border-radius: 18px;color: #000;} */
+.selectedItem{display: inline;padding: .2em .6em .3em; font-size: 10px;font-weight: 700;line-height: 1;color: #fff;text-align: center; white-space: nowrap;vertical-align: baseline;border-radius: .25em; margin-right: 2px;color: white;background-color: #5bc0de;}
+.selectedItem span{cursor: pointer;font-size: 12px;font-weight: 900;color: #f00;}
+.langSection{margin:10px 0px;}
+.langSection .select2-choice{height:29px;padding:0px 0 0 8px}
+.extraPadding{padding: 34px 15px;}
+.image-upload > input{display: none;}
+.image-upload img{cursor: pointer;}
+.hoverImage>i{position:absolute;top:40px;left:125%;-webkit-transition: left 0.2s; -webkit-transition-timing-function: linear; transition: left 0.2s;   transition-timing-function: linear;opacity:0;font-size:25px;}
+.image-upload:hover .hoverImage>i{left:38%;opacity:1;color:#3fb564;}
+.error-help{color:#ff0000;}
+.requiredfield:before { content:" *"; color:#f00;top: -6px; z-index: 10000; position: absolute; }
+.help-txt{font-family:roboto;font-size:12px;font-weight:900;color:#ff0000;}
+.help-warning{font-family:roboto;font-size:18px;font-weight:900;color:#ff0000;}
+.loading_icon{position:absolute;top:35%;left:35%;width:25px;height:25px;}

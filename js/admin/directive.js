@@ -122,12 +122,13 @@ batsAdminHome.directive('numbersOnly', function () {
         link: function (scope, element, attr, ngModelCtrl) {
             function fromUser(text) {
                 if (text) {
-                	console.log(text);
+                	//console.log(text);
                     var transformedInput = text.replace(/[^0-9]/g, '');
                     if (transformedInput !== text) {
                         ngModelCtrl.$setViewValue(transformedInput);
-                        ngModelCtrl.$render();
+                        ngModelCtrl.$render();                    
                     }
+                    
                     return transformedInput;
                 }
                 return undefined;
@@ -246,8 +247,3 @@ batsAdminHome.directive('trackActive', function($location) {
 	}
 	return {link: link};
 });
-
-
-
-
-

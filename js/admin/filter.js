@@ -41,7 +41,7 @@ batsAdminHome.filter('filterMultiple',['$filter',function ($filter) {
 				filterObj.applyFilter(obj,key);
 			});			
 		}
-		
+		console.log(filterObj);
 		return filterObj.filteredData;
 	}
 }]).filter('unique', function() {
@@ -101,3 +101,19 @@ batsAdminHome.filter('timestampToDate', function () {
     };
 });
 
+batsAdminHome.filter('driverFilter', function($rootScope) {
+    return function(driverlist, searchDriver) {
+        var searchRegx = new RegExp(searchDriver, "i");       
+        var result = [];
+        if(typeof driverlist!='undefined'){
+        	for (i = 0; i < driverlist.length; i++) {
+                if (driverlist[i].name.search(searchRegx) != -1 || 
+                		driverlist[i].contact_no.toString().search(searchDriver) != -1) {
+                    result.push(driverlist[i]);                    
+                }
+                
+            }
+        }        
+        return result;
+  }
+}); 

@@ -1,13 +1,4 @@
 var user_emailChk;
-/*
-Hardcoded Country & State Values
-*/
-	var countries = ['India'];
-	var states = ['Andaman and Nicobar Islands', 'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chandigarh', 
-	                'Chhattisgarh', 'Dadra and Nagar Haveli', 'Daman and Diu', 'Delhi', 'Goa', 'Gujarat', 'Haryana', 
-	                'Himachal Pradesh', 'Jammu and Kashmir', 'Jharkhand', 'Karnataka', 'Kerala', 'Lakshadweep', 'Madhya Pradesh', 
-	                'Maharashtra', 'Manipur', '	Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Puducherry', 'Punjab', 'Rajasthan', 
-	                'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal'];
 //==============Factory Home===============
 
 batsfactoryhome.controller('customerController', function($scope, $http, $localStorage) {
@@ -92,12 +83,17 @@ batsfactoryhome.controller('customerControllerInner', function($scope, $http, $l
 	/*
 	 Hardcoded Country & State Values
 	 */
+		var countries = ['India'];
+		var states = ['Andaman and Nicobar Islands', 'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chandigarh', 
+		                'Chhattisgarh', 'Dadra and Nagar Haveli', 'Daman and Diu', 'Delhi', 'Goa', 'Gujarat', 'Haryana', 
+		                'Himachal Pradesh', 'Jammu and Kashmir', 'Jharkhand', 'Karnataka', 'Kerala', 'Lakshadweep', 'Madhya Pradesh', 
+		                'Maharashtra', 'Manipur', '	Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Puducherry', 'Punjab', 'Rajasthan', 
+		                'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal'];
 		$scope.country = countries;
 		$scope.state = [];
 		$scope.onSelectCountry = function () {
 	        var myNewOptions = states;
 	        $scope.state = myNewOptions;
-	        console.log(JSON.stringify($scope.state));
 		};
 		$scope.states = states;
 		
@@ -363,9 +359,6 @@ $scope.saveEditForm = function() {
 
 //==============Factory User Create Form===============
 batsfactoryhome.controller('factoryCreate', function($scope, $http, $localStorage) {
-	$scope.onSelectCountry = function () {
-        $scope.state = states;
-	};
 	$scope.reset=function(){
 		$scope.customer={};
 		$scope.customer.password="";
@@ -374,7 +367,6 @@ batsfactoryhome.controller('factoryCreate', function($scope, $http, $localStorag
 		$scope.error = {cname:false};
 		$scope.createForm.$setPristine();  
 		$scope.error_mail = {cmail:false};
-		$scope.state = [];
 	};
 	$scope.verifyUser=function(customerName){ 
 		$scope.verifyUserJson={};

@@ -128,6 +128,11 @@ batsAdminHome.config(function($routeProvider, $locationProvider,$mdDateLocalePro
             templateUrl : '/html/admin/manage_device.html',
             controller  : 'deviceController',
             cache:false
+        })
+        .when('/admin/driver', {
+            templateUrl : '/html/admin/manage_driver.html',
+            controller  : 'driverController',
+            cache:false
         });
     $mdDateLocaleProvider.formatDate = function(date) {    	
     	if(date!=null && date!=""){    		

@@ -7,7 +7,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <!-- <link rel="icon" href="../../favicon.ico"> -->
-<title>BATS v1.3.1</title>
+<title>BATS v1.4</title>
 
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet" type="text/css"
@@ -39,8 +39,7 @@
 <link rel="stylesheet" type="text/css"
 	href="../assets/select_filter/select2-bootstrap.css">
 <link rel="stylesheet" type="text/css" href="../assets/datepicker/bootstrap-datetimepicker.css">
-<link rel="stylesheet" type="text/css" href="../css/admin.css">	
-
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
 </head>
 <body ng-controller="AdminController" ng-cloak>
 
@@ -318,6 +317,17 @@
 													</div>
 												</div>
 										</a></li>
+										<li><a ng-class="{ active: activePath=='/admin/driver' }"
+											href="/admin/driver">
+												<div class="row">
+													<div class="col-sm-3">
+														<i><img src="../images/driver.png" class="iconImage"/></i>
+													</div>
+													<div class="col-sm-9">
+														<p>Manage Driver</p>
+													</div>
+												</div>
+										</a></li>
 										<li><a href="#" data-toggle="modal"
 											data-target="#changePwdAdmin">
 												<div class="row">
@@ -446,8 +456,7 @@
 	<!-- Bootstrap core JavaScript ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script type="text/javascript" src="../js/jquery-1.11.2.min.js"></script>
-	<script type="text/javascript"
-		src="../assets/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+	<script type="text/javascript"src="../assets/bootstrap-3.3.5/js/bootstrap.min.js"></script>		
 	<script type="text/javascript" src="../assets/angular.min.js"></script>
 	<script type="text/javascript" src="../assets/ngStorage.js"></script>
 	<script type="text/javascript" src="../assets/angular-route.js"></script>
@@ -488,6 +497,7 @@
 	<script type="text/javascript" src="../js/admin/groupController.js"></script>
 	<script type="text/javascript" src="../js/admin/userController.js"></script>
 	<script type="text/javascript" src="../js/admin/deviceController.js"></script>
+	<script type="text/javascript" src="../js/admin/driverController.js"></script>
 	<script src="../js/admin/alarmNotificationsController.js"></script>
 	<script type="text/javascript" src="../js/admin/directive.js"></script>
 	<script type="text/javascript" src="../js/admin/filter.js"></script>
@@ -502,8 +512,7 @@
 		src="../assets/angular/angular-material.js"></script>
 	<script
 		src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.js'></script>
-	<!-- ./Material Design Calendar -->
-	
+	<!-- ./Material Design Calendar -->	
 	<script	src='../assets/datepicker/bootstrap-datetimepicker.js'></script>
 
 	<script type="text/javascript">
