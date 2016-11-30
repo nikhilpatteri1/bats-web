@@ -101,7 +101,7 @@ batsAdminHome.filter('timestampToDate', function () {
     };
 });
 
-batsAdminHome.filter('driverFilter', function($rootScope) {
+batsAdminHome.filter('driverFilter', function() {
     return function(driverlist, searchDriver) {
         var searchRegx = new RegExp(searchDriver, "i");       
         var result = [];

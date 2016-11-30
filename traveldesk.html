@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="batstravelDeskHome">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<!-- <link rel="icon" href="../../favicon.ico"> -->
+<title>BATS v1.4</title>
+
+<!-- Bootstrap core CSS -->
+<link rel="stylesheet" type="text/css"
+	href="../assets/bootstrap-3.3.5/css/bootstrap.min.css">
+
+<!-- font awesome for icons-->
+<link rel="stylesheet" type="text/css"
+	href="../assets/font-awesome-4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+
+
+<!-- Reset CSS -->
+<link rel="stylesheet" type="text/css" href="../css/reset.css">
+
+<!-- Custom CSS -->
+<link rel="stylesheet" type="text/css" href="../css/nav.css">
+<!-- <link rel="stylesheet" type="text/css" href="css/content.css"> -->
+<link rel="stylesheet" type="text/css" href="../css/carousel.css">
+
+<link rel="stylesheet" type="text/css"
+	href="../assets/sweetalert/sweetalert.css">
+
+<!-- Material Design Calendar -->
+<link rel='stylesheet prefetch' href='../css/angular-material.css'>
+<!-- Select Filter -->
+<link rel="stylesheet" type="text/css"
+	href="../assets/select_filter/select2.css">
+<link rel="stylesheet" type="text/css"
+	href="../assets/select_filter/select2-bootstrap.css">
+<link rel="stylesheet" type="text/css" href="../css/nav.css"/>
+<link rel="stylesheet" type="text/css" href="../assets/datepicker/bootstrap-datetimepicker.css">
+<link rel="stylesheet" type="text/css" href="../css/reset.css">		
+<link rel="stylesheet" type="text/css" href="../css/traveldesk.css">
+</head>
+<body>
+	<!--================= Nav Header Starts =================-->
+	<nav class="navbar navbar_home">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-9">
+					<div class="object">
+						<img src="../images/car_logo_active.png" alt="car_logo" /> <span
+							class="logo_Title">Bydesign Automobile Tracking System</span>
+					</div>
+				</div>
+				<div class="col-sm-3">
+				<div class="col-sm-5">				
+            	</div>
+            <div class="col-sm-7">
+            <a href="" class="logout" ng-controller="logoutTraveldeskUser"	ng-click="logoutTravelDeskSubmit()"><i class="fa fa-sign-out"></i>
+            <span>Logout</span></a>
+            </div>
+				</div>
+			</div>
+		</div>
+	</nav>
+	<!--================= Content Starts =================-->
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="row">
+					<div class="col-sm-2">
+						<div class="sidebar-nav">
+							<div class="navbar navbar-default" role="navigation">
+								<div class="navbar-collapse collapse sidebar-navbar-collapse">
+									<ul class="nav navbar-nav" track-active>
+										<li><a ng-class="{ active: activePath=='/traveldesk/binding' }"
+											href="/traveldesk/binding">
+												<div class="row">
+													<div class="col-sm-3">
+														<i class="fa fa-map"></i>
+													</div>
+													<div class="col-sm-9">
+														<p>Driver Binding</p>
+													</div>
+												</div>
+										</a></li>
+										<li><a href="#" data-toggle="modal"
+											data-target="#changePwdTravelDesk">
+												<div class="row">
+													<div class="col-sm-3">
+														<i class="fa fa-key"></i>
+													</div>
+													<div class="col-sm-9">
+														<p>Change Password</p>
+													</div>
+												</div>
+										</a></li>										
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- angular templating -->
+					<!-- this is where content will be injected -->
+					<div ng-view></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--================= Content Ends =================-->
+	<!-- Change Password Modal -->
+	<!-- Change Password -->
+	<div id="changePwdTravelDesk" class="modal modal_login"
+		data-backdrop="static" ng-controller="changePwdformTraveldesk">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="iconSection" align="center">
+					<div class="userIcon">
+						<i class="fa fa-key fa-3x"></i>
+					</div>
+				</div>
+				<div class="modal-body">
+					<div class="col-sm-2 col-sm-offset-10" align="right">
+						<span class="closeIcon" data-direction="left" data-dismiss="modal"
+							aria-hidden="true" ng-click="reset()">&times;</span>
+					</div>
+					<div class="row">
+						<div class="col-sm-6 col-sm-offset-3">
+							<!-- Change Password -->
+							<h1 class="titleHead">Change Password</h1>
+							<form name="changePwd" class="formInput" id="changePwdFrm">
+								<div class="control-group">
+									<div class="form-group">
+										<div class="row">
+											<div class="col-sm-12 controls">
+												<label ng-show="newpwd" class="floatlabeltxt show-hide">Enter
+													New Password</label> <input type="password" ng-model="newpwd"
+													class="form-control  new_pwd" name="new_pd"
+													placeholder="Enter New Password" ng-change="hidePasswordMismatch()" password-validate required>
+
+												<span class='help-inline' ng-show='changePwd.newpwd.$valid'>
+													<i class='icon-ok'></i>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="control-group">
+									<div class="form-group">
+										<div class="row">
+											<div class="col-sm-12 controls">
+												<label ng-show="repwd && newpwd"
+													class="floatlabeltxt show-hide">Re-Enter New
+													Password</label> <input type="password" ng-model="repwd"
+													ng-show="newpwd"
+													class="form-control confirm_pwd"
+													name="confirm_pd" same-as='newpwd'
+													placeholder="Re-Enter New Password" repassword-validate
+													required> <span class='help-inline'
+													ng-show='changePwd.repwd.$valid'> <i class='icon-ok'></i>
+												</span> <span class="mismatch" ng-show="isMismatch">Password
+													Mistmatch</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div ng-hide="newpwd && repwd">
+									<ul class="helplist">
+										<li>At least <strong>one letter</strong></li>
+										<li>At least <strong>one number</strong></li>
+										<li>At least <strong>8 characters long</strong></li>
+									</ul>
+								</div>
+								<div class="form-group">
+									<div class="row">
+										<div class="col-sm-6 col-sm-offset-3" align="center">
+											<button class="btn btn-primary chngbtn"
+												ng-disabled="!changePwd.$valid"
+												ng-click="pwdChangeTraveldesk(repwd)">Submit</button>
+										</div>
+									</div>
+								</div>
+
+							</form>
+
+							<!-- ./Change Password -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- ./Change Password -->
+	<!-- Change Password Modal Ends -->
+	<!-- Bootstrap core JavaScript ------>
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script type="text/javascript" src="../js/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="../assets/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../assets/angular.min.js"></script>
+	<script type="text/javascript" src="../assets/ngStorage.js"></script>
+	<script type="text/javascript" src="../assets/angular-route.js"></script>
+	<script type="text/javascript" src="../js/app.js"></script>
+	<script type="text/javascript" src="../js/global.js"></script>
+	<script type="text/javascript" src="../js/loginController.js"></script>
+	<script type="text/javascript" src="../assets/angular/angular-animate.js"></script>
+	<script type="text/javascript" src="../js/traveldesk/traveldesk.js"></script>
+	<script type="text/javascript" src="../js/traveldesk/directive.js"></script>
+	<script type="text/javascript" src="../js/traveldesk/factory.js"></script>
+	<script type="text/javascript" src="../js/traveldesk/filter.js"></script>
+	<script type="text/javascript" src="../assets/sweetalert/sweetalert-dev.js"></script>
+</body>
+</html>

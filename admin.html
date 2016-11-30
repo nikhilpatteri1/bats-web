@@ -18,7 +18,7 @@
 	href="../assets/font-awesome-4.5.0/css/font-awesome.min.css">
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
-
+	
 
 <!-- Reset CSS -->
 <link rel="stylesheet" type="text/css" href="../css/reset.css">
@@ -41,9 +41,9 @@
 <link rel="stylesheet" type="text/css" href="../assets/datepicker/bootstrap-datetimepicker.css">
 <link rel="stylesheet" type="text/css" href="../css/admin.css">
 </head>
-<body ng-controller="AdminController" ng-cloak>
+<body ng-controller="AdminController"  ng-cloak>
 
-
+<div ng-controller="TDcontroller">
 <div ng-controller="AlarmNotificationsControllerAdmin">
 	<!--================= Nav Header Starts =================-->
 	<nav class="navbar navbar_home">
@@ -57,8 +57,21 @@
 				</div>
 				<div class="col-sm-3">
 				<div class="col-sm-5">
-				<div class="nav notify-row"> <!--  notification start -->
+				<div class="nav notify-row"> 
+				
                 <ul class="top-menu">
+                
+                <!-- travel desk bar start -->
+                    <li id="trvel_desk_bar">
+                    <a href="#" ng-click="userinfo()">  
+                    <i class="fa fa-user" style="color:#fcb322" aria-hidden="true"></i></a>
+                    </li>
+                    
+                    <!--  trvel desk bar end -->
+                    
+                    
+                    
+                    <!--  notification start -->
                     <!-- notification dropdown start-->
                     <li id="header_notification_bar" class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#" ng-click="hideNotifyCount()">
@@ -88,6 +101,11 @@
                         </ul>
                     </li>
                     <!-- notification dropdown end -->
+                    
+                    
+                    
+                    
+                    
                 </ul>
             </div> <!--  notification end -->
             </div>
@@ -450,7 +468,267 @@
 
 
 
+<!-- =========create travel desk model========= -->
+<div id="createTDModal" class="modal fade"  role="dialog" data-backdrop="stastic" 
+		>
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="iconSection" align="center">
+				<div class="userIcon">
+					<i class="fa fa-user fa-3x"></i>
+				</div>
+			</div>
+			<div class="modal-body">
+				<form id="TravelDesk" name="travelDeskForm" class="form formInput">
+				<div id="createclose" class="col-sm-2 col-sm-offset-10" align="right">
+						<span class="closeIcon" data-direction="left" data-dismiss="modal"
+							aria-hidden="true" ng-click="reset()">&times;</span>
+				</div>
+				
+				<h1 class="titleHead">Create Travel Desk User</h1>
+				<div class="row">
+				<div class="col-sm-12">
+					<div class="row">
+						 <div class="col-sm-6">
+							<div class="form-group requiredfield"
+									ng-class="{ 'has-error' : travelDeskForm.Tdname.$invalid && !travelDeskForm.Tdname.$pristine }">
+									<label ng-show="travelDesk.Tdname"
+									class="floatlabeltxt show-hide">Enter the Name</label>
+									<input type="text" class="form-control" name="Tdname"
+									ng-model="travelDesk.Tdname" placeholder="Enter the Name"
+									ng-maxlength="25" required/>
+									<p ng-show="travelDeskForm.Tdname.$touched && travelDeskForm.Tdname.$invalid"
+									class="help-block error-help">Name is required.</p>
+									<p ng-show="travelDeskForm.Tdname.$error.maxlength && !travelDeskForm.Tdname.$pristine"
+									class="help-block">Max length 25</p>	
+														
+							</div>
+												
+						
+						</div>
+						
+						 <div class="col-sm-6">
+							<div class="form-group requiredfield" ng-class="{'has-error':travelDeskForm.Tdpassword.$invalid && !travelDeskForm.Tdpassword.$pristine}">
+													<label ng-show="travelDesk.tdpassword"
+														class="floatlabeltxt show-hide">Enter Password</label> 
+														<input name="Tdpassword" type="password" class="form-control"
+														ng-model="travelDesk.tdpassword"
+														ng-pattern="/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/"
+														placeholder="Enter Password" required/>
+													<p ng-show="travelDeskForm.Tdpassword.$touched && travelDeskForm.Tdpassword.$invalid" 
+													class="help-block error-help">Password is required </p>	
+													<div ng-show="travelDeskForm.Tdpassword.$error.pattern" 
+													class="help-block error-help">Password help
+													<ul class="helplist"><li>At least <strong>one letter,</strong></li><li>At least <strong>one number,</strong></li><li>At least <strong>8 characters long.</strong></li></ul> 
+													</div>													
+							</div>
+						
+						</div>	 
+		
+					</div>
+				
+					 <div class="row">
+						<div class="col-sm-6">
+							<div class="form-group requiredfield" 
+							ng-class="{'has-error':travelDeskForm.useremail.$invalid && !travelDeskForm.useremail.$pristine}">
+							<label ng-show="travelDesk.Email" class="floatlabeltxt show-hide">Enter Email Id</label>
+							<input type="email" ng-model="travelDesk.Email" 
+							ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
+							name="useremail"  class="form-control" placeholder="Enter Email Id" required/>
+							<p ng-show="travelDeskForm.useremail.$touched  && travelDeskForm.useremail.$invalid" 
+							class="help-block error-help">Email is required</p>
+							<p ng-show="travelDeskForm.useremail.$error.pattern && !travelDeskForm.usermail.$pristine" 
+							class="help-block error-help">Enter a valid email.</p>
+							</div>
+						</div>
+					<div class="col-sm-6">
+						<div class="form-group requiredfield"
+						ng-class="{'has-error': travelDeskForm.Tdcontact.$invalid && !travelDeskForm.Tdcontact.$pristine}">
+						<label ng-show="travelDesk.tdcontact" class="floatlabeltxt show-hide">Enter the Contact Number</label>
+						<input type="text" class="form-control" ng-model="travelDesk.tdcontact" 
+						name="Tdcontact" ng-minlength="10" ng-maxlength="10" numbers-only 
+						placeholder="Enter Contact Number" required/>
+						<p ng-show="travelDeskForm.Tdcontact.$touched  && travelDeskForm.Tdcontact.$invalid" 
+							class="help-block error-help">Contact is required</p>
+						<p ng-show="travelDeskForm.Tdcontact.$error.minlength && !travelDeskForm.Tdcontact.$pristine"
+						class="help-block">Min digits 10</p>
+						<p ng-show="travelDeskForm.Tdcontact.$error.maxlength && !travelDeskForm.Tdcontact.$pristine"
+						class="help-block">Max digits 10</p>	
+						</div>
+				
+					</div>
+				</div>
+				<div class="row">
+								<div class="col-sm-12">
+									<div class="form-group requiredfield"
+										ng-class="{ 'has-error' : travelDeskForm.desc.$invalid && !travelDeskForm.desc.$pristine }">
+										<label ng-show="travelDesk.desc" class="floatlabeltxt show-hide">Description</label>
+										<textarea ng-model="travelDesk.desc" name="desc"
+											class="form-control" placeholder="Description" required></textarea>
+										<p
+											ng-show="travelDeskForm.desc.$touched && travelDeskForm.desc.$invalid"
+											class="help-block error-help">Description is required.</p>
+									</div>
+								</div>
+				</div>
+				
+				</div>
+			</div>
+			
+			<div class="row">
+						<div class="col-sm-6 col-sm-offset-3" align="center">
+							<button id="createid" class="btn btn-primary " 
+							ng-click="submitTDform()">Create</button>
+							
+						</div>
+			</div>
+				
+			</form>
+			
+			</div>
+		</div>
+	</div>
+</div>
 
+
+<!-- End travel desk -->
+
+
+<!-- ===========update travel desk========= --> 
+<div class="modal fade" id="updateTDModal" role="dialog"
+	data-backdrop="static">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="iconSection" align="center">
+				<div class="userIcon">
+					<i class="fa fa-user fa-3x"></i>
+				</div>
+			</div>
+			<div class="modal-body">
+				<form name="updateUserForm" class="form formInput">
+					<div class="col-sm-2 col-sm-offset-10" align="right">
+						<span class="closeIcon" data-direction="left" data-dismiss="modal"
+							aria-hidden="true" ng-click="resetUpdate()">&times;</span>
+					</div>
+					<h1 class="titleHead">Update Travel Desk User</h1>
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group"
+										ng-class="{ 'has-error' : updateUserForm.uname.$invalid && !updateUserForm.uname.$pristine }">
+										<label ng-show="travelDesk.Tdname"
+											class="floatlabeltxt show-hide">Enter User Name</label> <input
+											type="text" ng-model="travelDesk.Tdname" name="uname"
+											class="form-control" placeholder="Enter User Name"
+											style="text-transform: lowercase" readonly required />
+										<p
+											ng-show="updateUserForm.uname.$invalid && !updateUserForm.uname.$pristine"
+											class="help-block">Username is required.</p>
+										<!-- <span class="help-block chk_frm_server" ng-show="error.uname">{{status}}</span> -->
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<!-- <div class="form-group" ng-show="password.update">
+															<div class="controls">
+																<input type="text" ng-model="user.password"
+																	ng-disabled="isSaving" name="password"
+																	class="form-control immediate-help"
+																	placeholder="Enter Password" password-validate required />
+																<div id="custPwdhelp" class="input-help">
+																	<h4>Password must meet the following requirements:</h4>
+																	<ul>
+																		<li ng-class="pwdHasLetter">At least <strong>one
+																				letter</strong></li>
+																		<li ng-class="pwdHasNumber">At least <strong>one
+																				number</strong></li>
+																		<li ng-class="pwdValidLength">At least <strong>8
+																				characters long</strong></li>
+																	</ul>
+																</div>
+															</div>
+														</div> -->
+
+									<div class="form-group"
+										ng-class="{ 'has-error' : updateUserForm.desc.$invalid && !updateUserForm.desc.$pristine }">
+										<label ng-show="travelDesk.desc"
+											class="floatlabeltxt show-hide">Description</label>
+										<textarea ng-model="travelDesk.desc" name="desc"
+											placeholder="Description" class="form-control floatlabel"
+											style="margin-top: 0px; height: 72px; border: none; border-bottom: 2px solid #ddd;"
+											required></textarea>
+										<p
+											ng-show="updateUserForm.desc.$invalid && !updateUserForm.desc.$pristine"
+											class="help-block">Description is required.</p>
+									</div>
+
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group"
+										ng-class="{ 'has-error' : updateUserForm.useremail.$invalid && !updateUserForm.useremail.$pristine }">
+										<label ng-show="travelDesk.Email"
+											class="floatlabeltxt show-hide">Enter Email Id</label> <input
+											type="email" ng-model="travelDesk.Email"
+											ng-keyup="verifyEmail(userUpdate.email)"
+											ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
+											name="useremail" class="form-control"
+											placeholder="Enter Email Id" required />
+										<p
+											ng-show="updateUserForm.useremail.$invalid && !updateUserForm.useremail.$pristine"
+											class="help-block">Enter a valid email.</p>
+										<span class="help-block chk_frm_server"
+											ng-show="error_mail.umail">{{statusMail}}</span>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group"
+										ng-class="{ 'has-error' : updateUserForm.contact_no.$invalid && !updateUserForm.contact_no.$pristine }">
+										<div class="row">
+											<!-- <div class="col-sm-3 padding_rt0">
+												<h4 class="plus_91">+91</h4>
+											</div> -->
+											<div class="col-sm-12">
+												<label ng-show="travelDesk.tdcontact"
+													class="floatlabeltxt show-hide">Enter Mobile Number</label>
+												<input type="text" ng-model="travelDesk.tdcontact"
+													numbers-only name="contact_no" class="form-control"
+													string-to-number placeholder="Enter Mobile Number"
+													ng-minlength="10" ng-maxlength="10" required />
+											</div>
+										</div>
+										<p
+											ng-show="updateUserForm.contact_no.$invalid && !updateUserForm.contact_no.$pristine"
+											class="help-block">Enter Valid Mobile Number.</p>
+										<p
+											ng-show="updateUserForm.contact_no.$error.minlength && updateUserForm.contact_no.$error.maxlength"
+											class="help-block">Mobile Number max 10 numbers.</p>
+										<!-- <span class="help-block">{{mobstatus}}</span> -->
+									</div>
+								</div>
+							</div>
+							
+							<br>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6 col-sm-offset-3" align="center">
+							<button class="btn btn-primary" 
+								ng-disabled="updateUserForm.$invalid"
+								ng-show="updateUserForm.$valid && !name.length"
+								ng-click="submitEditUserForm1()">Update</button><!-- showUpdateUser --> <!--  -->
+						</div>
+					</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+</div>
+<!-- =======End update travel desk======= -->
 
 
 	<!-- Bootstrap core JavaScript ================================================== -->
@@ -501,6 +779,7 @@
 	<script src="../js/admin/alarmNotificationsController.js"></script>
 	<script type="text/javascript" src="../js/admin/directive.js"></script>
 	<script type="text/javascript" src="../js/admin/filter.js"></script>
+	<script type="text/javascript" src="../js/admin/TDeskController.js"></script>
 	<script type="text/javascript"
 		src="../assets/sweetalert/sweetalert-dev.js"></script>
 	<!-- Material Design Calendar -->

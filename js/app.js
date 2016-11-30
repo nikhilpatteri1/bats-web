@@ -13,6 +13,9 @@ var batsAdminHome = angular.module('batsAdminHome', ['ngStorage', 'ngRoute','ngA
 //==============General Home===============
 var batsGeneralHome = angular.module('batsGeneralHome', ['ngStorage', 'ngRoute', 'uiGmapgoogle-maps','ngAnimate', 'ui.bootstrap','ngMaterial', 'ngMessages', 'highcharts-ng', 'ngMap']);
 
+//==============Travel Desk=================
+var batstravelDeskHome =angular.module('batstravelDeskHome',['ngStorage', 'ngRoute','ngAnimate']);
+
 var lt, lg;
 var markerArray = [];
 var map;
@@ -218,6 +221,33 @@ batsGeneralHome.run(function($rootScope, $route, $location,$localStorage){
 	        $rootScope.actualLocation = $location.path();	        
 	        var tokenCheck=$localStorage.data;
 	        if(tokenCheck.charAt(9)!='2'){
+	        	window.location = apiURL;
+	        }
+	    });        
+
+	   $rootScope.$watch(function () {return $location.path();}, function (newLocation, oldLocation) {		   
+	        
+	    });
+	});
+batstravelDeskHome.config(function($routeProvider, $locationProvider) {
+	  //$locationProvider.html5Mode(true);
+	  $locationProvider.html5Mode({
+		  enabled: true,
+		  requireBase: false
+		});
+  $routeProvider
+      .when('/traveldesk/binding', {
+          templateUrl : '/html/traveldesk/driver_binding.html',
+          controller  : 'batsDriverBinding'
+      });   
+});
+batstravelDeskHome.run(function($rootScope, $route, $location,$localStorage){
+	   //Bind the `$locationChangeSuccess` event on the rootScope, so that we dont need to 
+	   //bind in induvidual controllers.
+	   $rootScope.$on('$locationChangeSuccess', function() {		   
+	        $rootScope.actualLocation = $location.path();	        
+	        var tokenCheck=$localStorage.data;
+	        if(tokenCheck.charAt(9)!='3'){
 	        	window.location = apiURL;
 	        }
 	    });        

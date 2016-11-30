@@ -1,0 +1,31 @@
+@CHARSET "ISO-8859-1";
+/* driver binding*/
+.helplist {-webkit-padding-start: 0px;padding: 10px;color:#858594 !important;}
+.vehiclelist{-webkit-padding-start: 0px;margin:10px 0px;}
+.vehiclelist li{list-style-type: none;}
+.helplist li {display: inline-block;font-size: 10px;}
+.edit_icon,.delete_icon {border: 1px solid #03A9F4;border-radius: 20px;padding: 3px 7px 3px 7px;margin: 0 0 0 15px;}
+.titleHead {margin-bottom: 40px;text-align: center;color: #03A9F4;}
+.help-txt {font-family: roboto;font-size: 12px;font-weight: 900;color: #ff0000;}
+.error-help{color:#ff0000;}
+.iconImageSm {width: 35px; height: 35px;}
+.driverlist {-webkit-padding-start: 0px;}
+.driverlist li {list-style-type: none;margin: 10px 0px;}
+.driverlist li label{font-size:14px;color:#5a65b7;}
+.driverlist li p{font-size:12px;color:#b75a5a;}
+.search_customer_results {background: rgba(255, 255, 255, 0.5); padding: 20px 15px 5px 15px;height: 413px; overflow: auto;}
+.fixWidthHeight{width:90px;height:90px;}
+.heading_title {text-align: left;margin: 0 0 24px 0;color: #03A9F4;}
+.histHead label{font-size:14px;font-weight:700;}
+.histValues{font-size:12px;color:#425863;font-weight:700;}
+.driverHistoryHeadList{-webkit-padding-start: 0px;border-bottom:1px solid #ccd;}
+.driverHistoryHeadList label{font-size:12px;}
+.driverHistoryHeadList li{list-style-type: none;line-height: 3;}
+.driverHistoryList{-webkit-padding-start: 0px;}
+.driverHistoryList li{list-style-type: none;line-height: 3;border-bottom:1px solid #ccd;}
+.driverHistoryList li:last-child{border:none;}
+.driverHistoryList p{font-size:10px;}
+.maintainScroll{overflow-y: scroll;overflow-x: hidden;height: 75px;}
+.mb10{margin-top:10px;margin-bottom:10px;}
+.loading_icon{width:25px;height:25px;}
+/* driver binding*/

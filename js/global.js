@@ -6,6 +6,10 @@ var reqTime=5;
 var maxSpeed=10;
 //var factoryToken="VQGIO34xB0V3ZSxo";
 
+
+
+
+
 /*var factoryToken;
 console.log(factoryToken);*/
 

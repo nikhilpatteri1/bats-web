@@ -22,6 +22,11 @@ batsLogin.controller('loginController', function($scope, $http, $localStorage) {
 	  		$localStorage.data = $scope.token;
 	  		window.location = "/general/map";
 	  	  }
+	  	 else if($scope.token.charAt(9)==="3"){
+		  		$('#loginModal').modal('hide');
+		  		$localStorage.data = $scope.token;
+		  		window.location = "/traveldesk/binding";
+		  }
 	}
 	$scope.user = {};
 	$scope.reset=function(){
@@ -65,6 +70,11 @@ batsLogin.controller('loginController', function($scope, $http, $localStorage) {
 			  		$('#loginModal').modal('hide');
 			  		//$localStorage.data = $scope.token;
 			  		window.location = "/general/map";
+			  	  }
+			  	else if($scope.token.charAt(9)==="3"){
+			  		$('#loginModal').modal('hide');
+			  		//$localStorage.data = $scope.token;
+			  		window.location = "/traveldesk/binding";
 			  	  }
 			  	  
 			  });
@@ -350,8 +360,71 @@ batsGeneralHome.controller('changePwdformGeneral', function($scope,$http,$localS
 		$scope.isMismatch = false;
 	}
 });
+/*
+ * ============================================>>>>>> Change Password <<<<<<===========================================
+ * */
 
-
+batstravelDeskHome.controller('changePwdformTraveldesk', function($scope,$http,$localStorage) {
+	$scope.changepwdjson={};
+	$scope.reset=function(){
+		document.getElementById("changePwdFrm").reset();
+		$scope.changePwd.$setPristine();
+		$scope.newpwd="";
+		$scope.repwd="";
+		$scope.isMismatch="";
+	};
+	$scope.pwdChangeTraveldesk=function(typedPwd){
+		if($scope.newpwd==typedPwd){
+			$scope.changepwdjson.token=$localStorage.data;
+			$scope.changepwdjson.newpassword=typedPwd;
+			console.log($scope.changepwdjson);
+			if($scope.changePwd.$valid){
+				$http({
+				      method  : 'POST',		  
+				      url     : apiURL+'reset',
+					  data    : JSON.stringify($scope.changepwdjson), 
+					  headers : { 'Content-Type': 'application/json' }
+				     })
+					  .success(function(data) {
+						  swal({title: "Password Reset Successful",
+						  	   text: "Success!",   
+						  	   type: "success",   
+						  	   confirmButtonColor: "#9afb29",   
+						  	   closeOnConfirm: false }, 
+						  	 function(){   
+						  		 $('#changePwdTravelDesk').modal('hide');
+								 window.location = "/";
+							  });
+				      })
+				      .error(function(data, status, headers, config) {
+				    	  //swal(data);
+				    	  console.log(data.err);
+				    	  if(data.err == "Expired Session")
+		    			  {
+		            		  $('#changePwdTravelDesk').modal('hide');
+		    			      expiredSession();
+		    			      $localStorage.$reset();
+		    			  }
+			        	  else if(data.err == "Invalid User"){
+			        		  $('#changePwdTravelDesk').modal('hide');
+			        		  invalidUser();
+			    			  $localStorage.$reset();  
+			        	  }
+				    	  console.log(status);
+				    	  console.log(headers);
+				    	  console.log(config);
+				});
+			}
+		}
+		else{
+			$scope.isMismatch=true;
+		}
+	};
+	
+	$scope.hidePasswordMismatch = function(){
+		$scope.isMismatch = false;
+	}
+});
 
 //==============Factory Logout===============
 batsfactoryhome.controller('logoutFactoryUser', function($scope, $http, $localStorage) {
@@ -473,6 +546,61 @@ batsGeneralHome.controller('logoutGeneralUser', function($scope, $http, $localSt
 	//console.log($scope.token);
 	$scope.customer = {};
 	$scope.logoutGeneralSubmit = function() {
+		swal({   title: "Are you sure? You want to logout?",   
+	    	text: "",   
+	    	type: "warning",   
+	    	showCancelButton: true,   
+	    	confirmButtonColor: "#DD6B55",   
+	    	confirmButtonText: "Yes, Logout!",   
+	    	cancelButtonText: "No, cancel it!",   
+	    	closeOnConfirm: false,   
+	    	closeOnCancel: false },
+	    	function(isConfirm){  
+	    		if (isConfirm) {  
+	    			$scope.customer.token = $scope.token;
+	    			//$scope.customer.id = $scope.token;
+	    			console.log(JSON.stringify($scope.customer));
+	    			$http({
+	    			  method  : 'POST',		  
+	    			  url     : apiURL+'logout',
+	    			  data    : JSON.stringify($scope.customer), 
+	    			  headers : { 'Content-Type': 'application/json' }
+	    			 })
+	    			  .success(function(data) {
+	    			  $scope.data = data;
+	    			  $localStorage.$reset();
+	    			  window.location = apiURL;
+	    			  console.log(JSON.stringify($scope.data));
+	    			  })
+	    			  .error(function(data, status, headers, config) {
+	    				  console.log(data);
+	    				  if(data.err == "Expired Session")
+	    				  {
+	    				      expiredSession();
+	    				      $localStorage.$reset();
+	    				  }
+	    		    	  else if(data.err == "Invalid User"){
+	    		    		  invalidUser();
+	    					  $localStorage.$reset();  
+	    		    	  }
+	    				  console.log(status);
+	    				  console.log(headers);
+	    				  console.log(config);
+	    			  });
+	    		}
+	    		else {     
+        			swal("Cancelled", "You have cancelled :)", "error");   
+        			} 
+	    	});
+
+		  };
+	});
+//==============Travel Desk Logout===============
+batstravelDeskHome.controller('logoutTraveldeskUser', function($scope, $http, $localStorage) {
+	$scope.token = $localStorage.data;
+	//console.log($scope.token);
+	$scope.customer = {};
+	$scope.logoutTravelDeskSubmit = function() {
 		swal({   title: "Are you sure? You want to logout?",   
 	    	text: "",   
 	    	type: "warning",   
