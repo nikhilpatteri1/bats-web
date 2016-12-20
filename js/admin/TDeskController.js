@@ -1,5 +1,4 @@
 batsAdminHome.controller('TDcontroller',function($scope,$http,$localStorage){
-	console.log("entered the td controller");
 	$scope.token = $localStorage.data;
 	//console.log($scope.token);
 	if(typeof $scope.token==="undefined"){

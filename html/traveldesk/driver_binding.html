@@ -50,56 +50,57 @@
 			</div>
 			<!-- ./sorting /filtering part -->
 			<!-- Section for list vehicles after sorting or filtering done -->
-			<div class="row">
-				<div class="col-sm-12">
-
-					<ul class="vehiclelist"
-						ng-repeat="device in devlistObject | filter:deviceId | filter:{'bind':bindStatus}">
-						<li>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<div class="row">
-										<!-- Vehicle Number -->
-										<div class="col-sm-3">
-											<label>Vehicle No</label>
-											<p>{{device.vehicle_num.length>0?device.vehicle_num:device.devid}}</p>
-										</div>
-										<!-- ./Vehicle Number -->
-										<!-- Vehicle Model -->
-										<div class="col-sm-3">
-											<label>Vehicle Model</label>
-											<!-- <p>{{device}}</p> -->
-										</div>
-										<!-- ./Vehicle Model -->
-										<!-- Driver Name -->
-										<div class="col-sm-3">
-											<label>Driver Name</label>
-											<p>{{device.driver_name}}</p>
-										</div>
-										<!-- Driver Name -->
-										<!-- Driver Assign -->
-										<div class="col-sm-3">
-											<div
-												ng-show="{{device.driver_name.length>0 ? 'false':'true'}}">
-												<a href="#" class="edit_icon"
-													ng-click="showDriverModal(device)"> <i
-													class="fa fa-paperclip" aria-hidden="true"></i>
-												</a> <span class="help-block">Bind Driver</span>
+			<div class="search_customer_results  mb10">
+				<div class="row mb10">
+					<div class="col-sm-12">
+						<ul class="vehiclelist"
+							ng-repeat="device in devlistObject | filter:deviceId | filter:{'bind':bindStatus}">
+							<li>
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<div class="row">
+											<!-- Vehicle Number -->
+											<div class="col-sm-3">
+												<label>Vehicle No</label>
+												<p>{{device.vehicle_num.length>0?device.vehicle_num:device.devid}}</p>
 											</div>
-											<div
-												ng-show="{{device.driver_name.length>0 ? 'true':'false'}}">
-												<a href="#" class="edit_icon"
-													ng-click="unBindDriver(device)"> <i
-													class="fa fa-refresh" aria-hidden="true"></i>
-												</a> <span class="help-block">Un Bind Driver</span>
+											<!-- ./Vehicle Number -->
+											<!-- Vehicle Model -->
+											<div class="col-sm-3">
+												<label>Vehicle Model</label>
+												<!-- <p>{{device}}</p> -->
 											</div>
+											<!-- ./Vehicle Model -->
+											<!-- Driver Name -->
+											<div class="col-sm-3">
+												<label>Driver Name</label>
+												<p>{{device.driver_name}}</p>
+											</div>
+											<!-- Driver Name -->
+											<!-- Driver Assign -->
+											<div class="col-sm-3">
+												<div
+													ng-show="{{device.driver_name.length>0 ? 'false':'true'}}">
+													<a href="#" class="edit_icon"
+														ng-click="showDriverModal(device)"> <i
+														class="fa fa-paperclip" aria-hidden="true"></i>
+													</a> <span class="help-block">Bind Driver</span>
+												</div>
+												<div
+													ng-show="{{device.driver_name.length>0 ? 'true':'false'}}">
+													<a href="#" class="edit_icon"
+														ng-click="unBindDriver(device)"> <i
+														class="fa fa-refresh" aria-hidden="true"></i>
+													</a> <span class="help-block">Un Bind Driver</span>
+												</div>
+											</div>
+											<!-- Driver Assign -->
 										</div>
-										<!-- Driver Assign -->
 									</div>
 								</div>
-							</div>
-						</li>
-					</ul>
+							</li>
+						</ul>
+					</div>
 				</div>
 			</div>
 			<!-- End of section for list vehicles after sorting or filtering done -->
@@ -182,8 +183,8 @@
 																		</div>
 																		<div class="col-sm-6">
 																			<p>{{getTimeFormat(driverdetail.today_trip_hours)}}</p>
-																		</div>																		
-																	</div>																	
+																		</div>
+																	</div>
 																</div>
 																<!-- Driver Trip Hours Count -->
 																<!-- Driver Info -->
@@ -192,8 +193,8 @@
 																		id="id_{{driverdetail.driver_id}}"
 																		data-toggle="collapse"
 																		data-target="#{{driverdetail.driver_id}}"
-																		ng-click="showDriverInfo(driverdetail.driver_id)">Show/Hide Info
-																	</button>
+																		ng-click="showDriverInfo(driverdetail.driver_id)">Show/Hide
+																		Info</button>
 																</div>
 																<!-- Driver Info -->
 															</div>

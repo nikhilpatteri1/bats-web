@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="../assets/select2/css/select2.min.css"/>
 <div class="col-sm-10">
 	<h2 class="heading_title">Manage Driver</h2>
 	<div class="bgloading" ng-show="httpLoading">
@@ -65,7 +66,7 @@
 								</div>
 							</li>							
 						</ul>						
-						<div ng-if="noDrivers && searchDriver.length" class="help-warning">No drivers available for this search criteria !!!</div>
+						<p ng-show="(driverlist| driverFilter:searchDriver).length==0" class="help-block error-help">No drivers available for this search criteria !!!</p>
 						<p ng-show="!driverlist.length" class="help-warning">No driver created yet</p>
 					</div>
 				</div>
@@ -201,8 +202,8 @@
 													<input type="date" class="form-control" ng-model="driver.dob"
 														placeholder="DOB" /> -->
 													<div class='input-group date' id='dobPicker'>
-														<input type='text' class="form-control" 
-															ng-model="driver.dob" readonly="readonly" ng-required="false" placeholder="DOB"/> <span
+														<input type='text' class="form-control" id="dobOnCreate"
+															ng-model="driver.dob" readonly="readonly" ng-required="false" placeholder="DOB" ng-change="validateAge()"/> <span
 															id="dobAddon" class="input-group-addon"> <span
 															class="glyphicon glyphicon-calendar"> </span>
 														</span>
@@ -244,31 +245,15 @@
 											</div>
 											<div class="row">
 												<!-- Driver Languages Known -->
-												<div class="col-sm-12"
-													ng-class="{'has-error':alreadySelected || max5language}">
+												<div class="col-sm-12">
 													<div class="langSection">
 														<select id="langSelect" ng-model="selectedLanguage"
-															ng-change="formObj(selectedLanguage)"
-															class="form-control" ng-required="false">
-															<option selected disabled>Select language</option>
-															<option ng-repeat="option in lang">{{option.name}}</option>
+															ng-change="formLanguageArray()"
+															class="js-example-basic-multiple form-control" ng-required="false"
+															 multiple="multiple"
+															>															
 														</select>
-													</div>
-													<div ng-if="alreadySelected" class="help-block">Already
-														Selected</div>		
-													<div ng-if="max5language" class="help-block">Max 5
-														Languages</div>
-													<div class="form-control selectionSpace">
-														<div class="selectedItem" ng-repeat="item in langArray">
-															{{item}}<span ng-click="removeSelected(item)"> x</span>
-														</div>
-													</div>
-													<!-- 	<label ng-show="driver.languages"
-														class="floatlabeltxt show-hide">Enter Languages
-														Known</label>
-													<textarea class="form-control" ng-model="driver.languages"
-														placeholder="Enter Languages Known">
-														</textarea> -->
+													</div>													
 												</div>
 											</div>
 										</div>
@@ -299,11 +284,11 @@
 														<label class="radio-inline">
 														<input type="radio"
 														name="eType" class="" value="Permanent"
-														ng-model="driver.etype" checked="checked" required/><span
+														ng-model="driver.etype" required/><span
 														class="msgTxt">Permanent</span></label> <label
 														class="radio-inline"><input type="radio"
-														name="eType" class="" value="Contract"
-														ng-model="driver.etype" required/><span class="msgTxt">Contract</span></label>
+														name="eType" class="" value="Temporary"
+														ng-model="driver.etype" required/><span class="msgTxt">Temporary</span></label>
 														<p ng-show="driverform.eType.$touched && driverform.eType.$invalid" class="help-block error-help">Employee type is required</p>
 													</div>
 												</div>
@@ -316,7 +301,7 @@
 														class="floatlabeltxt show-hide">Enter Bloop Group</label>
 													<input type="text" class="form-control"
 														name="driverbloodgp"
-														ng-pattern="/^[ A-Za-z0-9+-]*$/"
+														ng-pattern="/^[ A-Za-z+-]*$/"
 														ng-maxlength="6"
 														ng-model="driver.blood" placeholder="Enter Bloop Group" required/>
 													<p ng-show="driverform.driverbloodgp.$touched && driverform.driverbloodgp.$invalid" class="help-block error-help">Blood group is required</p>
@@ -445,8 +430,7 @@
 															ng-model="driver.country" name="driverCountry"
 															class="form-control floatlabel floatlabel_select"
 															ng-change="onSelectCountry()" required>
-															<option selected disabled value="">- - Select
-																Country - -</option>
+															<option selected disabled value="">- - Select Country - -</option>
 															<option selected value="{{driver.country}}" ng-show>{{driver.country}}</option>
 															<option ng-repeat="c in country" value="{{c}}">{{c}}</option>
 														</select>
@@ -547,9 +531,11 @@
 															type="text" class="form-control"
 															ng-model="driver.ppincode"
 															name="driverpPincode"
+															ng-minlength= "6"
 															ng-maxlength="6"
 															numbers-only
 															placeholder="Enter Pincode" ng-required="false"/>
+															<p ng-show="driverform.driverpPincode.$error.minlength && !driverform.driverpPincode.$pristine" class="help-block">Min digits 6</p>
 															<p ng-show="driverform.driverpPincode.$error.maxlength && !driverform.driverpPincode.$pristine" class="help-block">Max digits 6</p>
 														</div>	
 													</div>
@@ -601,7 +587,7 @@
 														<label ng-show="driver.pcity"
 															class="floatlabeltxt show-hide">Enter City</label>										
 														<select ng-model="driver.pcity" name="driverpCity"
-														class="form-control floatlabel floatlabel_select" required>
+														class="form-control floatlabel floatlabel_select" ng-required="false">
 															<option selected disabled value="">-- Select City--</option>
 															<option ng-repeat="c in getCities(driver.pstate)">{{c.name}}</option>
 														</select>
@@ -754,8 +740,8 @@
 													<input type="date" class="form-control" ng-model="driver.dob"
 														placeholder="DOB" /> -->
 													<div class='input-group date' id='dobPickerUpdate'>
-														<input type='text' class="form-control"
-															ng-model="driver.dob" readonly="readonly" ng-required="false" placeholder="DOB"/> <span
+														<input type='text' class="form-control" id="dobOnUpdate"
+															ng-model="driver.dob" readonly="readonly" ng-required="false" placeholder="DOB"  ng-change="validateAge()"/> <span
 															id="dobAddon" class="input-group-addon"> <span
 															class="glyphicon glyphicon-calendar"> </span>
 														</span>
@@ -785,31 +771,14 @@
 											</div>
 											<div class="row">
 												<!-- Driver Languages Known -->
-												<div class="col-sm-12"
-													ng-class="{'has-error':alreadySelected || max5language}">
+												<div class="col-sm-12">
 													<div class="langSection">
 														<select id="updatelangSelect" ng-model="selectedLanguage"
-															ng-change="formObj(selectedLanguage)"
-															class="form-control" ng-required="false">
-															<option selected disabled>Select language</option>
-															<option ng-repeat="option in lang">{{option.name}}</option>
+															ng-change="formUpdateLanguageArray()"
+															class="js-example-basic-multiple form-control" ng-required="false"
+															 multiple="multiple">															
 														</select>
 													</div>
-													<div ng-if="alreadySelected" class="help-block">Already
-														Selected</div>
-													<div ng-if="max5language" class="help-block">Max 5
-														Languages</div>
-													<div class="form-control selectionSpace">
-														<div class="selectedItem" ng-repeat="item in langArray">
-															{{item}} <span ng-click="removeSelected(item)">x</span>
-														</div>
-													</div>
-													<!-- 	<label ng-show="driver.languages"
-														class="floatlabeltxt show-hide">Enter Languages
-														Known</label>
-													<textarea class="form-control" ng-model="driver.languages"
-														placeholder="Enter Languages Known">
-														</textarea> -->
 												</div>
 											</div>
 										</div>
@@ -843,8 +812,8 @@
 														ng-model="driver.etype" checked="checked" required/><span
 														class="msgTxt">Permanent</span></label> <label
 														class="radio-inline"><input type="radio"
-														name="eType" class="" value="Contract"
-														ng-model="driver.etype" required/><span class="msgTxt">Contract</span></label>
+														name="eType" class="" value="Temporary"
+														ng-model="driver.etype" required/><span class="msgTxt">Temporary</span></label>
 														<p ng-show="driverupdateform.eType.$touched && driverupdateform.eType.$invalid" class="help-block error-help">Employee type is required</p>
 													</div>
 												</div>
@@ -983,7 +952,7 @@
 														<select ng-model="driver.country" name="driverCountry"
 															class="form-control floatlabel floatlabel_select"
 															 required> <!-- ng-click="onSelectCountry()" -->
-															<option selected disabled value="">- - Select Country - -</option>
+															<option disabled value="">- - Select Country - -</option>
 															<option ng-show="editformselect" selected >{{driver.country}}</option>
 															<!-- <option ng-repeat="c in country" value="{{c}}">{{c}}</option> -->
 														</select>
@@ -1094,10 +1063,10 @@
 													</div>
 													<!-- Driver Country -->
 													<div class="col-sm-6">
-														<div class="form-group">{{driver.pcountry}}
+														<div class="form-group">
 															<label ng-show="driver.pcountry"
-																class="floatlabeltxt show-hide">Country</label> <select
-																ng-model="driver.pcountry" name="pcountry"
+																class="floatlabeltxt show-hide">Country</label>
+																<select ng-model="driver.pcountry" name="pcountry"
 																class="form-control floatlabel floatlabel_select"
 																 ng-required="false"> <!-- ng-change="onSelectCountry()" -->
 																<option selected disabled value="">- - Select Country - -</option>
@@ -1140,7 +1109,7 @@
 														<label ng-show="driver.pcity"
 															class="floatlabeltxt show-hide">Enter City</label>
 														<select ng-model="driver.pcity" name="driverpCity"
-															class="form-control floatlabel floatlabel_select" required>
+															class="form-control floatlabel floatlabel_select" ng-required="false">
 															<option disabled value="">-- Select City--</option>
 															<option selected>{{driver.pcity}}</option>
 															<option ng-repeat="c in getCities(driver.pstate)">{{c.name}}</option>

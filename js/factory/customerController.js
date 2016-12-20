@@ -214,8 +214,8 @@ batsfactoryhome.controller('factoryEdit', function($scope, $http, $localStorage)
 $scope.token = $localStorage.data;
 $scope.saveEditForm = function() {
 	$scope.edit.token = $scope.token;
-	$scope.edit.country=angular.lowercase($scope.edit.country);
-	$scope.edit.state=angular.lowercase($scope.edit.state);
+	$scope.edit.country=$scope.edit.country;
+	$scope.edit.state=$scope.edit.state;
 	//$scope.edit.contact_no = '+91'+$scope.edit.contact_no;
 	console.log(JSON.stringify($scope.edit));
     $http({
@@ -508,12 +508,12 @@ batsfactoryhome.controller('factoryCreate', function($scope, $http, $localStorag
 			//alert('New Customer Created');
 		}
 	$scope.customer.token = $scope.token;
-	$scope.customer.country=angular.lowercase($scope.customer.country);
-	$scope.customer.state=angular.lowercase($scope.customer.state);
+	$scope.customer.country=$scope.customer.country;
+	$scope.customer.state=$scope.customer.state;
 	$scope.customer.org_id=angular.lowercase($scope.customer.org_id);
 	//$scope.customer.contact_no = '+91'+$scope.customer.contact_no;
 	console.log(JSON.stringify($scope.customer));
-	$('#createModal').modal('hide');
+
     $http({
       method  : 'POST',		  
       url     : apiURL+'customer/create',
@@ -528,6 +528,7 @@ batsfactoryhome.controller('factoryCreate', function($scope, $http, $localStorag
 			   closeOnConfirm: false }, 
 			   function(){   
 				   $scope.data = data;
+					$('#createModal').modal('hide');
 				   console.log(JSON.stringify($scope.data));
 				   location.reload();
 		});

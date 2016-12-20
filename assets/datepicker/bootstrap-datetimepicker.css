@@ -4,7 +4,7 @@
  * https://github.com/Eonasdan/bootstrap-datetimepicker/
  */
 .bootstrap-datetimepicker-widget {
-  list-style: none;
+  list-style: none;  
 }
 .bootstrap-datetimepicker-widget.dropdown-menu {
   margin: 2px 0;

@@ -415,3 +415,11 @@ top: -19px;transition: all 0.25s ease 0s;width: 0;z-index: 10;margin-top: 10px;o
     font-weight: 500;
     line-height: 26.4px;
 }
+
+.addcbtn{
+	font-size: 18px !important;
+    padding: 5px 27px !important;
+    border-radius: 20px !important;
+    margin-top:15px !important;
+}
+

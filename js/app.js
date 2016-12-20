@@ -14,7 +14,7 @@ var batsAdminHome = angular.module('batsAdminHome', ['ngStorage', 'ngRoute','ngA
 var batsGeneralHome = angular.module('batsGeneralHome', ['ngStorage', 'ngRoute', 'uiGmapgoogle-maps','ngAnimate', 'ui.bootstrap','ngMaterial', 'ngMessages', 'highcharts-ng', 'ngMap']);
 
 //==============Travel Desk=================
-var batstravelDeskHome =angular.module('batstravelDeskHome',['ngStorage', 'ngRoute','ngAnimate']);
+var batstravelDeskHome =angular.module('batstravelDeskHome',['ngStorage', 'ngRoute','ngAnimate','ngMaterial']);
 
 var lt, lg;
 var markerArray = [];
@@ -229,7 +229,7 @@ batsGeneralHome.run(function($rootScope, $route, $location,$localStorage){
 	        
 	    });
 	});
-batstravelDeskHome.config(function($routeProvider, $locationProvider) {
+batstravelDeskHome.config(function($routeProvider, $locationProvider,$mdDateLocaleProvider) {
 	  //$locationProvider.html5Mode(true);
 	  $locationProvider.html5Mode({
 		  enabled: true,
@@ -239,7 +239,24 @@ batstravelDeskHome.config(function($routeProvider, $locationProvider) {
       .when('/traveldesk/binding', {
           templateUrl : '/html/traveldesk/driver_binding.html',
           controller  : 'batsDriverBinding'
+      })
+      .when('/traveldesk/trip', {
+          templateUrl : '/html/traveldesk/trip_management.html',
+          controller  : 'tripManagement'
+       })
+      .when('/traveldesk/history', {
+          templateUrl : '/html/traveldesk/trip_history.html',
+          controller  : 'tripHistory'
       });   
+  $mdDateLocaleProvider.formatDate = function(date) {    	
+  	if(date!=null && date!=""){    		
+  		return moment(date).format('DD-MM-YYYY');
+  	}
+  	else{    		
+  		return "Select Date";//moment(new Date()).format('DD-MM-YYYY');
+  	}
+  	
+   };     
 });
 batstravelDeskHome.run(function($rootScope, $route, $location,$localStorage){
 	   //Bind the `$locationChangeSuccess` event on the rootScope, so that we dont need to 

@@ -1184,22 +1184,22 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 	// var tagsData = cname;
 	// init jquery functions and plugins
 	$(document).ready(function() {
-		$.getScript('../assets/select_filter/select2.min.js', function() {
+		$.getScript('../assets/select2/js/select2.full.min.js', function() {
 			console.log("check");
 			$("#selectGroup").select2({});
 			$("#selectDevice").select2({});
 			$('#clearTextGroup span.select2-chosen').text("- - Select Group - -");
 			$('#clearTextDevice span.select2-chosen').text("- - Select Vehicle No / Device - -");			
 			$(document).on('input','.select2-input',function(){
-				console.log("input");
+				/*console.log("input");*/
 				$('.dropdownSection').css('top','20%');				
 			});
 			$(document).on('keyup','.select2-input',function(){
-				console.log("keyup");
+				/*console.log("keyup");*/
 				$('.dropdownSection').css('top','20%');				
 			});
 			$(document).on('keydown','.select2-input',function(){
-				console.log("keydown");
+				/*console.log("keydown");*/
 				$('.dropdownSection').css('top','20%');				
 			});
 			$(document).on('mouseenter','.map_content',function(){		

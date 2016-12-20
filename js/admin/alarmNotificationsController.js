@@ -95,6 +95,14 @@ batsAdminHome.controller('AlarmNotificationsControllerAdmin', function($scope, $
 					  }
 			      })
 			      .error(function(data, status, headers, config) {
+			    	  console.log(data);
+			    	  console.log(status);
+			    	  console.log(headers);
+			    	  console.log(config);
+			    	  if(data==null){
+			    		  expiredSession();
+						  $localStorage.$reset();
+			    	  }
 			    	  if (data.err == "Expired Session") {
 							expiredSession();
 							$localStorage.$reset();
@@ -102,10 +110,7 @@ batsAdminHome.controller('AlarmNotificationsControllerAdmin', function($scope, $
 							invalidUser();
 							$localStorage.$reset();
 						}
-			    	  console.log(data);
-			    	  console.log(status);
-			    	  console.log(headers);
-			    	  console.log(config);
+			    	  
 				  });
 
 	    };

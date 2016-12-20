@@ -129,8 +129,7 @@
 										<select ng-model="group.country" name="country"
 											class="form-control floatlabel floatlabel_select"
 											ng-change="onSelectCountry()" required>
-											<option selected disabled value="">- - Select
-												Country - -</option>
+											<option selected disabled value="">- - Select Country - -</option>
 											<option selected value="{{group.country}}" ng-show>{{group.country}}</option>
 											<option ng-repeat="c in country" value="{{c}}">{{c}}</option>
 										</select>
@@ -147,8 +146,7 @@
 										<label ng-show="group.state" class="floatlabeltxt show-hide">State</label>
 										<select ng-model="group.state" name="state"
 											class="form-control floatlabel floatlabel_select" required>
-											<option selected disabled value="">- - Select State
-												- -</option>
+											<option selected disabled value="">- - Select State- -</option>
 											<option ng-repeat="s in state" value="{{s}}"
 												ng-show="createGroupState">{{s}}</option>
 											<option selected value="{{group.state}}"
