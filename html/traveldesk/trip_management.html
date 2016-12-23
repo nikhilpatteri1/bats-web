@@ -1,4 +1,4 @@
-<div class="col-sm-10" ng-init="tripList()">
+<div class="col-sm-10" ng-init="tripList();grouplist()">
 	<h2 class="heading_title">Travel Desk</h2>
 	<div class="row">
 		<div class="col-sm-12">
@@ -11,27 +11,30 @@
 				<!-- search driver -->
 				<div class="row makeMB20">
 					<div class="col-sm-12">
-						<h3>Search Trip<span class="help-txt">(based on phone or name)</span></h3>
-						<input type="text" class="form-control" ng-model="searchTrip" placeholder="Search by name or phone number"/>
+						<h3>
+							Search Trip
+						</h3>
+						<input type="text" class="form-control" ng-model="searchTrip"
+							placeholder="Search by (trip-id / vehicle no / driver name / phone number)" />
 					</div>
 				</div>
 				<!-- ./search driver -->
 				<div class="row triplist_head">
-					<div class="col-sm-2">
+					<div class="col-sm-3">
 						<label>Trip-id</label>
-						
+
 					</div>
 					<div class="col-sm-2">
 						<label>Vehicle No</label>
-						
+
 					</div>
 					<div class="col-sm-2">
 						<label>Driver Name</label>
-						
+
 					</div>
 					<div class="col-sm-2">
 						<label>Driver Contact</label>
-						
+
 					</div>
 					<!-- <div class="col-sm-2">
 						<label>Driver Image</label>
@@ -40,68 +43,72 @@
 						<label>Edit</label>					
 						<label>Delete</label>
 					</div> -->
-					
+
 				</div>
-				
-<!-- listing trip -->
+
+				<!-- listing trip -->
 				<div class="row">
 					<div class="col-sm-12" id="displayList">
-						<ul id="accordion1" class="driverlist" >
-														
-							<li ng-repeat="tripdetail in triplistObject">
+						<ul id="accordion" class="driverlist">
+
+							<li
+								ng-repeat="tripdetail in triplistObject |tripFilter:searchTrip">
 								<div class="panel panel-default">
 									<div class="panel-heading">
-									<div class="row">
-									
-									<!-- Trip ID -->
-											<div class="col-sm-2">
-												<label>Trip-id</label>
+										<div class="row">
+
+											<!-- Trip ID -->
+											<div class="col-sm-3">
 												<p>{{tripdetail.trip_id}}</p>
 												<!-- <p>{{driverdetail.name}}</p> -->
 											</div>
 											<!-- Trip ID -->
 											<!-- Vehicle no -->
 											<div class="col-sm-2">
-												<label>Vehicle No</label>
 												<p>{{tripdetail.vehicle_num}}</p>
 											</div>
 											<!-- Vehicle No -->
 											<!-- Driver Name -->
 											<div class="col-sm-2">
-												<label>Driver Name</label>
 												<p>{{tripdetail.driver_name}}</p>
 											</div>
 											<!-- Driver Name -->
 											<!-- Driver Contact -->
-											<div class="col-sm-2">
-												<label>Driver Contact</label>
+											<div class="col-sm-1">
 												<p>{{tripdetail.contact_no}}</p>
 											</div>
 											<!-- Driver Contact -->
-											
+
 											<!-- image of driver/avatar -->
-											<div class="col-sm-2">
-												<img src="{{tripdetail.image_src.length>0?tripdetail.image_src:'../images/driver.png'}}"
-													class="img-responsive img-circle img-thumbnail iconImageSm" />
-											</div>
+											<!-- <div class="col-sm-1">
+												<img
+													src="{{tripdetail.image_src.length>0?tripdetail.image_src:'../images/driver.png'}}"
+													class="img-responsive img-circle img-thumbnail iconImageSm"
+													onerror="this.onerror=null;this.src='../images/driver.png';">
+											</div> -->
 											<!-- ./image of driver/avatar -->
-											
+
 											<!-- Driver Edit -->
-											<div class="col-sm-2">
-												<p class="alignIcons"> <!-- ng-click="fetchdriverInfo(driverdetail.driver_id)" -->
-													<a href="#" class="edit_icon"
-														 data-toggle="modal"
-														data-target="#updateTripModal"><i class="fa fa-pencil"></i></a>
-													<a href="#" class="delete_icon"
-														ng-click="deleteTrip(driverdetail.driver_id)"><i
-														class="fa fa-trash"></i></a>
-													<!-- <a class="btn btn-primary" data-toggle="collapse" href="#{{dynamic}}Collapse" aria-expanded="false" aria-controls="{{dynamic}}Collapse">  
-													Link with href  
-													</a>
-													<div class="collapse" id="{{dynamic}}Collapse"></div> -->
-													<a  ng-click="initMap()" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#{{tripdetail.trip_id}}"></a>
-												</p>
-												
+											<div class="col-sm-3" align="left">
+												<div class="row userIcons">
+													<div class="col-sm-4">
+														<a href="#" class="edit_icon" data-toggle="modal"
+															ng-click="fetchTripInfo(tripdetail.trip_id);initUpdateMap()"
+															data-target="#updateTripModal"><i
+															class="fa fa-pencil"></i></a>
+													</div>
+													<div class="col-sm-4">
+														<a href="#" class="delete_icon"
+															ng-click="cancelTrip(tripdetail.trip_id)"><i
+															class="fa fa-times"></i></a>
+													</div>
+													<div class="col-sm-4">
+														<button class="btn btn-primary btn-sm" data-toggle="collapse"
+															data-parent="#accordion1"
+															data-target="#{{tripdetail.trip_id}}"> Show/Hide Info
+														</button>
+													</div>
+												</div>
 											</div>
 											<!-- Driver Delete -->
 										</div>
@@ -109,84 +116,112 @@
 									<div id="{{tripdetail.trip_id}}" class="collapse panel-body">
 										<div class="row">
 											<div class="col-sm-2">
-												<img class="img-responsive img-thumbnail fixWidthHeight" src=""/>
+
+												<img
+													src="{{tripdetail.image_src.length>0?tripdetail.image_src:'../images/driver.png'}}"
+													class="img-responsive img-thumbnail fixWidthHeight"
+													onerror="this.onerror=null;this.src='../images/driver.png';">
 											</div>
 											<div class="col-sm-10">
 												<div class="row mb10">
-													<div class="col-sm-4">
-													<label>Driver Id</label>
-													<p class="mb10">{{tripdetail.driver_id}}</p>												
+													<div class="col-sm-3">
+														<label>Driver Id</label>
+														<p class="mb10">{{tripdetail.driver_id}}</p>
 													</div>
-													<div class="col-sm-4">
-													<label>Driver Contact</label>
-													<p class="mb10">{{tripdetail.contact_no}}</p>
+													<div class="col-sm-3">
+														<label>Driver Contact</label>
+														<p class="mb10">{{tripdetail.contact_no}}</p>
 													</div>
-													<div class="col-sm-4">
-													<label>Organization Id</label>
-													<p class="mb10">{{tripdetail.org_id}}</p>
+													<div class="col-sm-3">
+														<label>Organization Id</label>
+														<p class="mb10">{{tripdetail.org_id}}</p>
+													</div>
+													<div class="col-sm-3">
+														<label>Customer Count: </label>
+														<p class="mb10 count_label">
+															<span>{{tripdetail.customers_count}}</span>
+														</p>
 													</div>
 												</div>
-											
 											</div>
 										</div>
 										<hr>
-										<label>Trip Detail</label>
+										<label class="mb10">Trip Detail</label>
 										<div class="row">
-											<div class="col-sm-6" align="center">
-												<label>Start Time</label>
-												<p class="mb10">{{getTimeFormat(tripdetail.apprx_start_time)}}</p>												
+											<div class="col-sm-6">
+												<div class="row">
+													<div class="col-sm-6">
+														<label>Start Time</label>
+														<p class="mb10">{{getTimeFormat(tripdetail.apprx_start_time)}}</p>
+													</div>
+													<div class="col-sm-6">
+														<label>End Time</label>
+														<p class="mb10">{{getTimeFormat(tripdetail.apprx_end_time)}}</p>
+													</div>
+												</div>
 											</div>
-											<div class="col-sm-6" align="center">
-												<label>End Time</label>
-												<p class="mb10">{{getTimeFormat(tripdetail.apprx_end_time)}}</p>
+											<div class="col-sm-6">
+												<div class="row">
+													<div class="col-sm-6">
+														<label>Start Point Address</label>
+														<p class="mb10">
+															Crowne Plaza Bengaluru Electronics City
+															<!-- <reverse-geocode lat="{{tripdetail.start_point.lat}}"
+														lng="{{tripdetail.start_point.long}}" /> -->
+														</p>
+													</div>
+													<div class="col-sm-6">
+														<label>End Point Address</label>
+														<p class="mb10">
+															Crowne Plaza Bengaluru Electronics City
+															<!-- <reverse-geocode lat="{{tripdetail.end_point.lat}}"
+														lng="{{tripdetail.end_point.long}}" /> -->
+														</p>
+													</div>
+												</div>
 											</div>
 										</div>
-										<div class="row">
-											<div class="col-sm-6" align="center">
-											<label>Start Point Address</label>
-											<p class="mb10"> <reverse-geocode lat="{{tripdetail.start_point.lat}}" lng="{{tripdetail.start_point.long}}" /></p>
-											</div>
-											<div class="col-sm-6" align="center">
-											<label>End Point Address</label>
-											<p class="mb10"> <reverse-geocode lat="{{tripdetail.end_point.lat}}" lng="{{tripdetail.end_point.long}}" /></p>
+										<div class="row mb10">
+											<div class="col-sm-12">
+												<label>Customer Detail</label>
+												<ul>
+													<li><div class="row">
+															<div class="col-sm-6">
+																<label>Name</label>
+															</div>
+															<div class="col-sm-6">
+																<label>Contact No</label>
+															</div>
+														</div></li>
+													<li ng-repeat="cname in tripdetail.customers">
+														<div class="row">
+															<div class="col-sm-6">
+																<p>{{cname.name}}</p>
+															</div>
+															<div class="col-sm-6">
+																<p>{{cname.cn}}</p>
+															</div>
+														</div>
+													</li>
+												</ul>
 											</div>
 										</div>
 										<br>
-									
-									<!-- <div class="manipulateMap">
-										<ul class="elelist">
-											<li><textarea id="pathWay"rows="5" cols="5" placeholder="Pathway"></textarea></li>
-											<li ng-repeat="pathlist in pathways">
-											{{pathlist}}
-												<reverse-geocode lat="{{pathlist.lat}}" lng="{{pathlist.lng}}"/>
-											
-											</li>
-											<li><button id="undoBtn" onclick="undoMap()">Undo</button></li>
-										</ul>
-										<div id="right-panel"></div>
-									</div> -->
-									<div id="map2" style="width:100%; height:200px;"></div>
-									
-									<br>
-									<div class="row">
-										<div class="col-sm-6" align="center">
-										<label>Customer</label>
-										<p ng-repeat="cname in tripdetail.customers">
-										{{cname.name}}
-										{{cname.cn}}</p>
+										<div class="row mb10">
+											<div class="col-sm-12" align="center">
+												<button class="btn btn-primary"
+													ng-click="initTriplistMap(tripdetail)">Show Route
+													Map</button>
+												<div id="triplist_map{{tripdetail.trip_id}}" class="mb10"
+													style="width: 100%; height: 200px;"></div>
+											</div>
 										</div>
-										<div class="col-sm-6" align="center">
-										<label>Customer Count: </label>
-										{{tripdetail.customers_count}}
-										</div>
-									</div>
-										
-										
+										<br>
 									</div>
 								</div>
 							</li>
-														
-						</ul>						
+
+						</ul>
 						<!-- <p ng-show="(driverlist| driverFilter:searchDriver).length==0" class="help-block error-help">No drivers available for this search criteria !!!</p>
 						<p ng-show="!driverlist.length" class="help-warning">No driver created yet</p> -->
 					</div>
@@ -195,162 +230,178 @@
 			</div>
 		</div>
 		<a href="#" class="btn btn-primary add_new_trip " data-toggle="modal"
-			data-target="#createTripModal" ng-click="initMap();grouplist()"> <i class="fa fa-plus fa-3x"></i></a>
-			
+			data-target="#createTripModal" ng-click="initMap();"> <i
+			class="fa fa-plus fa-3x"></i></a>
+
 	</div>
 </div>
 
 
 <!-- Create trip modal -->
-	<div id="createTripModal" class="modal fade" role="dialog" data-backdrop="static">
-		<div class="modal-dialog modal-lg tdmodal">
-			<div class="modal-content">
-				<div class="iconSection" align="center">
-					<div class="userIcon">
-						<i class="fa fa-taxi fa-2x"></i>
-					</div>
+<div id="createTripModal" class="modal fade" role="dialog"
+	data-backdrop="static">
+	<div class="modal-dialog modal-lg tdmodal">
+		<div class="modal-content">
+			<div class="iconSection" align="center">
+				<div class="userIcon">
+					<i class="fa fa-taxi fa-2x"></i>
 				</div>
-				<div class="modal-body">
-					<form id="createTripf" name="createTripForm" class="form formInput">
-						<div id="createclose" class="col-sm-2 col-sm-offset-10" align="right">
-							<span class="closeIcon" data-direction="left" data-dismiss="modal"
-								aria-hidden="true">&times;</span>
+			</div>
+			<div class="modal-body">
+				<form id="createTripf" name="createTripForm" class="form formInput">
+					<div id="createclose" class="col-sm-2 col-sm-offset-10"
+						align="right">
+						<span class="closeIcon" ng-click="reset()" data-direction="left"
+							data-dismiss="modal" aria-hidden="true">&times;</span>
 					</div>
-						<h1 class="titleHead">Create Trip</h1>
-						<div class="row">
+					<h1 class="titleHead">Create Trip</h1>
+					<div class="row">
 						<div class="col-sm-12">
 							<div class="row">
 								<div class='col-sm-6'>
-						           <div class="form-group">
-						                <div class='input-group date'>
-						                    <input type='text' id='startTimePicker' ng-model="createTripForm.stime"
-						                    class="form-control tripinputheight" placeholder="Start Time" />{{createTripForm.stime}}
-						                    <span class="input-group-addon createtriptime">
-						                        <span class="glyphicon glyphicon-time"></span>
-						                    </span>
-						                </div>
-						           </div>
-						        </div>
-						        <div class="col-sm-6">
-						        	<div class="input-group date">
-						        		<input type='text' id='endTimePicker' ng-model="createTripForm.etime"
-						        		class="form-control tripinputheight" placeholder="End Time"/>
-						        		<span class="input-group-addon createtriptime">
-						        			<span class="glyphicon glyphicon-time"></span>
-						        		</span>
-						        	</div>
-						        	<!-- <div class="input-group">
-									    <input type="text" id="datetimepicker" class="form-control" name="date">
-									    <label class="input-group-addon btn" for="date">
-									       <span class="fa fa-calendar open-datetimepicker"></span>
-									    </label>
-									</div> -->
-						        </div>
-							</div> 
-						</div>
-						</div>
-						<div class="row">
-						<div class="col-sm-12">
-							<div class="row">
-								<div class="col-sm-6">
-								  <div class="form-group">
-										<select class="form-control floatlabel floatlabel_select tripinputheight"
-												ng-model="groupname" ng-change="fetchDevicelist(groupname)">
-											<option selected disabled value="">- - Group Name - -</option>
-											<option ng-repeat="group in grouplist" value="{{ group.gid }}">{{group.gname}}</option>
-										</select>
-								  </div>
+									<div class="form-group"
+										ng-class="{'has-error':StartTimeNotSelected}">
+										<div class='input-group date' id='startTimePicker'>
+											<input type='text' id="startTimeid" name="startTime"
+												readonly="readonly"
+												class="form-control floatlabel floatlabel_select tripinputheight"
+												placeholder="Start Time" ng-required="false" /> <span
+												class="input-group-addon createtriptime"> <span
+												class="glyphicon glyphicon-time"></span>
+											</span>
+										</div>
+										<p ng-show="StartTimeNotSelected"
+											class="help-block error-help">Start time is Required</p>
+									</div>
 								</div>
 								<div class="col-sm-6">
-									<div class="form-group">
-										<select class="form-control floatlabel floatlabel_select tripinputheight"
-												ng-model="createTripForm.devid">
-											<option selected disabled>- - Vehicle No - -</option>
-											<option ng-repeat="vehicle in devlistObject" value="{{ vehicle.devid }}">{{vehicle.vehicle_num.length>0?vehicle.vehicle_num:vehicle.devid}}</option>
-										</select>
+									<div class="form-group"
+										ng-class="{'has-error':EndTimeNotSelected}">
+										<div class="input-group date" id='endTimePicker'>
+											<input type='text' id="endTimeid" name="endTime"
+												readonly="readonly"
+												class="form-control floatlabel floatlabel_select tripinputheight"
+												placeholder="End Time" /> <span
+												class="input-group-addon createtriptime"> <span
+												class="glyphicon glyphicon-time"></span>
+											</span>
+										</div>
+										<p ng-show="EndTimeNotSelected" class="help-block error-help">End
+											time is Required</p>
 									</div>
 								</div>
 							</div>
 						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group"
+										ng-class="{'has-error':createTripForm.TripGroup.$invalid && !createTripForm.TripGroup.$pristine}">
+										<select name="TripGroup"
+											class="form-control floatlabel floatlabel_select tripinputheight"
+											ng-model="trip_create.groupname"
+											ng-change="fetchDevicelist(trip_create.groupname)"
+											ng-required="true">
+											<option selected disabled value="">- - Group Name --</option>
+											<option ng-repeat="group in grouplist"
+												value="{{ group.gid }}">{{group.gname}}</option>
+
+											<!-- <option selected value="{{ group.gid }}" ng-show>{{group.gname}}</option>
+											<option ng-repeat="group in grouplist" value="{{group}}">{{group}}</option> -->
+
+										</select>
+										<p
+											ng-show="createTripForm.TripGroup.$touched && createTripForm.TripGroup.$invalid"
+											class="help-block error-help">Group is Required</p>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group"
+										ng-class="{'has-error':createTripForm.vehicleName.$invalid && !createTripForm.vehicleName.$pristine}">
+										<select name="vehicleName"
+											class="form-control floatlabel floatlabel_select tripinputheight"
+											ng-model="trip_create.devid" ng-required="true">
+											<option selected disabled value="">- - Vehicle No -
+												-</option>
+											<option ng-repeat="vehicle in devlistObject"
+												value="{{ vehicle.devid }}">{{vehicle.vehicle_num.length>0?vehicle.vehicle_num:vehicle.devid}}</option>
+										</select>
+										<p
+											ng-show="createTripForm.vehicleName.$touched && createTripForm.vehicleName.$invalid"
+											class="help-block error-help">Vehicle No is Required</p>
+									</div>
+								</div>
+							</div>
 						</div>
-						<div class="row">
+					</div>
+					<div class="row">
 						<div class="col-sm-12">
 							<div class="row">
 								<div class="col-sm-6">
 									<div class="form-group">
 										<!-- <label class="floatlabeltxt show-hide">Enter Statr Point</label> -->
-										<input type="text" id="startpointId" ng-model="createTripForm.spoint" 
-											class="form-control tripinputheight" placeholder="Start Point"/>
+										<input type="text" id="startpointId"
+											ng-model="trip_create.spoint"
+											class="form-control tripinputheight"
+											placeholder="Start Point" readonly="readonly" />
 									</div>
 								</div>
 								<div class="col-sm-6">
 									<div class="form-group">
 										<!-- <label class="floatlabeltxt show-hide">Enter End Point</label> -->
-										<input type="text" id="endpointId" ng-model="createTripForm.epoint"
-												class="form-control tripinputheight" placeholder="End Point"/>
+										<input type="text" id="endpointId"
+											ng-model="trip_create.epoint"
+											class="form-control tripinputheight" placeholder="End Point"
+											readonly="readonly" />
 									</div>
 								</div>
 							</div>
 						</div>
-						</div>
-						<div class="row">
+					</div>
+					<div class="row">
 						<div class="col-sm-12">
-						<div id="map" style="width:100%; height:200px;"></div>
-						<!-- <div class="manipulateMap">
-							<ul class="elelist">
-								<li>
-								 <div class="form-group requiredfield"
-									ng-class="{ 'has-error' : travelDeskForm.desc.$invalid && !travelDeskForm.desc.$pristine }">
-									<label ng-show="travelDesk.desc" class="floatlabeltxt show-hide">Pathway</label>
-									<textarea id="pathWay" class="form-control" placeholder="Pathway" required></textarea>
-									<p ng-show="travelDeskForm.desc.$touched && travelDeskForm.desc.$invalid"
-										class="help-block error-help">Description is required.</p>
-								</div>
-											<li><button id="undoBtn" onclick="undoMap()">Undo</button></li>
-							</ul>
-										
-						</div> -->							
+							<div id="map" style="width: 100%; height: 200px;"></div>
+							<a class="clear_btn" ng-click="undoMap()">Clear Map</a>
 						</div>
-						</div>
-						<br>
-						<div class="row">
+					</div>
+					<div class="row">
 						<div class="col-sm-12">
-							<label>Pathway</label>
-							<p id="pathWay" placeholder="Pathway"></p>
-							<hr>
-						</div>
-						</div>
-						<div class="row">
-						<div class="col-sm-12">
-						
 							<div class="row">
-							<div class="col-sm-6">
-								<div class="form-group">
-									<!-- <label class="floatlabeltxt show-hide">Select Destionation</label> -->
-									<input id="destinationSelected" type="text" ng-model="createTripForm.dest" 
-											class="form-control tripinputheight" placeholder="Destination"/>
-											{{createTripForm.dest}}
+								<div class="col-sm-6">
+									<div class="form-group"
+										ng-class="{'has-error':createTripForm.tripDesc.$invalid && !createTripForm.tripDesc.$pristine}">
+										<!-- <label class="floatlabeltxt show-hide">Select Destionation</label> -->
+										<input id="destinationSelected" name="tripDesc" type="text"
+											ng-model="trip_create.dest"
+											class="form-control tripinputheight"
+											placeholder="Destination(choose a destination from map)"
+											ng-required="true" /> {{createTripForm.dest}}
+									</div>
+									<p
+										ng-show="createTripForm.tripDesc.$touched && createTripForm.tripDesc.$invalid"
+										class="help-block error-help">Destination is Required</p>
 								</div>
-							</div>
-							<div class="col-sm-6">
+								<div class="col-sm-6">
 									<div class="col-sm-6 col-sm-offset-6">
-									<a href="" class="addfields" ng-hide="hide_btn"
-										ng-click="addNewChoice()">Add Customer</a>
-								    </div>
-								<!-- <div class="form-group" align="center">
-									<a class="btn btn-primary addcbtn" id="showAddCust">Add Customer</a>
-								</div> -->
-							</div> 
+										<a href="" class="addfields" ng-hide="hide_btn"
+											ng-click="addNewCustomer()">Add Customer</a>
+									</div>
+								</div>
 							</div>
 							<div class="row">
-								<div class="col-sm-12" data-ng-repeat="group in choices">
+								<div class="col-sm-12"
+									data-ng-repeat="trip_create in trip_create.customers">
 									<div class="panel panel-default">
 										<div class="panel-heading dynamicBlockHeading">
-											 <h3 class="panel-title">Customer {{$index+1}}
-											 <span class="pull-right clickable" data-effect="fadeOut" ng-click="removeChoice($index)"><i class="fa fa-times"></i></span>
-											 </h3>
-                    								<!-- Watch Out: Here We must use the effect name in the data tag-->
-                    						
+											<h3 class="panel-title">
+												Customer {{$index+1}} <span class="pull-right clickable"
+													data-effect="fadeOut" ng-click="removeCustomer($index)"><i
+													class="fa fa-times"></i></span>
+											</h3>
+											<!-- Watch Out: Here We must use the effect name in the data tag-->
+
 										</div>
 										<div class="panel-body dynamicBlockBody">
 											<div class="row">
@@ -358,36 +409,26 @@
 													<div class="form-group multiple_contact"
 														ng-class="{'has-error':createTripForm.contact_name{{$index+1}}.$invalid && !createTripForm.contact_name{{$index+1}}.$pristine}">
 														<label ng-show="createTripForm.contact_name"
-															class="floatlabeltxt show-hide">Custer
-															Name</label>
+															class="floatlabeltxt show-hide">Customer Name</label>
 														<div class="row">
 															<div class="col-sm-12">
-																<input type="text" ng-model="createTripForm.contact_name"
-																	name="contact_name{{$index+1}}" class="dynamicBlockInput" placeholder="Customer Name" ng-minlength="2" ng-maxlength="70" required/>																
-															<p
-															ng-show="createTripForm.contact_name{{$index+1}}.$error.maxlength"
-															class="help-block dynamicBlockHelp">Name field of max of 70 characters only allowed.</p>
-															<p ng-show="createTripForm.contact_name{{$index+1}}.$error.minlength"class="help-block  dynamicBlockHelp">Name field of min of 2 character needed.</p>	
+																<input type="text" ng-model="trip_create.name"
+																	name="contact_name{{$index+1}}"
+																	id="contact_name{{$index+1}}" class="dynamicBlockInput"
+																	placeholder="Customer Name" ng-minlength="2"
+																	ng-maxlength="70" required />
+																<p
+																	ng-show="createTripForm.contact_name{{$index+1}}.$error.maxlength"
+																	class="help-block dynamicBlockHelp">Name field of
+																	max of 70 characters only allowed.</p>
+																<p
+																	ng-show="createTripForm.contact_name{{$index+1}}.$error.minlength"
+																	class="help-block  dynamicBlockHelp">Name field of
+																	min of 2 character needed.</p>
 															</div>
 														</div>
 													</div>
 												</div>
-												<!-- <div class="col-sm-4">
-													<div class="form-group multiple_contact"
-														ng-class="{'has-error':createGroupForm.contact_email{{$index+1}}.$invalid && !createGroupForm.contact_email{{$index+1}}.$pristine}">
-														<label ng-show="group.contact_email"
-															class="floatlabeltxt show-hide">Contact Person
-															Email</label>
-														<div class="row">
-															<div class="col-sm-12">
-																<input type="text" ng-model="group.contact_email" class="dynamicBlockInput"
-																	name="contact_email{{$index+1}}" placeholder="Contact Person e-mail" 
-																	ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"/>
-																<p ng-show="createGroupForm.contact_email.$invalid && !createGroupForm.contact_email.$pristine" class="help-block dynamicBlockHelp">Enter a valid email.</p>	
-															</div>
-														</div>
-													</div>
-												</div> -->
 												<div class="col-sm-6">
 													<div class="form-group multiple_contact"
 														ng-class="{ 'has-error' : createTripForm.contact_num{{$index+1}}.$invalid && !createTripForm.contact_num{{$index+1}}.$pristine}">
@@ -395,323 +436,270 @@
 															class="floatlabeltxt show-hide">Mobile Number</label>
 														<div class="row">
 															<div class="col-sm-12">
-																<input type="text" ng-model="createTripForm.contact_num"  class="dynamicBlockInput"
-																	numbers-only name="contact_num{{$index+1}}"
-																	class="form-control" string-to-number
-																	placeholder="Mobile Number"
+																<input type="text" ng-model="trip_create.cn"
+																	class="dynamicBlockInput" numbers-only
+																	name="contact_num{{$index+1}}" class="form-control"
+																	string-to-number placeholder="Mobile Number"
 																	ng-minlength="10" ng-maxlength="10" required />
 															</div>
 														</div>
 														<p
 															ng-show="createTripForm.contact_num{{$index+1}}.$invalid && !createTripForm.contact_num{{$index+1}}.$pristine"
-															class="help-block dynamicBlockHelp">Enter Valid Mobile Number.</p>
+															class="help-block dynamicBlockHelp">Enter Valid
+															Mobile Number.</p>
 														<p
 															ng-show="createTripForm.contact_num{{$index+1}}.$error.minlength && createTripForm.contact_num{{$index+1}}.$error.maxlength"
-															class="help-block dynamicBlockHelp">Mobile Number max 10 numbers.</p>
+															class="help-block dynamicBlockHelp">Mobile Number max
+															10 numbers.</p>
 														<!-- <span class="help-block">{{mobstatus}}</span> -->
 													</div>
 												</div>
 											</div>
-											<!-- <div class="row">
-												<div class="col-sm-12">
-													<div class="form-group multiple_contact"
-														ng-class="{ 'has-error' : createGroupForm.contact_desc{{$index+1}}.$invalid && !createGroupForm.contact_desc{{$index+1}}.$pristine }">
-														<label ng-show="group.contact_desc" class="floatlabeltxt show-hide">Description</label>
-														<textarea ng-model="group.contact_desc" name="contact_desc{{$index+1}}" placeholder="Description"
-															class="form-control dynamicBlockText" required></textarea>
-														<p
-															ng-show="createGroupForm.contact_desc{{$index+1}}.$invalid && !createGroupForm.contact_desc{{$index+1}}.$pristine"
-															class="help-block dynamicBlockHelp">Description is required.</p>
-													</div>
-												</div>
-											</div> -->
-										</div>
-									</div>
-									<!-- <a href="" class="remove" ng-show="$last && hide_remove"
-										ng-click="removeChoice()">Remove</a> -->
-								</div>
-							</div>
-							<!-- <div class="row">
-								<div class="col-sm-6 col-sm-offset-6">
-									<a href="" class="addfields" ng-hide="hide_btn"
-										ng-click="addNewChoice()">Add Customer</a>
-								</div>
-							</div> -->
-						</div>
-						</div>
-						<!-- <div id="custList">
-						<div class="row">
-							<div class="col-sm-12">
-							  <label>Customer List</label>
-							  <hr>
-								<div class="row">
-									<div class="col-sm-6">
-										<div class="form-group">
-											<label class="floatlabeltxt show-hide">Customer Name</label>
-											<input type="text" class="form-control" placeholder="Name"/>
-										</div>
-									</div>
-									<div class="col-sm-6">
-										<div class="form-group">
-											<label class="floatlabeltxt show-hide">Customer Contact</label>
-											<input type="text" class="form-control" placeholder="Contact"/>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						</div> -->
-						<div class="row">
-						<div class="col-sm-12 txtCenter">
-							<button class="btn btn-primary btn-lg"
-								ng-click="createTrip()"
-								>Create</button>
 						</div>
 					</div>
-					</form>
-				</div>
+					<div class="row">
+						<div class="col-sm-12 txtCenter" align="center">
+							<button class="btn btn-primary btn-lg" ng-disabled="createTripForm.$invalid" ng-click="createTrip()">Create</button>
+						</div>
+					</div>
+				</form>
 			</div>
-			
 		</div>
+
 	</div>
+</div>
 
 <!-- End Create Trip Modal -->
 
 <!-- Start Update Trip Modal -->
 
-<div id="updateTripModal" class="modal fade" role="dialog" data-backdrop="static">
-		<div class="modal-dialog modal-lg tdmodal">
-			<div class="modal-content">
-				<div class="iconSection" align="center">
-					<div class="userIcon">
-						<i class="fa fa-taxi fa-2x"></i>
-					</div>
+<div id="updateTripModal" class="modal fade" role="dialog"
+	data-backdrop="static">
+	<div class="modal-dialog modal-lg tdmodal">
+		<div class="modal-content">
+			<div class="iconSection" align="center">
+				<div class="userIcon">
+					<i class="fa fa-taxi fa-2x"></i>
 				</div>
-				<div class="modal-body">
-					<form id="updateTripf" name="updateTripForm" class="form formInput">
-						<div id="createclose" class="col-sm-2 col-sm-offset-10" align="right">
-							<span class="closeIcon" data-direction="left" data-dismiss="modal"
-								aria-hidden="true">&times;</span>
+			</div>
+			<div class="modal-body">
+				<form id="updateTripf" name="updateTripForm" class="form formInput">
+					<div id="createclose" class="col-sm-2 col-sm-offset-10"
+						align="right">
+						<span class="closeIcon" data-direction="left" data-dismiss="modal"
+							aria-hidden="true">&times;</span>
 					</div>
-						<h1 class="titleHead">Update Trip</h1>
-						<div class="row">
+					<h1 class="titleHead">Update Trip</h1>
+					<div class="row">
 						<div class="col-sm-12">
 							<div class="row">
 								<div class='col-sm-6'>
-						           <div class="form-group">
-						                <div class='input-group date' id='startTimePickerU'>
-						                    <input type='text' ng-model="updateTripForm.stime" 
-						                    		class="form-control tripinputheight" placeholder="Start Time" />
-						                    <span class="input-group-addon createtriptime">
-						                        <span class="glyphicon glyphicon-time"></span>
-						                    </span>
-						                </div>
-						           </div>
-						        </div>
-						        <div class="col-sm-6">
-						        	<div class="input-group date" id='endTimePickerU'>
-						        		<input type='text' ng-model="updateTripForm.etime" 
-						        				class="form-control tripinputheight" placeholder="End Time"/>
-						        		<span class="input-group-addon createtriptime">
-						        			<span class="glyphicon glyphicon-time"></span>
-						        		</span>
-						        	</div>
-						        </div>
+									<div class="form-group"
+										ng-class="{'has-error':updateStartTimeNotSelected}">
+										<input type="hidden" ng-model="updateTrip.trip_id" />
+										<div class='input-group date' id='startTimePickerU'>
+											<input type='text' ng-model="updateTrip.stime"
+												readonly="readonly" id="updateStartTime"
+												class="form-control tripinputheight"
+												placeholder="Start Time" /> <span id="updateTimeIcon"
+												class="input-group-addon createtriptime"> <span
+												class="glyphicon glyphicon-time"></span>
+											</span>
+										</div>
+										<p ng-show="updateStartTimeNotSelected"
+											class="help-block error-help">Start time is Required</p>
+									</div>
+								</div>
+								<div class="col-sm-6">
+										<div class="form-group" ng-class="{'has-error':updateEndTimeNotSelected}">
+										<div class="input-group date" id='endTimePickerU'>
+											<input type='text' ng-model="updateTrip.etime"
+												readonly="readonly" id="updateEndTime"
+												class="form-control tripinputheight" placeholder="End Time" />
+											<span class="input-group-addon createtriptime"> <span
+												class="glyphicon glyphicon-time"></span>
+											</span>
+										</div>
+										<p ng-show="updateEndTimeNotSelected" class="help-block error-help">End time is Required</p>
+									</div>
+								</div>
 							</div>
 						</div>
-						</div>
-						<div class="row">
+					</div>
+					<div class="row">
 						<div class="col-sm-12">
 							<div class="row">
-								<div class="col-sm-6">
-								  <div class="form-group">
-										<select class="form-control floatlabel floatlabel_select tripinputheight"
-												ng-model="updateTripForm.gname">
-											<option selected disabled value="">- - Group Name - -</option>
-											<!-- <option selected value="{{driver.country}}" ng-show>{{driver.country}}</option> -->
+								<!-- <div class="col-sm-6">
+									<div class="form-group">
+										<select
+											class="form-control floatlabel floatlabel_select tripinputheight"
+											ng-model="updateTrip.gname"
+											ng-change="fetchDevicelist(updateTrip.gname)" readonly>
+											<option selected disabled value="">- - Group Name -
+												-</option>
+											<option selected value="{{updateTrip.gname}}" ng-show>{{updateTrip.gname}}</option>
+											<option ng-repeat="group in grouplist"
+												value="{{ group.gid }}">{{group.gname}}</option>
 										</select>
-								  </div>
-								</div>
-								<div class="col-sm-6">
+									</div>
+								</div> -->
+								<div class="col-sm-12">
 									<div class="form-group">
-										<select class="form-control floatlabel floatlabel_select tripinputheight"
-												ng-model="updateTripForm.vno">
-											<option selected disabled value="">- - Vehicle No - -</option>
-										</select>
+										<!-- <select
+											class="form-control floatlabel floatlabel_select tripinputheight"
+											ng-model="updateTrip.vno">
+											<option selected disabled value="">- - Vehicle No -
+												-</option>
+											<option selected value="{{updateTrip.vno}}" ng-show>{{updateTrip.vno}}</option>
+											<option ng-repeat="vehicle in devlistObject"
+												value="{{ vehicle.devid }}">{{vehicle.vehicle_num.length>0?vehicle.vehicle_num:vehicle.devid}}</option>
+										</select> -->
+										<input type="text"
+											class="form-control floatlabel floatlabel_select tripinputheight"
+											ng-model="updateTrip.vno" readonly="readonly" />
 									</div>
 								</div>
 							</div>
 						</div>
-						</div>
-						<div class="row">
+					</div>
+					<div class="row">
 						<div class="col-sm-12">
 							<div class="row">
 								<div class="col-sm-6">
 									<div class="form-group">
-										<label class="floatlabeltxt show-hide">Enter Statr Point</label>
-										<input type="text" ng-model="updateTripForm.spoint" class="form-control tripinputheight" placeholder="Start Point"/>
+										<label class="floatlabeltxt show-hide">Start Point</label> <input
+											type="text" ng-model="updateTrip.spoint"
+											class="form-control tripinputheight"
+											placeholder="Start Point" readonly="readonly" />
 									</div>
 								</div>
 								<div class="col-sm-6">
 									<div class="form-group">
-										<label class="floatlabeltxt show-hide">Enter End Point</label>
-										<input type="text" ng-model="updateTripForm.epoint" class="form-control tripinputheight" placeholder="End Point"/>
+										<label class="floatlabeltxt show-hide">End Point</label> <input
+											type="text" ng-model="updateTrip.epoint"
+											class="form-control tripinputheight" placeholder="End Point"
+											readonly="readonly" />
 									</div>
 								</div>
 							</div>
 						</div>
-						</div>
-						<div class="row">
+					</div>
+					<div class="row">
 						<div class="col-sm-12">
-							<div id="map3" style="width:100%;height:200px"></div>
+							<div class="form-group" ng-class="{'has-error':updateTripForm.tripDesc.$invalid && !updateTripForm.tripDesc.$pristine}">
+								<label class="floatlabeltxt show-hide">Destination</label> <input
+									id="updateDestination"
+									type="text" ng-model="updateTrip.dest"
+									name="tripDesc"
+									placeholder="Destination(choose a destination from map)" ng-required="true"
+									class="form-control tripinputheight"/>
+							</div>
+							<p ng-show="updateTripForm.tripDesc.$touched && updateTripForm.tripDesc.$invalid" class="help-block error-help">Destination is Required</p>
 						</div>
-						</div>
-						<br>
-						<div class="row">
+					</div>
+					<div class="row">
 						<div class="col-sm-12">
-							<label>Pathway</label>
-							<hr>
+							<div id="updateMap" style="width: 100%; height: 200px"></div>
+							<a class="clear_btn" ng-click="undoMap()">Clear Map</a>
 						</div>
-						</div>
-						<div class="row">
+					</div>
+					<div class="row">
 						<div class="col-sm-12">
 							<div class="row">
-							<div class="col-sm-6">
-								<div class="form-group">
-									<label class="floatlabeltxt show-hide">Select Destionation</label>
-									<input type="text" ng-model="updateTripForm.dest" class="form-control tripinputheight" placeholder="Destination"/>
-								</div>
-							</div>
-							<div class="col-sm-6">
-								<div class="col-sm-6 col-sm-offset-6">
-									<a href="" class="addfields" ng-hide="hide_btn"
-										ng-click="addNewChoice()">Add Customer</a>
-								    </div>
-								<!-- <div class="form-group" align="center">
+								<div class="col-sm-6"></div>
+								<div class="col-sm-6">
+									<div class="col-sm-6 col-sm-offset-6">
+										<a href="" class="addfields" ng-hide="hide_btn"
+											ng-click="addNewChoice()">Add Customer</a>
+									</div>
+									<!-- <div class="form-group" align="center">
 									<a class="btn btn-primary addcbtn" id="showAddCustU">Add Customer</a>
 								</div> -->
-							</div>
+								</div>
 							</div>
 						</div>
-						</div>
-						
-						<div class="row">
-								<div class="col-sm-12" data-ng-repeat="group in choices">
-									<div class="panel panel-default">
-										<div class="panel-heading dynamicBlockHeading">
-											 <h3 class="panel-title">Customer {{$index+1}}
-											 <span class="pull-right clickable" data-effect="fadeOut" ng-click="removeChoice($index)"><i class="fa fa-times"></i></span>
-											 </h3>
-                    								<!-- Watch Out: Here We must use the effect name in the data tag-->
-                    						
+					</div>
+
+					<div class="row">
+						<div class="col-sm-12"
+							data-ng-repeat="updateTrip in updateTrip.Customers">
+							<div class="panel panel-default">
+								<div class="panel-heading dynamicBlockHeading">
+									<h3 class="panel-title">
+										Customer {{$index+1}} <span class="pull-right clickable"
+											data-effect="fadeOut" ng-click="removeChoice($index)"><i
+											class="fa fa-times"></i></span>
+									</h3>
+									<!-- Watch Out: Here We must use the effect name in the data tag-->
+
+								</div>
+								<div class="panel-body dynamicBlockBody">
+									<div class="row">
+										<div class="col-sm-6">
+											<div class="form-group multiple_contact"
+												ng-class="{'has-error':updateTripForm.contact_name{{$index+1}}.$invalid && !updateTripForm.contact_name{{$index+1}}.$pristine}">
+												<label ng-show="updateTripForm.name"
+													class="floatlabeltxt show-hide">Customer Name</label>
+												<div class="row">
+													<div class="col-sm-12">
+														<input type="text" ng-model="updateTrip.name"
+															name="contact_name{{$index+1}}" class="dynamicBlockInput"
+															placeholder="Customer Name" ng-minlength="2"
+															ng-maxlength="70" required />
+														<p ng-show="updateTripForm.contact_name{{$index+1}}.$error.maxlength"
+															class="help-block dynamicBlockHelp">Name field of max
+															of 70 characters only allowed.</p>
+														<p ng-show="updateTripForm.contact_name{{$index+1}}.$error.minlength"
+															class="help-block  dynamicBlockHelp">Name field of
+															min of 2 character needed.</p>
+													</div>
+												</div>
+											</div>											
 										</div>
-										<div class="panel-body dynamicBlockBody">
-											<div class="row">
-												<div class="col-sm-6">
-													<div class="form-group multiple_contact"
-														ng-class="{'has-error':updateTripForm.contact_name{{$index+1}}.$invalid && !updateTripForm.contact_name{{$index+1}}.$pristine}">
-														<label ng-show="updateTripForm.contact_name"
-															class="floatlabeltxt show-hide">Customer
-															Name</label>
-														<div class="row">
-															<div class="col-sm-12">
-																<input type="text" ng-model="updateTripForm.contact_name"
-																	name="contact_name{{$index+1}}" class="dynamicBlockInput" placeholder="Customer Name" ng-minlength="2" ng-maxlength="70" required/>																
-															<p
-															ng-show="updateTripForm.contact_name{{$index+1}}.$error.maxlength"
-															class="help-block dynamicBlockHelp">Name field of max of 70 characters only allowed.</p>
-															<p ng-show="updateTripForm.contact_name{{$index+1}}.$error.minlength"class="help-block  dynamicBlockHelp">Name field of min of 2 character needed.</p>	
-															</div>
-														</div>
+										<div class="col-sm-6">
+											<div class="form-group multiple_contact"
+												ng-class="{ 'has-error' : updateTripForm.contact_num{{$index+1}}.$invalid && !updateTripForm.contact_num{{$index+1}}.$pristine}">
+												<label ng-show="updateTripForm.cn" class="floatlabeltxt show-hide">Mobile
+													Number</label>
+												<div class="row">
+													<div class="col-sm-12">
+														<input type="text" ng-model="updateTrip.cn"
+															class="dynamicBlockInput" numbers-only
+															name="contact_num{{$index+1}}" class="form-control"
+															string-to-number placeholder="Mobile Number"
+															ng-minlength="10" ng-maxlength="10" required />
 													</div>
 												</div>
-												<!-- <div class="col-sm-4">
-													<div class="form-group multiple_contact"
-														ng-class="{'has-error':createGroupForm.contact_email{{$index+1}}.$invalid && !createGroupForm.contact_email{{$index+1}}.$pristine}">
-														<label ng-show="group.contact_email"
-															class="floatlabeltxt show-hide">Contact Person
-															Email</label>
-														<div class="row">
-															<div class="col-sm-12">
-																<input type="text" ng-model="group.contact_email" class="dynamicBlockInput"
-																	name="contact_email{{$index+1}}" placeholder="Contact Person e-mail" 
-																	ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"/>
-																<p ng-show="createGroupForm.contact_email.$invalid && !createGroupForm.contact_email.$pristine" class="help-block dynamicBlockHelp">Enter a valid email.</p>	
-															</div>
-														</div>
-													</div>
-												</div> -->
-												<div class="col-sm-6">
-													<div class="form-group multiple_contact"
-														ng-class="{ 'has-error' : updateTripForm.contact_num{{$index+1}}.$invalid && !updateTripForm.contact_num{{$index+1}}.$pristine}">
-														<label ng-show="updateTripForm.contact_num"
-															class="floatlabeltxt show-hide">Mobile Number</label>
-														<div class="row">
-															<div class="col-sm-12">
-																<input type="text" ng-model="updateTripForm.contact_num"  class="dynamicBlockInput"
-																	numbers-only name="contact_num{{$index+1}}"
-																	class="form-control" string-to-number
-																	placeholder="Mobile Number"
-																	ng-minlength="10" ng-maxlength="10" required />
-															</div>
-														</div>
-														<p
-															ng-show="updateTripForm.contact_num{{$index+1}}.$invalid && !updateTripForm.contact_num{{$index+1}}.$pristine"
-															class="help-block dynamicBlockHelp">Enter Valid Mobile Number.</p>
-														<p
-															ng-show="updateTripForm.contact_num{{$index+1}}.$error.minlength && updateTripForm.contact_num{{$index+1}}.$error.maxlength"
-															class="help-block dynamicBlockHelp">Mobile Number max 10 numbers.</p>
-														<!-- <span class="help-block">{{mobstatus}}</span> -->
-													</div>
-												</div>
+												<p
+													ng-show="updateTripForm.contact_num{{$index+1}}.$invalid && !updateTripForm.contact_num{{$index+1}}.$pristine"
+													class="help-block dynamicBlockHelp">Enter Valid Mobile
+													Number.</p>
+												<p
+													ng-show="updateTripForm.contact_num{{$index+1}}.$error.minlength && updateTripForm.contact_num{{$index+1}}.$error.maxlength"
+													class="help-block dynamicBlockHelp">Mobile Number max
+													10 numbers.</p>
 											</div>
-											<!-- <div class="row">
-												<div class="col-sm-12">
-													<div class="form-group multiple_contact"
-														ng-class="{ 'has-error' : createGroupForm.contact_desc{{$index+1}}.$invalid && !createGroupForm.contact_desc{{$index+1}}.$pristine }">
-														<label ng-show="group.contact_desc" class="floatlabeltxt show-hide">Description</label>
-														<textarea ng-model="group.contact_desc" name="contact_desc{{$index+1}}" placeholder="Description"
-															class="form-control dynamicBlockText" required></textarea>
-														<p
-															ng-show="createGroupForm.contact_desc{{$index+1}}.$invalid && !createGroupForm.contact_desc{{$index+1}}.$pristine"
-															class="help-block dynamicBlockHelp">Description is required.</p>
-													</div>
-												</div>
-											</div> -->
-										</div>
-									</div>
-									<!-- <a href="" class="remove" ng-show="$last && hide_remove"
-										ng-click="removeChoice()">Remove</a> -->
-								</div>
-							</div>
-						<!-- <div id="custList">
-						<div class="row">
-							<div class="col-sm-12">
-							  <label>Customer List</label>
-							  <hr>
-								<div class="row">
-									<div class="col-sm-6">
-										<div class="form-group">
-											<label class="floatlabeltxt show-hide">Customer Name</label>
-											<input type="text" class="form-control tripinputheight" placeholder="Name"/>
-										</div>
-									</div>
-									<div class="col-sm-6">
-										<div class="form-group">
-											<label class="floatlabeltxt show-hide">Customer Contact</label>
-											<input type="text" class="form-control tripinputheight" placeholder="Contact"/>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-						</div> -->
-					</form>
-				</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12 txtCenter" align="center">
+							<button class="btn btn-primary btn-lg"
+								ng-disabled="updateTripForm.$invalid"
+								ng-click="postUpdateTrip()" >Update Trip</button>
+						</div>
+					</div>
+				</form>
 			</div>
-			
 		</div>
+
 	</div>
-
-
-
+</div>
+<!-- End of Update Trip Modal -->

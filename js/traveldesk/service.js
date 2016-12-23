@@ -30,6 +30,15 @@ batstravelDeskHome.service('travelDeskService', function() {
 		}
 		)
 	};
+	this.getTsOverTime=function(time_val){
+		var s_split = time_val.split(':');		
+		var hr= s_split[0];
+		var s_apmsplit = s_split[1].split(' ');
+		var mi = s_apmsplit[0];
+		var meri = s_apmsplit[1];
+		return this.getTimestamp(new Date(),hr,mi,0,meri);
+		/*var todays =travelDeskService.getTimestamp(new Date(),hr,mi,0,meri);*/
+	};
 	this.getTimestamp=function (dt,hr,mins,sec,meridian){		
 		var d=new Date(dt);
 		if(meridian=="PM"){

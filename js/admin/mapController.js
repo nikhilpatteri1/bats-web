@@ -1184,7 +1184,7 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 	// var tagsData = cname;
 	// init jquery functions and plugins
 	$(document).ready(function() {
-		$.getScript('../assets/select2/js/select2.full.min.js', function() {
+		$.getScript('../assets/select_filter/select2.min.js', function() {
 			console.log("check");
 			$("#selectGroup").select2({});
 			$("#selectDevice").select2({});

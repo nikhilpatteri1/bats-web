@@ -43,6 +43,7 @@ batstravelDeskHome.controller('batsDriverBinding', function($scope, $localStorag
 		      //console.log(result);
 		      $scope.groupList=result.glist;
 		      
+		      
 		});	
 	
 	/*
@@ -93,7 +94,7 @@ batstravelDeskHome.controller('batsDriverBinding', function($scope, $localStorag
 		$('#accordion .in').collapse('hide');
 	}
 	/*
-	 * Show Driver info*/
+	 * Show Driver info*/ 
 	
 	$scope.showDriverInfo=function(driver_id){	
 		$scope.imageUploading=true;
@@ -120,11 +121,21 @@ batstravelDeskHome.controller('batsDriverBinding', function($scope, $localStorag
 		$scope.assignDriverJson.devtype=$scope.veh_details.devtype;
 		$scope.assignDriverJson.driver_id=driverdetail.driver_id;
 		$scope.assignDriverJson.bind="T";
-		console.log($scope.assignDriverJson);
 		travelDeskFactory.callApi("POST",apiURL+"device/assign_driver",$scope.assignDriverJson,function(result){
 			/*console.log(result);*/
 			if(result.status=="success"){
-				$scope.fetchDevicelist($scope.groupname);
+				
+				swal({title: "Driver binded Successfully",
+		   			   text: "Success!",   
+		   			   type: "success",   
+		   			   confirmButtonColor: "#9afb29",   
+		   			   closeOnConfirm: true }, 
+		   			   function(){
+		   				$scope.fetchDevicelist($scope.groupname);
+						$scope.searchDriver=""; 	
+		   		 });
+				
+				
 			}
 			$("#listDriverModal").modal('hide');
 			$scope.httpLoading=false;
@@ -136,25 +147,51 @@ batstravelDeskHome.controller('batsDriverBinding', function($scope, $localStorag
 	 * 	
 	 * */
 	$scope.unBindDriver=function(veh_dt){
-		$scope.httpLoading=true;
-		console.log(JSON.stringify(veh_dt));
-		$scope.unBindDriverJson={};
-		$scope.unBindDriverJson.token=$scope.token;
-		$scope.unBindDriverJson.devid=veh_dt.devid;
-		$scope.unBindDriverJson.vehicle_num=veh_dt.vehicle_num;
-		$scope.unBindDriverJson.driver_name=veh_dt.driver_name;
-		$scope.unBindDriverJson.licence_id=veh_dt.licence_id;
-		$scope.unBindDriverJson.devtype=veh_dt.devtype;
-		$scope.unBindDriverJson.driver_id=veh_dt.driver_id;
-		$scope.unBindDriverJson.bind="F";
-		console.log($scope.unBindDriverJson);
-		travelDeskFactory.callApi("POST",apiURL+"device/assign_driver",$scope.unBindDriverJson,function(result){
-			console.log(result);
-			if(result.status=="success"){
-				$scope.fetchDevicelist($scope.groupname);
-			}
-			$scope.httpLoading=false;
-		});
+		swal({   title: "Are you sure?",   
+         	text: "You want to un bind this driver?",   
+         	type: "warning",   
+         	showCancelButton: true,   
+         	confirmButtonColor: "#DD6B55",   
+         	confirmButtonText: "Yes, Un bind!",   
+         	cancelButtonText: "No, cancel it!",   
+         	closeOnConfirm: false,   
+         	closeOnCancel: false }, 
+         	function(isConfirm){
+         		if (isConfirm) {
+         			$scope.httpLoading=true;
+         			$scope.unBindDriverJson={};
+         			$scope.unBindDriverJson.token=$scope.token;
+         			$scope.unBindDriverJson.devid=veh_dt.devid;
+         			$scope.unBindDriverJson.vehicle_num=veh_dt.vehicle_num;
+         			$scope.unBindDriverJson.driver_name=veh_dt.driver_name;
+         			$scope.unBindDriverJson.licence_id=veh_dt.licence_id;
+         			$scope.unBindDriverJson.devtype=veh_dt.devtype;
+         			$scope.unBindDriverJson.driver_id=veh_dt.driver_id;
+         			$scope.unBindDriverJson.bind="F";
+         			travelDeskFactory.callApi("POST",apiURL+"device/assign_driver",$scope.unBindDriverJson,function(result){
+         				console.log(result); 
+         				if(result.status=="success"){
+         					console.log("status"); 
+         					swal({title: "Driver unbinded Successfully",
+      			   			   text: "Success!",   
+      			   			   type: "success",   
+      			   			   confirmButtonColor: "#9afb29",   
+      			   			   closeOnConfirm: true }, 
+      			   			   function(){
+      			   				$scope.fetchDevicelist($scope.groupname);
+      			   				$scope.searchDriver="";
+      			   		 });
+         					
+         					/*$scope.searchDriver="";*/
+         					
+         				}
+         				$scope.httpLoading=false;
+         			});
+         		}
+         		else{
+         			swal("Cancelled", "You have cancelled :)", "error");
+     			}
+         });
 	}	
 	
 

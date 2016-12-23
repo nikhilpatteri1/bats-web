@@ -13,7 +13,7 @@ batstravelDeskHome.factory('travelDeskFactory', function($http,$localStorage) {
 			}).success(function(data) {
 				callback(data);
 				// console.log(data);
-			}).error(function(data) {
+			}).error(function(data,status,config,headers) {
 				callback(data);
 				// console.log(data.err);
 				if (data.err == "Expired Session") {
