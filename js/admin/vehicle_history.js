@@ -419,6 +419,7 @@ batsAdminHome.controller('vehicleHistory', function($scope, $http, $localStorage
 		return ((x.ts == y.ts) ? 0 : ((x.ts > y.ts) ? 1 : -1 ));
 	}
 	$(document).ready(function() {
+		
 		$.getScript('../assets/select_filter/select2.min.js', function() {
 			$("#selectGroup").select2({});
 			$("#selectDevice").select2({});

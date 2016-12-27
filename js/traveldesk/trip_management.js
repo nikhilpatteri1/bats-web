@@ -43,6 +43,7 @@ batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$
 		   end=event.latLng;
 		   addMarker(event.latLng);
 		   calcRoute();
+		   
 	   });
 	   directionsDisplay.addListener('directions_changed', function() {
 			computeTotalDistance(directionsDisplay.getDirections());
@@ -143,20 +144,21 @@ batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$
 		
 	}
 	
-	
-	
 	$('#startTimePicker').datetimepicker({
-		format:'LT',
-		ignoreReadonly:true
-		
-	});
-	$("#startTimePicker,#endTimePicker").on("dp.change",function (e) {
-		console.log("cjecl");
-		$scope.resetTimeValidation();
-	});
+			format:'LT',
+			defaultDate:  new Date(),
+	    	minDate: new Date(),
+			ignoreReadonly:true,
+    });	
+		/*$("#startTimePicker,#endTimePicker").on("dp.change",function (e) {
+			console.log("cjecl");
+			$scope.resetTimeValidation();
+		});*/		
 	$('#endTimePicker').datetimepicker({
-		format:'LT',
-		ignoreReadonly:true
+			format:'LT',
+			defaultDate:  new Date(),
+			minDate: new Date(),
+			ignoreReadonly:true,
 	});
 	
 	$scope.trip_create.customers = [{}];
@@ -186,16 +188,29 @@ batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$
 		return travelDeskService.showTime(ts);
 	}
 	
+	
 	$scope.reset = function(){
 		document.getElementById("createTripf").reset();
 		$scope.trip_create = {};
 		$scope.createTripData ={};
+		$scope.devlistObject = {};
 		$("#pathWay").text("");
 		$scope.createTripForm.$setPristine();
 		$scope.createTripForm.$setUntouched();
 		$scope.trip_create.customers=[{}];
 		$scope.resetTimeValidation();
-
+		var createDate = new Date();		
+		var hours = createDate.getHours();
+		  var minutes = createDate.getMinutes();
+		  
+		  var ampm = hours >= 12 ? 'PM' : 'AM';
+		  hours = hours % 12;
+		  hours = hours ? hours : 12; // the hour '0' should be '12'
+		  minutes = minutes < 10 ? '0'+minutes : minutes;
+		  var strTime = hours + ':' + minutes + ' ' + ampm;
+		  $("#startTimeid").val(strTime);
+		  $("#endTimeid").val(strTime);
+		
 	}
 	
 	$(function(){
@@ -251,6 +266,7 @@ batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$
 		$scope.StartTimeNotSelected=false;
 		$scope.EndTimeNotSelected=false;
 	}
+	
 	$scope.createTrip = function(){
 		var flag=false;
 		if($("#startTimeid").val()==""){

@@ -426,7 +426,7 @@ batsAdminHome.controller('driverController', function($scope, $localStorage, $ht
 			.success(function(data){
 				//console.log(JSON.stringify(data));
 				$scope.driverlist=data;
-				$scope.httpLoading=false;
+				$scope.httpLoading=false;				
 			})
 			.error(function(data, status, headers, config) {
 				console.log(data);
@@ -493,7 +493,12 @@ batsAdminHome.controller('driverController', function($scope, $localStorage, $ht
 		}
 		
 		$scope.createDriverObject.education=$scope.driver.education;
-		$scope.createDriverObject.languages_known=$scope.driver.languages;
+		if($scope.driver.languages==null){
+	    	  $scope.createDriverObject.languages_known=[];
+	      }
+	      else{
+	    	  $scope.createDriverObject.languages_known=$scope.driver.languages;
+	      }		
 		$scope.createDriverObject.password=$scope.driver.password;
 		$scope.createDriverObject.salary=$scope.driver.salary;
 		$scope.createDriverObject.employee_type=$scope.driver.etype;		
@@ -517,6 +522,7 @@ batsAdminHome.controller('driverController', function($scope, $localStorage, $ht
 	   			   closeOnConfirm: true }, 
 	   			   function(){   
 	   				$('#driverCreateModal').modal('hide');
+	   				$scope.reset();
 					$scope.listDrivers();
 	   		 });
 		})
@@ -648,11 +654,17 @@ batsAdminHome.controller('driverController', function($scope, $localStorage, $ht
 				$scope.updateDriverObject.dob=$scope.driver.dob;
 			}			
 	      $scope.updateDriverObject.education=$scope.driver.education;
-	      $scope.updateDriverObject.languages_known=$scope.langArray;
+	      if($scope.driver.languages==null){
+	    	  $scope.updateDriverObject.languages_known=[];
+	      }
+	      else{
+	    	  $scope.updateDriverObject.languages_known=$scope.driver.languages;
+	      }
+	      
 	      $scope.updateDriverObject.salary=$scope.driver.salary;
 	      $scope.updateDriverObject.employee_type=$scope.driver.etype;
 	      $scope.updateDriverObject.driver_id=$scope.driver.driver_id;
-	      //console.log($scope.updateDriverObject);
+	      console.log($scope.updateDriverObject);
 	      $scope.httpLoading=true
 			$http({
 				method:'POST',
@@ -748,13 +760,14 @@ batsAdminHome.controller('driverController', function($scope, $localStorage, $ht
 				         			   			   confirmButtonColor: "#9afb29",   
 				         			   			   closeOnConfirm: true }, 
 				         			   			   function(){   
-				         			   				
+				         			   				$scope.searchDriver="";
 				         			   		 });
 				         					$scope.httpLoading=false;
 				         					$scope.listDrivers();
 				         				})
 				         				.error(function(data, status, headers, config) {
 				         					console.log(data);
+				         					swal({title:data.err});
 				         					$scope.httpLoading=false;
 				         				}).finally(function(){		
 				         					$scope.httpLoading=false;
@@ -797,12 +810,12 @@ batsAdminHome.controller('driverController', function($scope, $localStorage, $ht
 			});		 
 	 }
 	 
-	 
 	 /*
 		 * ===============================>>>>> End of Delete Driver function <<<<<==========================================
 		 * */
 	$(document).ready(
 			function() {
+				
 				$.getScript('../assets/select2/js/select2.full.min.js', function() {
 					$('#langSelect').select2({
 						  data:["Abkhaz","Afar","Afrikaans","Akan","Albanian","Amharic","Arabic","Aragonese","Armenian","Assamese","Avaric","Avestan","Aymara","Azerbaijani","Bambara","Bashkir","Basque","Belarusian","Bengali","Bihari","Bislama","Bosnian","Breton","Bulgarian","Burmese","Catalan; Valencian","Chamorro","Chechen","Chichewa; Chewa; Nyanja","Chinese","Chuvash","Cornish","Corsican","Cree","Croatian","Czech","Danish","Divehi; Dhivehi; Maldivian;","Dutch","English","Esperanto","Estonian","Ewe","Faroese","Fijian","Finnish","French","Fula; Fulah; Pulaar; Pular","Galician","Georgian","German","Greek, Modern","GuaranÃƒÂ­","Gujarati","Haitian; Haitian Creole","Hausa","Hebrew (modern)","Herero","Hindi","Hiri Motu","Hungarian","Interlingua","Indonesian","Interlingue","Irish","Igbo","Inupiaq","Ido","Icelandic","Italian","Inuktitut","Japanese","Javanese","Kalaallisut, Greenlandic","Kannada","Kanuri","Kashmiri","Kazakh","Khmer","Kikuyu, Gikuyu","Kinyarwanda","Kirghiz, Kyrgyz","Komi","Kongo","Korean","Kurdish","Kwanyama, Kuanyama","Latin","Luxembourgish, Letzeburgesch","Luganda","Limburgish, Limburgan, Limburger","Lingala","Lao","Lithuanian","Luba-Katanga","Latvian","Manx","Macedonian","Malagasy","Malay","Malayalam","Maltese","MÃ„ï¿½ori","Marathi (MarÃ„ï¿½Ã¡Â¹Â­hÃ„Â«)","Marshallese","Mongolian","Nauru","Navajo, Navaho","Norwegian BokmÃƒÂ¥l","North Ndebele","Nepali","Ndonga","Norwegian Nynorsk","Norwegian","Nuosu","South Ndebele","Occitan","Ojibwe, Ojibwa","Old Church Slavonic, Church Slavic, Church Slavonic, Old Bulgarian, Old Slavonic","Oromo","Oriya","Ossetian, Ossetic","Panjabi, Punjabi","PÃ„ï¿½li","Persian","Polish","Pashto, Pushto","Portuguese","Quechua","Romansh","Kirundi","Romanian, Moldavian, Moldovan","Russian","Sanskrit (SaÃ¡Â¹ï¿½skÃ¡Â¹â€ºta)","Sardinian","Sindhi","Northern Sami","Samoan","Sango","Serbian","Scottish Gaelic; Gaelic","Shona","Sinhala, Sinhalese","Slovak","Slovene","Somali","Southern Sotho","Spanish; Castilian","Sundanese","Swahili","Swati","Swedish","Tamil","Telugu","Tajik","Thai","Tigrinya","Tibetan Standard, Tibetan, Central","Turkmen","Tagalog","Tswana","Tonga (Tonga Islands)","Turkish","Tsonga","Tatar","Twi","Tahitian","Uighur, Uyghur","Ukrainian","Urdu","Uzbek","Venda","Vietnamese","VolapÃƒÂ¼k","Walloon","Welsh","Wolof","Western Frisian","Xhosa","Yiddish","Yoruba","Zhuang, Chuang"],
@@ -816,6 +829,5 @@ batsAdminHome.controller('driverController', function($scope, $localStorage, $ht
 						 });
 				});// script
 			});
-	
 });
 

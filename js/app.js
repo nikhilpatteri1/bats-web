@@ -134,7 +134,7 @@ batsAdminHome.config(function($routeProvider, $locationProvider,$mdDateLocalePro
         })
         .when('/admin/driver', {
             templateUrl : '/html/admin/manage_driver.html',
-            controller  : 'driverController',
+            controller  : 'driverController',            
             cache:false
         });
     $mdDateLocaleProvider.formatDate = function(date) {    	

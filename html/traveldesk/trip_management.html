@@ -116,7 +116,6 @@
 									<div id="{{tripdetail.trip_id}}" class="collapse panel-body">
 										<div class="row">
 											<div class="col-sm-2">
-
 												<img
 													src="{{tripdetail.image_src.length>0?tripdetail.image_src:'../images/driver.png'}}"
 													class="img-responsive img-thumbnail fixWidthHeight"
@@ -363,7 +362,7 @@
 					<div class="row">
 						<div class="col-sm-12">
 							<div id="map" style="width: 100%; height: 200px;"></div>
-							<a class="clear_btn" ng-click="undoMap()">Clear Map</a>
+							<a class="clear_btn" ng-click="undoMap();">Clear Map</a>
 						</div>
 					</div>
 					<div class="row">
@@ -379,8 +378,7 @@
 											placeholder="Destination(choose a destination from map)"
 											ng-required="true" /> {{createTripForm.dest}}
 									</div>
-									<p
-										ng-show="createTripForm.tripDesc.$touched && createTripForm.tripDesc.$invalid"
+									<p ng-show="createTripForm.tripDesc.$touched && createTripForm.tripDesc.$invalid"
 										class="help-block error-help">Destination is Required</p>
 								</div>
 								<div class="col-sm-6">

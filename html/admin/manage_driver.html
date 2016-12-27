@@ -302,10 +302,12 @@
 													<input type="text" class="form-control"
 														name="driverbloodgp"
 														ng-pattern="/^[ A-Za-z+-]*$/"
+														ng-minlength="2"
 														ng-maxlength="6"
 														ng-model="driver.blood" placeholder="Enter Bloop Group" required/>
 													<p ng-show="driverform.driverbloodgp.$touched && driverform.driverbloodgp.$invalid" class="help-block error-help">Blood group is required</p>
 													<p ng-show="driverform.driverbloodgp.$error.pattern" class="help-block">No special characters except +,-</p>
+													<p ng-if="driverform.driverbloodgp.$error.minlength && !driverform.driverbloodgp.$pristine" class="help-block">Min 2 charcters</p>
 													<p ng-if="driverform.driverbloodgp.$error.maxlength && !driverform.driverbloodgp.$pristine" class="help-block">Max 6 charcters</p>
 													
 												</div>
@@ -827,11 +829,13 @@
 													<input type="text" class="form-control"
 													ng-pattern="/^[ A-Za-z0-9+-]*$/"
 														name="driverbloodgp"
+														ng-minlength="2"
 														ng-maxlength="6"
 														ng-model="driver.blood" placeholder="Enter Bloop Group" required/>
 														<p ng-show="driverupdateform.driverbloodgp.$error.pattern" class="help-block">No special characters except +,-</p>
 													<p ng-show="driverupdateform.driverbloodgp.$touched && driverupdateform.driverbloodgp.$invalid" class="help-block error-help">Blood group is required</p>
-													<p ng-if="driverupdateform.driverbloodgp.$error.maxlength && !driverupdateform.driverbloodgp.$pristine" class="help-block">Max 10 charcters</p>
+													<p ng-if="driverupdateform.driverbloodgp.$error.minlength && !driverupdateform.driverbloodgp.$pristine" class="help-block">Min 2 charcters</p>
+													<p ng-if="driverupdateform.driverbloodgp.$error.maxlength && !driverupdateform.driverbloodgp.$pristine" class="help-block">Max 6 charcters</p>
 												</div>
 												</div>
 												<!-- Driver Aadhar No -->
