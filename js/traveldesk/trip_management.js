@@ -49,7 +49,8 @@ batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$
 			computeTotalDistance(directionsDisplay.getDirections());
 		});
 	   
-	   
+	   $("#startTimeid").val(travelDeskService.getDateTime(new Date().getTime()));
+	   $("#endTimeid").val(travelDeskService.getDateTime(new Date().getTime()));
 	
 	}
 
@@ -144,23 +145,38 @@ batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$
 		
 	}
 	
+	$(document).on('click', '#startTimePicker', function(){
 	$('#startTimePicker').datetimepicker({
-			format:'LT',
-			defaultDate:  new Date(),
-	    	minDate: new Date(),
-			ignoreReadonly:true,
+		format: 'DD/MM/YYYY hh:mm a',
+		defaultDate:'now',        
+        minDate: 'now',        		
+		ignoreReadonly:true,
     });	
-		/*$("#startTimePicker,#endTimePicker").on("dp.change",function (e) {
-			console.log("cjecl");
-			$scope.resetTimeValidation();
-		});*/		
-	$('#endTimePicker').datetimepicker({
-			format:'LT',
-			defaultDate:  new Date(),
-			minDate: new Date(),
+	});			
+	$(document).on('click', '#endTimePicker', function(){
+		$('#endTimePicker').datetimepicker({
+			format: 'DD/MM/YYYY hh:mm a',
+			defaultDate:'now',	        
+	        minDate: 'now',
 			ignoreReadonly:true,
+		});
 	});
-	
+	$(document).on('click', '#startTimePickerU', function(){
+		 $('#startTimePickerU').datetimepicker({
+			 format: 'DD/MM/YYYY hh:mm a',
+			 defaultDate:'now',
+		     minDate: 'now',
+			 ignoreReadonly:true,
+	    });
+	});
+	$(document).on('click', '#endTimePickerU', function(){
+		$('#endTimePickerU').datetimepicker({
+			format: 'DD/MM/YYYY hh:mm a',
+			defaultDate:'now',	       
+	        minDate: 'now',	        		
+			ignoreReadonly:true,
+		 });
+	});
 	$scope.trip_create.customers = [{}];
 	$scope.addNewCustomer = function() {
 	  $scope.trip_create.customers.push({});
@@ -199,17 +215,9 @@ batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$
 		$scope.createTripForm.$setUntouched();
 		$scope.trip_create.customers=[{}];
 		$scope.resetTimeValidation();
-		var createDate = new Date();		
-		var hours = createDate.getHours();
-		  var minutes = createDate.getMinutes();
-		  
-		  var ampm = hours >= 12 ? 'PM' : 'AM';
-		  hours = hours % 12;
-		  hours = hours ? hours : 12; // the hour '0' should be '12'
-		  minutes = minutes < 10 ? '0'+minutes : minutes;
-		  var strTime = hours + ':' + minutes + ' ' + ampm;
-		  $("#startTimeid").val(strTime);
-		  $("#endTimeid").val(strTime);
+		
+		  $("#startTimeid").val(travelDeskService.getDateTime(new Date().getTime()));
+		  $("#endTimeid").val(travelDeskService.getDateTime(new Date().getTime()));
 		
 	}
 	
@@ -286,49 +294,54 @@ batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$
 			flag=true;
 		}
 		if(flag){
-			$scope.createTripData ={};
-			$scope.createTripData.token = $scope.token;
-			console.log($scope.trip_create.devid);
-			$scope.createTripData.devid= $scope.trip_create.devid;
-			$scope.createTripData.start_point ={};
-			$scope.createTripData.start_point.name= "Crowne Plaza Bengaluru";
-			$scope.createTripData.start_point.lat= 12.850167;
-			$scope.createTripData.start_point.long= 77.660329;
-			$scope.createTripData.end_point ={};
-			$scope.createTripData.end_point.name="Crowne Plaza Bengaluru" ;
-			$scope.createTripData.end_point.lat= 12.850167;
-			$scope.createTripData.end_point.long= 77.660329;
-			$scope.createTripData.destination= destinations;
-			$scope.createTripData.path_way = $scope.pathwaysArray;
-			$scope.createTripData.apprx_start_time=travelDeskService.getTsOverTime($("#startTimeid").val());
-			$scope.createTripData.apprx_end_time=travelDeskService.getTsOverTime($("#endTimeid").val());	
-			$scope.createTripData.customers=$scope.trip_create.customers;
-			/*console.log(JSON.stringify($scope.createTripData));*/
-			
-			
-			travelDeskFactory.callApi("POST",apiURL+"trip/create",$scope.createTripData,function(result){
-			      console.log(result);	
-			      if(result.status == "success"){
-			    	  
-			    	  swal({title: "Trip Created Successfully",
-			   			   text: "Success!",   
-			   			   type: "success",   
-			   			   confirmButtonColor: "#9afb29",   
-			   			   closeOnConfirm: true }, 
-			   			   function(){   
-			   				$('#createTripModal').modal('hide');
-			   			    $scope.trip_create.customers=[{}];
-							$scope.tripList();
-							$scope.reset();
-			   		 });
-			    	  
-			      }
-			      else if(result.msg == "Trip already exist for this vehicle and driver"){
-			    	  swal({title:"Trip already exist for this vehicle and driver"});
-			      }
-			      else{}
-			      $scope.httpLoading=false;
-			});
+			if(travelDeskService.getTsOverTime($("#startTimeid").val())<travelDeskService.getTsOverTime($("#endTimeid").val())){
+				$scope.createTripData ={};
+				$scope.createTripData.token = $scope.token;
+				console.log($scope.trip_create.devid);
+				$scope.createTripData.devid= $scope.trip_create.devid;
+				$scope.createTripData.start_point ={};
+				$scope.createTripData.start_point.name= "Crowne Plaza Bengaluru";
+				$scope.createTripData.start_point.lat= 12.850167;
+				$scope.createTripData.start_point.long= 77.660329;
+				$scope.createTripData.end_point ={};
+				$scope.createTripData.end_point.name="Crowne Plaza Bengaluru" ;
+				$scope.createTripData.end_point.lat= 12.850167;
+				$scope.createTripData.end_point.long= 77.660329;
+				$scope.createTripData.destination= destinations;
+				$scope.createTripData.path_way = $scope.pathwaysArray;
+				$scope.createTripData.apprx_start_time=travelDeskService.getTsOverTime($("#startTimeid").val());
+				$scope.createTripData.apprx_end_time=travelDeskService.getTsOverTime($("#endTimeid").val());	
+				$scope.createTripData.customers=$scope.trip_create.customers;
+				/*console.log(JSON.stringify($scope.createTripData));*/
+				
+				
+				travelDeskFactory.callApi("POST",apiURL+"trip/create",$scope.createTripData,function(result){
+				      console.log(result);	
+				      if(result.status == "success"){
+				    	  
+				    	  swal({title: "Trip Created Successfully",
+				   			   text: "Success!",   
+				   			   type: "success",   
+				   			   confirmButtonColor: "#9afb29",   
+				   			   closeOnConfirm: true }, 
+				   			   function(){   
+				   				$('#createTripModal').modal('hide');
+				   			    $scope.trip_create.customers=[{}];
+								$scope.tripList();
+								$scope.reset();
+				   		 });
+				    	  
+				      }
+				      else if(result.msg == "Trip already exist for this vehicle and driver"){
+				    	  swal({title:"Trip already exist for this vehicle and driver"});
+				      }
+				      else{}
+				      $scope.httpLoading=false;
+				});
+			}
+			else{
+				swal({title:"Check end time and date"});
+			}
 		}
 	}
 	
@@ -411,15 +424,6 @@ batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$
 			$scope.hide_remove = false;
 		}
 	};
-	
-	 $('#startTimePickerU').datetimepicker({
-        format: 'LT',
-        ignoreReadonly:true
-    });
-	$('#endTimePickerU').datetimepicker({
-	     format: 'LT',
-	     ignoreReadonly:true
-	 });
 	$scope.fetchTripInfo=function(trip_id){
 		$scope.tripInfoJson={};
 		$scope.tripInfoJson.token=$scope.token;
@@ -509,8 +513,8 @@ batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$
 	
 	function updateTripForm(result){
 		$scope.updateTrip.trip_id=result.data.trip_id;
-		$scope.updateTrip.stime=travelDeskService.showTime(result.data.apprx_start_time);
-		$scope.updateTrip.etime=travelDeskService.showTime(result.data.apprx_end_time);
+		$scope.updateTrip.stime=travelDeskService.getDateTime(result.data.apprx_start_time);
+		$scope.updateTrip.etime=travelDeskService.getDateTime(result.data.apprx_end_time);
 		//$scope.updateTrip.gname=result.data.gname;
 		$scope.updateTrip.vno=result.data.devid;
 		$scope.updateTrip.spoint=result.data.start_point.name
@@ -545,47 +549,53 @@ batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$
 	$scope.postUpdateTrip=function(){
 		//$scope.updateTrip.stime=travelDeskService.getTsOverTime($scope.updateTrip.stime);
 		//$scope.updateTrip.etime=travelDeskService.getTsOverTime($scope.updateTrip.etime);
-		$scope.updateTripJson={};
-		$scope.updateTripJson.token=$scope.token;
-		$scope.updateTripJson.start_point={};
-		$scope.updateTripJson.start_point.name= "Crowne Plaza Bengaluru";
-		$scope.updateTripJson.start_point.lat= 12.850167;
-		$scope.updateTripJson.start_point.long= 77.660329;
-		$scope.updateTripJson.end_point={};
-		$scope.updateTripJson.end_point.name= "Crowne Plaza Bengaluru";
-		$scope.updateTripJson.end_point.lat= 12.850167;
-		$scope.updateTripJson.end_point.long= 77.660329;
-		$scope.updateTripJson.path_way=$scope.pathwaysArray;
+		if(travelDeskService.getTsOverTime($("#updateStartTime").val())<travelDeskService.getTsOverTime($("#updateEndTime").val())){
+			$scope.updateTripJson={};
+			$scope.updateTripJson.token=$scope.token;
+			$scope.updateTripJson.start_point={};
+			$scope.updateTripJson.start_point.name= "Crowne Plaza Bengaluru";
+			$scope.updateTripJson.start_point.lat= 12.850167;
+			$scope.updateTripJson.start_point.long= 77.660329;
+			$scope.updateTripJson.end_point={};
+			$scope.updateTripJson.end_point.name= "Crowne Plaza Bengaluru";
+			$scope.updateTripJson.end_point.lat= 12.850167;
+			$scope.updateTripJson.end_point.long= 77.660329;
+			$scope.updateTripJson.path_way=$scope.pathwaysArray;
+			
+			$scope.updateTripJson.apprx_start_time=travelDeskService.getTsOverTime($("#updateStartTime").val());		
+			$scope.updateTripJson.apprx_end_time=travelDeskService.getTsOverTime($("#updateEndTime").val());
+			$scope.updateTripJson.customers=$scope.updateTrip.Customers;
+			$scope.updateTripJson.destination=$scope.updateTrip.dest;
+			$scope.updateTripJson.trip_id=$scope.updateTrip.trip_id;
+			//console.log(JSON.stringify($scope.updateTripJson));
+			travelDeskFactory.callApi("POST",apiURL+"trip/update",$scope.updateTripJson,function(result){
+			      console.log(result);	
+			      if(result.status == "success"){
+			    	  
+			    	  swal({title: "Trip updated Successfully",
+			   			   text: "Success!",   
+			   			   type: "success",   
+			   			   confirmButtonColor: "#9afb29",   
+			   			   closeOnConfirm: true }, 
+			   			   function(){   
+			   				$('#updateTripModal').modal('hide');
+			   			    $scope.trip_create.customers=[{}];
+							$scope.tripList();
+							$scope.reset();
+			   		 });
+			    	  
+			      }
+			      else if(result.msg == "Trip already exist for this vehicle and driver"){
+			    	  swal({title:"Trip already exist for this vehicle and driver"});
+			      }
+			      else{}
+			      $scope.httpLoading=false;
+			});
+		}
+		else{
+			swal({title:"Check end time and date"});
+		}
 		
-		$scope.updateTripJson.apprx_start_time=travelDeskService.getTsOverTime($("#updateStartTime").val());		
-		$scope.updateTripJson.apprx_end_time=travelDeskService.getTsOverTime($("#updateEndTime").val());
-		$scope.updateTripJson.customers=$scope.updateTrip.Customers;
-		$scope.updateTripJson.destination=$scope.updateTrip.dest;
-		$scope.updateTripJson.trip_id=$scope.updateTrip.trip_id;
-		//console.log(JSON.stringify($scope.updateTripJson));
-		travelDeskFactory.callApi("POST",apiURL+"trip/update",$scope.updateTripJson,function(result){
-		      console.log(result);	
-		      if(result.status == "success"){
-		    	  
-		    	  swal({title: "Trip updated Successfully",
-		   			   text: "Success!",   
-		   			   type: "success",   
-		   			   confirmButtonColor: "#9afb29",   
-		   			   closeOnConfirm: true }, 
-		   			   function(){   
-		   				$('#updateTripModal').modal('hide');
-		   			    $scope.trip_create.customers=[{}];
-						$scope.tripList();
-						$scope.reset();
-		   		 });
-		    	  
-		      }
-		      else if(result.msg == "Trip already exist for this vehicle and driver"){
-		    	  swal({title:"Trip already exist for this vehicle and driver"});
-		      }
-		      else{}
-		      $scope.httpLoading=false;
-		});
 	}
 	$('#updateTripModal').on('shown.bs.modal', function() {		
 		   resizeUpdateMap();
