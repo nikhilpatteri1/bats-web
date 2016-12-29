@@ -323,6 +323,9 @@ batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$
 			   		 });
 			    	  
 			      }
+			      else if(result.msg == "Trip already exist for this vehicle and driver"){
+			    	  swal({title:"Trip already exist for this vehicle and driver"});
+			      }
 			      else{}
 			      $scope.httpLoading=false;
 			});
@@ -542,7 +545,6 @@ batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$
 	$scope.postUpdateTrip=function(){
 		//$scope.updateTrip.stime=travelDeskService.getTsOverTime($scope.updateTrip.stime);
 		//$scope.updateTrip.etime=travelDeskService.getTsOverTime($scope.updateTrip.etime);
-		console.log(JSON.stringify($scope.updateTrip));
 		$scope.updateTripJson={};
 		$scope.updateTripJson.token=$scope.token;
 		$scope.updateTripJson.start_point={};
@@ -554,12 +556,13 @@ batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$
 		$scope.updateTripJson.end_point.lat= 12.850167;
 		$scope.updateTripJson.end_point.long= 77.660329;
 		$scope.updateTripJson.path_way=$scope.pathwaysArray;
-		$scope.updateTripJson.apprx_start_time=travelDeskService.getTsOverTime($scope.updateTrip.stime);
-		$scope.updateTripJson.apprx_end_time=travelDeskService.getTsOverTime($scope.updateTrip.etime);
+		
+		$scope.updateTripJson.apprx_start_time=travelDeskService.getTsOverTime($("#updateStartTime").val());		
+		$scope.updateTripJson.apprx_end_time=travelDeskService.getTsOverTime($("#updateEndTime").val());
 		$scope.updateTripJson.customers=$scope.updateTrip.Customers;
 		$scope.updateTripJson.destination=$scope.updateTrip.dest;
 		$scope.updateTripJson.trip_id=$scope.updateTrip.trip_id;
-		console.log(JSON.stringify($scope.updateTripJson));
+		//console.log(JSON.stringify($scope.updateTripJson));
 		travelDeskFactory.callApi("POST",apiURL+"trip/update",$scope.updateTripJson,function(result){
 		      console.log(result);	
 		      if(result.status == "success"){
@@ -576,6 +579,9 @@ batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$
 						$scope.reset();
 		   		 });
 		    	  
+		      }
+		      else if(result.msg == "Trip already exist for this vehicle and driver"){
+		    	  swal({title:"Trip already exist for this vehicle and driver"});
 		      }
 		      else{}
 		      $scope.httpLoading=false;

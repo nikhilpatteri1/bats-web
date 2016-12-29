@@ -33,20 +33,24 @@ batstravelDeskHome.service('travelDeskService', function() {
 	this.getTsOverTime=function(time_val){
 		var s_split = time_val.split(':');		
 		var hr= s_split[0];
+		console.log(hr);
 		var s_apmsplit = s_split[1].split(' ');
 		var mi = s_apmsplit[0];
 		var meri = s_apmsplit[1];
 		return this.getTimestamp(new Date(),hr,mi,0,meri);
 		/*var todays =travelDeskService.getTimestamp(new Date(),hr,mi,0,meri);*/
 	};
-	this.getTimestamp=function (dt,hr,mins,sec,meridian){		
+	this.getTimestamp=function (dt,hr,mins,sec,meridian){
+		console.log(hr+mins+sec+meridian);
 		var d=new Date(dt);
 		if(meridian=="PM"){
-			hr=hr+12;
+			hr=Number(hr)+12;
 		}
 		d.setHours(hr);
+		console.log(d.getHours());
 		d.setMinutes(mins);
 		d.setSeconds(sec);
+		console.log(d.getTime());
 		return d.getTime();
 	};
 	this.getTimestampSec= function(hr,mins,sec){
