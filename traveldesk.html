@@ -150,11 +150,32 @@
 						<span class="closeIcon" data-direction="left" data-dismiss="modal"
 							aria-hidden="true" ng-click="reset()">&times;</span>
 					</div>
+					
+					
+					
 					<div class="row">
 						<div class="col-sm-6 col-sm-offset-3">
 							<!-- Change Password -->
 							<h1 class="titleHead">Change Password</h1>
 							<form name="changePwd" class="formInput" id="changePwdFrm">
+								
+								<div class="control-group">
+									<div class="form-group">
+										<div class="row">
+											<div class="col-sm-12 controls">
+												<label ng-show="newpwd" class="floatlabeltxt show-hide">Enter
+													New Password</label> <input type="password" ng-model="newpwd"
+													class="form-control new_pwd" name="new_pd"
+													placeholder="Enter New Password" ng-change="hidePasswordMismatch()" password-validate required>											
+												<span class='help-inline' ng-show='changePwd.newpwd.$valid'>
+													<i class='icon-ok'></i>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								<!-- 
 								<div class="control-group">
 									<div class="form-group">
 										<div class="row">
@@ -170,8 +191,26 @@
 											</div>
 										</div>
 									</div>
-								</div>
+								</div> -->
 								<div class="control-group">
+									<div class="form-group">
+										<div class="row">
+											<div class="col-sm-12 controls">
+												<label ng-show="repwd && newpwd"
+													class="floatlabeltxt show-hide">Re-Enter New
+													Password</label> <input type="password" ng-model="repwd"
+													ng-show="newpwd" class="form-control confirm_pwd"
+													name="confirm_pd" same-as='newpwd'
+													placeholder="Re-Enter New Password" repassword-validate
+													required> <span class='help-inline'
+													ng-show='changePwd.repwd.$valid'> <i class='icon-ok'></i>
+												</span> <span class="mismatch" ng-show="isMismatch">Password
+													Mistmatch</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- <div class="control-group">
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-12 controls">
@@ -189,7 +228,7 @@
 											</div>
 										</div>
 									</div>
-								</div>
+								</div> -->
 								<div ng-hide="newpwd && repwd">
 									<ul class="helplist">
 										<li>At least <strong>one letter</strong></li>

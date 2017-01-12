@@ -112,7 +112,7 @@
 			</div>
 			<div class="row mb10">
 				<div class="col-sm-12" align="center">
-					<a id="showHistoryData" 
+					<a id="showHistoryData"  style="z-index:900;"
 						ng-class="{bounce:startBouncing}"
 						ng-show="showUpBtn"
 						ng-click="stopBouncing()"
@@ -174,7 +174,7 @@
 														</div>
 														<div class="col-sm-4">
 															<label>Trip Status</label>
-															<p class="mb10">{{tripData.status}}</p>
+															<p class="mb10">{{getStatus(tripData.status)}}</p>
 														</div>
 													</div>
 													<!-- about trip  -->

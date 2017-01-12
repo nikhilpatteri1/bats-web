@@ -180,6 +180,7 @@ batstravelDeskHome.controller('batsDriverBinding', function($scope, $localStorag
       			   			   function(){
       			   				$scope.fetchDevicelist($scope.groupname);
       			   				$scope.searchDriver="";
+      			   				$scope.showDrivers();
       			   		 });
          					
          					/*$scope.searchDriver="";*/

@@ -245,6 +245,14 @@ batstravelDeskHome.controller('tripHistory', function($scope, $localStorage,trav
 		 * 	Display the trip history data
 		 * 	on selection of trip
 		 * */
+		
+		$scope.getStatus= function(tripDataStatus)
+			{
+			return travelDeskService.showStatus(tripDataStatus);
+			}
+		
+		
+		
 		$scope.showHistoryData=function(tripDetail){
 			$scope.showUpBtn=true;
 			$scope.startBouncing=true;

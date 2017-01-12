@@ -1,4 +1,4 @@
-batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$http,travelDeskFactory,travelDeskService) {
+batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$http,$timeout,travelDeskFactory,travelDeskService) {
 	$scope.token = $localStorage.data;
 	var pathWays;
 	var destinations;
@@ -15,6 +15,13 @@ batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$
 	var directionsDisplay;
 	var directionsService;
 	var triplist_map;
+	var Trip_duration;
+	var UTrip_duration;
+	var CEndStamp;
+	var UEndStamp;
+	
+	
+
 	
 	
 	$scope.initMap =function() {
@@ -43,6 +50,7 @@ batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$
 		   end=event.latLng;
 		   addMarker(event.latLng);
 		   calcRoute();
+		    
 		   
 	   });
 	   directionsDisplay.addListener('directions_changed', function() {
@@ -54,6 +62,14 @@ batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$
 	
 	}
 
+	
+	
+	
+	/*$scope.remErr = function(err){
+		console.log(err);
+	}*/
+	
+	
 	$('#createTripModal').on('shown.bs.modal', function() {		
 		resizeCreateMap();
 	});
@@ -65,10 +81,26 @@ batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$
 	};
 	
 	 $scope.undoMap  = function(){
+		 console.log("enter undo");
 			marker.setMap(null);
 			directionsDisplay.setMap(null);
 			marker="";
 			$scope.pathwaysArray = '';
+			
+			$timeout(function(){
+				$("#updateDestination").val("");
+				$("#updateDestination").focus();
+				$scope.updateTrip.dest="";
+				$scope.updateTripForm.tripDesc.$invalid = true;
+				$scope.updateTripForm.tripDesc.$touched = true;
+				  });
+			$timeout(function(){
+				$("#destinationSelected").val("");
+				$("#destinationSelected").focus();
+				$scope.trip_create.dest="";
+				$scope.createTripForm.tripDesc.$invalid = true;
+				$scope.createTripForm.tripDesc.$touched = true;
+				  });
 		}
 
 	
@@ -79,11 +111,52 @@ batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$
 		bounds.extend(end);
 		
 		travelDeskService.convertAddress(end,function(result){
-			console.log(result);
-			destinations= result;
-			document.getElementById("destinationSelected").value="";
-			document.getElementById("destinationSelected").value=result;
-			$scope.trip_create.dest=result;
+			//console.log(result);
+			var b =result.toString();
+			//console.log(b);
+			var a= b.split(",");
+			//console.log(a[0]);
+			if(a[0] == "Unnamed Road"){
+				a.shift();
+				$timeout(function(){
+					$("#destinationSelected").val(a);
+					$("#destinationSelected").focus();
+					$scope.trip_create.dest=a;
+					$scope.createTripForm.tripDesc.$invalid = false;
+					$scope.createTripForm.tripDesc.$touched = false;
+					destinations= a;
+					  });
+				//console.log(a);
+			}
+			else{
+				//console.log(a);
+				$timeout(function(){
+					$("#destinationSelected").val(a);
+					$("#destinationSelected").focus();
+					$scope.trip_create.dest=a;
+					$scope.createTripForm.tripDesc.$invalid = false;
+					$scope.createTripForm.tripDesc.$touched = false;
+					destinations= a;
+					  });
+			}
+			
+			
+			/*$timeout(function(){
+				$("#destinationSelected").val(result);
+				$("#destinationSelected").focus();
+				$scope.trip_create.dest=result;
+				$scope.createTripForm.tripDesc.$invalid = false;
+				$scope.createTripForm.tripDesc.$touched = false;
+				  });*/
+			
+			
+			
+			//document.getElementById("destinationSelected").value="";
+			//document.getElementById("destinationSelected").value=result;
+			//$scope.trip_create.dest=result;
+			//console.log($scope.trip_create.dest);
+			//$( "#destinationSelected" ).click();			
+			//console.log($("#destinationSelected").val());
 			})
 			
 		map.fitBounds(bounds);
@@ -95,6 +168,18 @@ batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$
 		directionsService.route(request, function(response, status) {
 			if (status == google.maps.DirectionsStatus.OK) {
 				directionsDisplay.setDirections(response);
+				console.log(response.routes[0].legs[0].duration.value);
+				Trip_duration = response.routes[0].legs[0].duration.value + "000";
+				console.log(Number(Trip_duration));
+				//var d =travelDeskService.getTsOverTime($("#startTimeid").val());
+				//console.log(d);
+				CEndStamp = travelDeskService.getTsOverTime($("#startTimeid").val()) + Number(Trip_duration);
+				console.log(CEndStamp);
+				var b = travelDeskService.showTime(CEndStamp);
+				console.log(b);
+				$("#endTimeid").val(b);
+				//console.log(travelDeskService.getDateTime(a));
+				
 				directionsDisplay.setMap(map);
 				directionsDisplay.setOptions({suppressMarkers:true});
 			} else {
@@ -104,6 +189,7 @@ batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$
 			}
 		});
 	}
+	
 	function addMarker(location) {
 	    // Add the marker at the clicked location, and add the next-available label
 	    // from the array of alphabetical characters.    
@@ -153,14 +239,14 @@ batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$
 		ignoreReadonly:true,
     });	
 	});			
-	$(document).on('click', '#endTimePicker', function(){
+	/*$(document).on('click', '#endTimePicker', function(){
 		$('#endTimePicker').datetimepicker({
 			format: 'DD/MM/YYYY hh:mm a',
 			defaultDate:'now',	        
 	        minDate: 'now',
 			ignoreReadonly:true,
 		});
-	});
+	});*/
 	$(document).on('click', '#startTimePickerU', function(){
 		 $('#startTimePickerU').datetimepicker({
 			 format: 'DD/MM/YYYY hh:mm a',
@@ -169,15 +255,17 @@ batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$
 			 ignoreReadonly:true,
 	    });
 	});
-	$(document).on('click', '#endTimePickerU', function(){
+	/*$(document).on('click', '#endTimePickerU', function(){
 		$('#endTimePickerU').datetimepicker({
 			format: 'DD/MM/YYYY hh:mm a',
 			defaultDate:'now',	       
 	        minDate: 'now',	        		
 			ignoreReadonly:true,
 		 });
-	});
+	});*/
 	$scope.trip_create.customers = [{}];
+	
+	
 	$scope.addNewCustomer = function() {
 	  $scope.trip_create.customers.push({});
 	  console.log($scope.trip_create.customers);
@@ -189,7 +277,8 @@ batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$
 			$scope.hide_remove = true;
 		}
 	};  
-	$scope.removeCustomer = function(val) {
+	
+	/*$scope.removeCustomer = function(val) {
 	  console.log(val);	  
 	  $scope.trip_create.customers.splice(val);
 	  if($scope.trip_create.customers.length < 4){
@@ -198,7 +287,19 @@ batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$
 	  if($scope.trip_create.customers.length == 1){
 			$scope.hide_remove = false;
 		}
-	};
+	};*/
+	
+	
+	
+	$scope.remove = function(item) { 
+  	  var index = $scope.trip_create.customers.indexOf(item);
+  	$scope.trip_create.customers.splice(index, 1);  
+  	$scope.hide_btn = false;  
+  	//$("#btn").show();
+  	}
+	
+	
+	
 	
 	$scope.getTimeFormat = function(ts){
 		return travelDeskService.showTime(ts);
@@ -218,8 +319,19 @@ batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$
 		
 		  $("#startTimeid").val(travelDeskService.getDateTime(new Date().getTime()));
 		  $("#endTimeid").val(travelDeskService.getDateTime(new Date().getTime()));
+		  $scope.updateTrip.stime ="";
+		  $scope.updateTrip.etime="";
+		  
 		
 	}
+	
+	/*$scope.reset1 = function(){
+		//$("#updateStartTime").val("");
+		$scope.updateTrip.stime ="";
+		  console.log("reset");
+		$scope.updateTrip.etime="";
+		  //$("#updateEndTime").val("");
+	}*/
 	
 	$(function(){
 		var active = true;
@@ -310,9 +422,11 @@ batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$
 				$scope.createTripData.destination= destinations;
 				$scope.createTripData.path_way = $scope.pathwaysArray;
 				$scope.createTripData.apprx_start_time=travelDeskService.getTsOverTime($("#startTimeid").val());
-				$scope.createTripData.apprx_end_time=travelDeskService.getTsOverTime($("#endTimeid").val());	
+				$scope.createTripData.apprx_end_time=CEndStamp;	
+				
+				
 				$scope.createTripData.customers=$scope.trip_create.customers;
-				/*console.log(JSON.stringify($scope.createTripData));*/
+				console.log(JSON.stringify($scope.createTripData));
 				
 				
 				travelDeskFactory.callApi("POST",apiURL+"trip/create",$scope.createTripData,function(result){
@@ -380,9 +494,12 @@ batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$
 				destination : end,
 				travelMode : google.maps.TravelMode.DRIVING
 			};
+		
 			directionsService.route(request, function(response, status) {
 				if (status == google.maps.DirectionsStatus.OK) {
+					//console.log("aaaaaaaaaa");
 					directionsDisplay.setDirections(response);
+					console.log(response.routes[0].legs[0].duration.value);					
 					directionsDisplay.setMap(triplist_map);
 					directionsDisplay.setOptions({suppressMarkers:true});
 				} else {
@@ -414,7 +531,8 @@ batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$
 			$scope.hide_remove = true;
 		}
 	};  
-	$scope.removeChoice = function(val) {
+	
+	/*$scope.removeChoice = function(val) {
 		console.log(val);	  
 		$scope.updateTrip.Customers.splice(val);
 	  if($scope.updateTrip.Customers.length < 4){
@@ -423,7 +541,18 @@ batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$
 	  if($scope.updateTrip.Customers.length == 1){
 			$scope.hide_remove = false;
 		}
-	};
+	};*/
+	
+	
+	$scope.Updateremove = function(item) { 
+	  	  var index = $scope.updateTrip.Customers.indexOf(item);
+	  	$scope.updateTrip.Customers.splice(index, 1);  
+	  	$scope.hide_btn = false;  
+	  	//$("#btn").show();
+	  	}
+	
+	
+	
 	$scope.fetchTripInfo=function(trip_id){
 		$scope.tripInfoJson={};
 		$scope.tripInfoJson.token=$scope.token;
@@ -487,9 +616,57 @@ batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$
 		
 		travelDeskService.convertAddress(end,function(result){			
 			destinations= result;
-			document.getElementById("updateDestination").value="";
-			document.getElementById("updateDestination").value=result;
-			$scope.updateTrip.dest=result;
+			
+			//console.log(result);
+			var b =result.toString();
+			//console.log(b);
+			var a= b.split(",");
+			//console.log(a[0]);
+			if(a[0] == "Unnamed Road"){
+				a.shift();
+				$timeout(function(){
+					$("#updateDestination").val(a);
+					$("#updateDestination").focus();
+					$scope.updateTrip.dest=a;
+					$scope.updateTripForm.tripDesc.$invalid = false;
+					$scope.updateTripForm.tripDesc.$invalid = false;
+					destinations= a;
+					  });
+				//console.log(a);
+			}
+			else{
+				//console.log(a);
+				$timeout(function(){
+					$("#updateDestination").val(a);
+					$("#updateDestination").focus();
+					$scope.updateTrip.dest=a;
+					$scope.updateTripForm.tripDesc.$invalid = false;
+					$scope.updateTripForm.tripDesc.$invalid = false;
+					destinations= a;
+					  });
+			//document.getElementById("updateDestination").value="";
+			//document.getElementById("updateDestination").value=result;
+			//$scope.updateTrip.dest=result;
+			
+				/*$timeout(function(){
+				$("#updateDestination").val(result);
+				$("#updateDestination").focus();
+				$scope.updateTrip.dest=result;
+				$scope.updateTripForm.tripDesc.$invalid = false;
+				$scope.updateTripForm.tripDesc.$touched = false;
+				  });*/
+			
+			}
+			
+			/*setTimeout(function(){
+				$("#updateDestination").val(result);
+				$("#updateDestination").focus();
+				$scope.updateTrip.dest=result;
+			},1);
+			$scope.updateTripForm.tripDesc.$invalid = false;
+			$scope.updateTripForm.tripDesc.$touched = false;*/
+			
+			
 			})
 			
 		updateMap.fitBounds(bounds);
@@ -501,6 +678,15 @@ batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$
 		directionsService.route(request, function(response, status) {
 			if (status == google.maps.DirectionsStatus.OK) {
 				directionsDisplay.setDirections(response);
+				UTrip_duration = response.routes[0].legs[0].duration.value + "000";
+				console.log(Number(UTrip_duration));
+				//var d =travelDeskService.getTsOverTime($("#startTimeid").val());
+				//console.log(d);
+				UEndStamp = travelDeskService.getTsOverTime($("#updateStartTime").val()) + Number(UTrip_duration);
+				console.log(UEndStamp);
+				var d = travelDeskService.showTime(UEndStamp);
+				console.log(d);
+				$("#updateEndTime").val(d);
 				directionsDisplay.setMap(updateMap);
 				directionsDisplay.setOptions({suppressMarkers:true});
 			} else {
@@ -563,7 +749,7 @@ batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$
 			$scope.updateTripJson.path_way=$scope.pathwaysArray;
 			
 			$scope.updateTripJson.apprx_start_time=travelDeskService.getTsOverTime($("#updateStartTime").val());		
-			$scope.updateTripJson.apprx_end_time=travelDeskService.getTsOverTime($("#updateEndTime").val());
+			$scope.updateTripJson.apprx_end_time=UEndStamp;
 			$scope.updateTripJson.customers=$scope.updateTrip.Customers;
 			$scope.updateTripJson.destination=$scope.updateTrip.dest;
 			$scope.updateTripJson.trip_id=$scope.updateTrip.trip_id;

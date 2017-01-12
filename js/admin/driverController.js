@@ -31,6 +31,10 @@ batsAdminHome.controller('driverController', function($scope, $localStorage, $ht
 	$scope.driver.ppincode="";
 	$scope.driver.pstreet="";
 	$scope.driver.pcountry="";
+	$scope.driver.etype = 'Permanent';
+	
+	
+	
 	/*====================================================>>>>>> Start of Basic function <<<<<=================================================*/
 	/*
 	 *  check for token availability
@@ -49,6 +53,9 @@ batsAdminHome.controller('driverController', function($scope, $localStorage, $ht
 		
 		  	   });
 	}
+	
+	$scope.bloodGroups = ["a+","a-","b-","b+","ab+","ab-","o+","o-","a1b+ve","a1o+ve","a1ab+ve","b1a+ve","b1ab+ve","b1o+ve","ab1a+ve","ab1b+ve","ab1o+ve","o1a+ve","o1b+ve","o1ab+ve","ab1a+ve","ab1b+ve","ab1o+ve","a1b-ve","a1o-ve","a1ab-ve","b1a-ve","b1ab-ve","b1o-ve","ab1a-ve","ab1b-ve","ab1o-ve","o1a-ve","o1b-ve","o1ab-ve","ab1a-ve","ab1b-ve","ab1o-ve"];
+	
 	
 		 
 	/* Use Present Address as permanent address option
@@ -74,6 +81,10 @@ batsAdminHome.controller('driverController', function($scope, $localStorage, $ht
 	/**
 	   * Show DateTimePicker onclick in jquery 
 	* */	
+	$(document).ready(function(){
+		$('input').attr('autocomplete','off');
+	    
+	});
 		$(document).on('click', '#dobPicker', function(){
 			var curDate = moment();
 			$('#dobPicker').datetimepicker({
@@ -109,6 +120,7 @@ batsAdminHome.controller('driverController', function($scope, $localStorage, $ht
 		            	//$scope.driver.dob=$scope.selectedDOB;
 		            });
 			});
+		
 		/*to validate minor age for driver*/
 		$scope.validateAge=function(){
 		/*function validateAge(){*/		
@@ -216,6 +228,19 @@ batsAdminHome.controller('driverController', function($scope, $localStorage, $ht
 		 *  for loading country and state
 		 * */
 		
+		/*$scope.granChoice=function(basedOn){
+			if(basedOn.Item=="Permanent"){
+				$scope.Permanent=true;
+				$scope.Temporary=false;
+				$scope.driver.etype="Permanent";
+			}
+			else if(basedOn.Item=="Temporary"){
+				$scope.Permanent=false;
+				$scope.Temporary=true;
+				$scope.driver.etype="Temporary";
+			}
+		}*/
+		
 		
 		
 		var countries = ['India'];
@@ -254,7 +279,12 @@ batsAdminHome.controller('driverController', function($scope, $localStorage, $ht
 			$scope.driver.pcity = "";
 		}
 		
-		
+		$scope.oneplusMinus = function(){
+			console.log("blood group");			
+			var driverBlood = document.getElementById("driverBlood");
+			driverBlood.value = driverBlood.value.replace(/\++/g,'+');
+			driverBlood.value = driverBlood.value.replace(/\--/g,'-');
+		}
 		
 		
 		
@@ -385,9 +415,13 @@ batsAdminHome.controller('driverController', function($scope, $localStorage, $ht
 			 document.getElementById("driverCreateform").reset();
 			 $scope.driver={};
 			 $scope.driver.confirmAddress=true;
+			 //$("#confirmAddress").selected(true);
 			 $scope.createDriverObject={};		 
 			 $scope.langArray=[];
 			 $scope.imagepath="";
+			 $scope.states = "";
+			 $scope.driver.etype = "Permanent";
+			 $("#perid").prop("checked", true);
 			 $scope.driverform.$setPristine();
 			 $scope.driverform.$setUntouched();
 			 $scope.driverupdateform.$setPristine();
@@ -396,17 +430,24 @@ batsAdminHome.controller('driverController', function($scope, $localStorage, $ht
 			 $scope.driverupdateform.driverContact.$setValidity('contAvailable',true);
 			 $scope.driverform.driverlicense.$setValidity('dlavailable',true);
 			 $scope.driverupdateform.driverlicense.$setValidity('dlavailable',true);
+			 
+			 $("#id_label_multiple").select2("val","");
 				$('#langSelect').select2({
-					data:["Abkhaz","Afar","Afrikaans","Akan","Albanian","Amharic","Arabic","Aragonese","Armenian","Assamese","Avaric","Avestan","Aymara","Azerbaijani","Bambara","Bashkir","Basque","Belarusian","Bengali","Bihari","Bislama","Bosnian","Breton","Bulgarian","Burmese","Catalan; Valencian","Chamorro","Chechen","Chichewa; Chewa; Nyanja","Chinese","Chuvash","Cornish","Corsican","Cree","Croatian","Czech","Danish","Divehi; Dhivehi; Maldivian;","Dutch","English","Esperanto","Estonian","Ewe","Faroese","Fijian","Finnish","French","Fula; Fulah; Pulaar; Pular","Galician","Georgian","German","Greek, Modern","GuaranÃƒÂ­","Gujarati","Haitian; Haitian Creole","Hausa","Hebrew (modern)","Herero","Hindi","Hiri Motu","Hungarian","Interlingua","Indonesian","Interlingue","Irish","Igbo","Inupiaq","Ido","Icelandic","Italian","Inuktitut","Japanese","Javanese","Kalaallisut, Greenlandic","Kannada","Kanuri","Kashmiri","Kazakh","Khmer","Kikuyu, Gikuyu","Kinyarwanda","Kirghiz, Kyrgyz","Komi","Kongo","Korean","Kurdish","Kwanyama, Kuanyama","Latin","Luxembourgish, Letzeburgesch","Luganda","Limburgish, Limburgan, Limburger","Lingala","Lao","Lithuanian","Luba-Katanga","Latvian","Manx","Macedonian","Malagasy","Malay","Malayalam","Maltese","MÃ„ï¿½ori","Marathi (MarÃ„ï¿½Ã¡Â¹Â­hÃ„Â«)","Marshallese","Mongolian","Nauru","Navajo, Navaho","Norwegian BokmÃƒÂ¥l","North Ndebele","Nepali","Ndonga","Norwegian Nynorsk","Norwegian","Nuosu","South Ndebele","Occitan","Ojibwe, Ojibwa","Old Church Slavonic, Church Slavic, Church Slavonic, Old Bulgarian, Old Slavonic","Oromo","Oriya","Ossetian, Ossetic","Panjabi, Punjabi","PÃ„ï¿½li","Persian","Polish","Pashto, Pushto","Portuguese","Quechua","Romansh","Kirundi","Romanian, Moldavian, Moldovan","Russian","Sanskrit (SaÃ¡Â¹ï¿½skÃ¡Â¹â€ºta)","Sardinian","Sindhi","Northern Sami","Samoan","Sango","Serbian","Scottish Gaelic; Gaelic","Shona","Sinhala, Sinhalese","Slovak","Slovene","Somali","Southern Sotho","Spanish; Castilian","Sundanese","Swahili","Swati","Swedish","Tamil","Telugu","Tajik","Thai","Tigrinya","Tibetan Standard, Tibetan, Central","Turkmen","Tagalog","Tswana","Tonga (Tonga Islands)","Turkish","Tsonga","Tatar","Twi","Tahitian","Uighur, Uyghur","Ukrainian","Urdu","Uzbek","Venda","Vietnamese","VolapÃƒÂ¼k","Walloon","Welsh","Wolof","Western Frisian","Xhosa","Yiddish","Yoruba","Zhuang, Chuang"],
+					
 					  tags: "true",
 				      placeholder: "Select / Type Languages Known",
 				      allowClear: true,
-				      tokenSeparators: [',', ' '],
-				      maximumSelectionLength: 5});
+				     // tokenSeparators: [',', ' '],
+				      maximumSelectionSize: 5
+				      });
 				$('#updatelangSelect').select2({
-					data:["Abkhaz","Afar","Afrikaans","Akan","Albanian","Amharic","Arabic","Aragonese","Armenian","Assamese","Avaric","Avestan","Aymara","Azerbaijani","Bambara","Bashkir","Basque","Belarusian","Bengali","Bihari","Bislama","Bosnian","Breton","Bulgarian","Burmese","Catalan; Valencian","Chamorro","Chechen","Chichewa; Chewa; Nyanja","Chinese","Chuvash","Cornish","Corsican","Cree","Croatian","Czech","Danish","Divehi; Dhivehi; Maldivian;","Dutch","English","Esperanto","Estonian","Ewe","Faroese","Fijian","Finnish","French","Fula; Fulah; Pulaar; Pular","Galician","Georgian","German","Greek, Modern","GuaranÃƒÂ­","Gujarati","Haitian; Haitian Creole","Hausa","Hebrew (modern)","Herero","Hindi","Hiri Motu","Hungarian","Interlingua","Indonesian","Interlingue","Irish","Igbo","Inupiaq","Ido","Icelandic","Italian","Inuktitut","Japanese","Javanese","Kalaallisut, Greenlandic","Kannada","Kanuri","Kashmiri","Kazakh","Khmer","Kikuyu, Gikuyu","Kinyarwanda","Kirghiz, Kyrgyz","Komi","Kongo","Korean","Kurdish","Kwanyama, Kuanyama","Latin","Luxembourgish, Letzeburgesch","Luganda","Limburgish, Limburgan, Limburger","Lingala","Lao","Lithuanian","Luba-Katanga","Latvian","Manx","Macedonian","Malagasy","Malay","Malayalam","Maltese","MÃ„ï¿½ori","Marathi (MarÃ„ï¿½Ã¡Â¹Â­hÃ„Â«)","Marshallese","Mongolian","Nauru","Navajo, Navaho","Norwegian BokmÃƒÂ¥l","North Ndebele","Nepali","Ndonga","Norwegian Nynorsk","Norwegian","Nuosu","South Ndebele","Occitan","Ojibwe, Ojibwa","Old Church Slavonic, Church Slavic, Church Slavonic, Old Bulgarian, Old Slavonic","Oromo","Oriya","Ossetian, Ossetic","Panjabi, Punjabi","PÃ„ï¿½li","Persian","Polish","Pashto, Pushto","Portuguese","Quechua","Romansh","Kirundi","Romanian, Moldavian, Moldovan","Russian","Sanskrit (SaÃ¡Â¹ï¿½skÃ¡Â¹â€ºta)","Sardinian","Sindhi","Northern Sami","Samoan","Sango","Serbian","Scottish Gaelic; Gaelic","Shona","Sinhala, Sinhalese","Slovak","Slovene","Somali","Southern Sotho","Spanish; Castilian","Sundanese","Swahili","Swati","Swedish","Tamil","Telugu","Tajik","Thai","Tigrinya","Tibetan Standard, Tibetan, Central","Turkmen","Tagalog","Tswana","Tonga (Tonga Islands)","Turkish","Tsonga","Tatar","Twi","Tahitian","Uighur, Uyghur","Ukrainian","Urdu","Uzbek","Venda","Vietnamese","VolapÃƒÂ¼k","Walloon","Welsh","Wolof","Western Frisian","Xhosa","Yiddish","Yoruba","Zhuang, Chuang"],
-					maximumSelectionLength: 5
+					placeholder: "Select / Type Languages Known",  
+					allowClear: true,
+				     // tokenSeparators: [',', ' '],
+				      maximumSelectionSize: 5
 					 });
+				
+				
 		 }
 	/*====================================================>>>>>> End of Basic function <<<<<=================================================*/
 	/*
@@ -493,12 +534,7 @@ batsAdminHome.controller('driverController', function($scope, $localStorage, $ht
 		}
 		
 		$scope.createDriverObject.education=$scope.driver.education;
-		if($scope.driver.languages==null){
-	    	  $scope.createDriverObject.languages_known=[];
-	      }
-	      else{
-	    	  $scope.createDriverObject.languages_known=$scope.driver.languages;
-	      }		
+		$scope.createDriverObject.languages_known=$("#id_label_multiple").select2("val");
 		$scope.createDriverObject.password=$scope.driver.password;
 		$scope.createDriverObject.salary=$scope.driver.salary;
 		$scope.createDriverObject.employee_type=$scope.driver.etype;		
@@ -514,6 +550,7 @@ batsAdminHome.controller('driverController', function($scope, $localStorage, $ht
 		})
 		.success(function(data){
 			console.log(data);
+			console.log("success");
 			$scope.httpLoading=false;
 			swal({title: "Driver Created Successfully",
 	   			   text: "Success!",   
@@ -588,10 +625,9 @@ batsAdminHome.controller('driverController', function($scope, $localStorage, $ht
 		 $scope.driver.contact=data.contact_no;
 		 $scope.driver.license=data.licence_id;
 		 $scope.driver.etype=data.employee_type;
-		 $timeout(function(){		 	
-				$('#updatelangSelect').val(data.languages_known);
-				$('#updatelangSelect').trigger('change');
-			})
+			 console.log(data.languages_known);
+			 $("#updatelangSelect").select2('val',data.languages_known);
+			 $('#updatelangSelect').trigger('change');
 		 $scope.langArray=data.languages_known;		 
 		 $scope.driver.blood=data.blood_group;
 		 $scope.driver.image_src=data.image_src;
@@ -653,14 +689,8 @@ batsAdminHome.controller('driverController', function($scope, $localStorage, $ht
 			else{
 				$scope.updateDriverObject.dob=$scope.driver.dob;
 			}			
-	      $scope.updateDriverObject.education=$scope.driver.education;
-	      if($scope.driver.languages==null){
-	    	  $scope.updateDriverObject.languages_known=[];
-	      }
-	      else{
-	    	  $scope.updateDriverObject.languages_known=$scope.driver.languages;
-	      }
-	      
+	      $scope.updateDriverObject.education=$scope.driver.education;	      
+	      $scope.updateDriverObject.languages_known=$("#updatelangSelect").select2("val");
 	      $scope.updateDriverObject.salary=$scope.driver.salary;
 	      $scope.updateDriverObject.employee_type=$scope.driver.etype;
 	      $scope.updateDriverObject.driver_id=$scope.driver.driver_id;
@@ -813,21 +843,25 @@ batsAdminHome.controller('driverController', function($scope, $localStorage, $ht
 	 /*
 		 * ===============================>>>>> End of Delete Driver function <<<<<==========================================
 		 * */
-	$(document).ready(
-			function() {
-				
-				$.getScript('../assets/select2/js/select2.full.min.js', function() {
-					$('#langSelect').select2({
-						  data:["Abkhaz","Afar","Afrikaans","Akan","Albanian","Amharic","Arabic","Aragonese","Armenian","Assamese","Avaric","Avestan","Aymara","Azerbaijani","Bambara","Bashkir","Basque","Belarusian","Bengali","Bihari","Bislama","Bosnian","Breton","Bulgarian","Burmese","Catalan; Valencian","Chamorro","Chechen","Chichewa; Chewa; Nyanja","Chinese","Chuvash","Cornish","Corsican","Cree","Croatian","Czech","Danish","Divehi; Dhivehi; Maldivian;","Dutch","English","Esperanto","Estonian","Ewe","Faroese","Fijian","Finnish","French","Fula; Fulah; Pulaar; Pular","Galician","Georgian","German","Greek, Modern","GuaranÃƒÂ­","Gujarati","Haitian; Haitian Creole","Hausa","Hebrew (modern)","Herero","Hindi","Hiri Motu","Hungarian","Interlingua","Indonesian","Interlingue","Irish","Igbo","Inupiaq","Ido","Icelandic","Italian","Inuktitut","Japanese","Javanese","Kalaallisut, Greenlandic","Kannada","Kanuri","Kashmiri","Kazakh","Khmer","Kikuyu, Gikuyu","Kinyarwanda","Kirghiz, Kyrgyz","Komi","Kongo","Korean","Kurdish","Kwanyama, Kuanyama","Latin","Luxembourgish, Letzeburgesch","Luganda","Limburgish, Limburgan, Limburger","Lingala","Lao","Lithuanian","Luba-Katanga","Latvian","Manx","Macedonian","Malagasy","Malay","Malayalam","Maltese","MÃ„ï¿½ori","Marathi (MarÃ„ï¿½Ã¡Â¹Â­hÃ„Â«)","Marshallese","Mongolian","Nauru","Navajo, Navaho","Norwegian BokmÃƒÂ¥l","North Ndebele","Nepali","Ndonga","Norwegian Nynorsk","Norwegian","Nuosu","South Ndebele","Occitan","Ojibwe, Ojibwa","Old Church Slavonic, Church Slavic, Church Slavonic, Old Bulgarian, Old Slavonic","Oromo","Oriya","Ossetian, Ossetic","Panjabi, Punjabi","PÃ„ï¿½li","Persian","Polish","Pashto, Pushto","Portuguese","Quechua","Romansh","Kirundi","Romanian, Moldavian, Moldovan","Russian","Sanskrit (SaÃ¡Â¹ï¿½skÃ¡Â¹â€ºta)","Sardinian","Sindhi","Northern Sami","Samoan","Sango","Serbian","Scottish Gaelic; Gaelic","Shona","Sinhala, Sinhalese","Slovak","Slovene","Somali","Southern Sotho","Spanish; Castilian","Sundanese","Swahili","Swati","Swedish","Tamil","Telugu","Tajik","Thai","Tigrinya","Tibetan Standard, Tibetan, Central","Turkmen","Tagalog","Tswana","Tonga (Tonga Islands)","Turkish","Tsonga","Tatar","Twi","Tahitian","Uighur, Uyghur","Ukrainian","Urdu","Uzbek","Venda","Vietnamese","VolapÃƒÂ¼k","Walloon","Welsh","Wolof","Western Frisian","Xhosa","Yiddish","Yoruba","Zhuang, Chuang"],
-						  tags: "true",
+	$(document).ready(function() {		
+		$.getScript('../assets/select_filter/select2.min.js', function() {
+					$('#id_label_multiple').select2({						  
 					      placeholder: "Select / Type Languages Known",
-					      allowClear: true,
-					      tokenSeparators: [',', ' '],
-					      maximumSelectionLength: 5});
+					      allowClear: true,					     
+					      maximumSelectionSize: 5
+					      });
 					$('#updatelangSelect').select2({
-						data:["Abkhaz","Afar","Afrikaans","Akan","Albanian","Amharic","Arabic","Aragonese","Armenian","Assamese","Avaric","Avestan","Aymara","Azerbaijani","Bambara","Bashkir","Basque","Belarusian","Bengali","Bihari","Bislama","Bosnian","Breton","Bulgarian","Burmese","Catalan; Valencian","Chamorro","Chechen","Chichewa; Chewa; Nyanja","Chinese","Chuvash","Cornish","Corsican","Cree","Croatian","Czech","Danish","Divehi; Dhivehi; Maldivian;","Dutch","English","Esperanto","Estonian","Ewe","Faroese","Fijian","Finnish","French","Fula; Fulah; Pulaar; Pular","Galician","Georgian","German","Greek, Modern","GuaranÃƒÂ­","Gujarati","Haitian; Haitian Creole","Hausa","Hebrew (modern)","Herero","Hindi","Hiri Motu","Hungarian","Interlingua","Indonesian","Interlingue","Irish","Igbo","Inupiaq","Ido","Icelandic","Italian","Inuktitut","Japanese","Javanese","Kalaallisut, Greenlandic","Kannada","Kanuri","Kashmiri","Kazakh","Khmer","Kikuyu, Gikuyu","Kinyarwanda","Kirghiz, Kyrgyz","Komi","Kongo","Korean","Kurdish","Kwanyama, Kuanyama","Latin","Luxembourgish, Letzeburgesch","Luganda","Limburgish, Limburgan, Limburger","Lingala","Lao","Lithuanian","Luba-Katanga","Latvian","Manx","Macedonian","Malagasy","Malay","Malayalam","Maltese","MÃ„ï¿½ori","Marathi (MarÃ„ï¿½Ã¡Â¹Â­hÃ„Â«)","Marshallese","Mongolian","Nauru","Navajo, Navaho","Norwegian BokmÃƒÂ¥l","North Ndebele","Nepali","Ndonga","Norwegian Nynorsk","Norwegian","Nuosu","South Ndebele","Occitan","Ojibwe, Ojibwa","Old Church Slavonic, Church Slavic, Church Slavonic, Old Bulgarian, Old Slavonic","Oromo","Oriya","Ossetian, Ossetic","Panjabi, Punjabi","PÃ„ï¿½li","Persian","Polish","Pashto, Pushto","Portuguese","Quechua","Romansh","Kirundi","Romanian, Moldavian, Moldovan","Russian","Sanskrit (SaÃ¡Â¹ï¿½skÃ¡Â¹â€ºta)","Sardinian","Sindhi","Northern Sami","Samoan","Sango","Serbian","Scottish Gaelic; Gaelic","Shona","Sinhala, Sinhalese","Slovak","Slovene","Somali","Southern Sotho","Spanish; Castilian","Sundanese","Swahili","Swati","Swedish","Tamil","Telugu","Tajik","Thai","Tigrinya","Tibetan Standard, Tibetan, Central","Turkmen","Tagalog","Tswana","Tonga (Tonga Islands)","Turkish","Tsonga","Tatar","Twi","Tahitian","Uighur, Uyghur","Ukrainian","Urdu","Uzbek","Venda","Vietnamese","VolapÃƒÂ¼k","Walloon","Welsh","Wolof","Western Frisian","Xhosa","Yiddish","Yoruba","Zhuang, Chuang"],
+						placeholder: "Select / Type Languages Known",
+					      allowClear: true,					     
+					      maximumSelectionSize: 5
 						 });
-				});// script
+				
 			});
+		
+	});
+ /*$(document).ready(function(){
+	       $('#perid').trigger('click');
+	
+ });*/
 });
 

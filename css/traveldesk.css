@@ -109,3 +109,34 @@ font-family:Roboto, Arial, sans-serif;font-size: 11px;border-radius:2px;box-shad
 .count_label span {font-size:24px;font-weight:900;color: red}
 #endTimeid,#startTimeid,#updateEndTime,#updateStartTime{background-color:#fff !important}
 .userIcons a{line-height: 2;}
+
+.maplabel{
+	position: absolute;
+    top: 0px;
+    /* left: 186px; */
+    z-index: 1000;
+    background: #ffffff;
+    right: 15px;
+    g: 4px;
+    padding: 7px;
+    font-size: 12px;
+    color: #03A9F4;
+}
+
+input.ng-dirty.ng-invalid{
+	border-bottom: solid 2px #ec3f41;
+}
+input.ng-dirty.ng-valid{
+	 border-bottom: solid 2px #3a7d34;
+}
+
+.mismatch{
+	font-size: 14px;
+    font-weight: 600;
+    color:#ec3f41;
+}
+/* .sidebar-nav .nav > li > a:active{
+	color:#ec3f41!important;
+} */
+
+

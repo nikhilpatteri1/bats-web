@@ -24,7 +24,7 @@
 <link rel="stylesheet" type="text/css" href="css/nav.css">
 <!-- <link rel="stylesheet" type="text/css" href="css/content.css"> -->
 <link rel="stylesheet" type="text/css" href="css/carousel.css">
- 
+<link rel="stylesheet" type="text/css" href="css/customNew.css">
 <link rel="stylesheet" type="text/css" href="assets/sweetalert/sweetalert.css">
 
 <style>
@@ -41,9 +41,85 @@
 
 
 	<!--================= Nav Header Starts =================-->
-	<nav class="navbar">
+	<nav class="navbar header">
 		<div class="container">
 			<div class="row">
+				<div class="col-xs-12">
+					<div class="col-xs-2">
+						<img src="images/logo-new-bats-white.png" alt="bydesign_logo" class="logo"/>
+					</div>
+					<div class="col-xs-10">
+					<a href="" class="login" data-toggle="modal" data-target="#loginModal">login</a>
+				    </div>
+				</div>
+				
+			
+			</div>
+			
+			<!-- ==================== Login Modal =================== -->
+						<div class="modal_login modal fade" id="loginModal" role="dialog" data-backdrop="static"  ng-controller="loginController">
+							<div class="modal-dialog cmodalWidthHight">
+								<div class="modal-content ">
+									<div class="modal-header">
+										<span class="close_icon" data-direction="left" data-dismiss="modal" aria-hidden="true" ng-click="reset()" onclick="resetlabel()">×</span>
+										<h4 class="modal-title">Login</h4>
+									</div>
+									<div class="modal-body">
+										<form name="userForm" class="form formInput">
+											<div class="form-group field" ng-class="{ 'has-error' : userForm.user.username.$invalid && !userForm.user.username.$pristine }">
+												<label ng-show="user.username" class="show-hide">Username</label>
+												 <input type="text" name="username"
+													class="form-control" ng-model="user.username"
+													 placeholder="username" ng-disabled="isSaving" style="text-transform: lowercase" required />
+													<p ng-show="userForm.user.username.$invalid && userForm.user.username.$pristine"
+															class="help-block">Username is required.</p>
+											</div>
+											<div class="form-group field"  ng-class="{ 'has-error' : userForm.user.password.$invalid && !userForm.user.password.$pristine }">
+												<label ng-show="user.password" class="show-hide">Password</label>
+												 <input type="password" name="password"
+													class="form-control" ng-model="user.password"
+													placeholder="password" ng-disabled="isSaving"  required />
+													<p ng-show="userForm.user.password.$invalid && userForm.user.password.$pristine"
+															class="help-block">Password is required.</p>
+											</div>
+											<button class="btn btn-primary" ng-disabled="userForm.$invalid" ng-click="submitLoginForm()">Submit</button>
+										</form>
+									</div>
+									<div class="modal-footer">
+										<a href="" class="dialog_forgot">Forgot Password?</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						
+			<!-- ==================== Forget Password Modal =================== -->
+						<div class="modal_login modal fade" id="fgtModal" role="dialog" data-backdrop="static" ng-controller="forgetpwdController">
+							<div class="modal-dialog modal-lg">
+								<div class="modal-content cmodalWidthHight">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" onclick="resetlabel()" ng-click="reset()">&times;</button>
+										<h4 class="modal-title">Forgot Password</h4>
+									</div>
+									<div class="modal-body">
+										<form name="fgtForm" class="form formInput">
+											<div class="form-group" ng-class="{ 'has-error' : fgtForm.useremail.$invalid && !fgtForm.useremail.$pristine }">
+												<label ng-show="useremail" class="show-hide">Enter Email ID</label> 
+												<input type="email" name="useremail" class="form-control" ng-model="useremail" 
+												ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
+												 ng-disabled="isSaving" placeholder="Enter Email Id" required />
+												<p ng-show="fgtForm.useremail.$invalid && !fgtForm.useremail.$pristine" class="help-block">Enter a valid email.</p>
+											</div>
+											<button class="btn btn-primary" ng-click="submitFgtForm(useremail)" ng-disabled="fgtForm.$invalid">Submit</button>
+										</form>
+									</div>
+									<div class="modal-footer">
+										<a href="" class="dialog_login">Click here to login</a>
+									</div>
+								</div>
+							</div>
+						</div>
+			<!-- <div class="row">
 				<div class="col-xs-12">
 					<div class="col-xs-2 car_img">
 						<img src="images/car_header.png" alt="car_logo" />
@@ -60,16 +136,16 @@
 							locations</p>
 						<a href="" class="login" data-toggle="modal"
 							data-target="#loginModal"><i class="fa fa-key"></i></a>
-						<!-- <div><a href="#" class="login" data-toggle="dropdown"><i class="fa fa-user"></i></a>
+						<div><a href="#" class="login" data-toggle="dropdown"><i class="fa fa-user"></i></a>
     <ul class="dropdown-menu" style="right:0;left:inherit;">
       <li><a href="#">Manage Customer</a></li>
       <li><a href="#">Manage Device</a></li>
       <li><a href="#">Logout</a></li>
     </ul>
-  </div> -->
+  </div>
 
 
-						<!--==================== Login Modal ===================-->
+						==================== Login Modal ===================
 						<div class="modal_login modal fade" id="loginModal" role="dialog" data-backdrop="static"  ng-controller="loginController">
 							<div class="modal-dialog modal-lg">
 								<div class="modal-content">
@@ -107,7 +183,7 @@
 						
 																	
 													
-						<!--==================== Forget Password Modal ===================-->
+						==================== Forget Password Modal ===================
 						<div class="modal_login modal fade" id="fgtModal" role="dialog" data-backdrop="static" ng-controller="forgetpwdController">
 							<div class="modal-dialog modal-lg">
 								<div class="modal-content">
@@ -138,7 +214,7 @@
 
 					</div>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</nav>
 	<!--================= Nav Header Ends =================-->

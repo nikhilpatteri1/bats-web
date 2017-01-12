@@ -104,4 +104,27 @@ batstravelDeskHome.directive('numbersOnly', function () {
         }
     };
 });
+
+
+batstravelDeskHome.directive('sameAs', function() {
+	  return {
+	    require: 'ngModel',
+	    link: function(scope, elm, attrs, ctrl) {
+	      ctrl.$parsers.unshift(function(viewValue) {
+	        if (viewValue === scope[attrs.sameAs]) {
+	        	console.log(viewValue+"==="+scope[attrs.sameAs]);
+	        	scope.isMismatch=false;
+	          ctrl.$setValidity('sameAs', true);
+	          return viewValue;
+	        } else {
+	        	console.log(viewValue+"==="+scope[attrs.sameAs]);
+	        	scope.isMismatch=true;
+	          ctrl.$setValidity('sameAs', false);
+	          return undefined;
+	        }
+	      });
+	    }
+	  };
+	});
+
 //validate numbers only

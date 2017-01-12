@@ -221,6 +221,7 @@
 							</li>
 
 						</ul>
+						<p ng-show="(triplistObject |tripFilter:searchTrip).length==0" class="help-block error-help">No drivers available for this search criteria !!!</p>
 						<!-- <p ng-show="(driverlist| driverFilter:searchDriver).length==0" class="help-block error-help">No drivers available for this search criteria !!!</p>
 						<p ng-show="!driverlist.length" class="help-warning">No driver created yet</p> -->
 					</div>
@@ -254,50 +255,15 @@
 							data-dismiss="modal" aria-hidden="true">&times;</span>
 					</div>
 					<h1 class="titleHead">Create Trip</h1>
-					<div class="row">
-						<div class="col-sm-12">
-							<div class="row">
-								<div class='col-sm-6'>
-									<div class="form-group"
-										ng-class="{'has-error':StartTimeNotSelected}">
-										<div class='input-group date' id='startTimePicker'>
-											<input type='text' id="startTimeid" name="startTime"
-												readonly="readonly"
-												class="form-control floatlabel floatlabel_select tripinputheight"
-												placeholder="Start Time" ng-required="false" /> <span
-												class="input-group-addon createtriptime"> <span
-												class="glyphicon glyphicon-time"></span>
-											</span>
-										</div>
-										<p ng-show="StartTimeNotSelected"
-											class="help-block error-help">Start time is Required</p>
-									</div>
-								</div>
-								<div class="col-sm-6">
-									<div class="form-group"
-										ng-class="{'has-error':EndTimeNotSelected}">
-										<div class="input-group date" id='endTimePicker'>
-											<input type='text' id="endTimeid" name="endTime"
-												readonly="readonly"
-												class="form-control floatlabel floatlabel_select tripinputheight"
-												placeholder="End Time" /> <span
-												class="input-group-addon createtriptime"> <span
-												class="glyphicon glyphicon-time"></span>
-											</span>
-										</div>
-										<p ng-show="EndTimeNotSelected" class="help-block error-help">End
-											time is Required</p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+					
 					<div class="row">
 						<div class="col-sm-12">
 							<div class="row">
 								<div class="col-sm-6">
 									<div class="form-group"
 										ng-class="{'has-error':createTripForm.TripGroup.$invalid && !createTripForm.TripGroup.$pristine}">
+										<label ng-show="trip_create.groupname"
+															class="floatlabeltxt show-hide">Group Name</label>
 										<select name="TripGroup"
 											class="form-control floatlabel floatlabel_select tripinputheight"
 											ng-model="trip_create.groupname"
@@ -319,6 +285,8 @@
 								<div class="col-sm-6">
 									<div class="form-group"
 										ng-class="{'has-error':createTripForm.vehicleName.$invalid && !createTripForm.vehicleName.$pristine}">
+										<label ng-show="trip_create.devid"
+															class="floatlabeltxt show-hide">Vehicle No</label>
 										<select name="vehicleName"
 											class="form-control floatlabel floatlabel_select tripinputheight"
 											ng-model="trip_create.devid" ng-required="true">
@@ -338,9 +306,80 @@
 					<div class="row">
 						<div class="col-sm-12">
 							<div class="row">
+								<div class='col-sm-12'>
+									<div class="form-group"
+										ng-class="{'has-error':StartTimeNotSelected}">
+										<label class="floatlabeltxt show-hide">Start Time</label>
+										<div class='input-group date' id='startTimePicker'>
+											<input type='text' id="startTimeid" name="startTime"
+												readonly="readonly"
+												class="form-control floatlabel floatlabel_select tripinputheight"
+												placeholder="Start Time" ng-required="false" /> <span
+												class="input-group-addon createtriptime"> <span
+												class="glyphicon glyphicon-time"></span>
+											</span>
+										</div>
+										<p ng-show="StartTimeNotSelected"
+											class="help-block error-help">Start time is Required</p>
+									</div>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+					
+					<div class="row">					
+						<div class="col-sm-12">
+						<label class="maplabel">Select Destination From Map</label>
+							<div id="map" style="width: 100%; height: 200px;"></div>
+							<a class="clear_btn" ng-click="undoMap();">Clear Map</a>
+						</div>
+					</div>
+					<br>
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group"
+										ng-class="{'has-error':EndTimeNotSelected}">
+										<label class="floatlabeltxt show-hide">End Time(Google Suggestion)</label>
+										<div class="input-group date" id='endTimePicker'>
+											<input type='text' id="endTimeid" name="endTime"
+												readonly="readonly"
+												class="form-control floatlabel floatlabel_select tripinputheight"
+												placeholder="End Time" /> <span
+												class="input-group-addon createtriptime"> <span
+												class="glyphicon glyphicon-time"></span>
+											</span>
+										</div>
+										<p ng-show="EndTimeNotSelected" class="help-block error-help">End
+											time is Required</p>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group"
+										ng-class="{'has-error':createTripForm.tripDesc.$invalid && !createTripForm.tripDesc.$pristine}">
+										<label ng-show="trip_create.dest" class="floatlabeltxt show-hide">Destination</label>
+										<input id="destinationSelected" name="tripDesc" type="text"
+											ng-model="trip_create.dest" readonly="readonly"
+											class="form-control tripinputheight"
+											placeholder="Destination(choose a destination from map)"
+											ng-required="true"/>
+									</div>
+									<p ng-show="createTripForm.tripDesc.$touched && createTripForm.tripDesc.$invalid"
+										class="help-block error-help">Destination is Required</p>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="row">
 								<div class="col-sm-6">
 									<div class="form-group">
-										<!-- <label class="floatlabeltxt show-hide">Enter Statr Point</label> -->
+										<label class="floatlabeltxt show-hide">Start Point</label>
 										<input type="text" id="startpointId"
 											ng-model="trip_create.spoint"
 											class="form-control tripinputheight"
@@ -349,7 +388,7 @@
 								</div>
 								<div class="col-sm-6">
 									<div class="form-group">
-										<!-- <label class="floatlabeltxt show-hide">Enter End Point</label> -->
+										<label class="floatlabeltxt show-hide">End Point</label>
 										<input type="text" id="endpointId"
 											ng-model="trip_create.epoint"
 											class="form-control tripinputheight" placeholder="End Point"
@@ -360,34 +399,14 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-sm-12">
-							<div id="map" style="width: 100%; height: 200px;"></div>
-							<a class="clear_btn" ng-click="undoMap();">Clear Map</a>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-sm-12">
-							<div class="row">
-								<div class="col-sm-6">
-									<div class="form-group"
-										ng-class="{'has-error':createTripForm.tripDesc.$invalid && !createTripForm.tripDesc.$pristine}">
-										<!-- <label class="floatlabeltxt show-hide">Select Destionation</label> -->
-										<input id="destinationSelected" name="tripDesc" type="text"
-											ng-model="trip_create.dest"
-											class="form-control tripinputheight"
-											placeholder="Destination(choose a destination from map)"
-											ng-required="true" /> {{createTripForm.dest}}
-									</div>
-									<p ng-show="createTripForm.tripDesc.$touched && createTripForm.tripDesc.$invalid"
-										class="help-block error-help">Destination is Required</p>
-								</div>
-								<div class="col-sm-6">
+						 <div class="col-sm-12">
 									<div class="col-sm-6 col-sm-offset-6">
 										<a href="" class="addfields" ng-hide="hide_btn"
 											ng-click="addNewCustomer()">Add Customer</a>
 									</div>
-								</div>
-							</div>
+						</div> 
+					</div>
+							
 							<div class="row">
 								<div class="col-sm-12"
 									data-ng-repeat="trip_create in trip_create.customers">
@@ -395,7 +414,7 @@
 										<div class="panel-heading dynamicBlockHeading">
 											<h3 class="panel-title">
 												Customer {{$index+1}} <span class="pull-right clickable"
-													data-effect="fadeOut" ng-click="removeCustomer($index)"><i
+													data-effect="fadeOut" ng-hide="{{$index == 0?'true':'false'}}" ng-click="remove(trip_create)"><i
 													class="fa fa-times"></i></span>
 											</h3>
 											<!-- Watch Out: Here We must use the effect name in the data tag-->
@@ -406,7 +425,7 @@
 												<div class="col-sm-6">
 													<div class="form-group multiple_contact"
 														ng-class="{'has-error':createTripForm.contact_name{{$index+1}}.$invalid && !createTripForm.contact_name{{$index+1}}.$pristine}">
-														<label ng-show="createTripForm.contact_name"
+														<label ng-show="trip_create.name"
 															class="floatlabeltxt show-hide">Customer Name</label>
 														<div class="row">
 															<div class="col-sm-12">
@@ -423,6 +442,7 @@
 																	ng-show="createTripForm.contact_name{{$index+1}}.$error.minlength"
 																	class="help-block  dynamicBlockHelp">Name field of
 																	min of 2 character needed.</p>
+																	<p ng-show="createTripForm.contact_name{{$index+1}}.$touched && createTripForm.contact_name{{$index+1}}.$invalid" class="help-block error-help">Name is required</p>
 															</div>
 														</div>
 													</div>
@@ -430,7 +450,7 @@
 												<div class="col-sm-6">
 													<div class="form-group multiple_contact"
 														ng-class="{ 'has-error' : createTripForm.contact_num{{$index+1}}.$invalid && !createTripForm.contact_num{{$index+1}}.$pristine}">
-														<label ng-show="createTripForm.contact_num"
+														<label ng-show="trip_create.cn"
 															class="floatlabeltxt show-hide">Mobile Number</label>
 														<div class="row">
 															<div class="col-sm-12">
@@ -449,6 +469,7 @@
 															ng-show="createTripForm.contact_num{{$index+1}}.$error.minlength && createTripForm.contact_num{{$index+1}}.$error.maxlength"
 															class="help-block dynamicBlockHelp">Mobile Number max
 															10 numbers.</p>
+															<p ng-show="createTripForm.contact_num{{$index+1}}.$touched && createTripForm.contact_num{{$index+1}}.$invalid" class="help-block error-help">Name is required</p>
 														<!-- <span class="help-block">{{mobstatus}}</span> -->
 													</div>
 												</div>
@@ -457,11 +478,10 @@
 									</div>
 								</div>
 							</div>
-						</div>
-					</div>
+						
 					<div class="row">
 						<div class="col-sm-12 txtCenter" align="center">
-							<button class="btn btn-primary btn-lg" ng-disabled="createTripForm.$invalid" ng-click="createTrip()">Create</button>
+							<button id="createId" class="btn btn-primary btn-lg" ng-disabled="createTripForm.$invalid" ng-click="createTrip()">Create</button>
 						</div>
 					</div>
 				</form>
@@ -486,48 +506,13 @@
 			</div>
 			<div class="modal-body">
 				<form id="updateTripf" name="updateTripForm" class="form formInput">
-					<div id="createclose" class="col-sm-2 col-sm-offset-10"
+					<div id="updateclose" class="col-sm-2 col-sm-offset-10"
 						align="right">
-						<span class="closeIcon" data-direction="left" data-dismiss="modal"
+						<span class="closeIcon" ng-click="reset()" data-direction="left" data-dismiss="modal"
 							aria-hidden="true">&times;</span>
 					</div>
 					<h1 class="titleHead">Update Trip</h1>
-					<div class="row">
-						<div class="col-sm-12">
-							<div class="row">
-								<div class='col-sm-6'>
-									<div class="form-group"
-										ng-class="{'has-error':updateStartTimeNotSelected}">
-										<input type="hidden" ng-model="updateTrip.trip_id" />
-										<div class='input-group date' id='startTimePickerU'>
-											<input type='text' ng-model="updateTrip.stime"
-												readonly="readonly" id="updateStartTime"
-												class="form-control tripinputheight"
-												placeholder="Start Time" /> <span id="updateTimeIcon"
-												class="input-group-addon createtriptime"> <span
-												class="glyphicon glyphicon-time"></span>
-											</span>
-										</div>
-										<p ng-show="updateStartTimeNotSelected"
-											class="help-block error-help">Start time is Required</p>
-									</div>
-								</div>
-								<div class="col-sm-6">
-										<div class="form-group" ng-class="{'has-error':updateEndTimeNotSelected}">
-										<div class="input-group date" id='endTimePickerU'>
-											<input type='text' ng-model="updateTrip.etime"
-												readonly="readonly" id="updateEndTime"
-												class="form-control tripinputheight" placeholder="End Time" />
-											<span class="input-group-addon createtriptime"> <span
-												class="glyphicon glyphicon-time"></span>
-											</span>
-										</div>
-										<p ng-show="updateEndTimeNotSelected" class="help-block error-help">End time is Required</p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+					
 					<div class="row">
 						<div class="col-sm-12">
 							<div class="row">
@@ -556,6 +541,7 @@
 											<option ng-repeat="vehicle in devlistObject"
 												value="{{ vehicle.devid }}">{{vehicle.vehicle_num.length>0?vehicle.vehicle_num:vehicle.devid}}</option>
 										</select> -->
+										<label class="floatlabeltxt show-hide">Vehicle No</label>
 										<input type="text"
 											class="form-control floatlabel floatlabel_select tripinputheight"
 											ng-model="updateTrip.vno" readonly="readonly" />
@@ -564,6 +550,73 @@
 							</div>
 						</div>
 					</div>
+					
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="row">
+								<div class='col-sm-12'>
+									<div class="form-group"
+										ng-class="{'has-error':updateStartTimeNotSelected}">
+										<label class="floatlabeltxt show-hide">Start Time</label>
+										<input type="hidden" ng-model="updateTrip.trip_id" />
+										<div class='input-group date' id='startTimePickerU'>
+											<input type='text' ng-model="updateTrip.stime"
+												readonly="readonly" id="updateStartTime"
+												class="form-control tripinputheight"
+												placeholder="Start Time" /> <span id="updateTimeIcon"
+												class="input-group-addon createtriptime"> <span
+												class="glyphicon glyphicon-time"></span>
+											</span>
+										</div>
+										<p ng-show="updateStartTimeNotSelected"
+											class="help-block error-help">Start time is Required</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+						<label class="maplabel">Select Destination From Map</label>
+							<div id="updateMap" style="width: 100%; height: 200px"></div>
+							<a class="clear_btn" ng-click="undoMap()">Clear Map</a>
+						</div>
+					</div>
+					<br>
+					
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="row">
+								<div class="col-sm-6">
+										<div class="form-group" ng-class="{'has-error':updateEndTimeNotSelected}">
+										<label class="floatlabeltxt show-hide">End Time</label>
+										<div class="input-group date" id='endTimePickerU'>
+											<input type='text' ng-model="updateTrip.etime"
+												readonly="readonly" id="updateEndTime"
+												class="form-control tripinputheight" placeholder="End Time" readonly="true" />
+											<span class="input-group-addon createtriptime"> <span
+												class="glyphicon glyphicon-time"></span>
+											</span>
+										</div>
+										<p ng-show="updateEndTimeNotSelected" class="help-block error-help">End time is Required</p>
+									</div>
+								</div>
+								<div class="col-sm-6">
+							<div class="form-group" ng-class="{'has-error':updateTripForm.tripDesc.$invalid && !updateTripForm.tripDesc.$pristine}">
+								<label ng-show="updateTrip.dest" class="floatlabeltxt show-hide">Destination</label> 
+								<input id="updateDestination"
+									type="text" ng-model="updateTrip.dest"
+									name="tripDesc" readonly="readonly"
+									placeholder="Destination(choose a destination from map)" ng-required="true"
+									class="form-control tripinputheight"/>
+							</div>
+							<p ng-show="updateTripForm.tripDesc.$touched && updateTripForm.tripDesc.$invalid" class="help-block error-help">Destination is Required</p>
+						</div>
+							</div>
+						</div>
+					</div>
+					
+					
 					<div class="row">
 						<div class="col-sm-12">
 							<div class="row">
@@ -586,25 +639,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-sm-12">
-							<div class="form-group" ng-class="{'has-error':updateTripForm.tripDesc.$invalid && !updateTripForm.tripDesc.$pristine}">
-								<label class="floatlabeltxt show-hide">Destination</label> <input
-									id="updateDestination"
-									type="text" ng-model="updateTrip.dest"
-									name="tripDesc"
-									placeholder="Destination(choose a destination from map)" ng-required="true"
-									class="form-control tripinputheight"/>
-							</div>
-							<p ng-show="updateTripForm.tripDesc.$touched && updateTripForm.tripDesc.$invalid" class="help-block error-help">Destination is Required</p>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-sm-12">
-							<div id="updateMap" style="width: 100%; height: 200px"></div>
-							<a class="clear_btn" ng-click="undoMap()">Clear Map</a>
-						</div>
-					</div>
+					
 					<div class="row">
 						<div class="col-sm-12">
 							<div class="row">
@@ -627,9 +662,10 @@
 							data-ng-repeat="updateTrip in updateTrip.Customers">
 							<div class="panel panel-default">
 								<div class="panel-heading dynamicBlockHeading">
+								
 									<h3 class="panel-title">
 										Customer {{$index+1}} <span class="pull-right clickable"
-											data-effect="fadeOut" ng-click="removeChoice($index)"><i
+											data-effect="fadeOut" ng-hide="{{$index == 0?'true':'false'}}" ng-click="Updateremove(updateTrip)"><i
 											class="fa fa-times"></i></span>
 									</h3>
 									<!-- Watch Out: Here We must use the effect name in the data tag-->
@@ -640,7 +676,7 @@
 										<div class="col-sm-6">
 											<div class="form-group multiple_contact"
 												ng-class="{'has-error':updateTripForm.contact_name{{$index+1}}.$invalid && !updateTripForm.contact_name{{$index+1}}.$pristine}">
-												<label ng-show="updateTripForm.name"
+												<label ng-show="updateTrip.name"
 													class="floatlabeltxt show-hide">Customer Name</label>
 												<div class="row">
 													<div class="col-sm-12">
@@ -654,6 +690,7 @@
 														<p ng-show="updateTripForm.contact_name{{$index+1}}.$error.minlength"
 															class="help-block  dynamicBlockHelp">Name field of
 															min of 2 character needed.</p>
+														<p ng-show="updateTripForm.contact_name{{$index+1}}.$touched && updateTripForm.contact_name{{$index+1}}.$invalid" class="help-block error-help">Name is required</p>
 													</div>
 												</div>
 											</div>											
@@ -661,7 +698,7 @@
 										<div class="col-sm-6">
 											<div class="form-group multiple_contact"
 												ng-class="{ 'has-error' : updateTripForm.contact_num{{$index+1}}.$invalid && !updateTripForm.contact_num{{$index+1}}.$pristine}">
-												<label ng-show="updateTripForm.cn" class="floatlabeltxt show-hide">Mobile
+												<label ng-show="updateTrip.cn" class="floatlabeltxt show-hide">Mobile
 													Number</label>
 												<div class="row">
 													<div class="col-sm-12">
@@ -680,6 +717,7 @@
 													ng-show="updateTripForm.contact_num{{$index+1}}.$error.minlength && updateTripForm.contact_num{{$index+1}}.$error.maxlength"
 													class="help-block dynamicBlockHelp">Mobile Number max
 													10 numbers.</p>
+													<p ng-show="updateTripForm.contact_num{{$index+1}}.$touched && updateTripForm.contact_num{{$index+1}}.$invalid" class="help-block error-help">Number is required</p>
 											</div>
 										</div>
 									</div>

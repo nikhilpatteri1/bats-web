@@ -1,0 +1,49 @@
+.header{
+	height: 70px;
+    width: 100%;
+    border-radius: 0;
+    background: #000000;
+    z-index: 100;
+    position: fixed;
+}
+
+.logo{	
+	height: 50px;
+    width: 150px;
+    position: absolute;
+    top: 12px;
+    right: 90px;
+}
+
+.login{
+	color: #fff;
+    font-size: 20px;
+    float: right;
+    top: 12px;
+    right: -50px;
+    border: none !important;
+}
+
+.loginModal{
+    z-index: 2;
+    opacity: 1;
+    background: #FFF;
+    padding-top: 100px;
+}
+
+.modal-backdrop{
+	z-index:0 !important;
+	opacity:1 !important;
+	background-color:#ffffff !important;
+} 
+
+.login:focus, .login:hover{
+	color: #ffffff;
+    text-decoration: none;
+}
+
+.cmodalWidthHight{
+    width: 350px !important;
+    margin: auto !important;
+    top: 100px !important;
+}

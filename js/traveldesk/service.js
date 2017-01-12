@@ -1,13 +1,18 @@
 batstravelDeskHome.service('travelDeskService', function() {
 	this.showTime = function(ts) {
+		//console.log(ts);
 		var d = new Date(Number(ts));
+		var day = d.getDate();
+		var month = d.getMonth()+1;
+		var year = d.getFullYear();
 		var hours = d.getHours();
 		var minutes = d.getMinutes();
 		var ampm = hours >= 12 ? 'pm' : 'am';
 		hours = hours % 12;
 		hours = hours ? hours : 12; // the hour '0' should be '12'
 		minutes = minutes < 10 ? '0' + minutes : minutes;
-		var strTime = hours + ':' + minutes + ' ' + ampm;
+		var strTime = day+"/"+month+"/"+year+" "+ hours + ':' + minutes + ' ' + ampm;
+		//console.log(strTime);
 		return strTime;
 	};
 	this.getDateTime = function(ts) {
@@ -34,10 +39,33 @@ batstravelDeskHome.service('travelDeskService', function() {
 			latLng: latlng
 		},
 		function(responses){
-			//console.log(responses);
+			
+			var a = responses[0].address_components;
+			delete responses[0].address_components[0];
+			
+			//console.log(a);
+			/*console.log(responses[0].address_components[0]);
+			var q= responses[0].address_components.shift();
+			var d=responses[0].address_components.splice(0, 1);
+			var e= responses[0].address_components.splice(0, 1).formatted_address;
+			console.log(responses[0].address_components.splice(0, 1).formatted_address);
+			console.log(d);
+			console.log(q);*/
+			
 			if(responses && responses.length > 0){
-				//console.log(responses[0].formatted_address);
+				
+				/*console.log(responses[0].formatted_address);
+				
+				if(responses[0].address_components[0] = "Unnamed Road"){
+					//delete responses[0].address_components[0];
+					responses[0].formatted_address;
+					cb(responses[0].formatted_address);
+				}
+				else{
+					cb(responses[0].formatted_address);
+				}*/
 				responses[0].formatted_address;
+				console.log(responses[0].formatted_address);
 				cb(responses[0].formatted_address);
 			}
 			else{
@@ -94,6 +122,8 @@ batstravelDeskHome.service('travelDeskService', function() {
 				sts.setHours(tsArr[0]);
 				sts.setMinutes(tsArr[1]);
 				startTimeStamp = sts.getTime();
+				//console.log(startTimeStamp);
+				return sts.getTime();
 			}
 			else{
 				sts.setHours(Number(tsArr[0]) + 12);
@@ -109,19 +139,44 @@ batstravelDeskHome.service('travelDeskService', function() {
 				sts.setHours(Number(tsArr[0]) - 12);
 				sts.setMinutes(tsArr[1]);
 				startTimeStamp = sts.getTime();
+				//console.log(startTimeStamp);
+				return sts.getTime();
 			}
 			else{
 				sts.setHours(tsArr[0]);
 				sts.setMinutes(tsArr[1]);
 				//console.log("else " + sts);
 				startTimeStamp = sts.getTime();
-				return sts.getTime();
 				//console.log(startTimeStamp);
+				return sts.getTime();
+				
 			}
 		}
 	}
 
-	
+	this.showStatus=function(status_code){		
+		var status;
+		switch (status_code){
+			case 'S':
+			status='Scheduled';			
+			break;
+			case 'R':
+			status='Running';
+			break;
+			case 'D':
+			status='Dropped';
+			break;
+			case 'F':
+			status='Finished';
+			break;
+			case 'C':
+			status='Cancelled';
+			break;
+
+		}
+
+		return status;
+	}
 	
 });
 
