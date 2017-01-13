@@ -15,7 +15,7 @@
     right: 90px;
 }
 
-.login{
+.login1{
 	color: #fff;
     font-size: 20px;
     float: right;
@@ -31,7 +31,7 @@
     padding-top: 100px;
 }
 
-.modal-backdrop{
+.modal-backdrop1{
 	z-index:0 !important;
 	opacity:1 !important;
 	background-color:#ffffff !important;
