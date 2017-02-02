@@ -1,5 +1,13 @@
-batsAdminHome.controller('vehicleAlarm',function($scope, $http, $localStorage){
-
+batsAdminHome.controller('vehicleAlarm',function($scope,$rootScope, $http, $localStorage){
+	$rootScope.menuPos=2;
+	console.log(window.screen.availHeight);
+	var contentHeight=window.screen.availHeight-200;
+	$scope.histcontentheight={
+			"height":contentHeight
+	}
+	$scope.redColor={
+			"color":"#ff0000"
+	}
 	$scope.token = $localStorage.data;
 	var todayDate = new Date();
 	$scope.deviceSelectAlarm = false;
@@ -59,7 +67,7 @@ batsAdminHome.controller('vehicleAlarm',function($scope, $http, $localStorage){
 	$scope.fetchDevList = function(groupID) {
 	$scope.httpLoading=true;
 	$('#clearTextDevice span.select2-chosen').empty();  
-	$('#clearTextDevice span.select2-chosen').text("- - Select Vehicle No/Device - -"); 
+	$('#clearTextDevice span.select2-chosen').text("Select Vehicle No/Device"); 
 	$scope.deviceSelectAlarm=false;
 	$scope.showResultTable = false;
 	$scope.noResultTable = false;
@@ -202,11 +210,10 @@ $scope.getDate = function(ts) {
 	  var ampm = hours >= 12 ? 'pm' : 'am';
 	  hours = hours % 12;
 	  hours = hours ? hours : 12; // the hour '0' should be '12'
+	  hours= hours<10?'0'+hours:hours;
 	  minutes = minutes < 10 ? '0'+minutes : minutes;
 	  var strTime = hours + ':' + minutes + ' ' + ampm;
-	return d.getDate() + "-" + monthVal + "-"
-			+ d.getFullYear() + " / "
-			+ strTime;
+	return strTime+" | "+d.getDate() + "/" + monthVal + "/"+ d.getFullYear();
 };
 
 
@@ -242,8 +249,8 @@ $scope.givelt=function(lt,lg){
 			$.getScript('../assets/select_filter/select2.min.js', function() {
 				$("#selectGroup").select2({});
 				$("#selectDevice").select2({});
-				$('#clearTextGroup span.select2-chosen').text("- - Select Group - -");
-				$('#clearTextDevice span.select2-chosen').text("- - Select Vehicle No/Device - -");
+				$('#clearTextGroup span.select2-chosen').text("Select Group");
+				$('#clearTextDevice span.select2-chosen').text("Select Vehicle No/Device");
 			});// script
 		});	
 	

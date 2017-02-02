@@ -99,13 +99,63 @@ batstravelDeskHome.controller('tripHistory', function($scope, $localStorage,trav
 	
 	
 	
+	    $scope.tab = 1;
+
+	    $scope.setTab = function(newTab){
+	    	/*google.maps.event.trigger(map, 'resize');*///$scope.tripDetails="";
+	    	console.log("in setTab");
+	    	clearField();
+	      $scope.tab = newTab;
+	    };
+
+	    $scope.isSet = function(tabNum){
+	    	//$scope.showTripDropDown=false;
+	    	//$scope.tripDetails="";
+	    	console.log("in isSetTab");
+	    	
+	      return $scope.tab === tabNum;
+	    };
+
+	
+	/*var map,map1;
+
+	jQuery(function($) {
+	    $(document).ready(function() {
+	        var latlng = new google.maps.LatLng(-34.397, 150.644);
+	        var myOptions = {
+	            zoom: 8,
+	            center: latlng,
+	            mapTypeId: google.maps.MapTypeId.ROADMAP
+	        };
+	        map = new google.maps.Map(document.getElementById("vehical_map"), myOptions);
+	        map1 = new google.maps.Map(document.getElementById("driver_map"), myOptions);
+	 
+	        console.dir(map);
+	        google.maps.event.trigger(map, 'resize');
+	        console.dir(map1);
+	        google.maps.event.trigger(map1, 'resize');
+
+	        $('a[href="#vehical"]').on('shown', function(e) {
+	            google.maps.event.trigger(map, 'resize');
+	        });
+	        $("#vehical_map").css("width", 400).css("height", 400);
+	        
+	        $('a[href="#driver"]').on('shown', function(e) {
+	            google.maps.event.trigger(map1, 'resize');
+	        });
+	        $("#driver_map").css("width", 800).css("height", 400);
+	    });
+	      
+	    
+	});*/
+	
 	/**
 	 *  Open the filter and choice 
 	 * */	
-		$('#openFilter').on('click', function(){
+		/*$('#openFilter').on('click', function(){
 			if($(this).attr('id')=='openFilter'){$('.filterChoice, #openFilter').toggleClass('active');}
 			  return false;
-		});
+		});*/
 	/**
 	   * Show DateTimePicker onclick in jquery 
 	 */	
@@ -155,13 +205,13 @@ batstravelDeskHome.controller('tripHistory', function($scope, $localStorage,trav
 					$.getScript('../assets/select_filter/select2.min.js',
 							function() {
 						$("#selectTrip").select2({});
-						$('#selectTripSection span.select2-chosen').text("- - Select Trip - -");
+						$('#selectTripSection span.select2-chosen').text(" Select Trip");
 						$("#selectDriver").select2({});
-						$('#selectDriverSection span.select2-chosen').text("- - Select Driver - -");
+						$('#selectDriverSection span.select2-chosen').text("Select Driver ");
 						$("#selectGroup").select2({});
-						$('#selectGroupSection span.select2-chosen').text("- - Select Group - -");
+						$('#selectGroupSection span.select2-chosen').text("Select Group ");
 						$("#selectVehicle").select2({});
-						$('#selectVehicleSection span.select2-chosen').text("- - Select Vehicle - -");
+						$('#selectVehicleSection span.select2-chosen').text("Select Vehicle ");
 					});
 				});
 		
@@ -172,7 +222,19 @@ batstravelDeskHome.controller('tripHistory', function($scope, $localStorage,trav
 		$scope.getTimeFormat=function(ts){
 			return travelDeskService.showTime(ts);
 		}
+		
+		function clearField(){
+			$scope.showTripDropDown=false;
+			$scope.trip.timeStamp=null;
+			$scope.showUpBtn=false;
+			 map = new google.maps.Map(document.getElementById('history_map'), {
+		          center: {lat: 20.5937, lng: 78.9629},
+		          zoom: 4
+		        });
 			
+		}
+		
+		
 	/*====================================================>>>>>> End of Basic function <<<<<=================================================*/
 	/*====================================================>>>>>> Start of API function <<<<<=================================================*/
 		/**
@@ -183,6 +245,7 @@ batstravelDeskHome.controller('tripHistory', function($scope, $localStorage,trav
 		$scope.listDriversJson.type="0"//to get all drivers created by admin
 		travelDeskFactory.callApi("POST",apiURL+"driver/list",$scope.listDriversJson,function(result){	
 			/*console.log(result);*/
+			$scope.showTripDropDown=false;
 		    $scope.driverList=result;  
 		});
 		
@@ -193,6 +256,7 @@ batstravelDeskHome.controller('tripHistory', function($scope, $localStorage,trav
 		$scope.listGroupJson.token=$scope.token;	
 		travelDeskFactory.callApi("POST",apiURL+"group/list",$scope.listGroupJson,function(result){
 			      //console.log(result);
+			$scope.showTripDropDown=false;
 			      $scope.groupList=result.glist;
 			      
 		});	
@@ -200,6 +264,7 @@ batstravelDeskHome.controller('tripHistory', function($scope, $localStorage,trav
 		 * list devices*/
 		$scope.fetchDevicelist=function(groupDetail){			
 			$scope.httpLoading=true;
+			$scope.showTripDropDown=false;
 			$scope.listDeviceJson={};
 			$scope.listDeviceJson.token=$scope.token;
 			$scope.listDeviceJson.gid=groupDetail.gid;
@@ -210,16 +275,18 @@ batstravelDeskHome.controller('tripHistory', function($scope, $localStorage,trav
 		}
 		/*
 		 * fetch history*/
-		$scope.fetchHistory=function(){
+		$scope.fetchHistory=function(searchtype){
+			console.log("hi geeta im indisidfsd")
 			$scope.httpLoading=true;
 			$scope.getHistoryJson={};
 			$scope.getHistoryJson.token=$scope.token;
-			if($scope.basedOn.Item=="0"){
+			console.log($scope.basedOn.Item);
+			if(searchtype=="0"){
 				$scope.getHistoryJson.driver_id=$scope.trip.driver_id.driver_id;
 				$scope.getHistoryJson.vehicle_num=""
 				$scope.getHistoryJson.history_type="D"
 			}
-			else if($scope.basedOn.Item=="1"){
+			else if(searchtype=="1"){
 				$scope.getHistoryJson.driver_id="";
 				$scope.getHistoryJson.vehicle_num=$scope.trip.vehicle_num.vehicle_num;
 				$scope.getHistoryJson.history_type="V"
@@ -230,12 +297,18 @@ batstravelDeskHome.controller('tripHistory', function($scope, $localStorage,trav
 			travelDeskFactory.callApi("POST",apiURL+"trip/history",$scope.getHistoryJson,function(result){
 				if(result.msg=="history data not found"){
 					swal("No History Available");
+					 map = new google.maps.Map(document.getElementById('history_map'), {
+				          center: {lat: 20.5937, lng: 78.9629},
+				          zoom: 4
+				        });
+				//	map.clear();
+					 $scope.showTripDropDown=false;
 					$interval.cancel(pageRefresh);
 				}
 				else{
 					$scope.tripDetails=result.data;
 					$scope.showTripDropDown=true;
-					$('.filterChoice, #openFilter').toggleClass('active');
+					//$('.filterChoice, #openFilter').toggleClass('active');
 				}
 			      $scope.httpLoading=false;
 			});
@@ -254,6 +327,7 @@ batstravelDeskHome.controller('tripHistory', function($scope, $localStorage,trav
 		
 		
 		$scope.showHistoryData=function(tripDetail){
+			
 			$scope.showUpBtn=true;
 			$scope.startBouncing=true;
 			$scope.tripData=tripDetail;			

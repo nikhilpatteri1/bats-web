@@ -28,10 +28,10 @@ input.ng-dirty.ng-valid {
 	border-bottom: solid 2px green;
 }
 
-.titleHead {
+/* .titleHead {
 	margin-bottom: 40px;
 	text-align: center;
-}
+} */
 
 .mismatch {
 	font-size: 14px;
@@ -220,12 +220,12 @@ input {
 	overflow: auto;
 }
 
-.search_heading {
+/* .search_heading {
 	color: #eee;
 	background: #424242;
 	padding: 12px 0px 10px 10px;
 	border-radius: 10px 10px 0 0;
-}
+} */
 
 .search_heading input {
 	width: auto
@@ -333,15 +333,21 @@ select {
 .mtop10.count_label label {
 	color: #fff
 }
-.count_label{
-	margin-top:10px;
-	padding:0px 0px 10px 10px;
-	text-align:center;
+.count_label {
+	margin-top: 45px;
+	text-align: center;
 }
+
+.count_label label {
+	color: #f47b1e;
+	font-size: 18px;
+	padding: 0px;
+}
+
 .count_label span {
-	font-size:24px;
-	font-weight:900;
-	color: red
+	font-size: 8px;
+	color: #363636;
+	font-weight: 700;
 }
 
 /* rect {
@@ -374,7 +380,7 @@ select.select_group,select.select_device {
 .tableSection {
 	position: relative;
 	padding:37px 10px 10px;
-	background: #03A9F4;
+	background: #e7e7e7;
 }
 
 .hist-container {
@@ -395,7 +401,7 @@ select.select_group,select.select_device {
 
 .hist-container>td,th {
 	border-bottom: 1px solid #eee;
-	background: #ddd;
+	background: #e7e7e7;
 	color: #000;
 	padding: 10px 25px;
 }
@@ -403,8 +409,8 @@ select.select_group,select.select_device {
 .hist-container table>thead>tr>th {
 	height: 0;
 	line-height: 0;
-	padding-top: 0;
-	padding-bottom: 0;
+	padding-top: 6px;
+	padding-bottom: 6px;
 	color: transparent;
 	border: none;
 	white-space: nowrap;
@@ -413,18 +419,22 @@ select.select_group,select.select_device {
 .hist-container table>thead>tr>th>div {
 	position: absolute;
 	background: transparent;
-	color: #fff;
-	padding: 9px 25px;
+	color: #6a6a6a;
+	padding: 14px 25px;
 	top: 0;
 	margin-left: -25px;
 	line-height: normal;
+	font-size:14px;
 	/* border-left: 1px solid #800; */
 }
 
 .hist-container>th:first-child div {
 	border: none;
 }
-
+.hist-container table>tbody>tr>td, .hist-container table>tbody>tr>th, .hist-container table>tfoot>tr>td, .hist-container table>tfoot>tr>th, .hist-containertable>thead>tr>td {
+    padding: 8px 10px;
+    font-size: 13px;
+}
 .show-hide.ng-hide-add,.show-hide.ng-hide-remove {
 	transition: all linear 0.2s;
 	display: block !important;
@@ -548,7 +558,7 @@ select.select_group,select.select_device {
 	height: auto !important;
 	background: rgba(255,255,255,0.8);
 }
-#highcharts_minmax .minmax_devid{background: rgba(255,255,255,0.8);padding: 10px;margin: 0 0 10px 0;}
+/* #highcharts_minmax .minmax_devid{background: rgba(255,255,255,0.8);padding: 10px;margin: 0 0 10px 0;} */
 .showMinMaxErr{color: red;margin-bottom: 20px;}
 .paddingTB05{
 	padding-top:5px;
@@ -562,9 +572,10 @@ select.select_group,select.select_device {
 	margin-top: 20px;
 }
 .encircle{border: 2px solid #000;width: 40px;height: 40px;border-radius: 20px;line-height: 37px;text-align: center;}
-.encircle:hover{cursor:pointer}
-.encircleactive{border-color:#fff;background-color:#03A9F4;color:#fff;}
-.encircleavailable{background-color:#03A9F4;}
+.encircle:hover{cursor:pointer;}
+.encircleactive{border-color:#ddd;background-color:#637778;color:#fff!important;}
+.encircleavailable{background-color:#637778;color:#000;}
+.slotDiv{width: 75px;height: 32px;border: 1px solid #ddd; padding: 10px 0px;font-size: 11px;}
 /* .slotlegend{float: left;position: absolute;left: 7%;z-index: 1000;} */
 /* .slotlegend{float: right;position: absolute;top:0%;right: 7%;z-index: 1000;} */
 .legendlabel{padding:10px;font-size:12px;}
@@ -626,21 +637,25 @@ font-family:Roboto, Arial, sans-serif;font-size: 11px;border-radius:2px;box-shad
 	transition: top 1s;
 	z-index:1000;
 }
-.speedometerSection{
+.speedometerSection {
 	position: fixed;
-	top:30%;
-	left: 125%; /* This moves it to the bottom (initial state) */	
-	width:300px;	
+	top: 15%;
+	left: 80%; /* This moves it to the bottom (initial state) */
+	width: 240px;
 	transition: left 1s;
-	z-index:1000;
+	z-index: 10009;
+	background: #fbfbfb;
+	line-height: 1;
+	border: 1px solid #ddd;
+	box-shadow: inset 0px 0px 5px 0px #ddd;
 }
 .map_content:hover .dropdownSection {
 	top: 20%; /* This moves it to the top (only on hover) */
 }
-.map_content:hover .speedometerSection {
-	left:75%; /* This moves it to the top (only on hover) */
+/* .map_content:hover .speedometerSection {
+	left:75%; This moves it to the top (only on hover)
 }
-
+ */
 
 #map_canvas {
 	height: 100%;
@@ -664,17 +679,36 @@ font-family:Roboto, Arial, sans-serif;font-size: 11px;border-radius:2px;box-shad
 
 #map_section {
 	position: fixed;
-	top:18%;	
-	height: 82%;
+	top: 11.8%;
+	height: 83.9%;
 	width: 84%;
 }
-.legendSection{padding:10px;}
-.legendlist li{list-style: none;padding: 4px 0px 4px 0px;font-size:12px;font-weight:900}
-.wrap_type{width:15px;height:15px;float:left;margin:0 10px 0 0;}
+.legendSection {position: fixed;bottom: 0px;background: #fff;width: 100%;left: 16.6667%;padding: 5px 0px;height: 27px;border-top: 2px solid #c2c2c2;}
+.legendlist li {font-family: 'Roboto';font-size: 12px;list-style: none;padding: 4px 0px 4px 0px;color: #b9b9b9;	float: left;}
+.wrap_type {width: 10px;height: 10px;border-radius: 50%;float: left;margin: 0 12px 0 12px;}
 .geo {background-color:#f44336;}
 .speed {background-color:#ffde01;}
 .geospeed {background-color:#e59305;}
 .normalVehicle {background-color:#043a08;}
 .aliveVehicle {background-color:#0540E5;}
 .loadingImage{width:20px;height:20px}
+#latestLocationId {position: fixed;top: 11.8%;height: 88.23%;width: 84%;}
+.customcol3{width:22%;}
+.customcol4{width:31%;}
+.nodata_img{width:250px; height:250px;}
+.nodata_list{-webkit-padding-start:0px;}
+.centerData{position: relative;}
+.nodata_list li{list-style-type: none;}
+.nodata_list li>label{font-size:18px;}
+.nodata_list li>p{font-size:18px;}
+.nodata_list li>span{font-size:12px;color:#333;font-weight:800;}
+.iconBg{background-color:#363636;}
+.verhorcentericon {display: flex;align-items: center; justify-content: center; height: 32px;}
+.slotLabel{color:#647678;}
+#hist_map_section{position: fixed;top: 11.8%;height: 88.23%;width: 84%;}
+.table-header{background: #000;color:#fff;font-size:14px;padding:2px 0px;cursor:pointer;}
+.tp3{margin-top:-3px;position: absolute;right: -330px;}
+.select2-container.ng-dirty.ng-valid {border-color: #ddd;}
+.link{color:#2ab3ea;font-weight:600;font-size:13px;}
+.verhorcentericon {display: flex;align-items: center;justify-content: center;height: 32px;}
 /*./Map Screen*/

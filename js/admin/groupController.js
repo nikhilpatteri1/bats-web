@@ -1,6 +1,7 @@
 /** Group Creation Controller 
 */
-batsAdminHome.controller('groupController', function($scope, $http, $localStorage) {
+batsAdminHome.controller('groupController', function($rootScope,$scope, $http, $localStorage) {
+	$rootScope.menuPos=7;
 	var posArray;
 	var geofence;
 	var centerVal = {lat: 21.0000, lng: 78.0000};
@@ -105,6 +106,11 @@ batsAdminHome.controller('groupController', function($scope, $http, $localStorag
 			  console.log(JSON.stringify(glist));
 			  if(glist.length == 0){
 				  $scope.noGroupList = true;
+				  $scope.yesGrouplist=false;
+			  }
+			  else if(glist.length != 0){
+				  $scope.noGroupList = false;
+				  $scope.yesGrouplist=true;
 			  }
 			  })
 			  .error(function(data, status, headers, config) {
@@ -137,6 +143,10 @@ batsAdminHome.controller('groupController', function($scope, $http, $localStorag
 	     })
 		  .success(function(data) {
 		  $scope.customerDevices = data.un_allocated;
+		  $scope.FActoryStock=$scope.customerDevices;
+		   console.log($scope.FActoryStock.length);
+		   $scope.FactoryStockCount=$scope.FActoryStock.length;
+		  
 		  console.log(JSON.stringify($scope.customerDevices));
 		  $scope.presentStock = true;
 		  if(data.un_allocated.length == 0){
@@ -182,8 +192,9 @@ batsAdminHome.controller('groupController', function($scope, $http, $localStorag
 	    //var idx = $scope.selection.indexOf(deviceID);
 	    // is currently selected
 	    if (idx > -1) {
-	      $scope.customerDevices.push(_.findWhere($scope.selection,{"devid":deviceID}));
+	     $scope.customerDevices.push(_.findWhere($scope.selection,{"devid":deviceID}));
 	      $scope.selection.splice(idx, 1);
+	      $scope.FactoryStockCount=$scope.FactoryStockCount+1;
 	      //console.log($scope.selection);
 	    }
 
@@ -204,7 +215,8 @@ batsAdminHome.controller('groupController', function($scope, $http, $localStorag
 			if( index === -1 ) {
 				alert( "Something gone wrong" );
 			}
-			$scope.customerDevices.splice( index, 1 );		
+			  $scope.FactoryStockCount=$scope.FactoryStockCount-1;
+			$scope.customerDevices.splice( index, 1 );	
 			//console.log(JSON.stringify($scope.customerDevices));
 	    }
 	  };
@@ -700,7 +712,59 @@ function showGeofenceMap(){
      *
      */
     $(document).ready(function () {
-    	var styleMap = [{"featureType":"administrative","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"landscape","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"color":"#bee4f4"},{"visibility":"on"}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"geometry.fill","stylers":[{"visibility":"on"}]},{"featureType":"transit","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#46bcec"},{"visibility":"on"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"on"},{"color":"#000000"}]}];
+    	var styleMap = [
+    	                {
+    	                    "featureType": "poi.business",
+    	                    "stylers": [
+    	                      {
+    	                        "visibility": "off"
+    	                      }
+    	                    ]
+    	                  },
+    	                  {
+    	                    "featureType": "poi.park",
+    	                    "elementType": "labels.text",
+    	                    "stylers": [
+    	                      {
+    	                        "visibility": "off"
+    	                      }
+    	                    ]
+    	                  },
+    	                  {
+    	                    "featureType": "road.arterial",
+    	                    "stylers": [
+    	                      {
+    	                        "visibility": "off"
+    	                      }
+    	                    ]
+    	                  },
+    	                  {
+    	                    "featureType": "road.highway",
+    	                    "elementType": "labels",
+    	                    "stylers": [
+    	                      {
+    	                        "visibility": "off"
+    	                      }
+    	                    ]
+    	                  },
+    	                  {
+    	                    "featureType": "road.local",
+    	                    "stylers": [
+    	                      {
+    	                        "visibility": "off"
+    	                      }
+    	                    ]
+    	                  },
+    	                  {
+    	                    "featureType": "transit.station",
+    	                    "elementType": "geometry.fill",
+    	                    "stylers": [
+    	                      {
+    	                        "lightness": 5
+    	                      }
+    	                    ]
+    	                  }
+    	                ];
     	// Variables and definitions
     	//console.log(geofence.length);
     	//console.log(centerVal);
@@ -770,12 +834,12 @@ function showGeofenceMap(){
         });
         myPolygon.setMap(map); 
       // Add custom clear button
-      var resetControl = $('<h6>Re-Draw</h6>').css({
-        backgroundColor: '#03A9F4',
-        borderColor: '#03A9F4',
+      var resetControl = $('<h6>  Draw</h6>').css({
+        backgroundColor: '#fff',
+        borderColor: '#fff',
         borderStyle: 'solid',
         borderWidth: '1px',
-        color: '#ffffff',
+        color: '#000',
         cursor: 'pointer',
         margin: '5px',
         padding: '5px'
@@ -875,6 +939,11 @@ $(document).on('click', '.clickable', function(){
 $scope.back2Form=function(){
 	$('#show2').hide();
 	$('#show1').show();
+	$scope.applyClass=false;
+}
+$scope.applyClass=false;
+$scope.changeStyle=function(){
+	$scope.applyClass=true;
 }
 });
 

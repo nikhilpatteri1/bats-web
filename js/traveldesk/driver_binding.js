@@ -1,4 +1,5 @@
-batstravelDeskHome.controller('batsDriverBinding', function($scope, $localStorage,travelDeskFactory) {
+batstravelDeskHome.controller('batsDriverBinding', function($rootScope,$scope, $localStorage,travelDeskFactory) {
+	$rootScope.menuPos = 0;
 	$scope.httpLoading=false;//loading image
 	$scope.token = $localStorage.data;
 	$scope.veh_details;
@@ -96,7 +97,8 @@ batstravelDeskHome.controller('batsDriverBinding', function($scope, $localStorag
 	/*
 	 * Show Driver info*/ 
 	
-	$scope.showDriverInfo=function(driver_id){	
+	$scope.showDriverInfo=function(driver_id){
+		$(".panel-body").css("border","none");  
 		$scope.imageUploading=true;
 		$scope.driverInfoJson={};
 		$scope.driverInfoJson.token=$scope.token;
@@ -106,6 +108,19 @@ batstravelDeskHome.controller('batsDriverBinding', function($scope, $localStorag
 			$scope.imageUploading=false;
 		});
 	}
+	
+	
+	$scope.toggleEventInfo = function(driverd) {
+	    if ($scope.isEventShown(driverd)) {
+	      $scope.shownEvent = null;
+	    } else {
+	      $scope.shownEvent = driverd;
+	    }
+	  };
+	  $scope.isEventShown = function(driverd) {
+	    return $scope.shownEvent === driverd;
+	  };
+	
 	/*
 	 * Assign Driver to vehicle
 	 * 	

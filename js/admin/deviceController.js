@@ -1,8 +1,9 @@
 /**
  * Group Creation Controller
  */
-batsAdminHome.controller('deviceController', function($scope, $http, $interval,
+batsAdminHome.controller('deviceController', function($rootScope,$scope, $http, $interval,
 		$localStorage, $timeout) {
+	$rootScope.menuPos=9;
 	$scope.token = $localStorage.data;
 	$scope.groupList = [];
 	$scope.deviceList = [];
@@ -27,6 +28,23 @@ batsAdminHome.controller('deviceController', function($scope, $http, $interval,
 
 	}
 
+	  $scope.tab = 1;
+
+	    $scope.setTab = function(newTab){
+	    	/*google.maps.event.trigger(map, 'resize');*///$scope.tripDetails="";
+	    	console.log("in setTab");
+	    	//clearField();
+	      $scope.tab = newTab;
+	    };
+
+	    $scope.isSet = function(tabNum){
+	    	//$scope.showTripDropDown=false;
+	    	//$scope.tripDetails="";
+	    	console.log("in isSetTab");
+	    	
+	      return $scope.tab === tabNum;
+	    };
+	
 	/**
 	 * Load User list 1) on load of page load the username is displayed in the
 	 * user list grid
@@ -129,7 +147,7 @@ batsAdminHome.controller('deviceController', function($scope, $http, $interval,
 	$scope.listDevice = function(gid) {
 		$scope.deviceId='';
 		$('#clearTextDevice span.select2-chosen').empty();
-		$('#clearTextDevice span.select2-chosen').text("- - Select Vehicle No/Device - -");		
+		$('#clearTextDevice span.select2-chosen').text(" Select Vehicle No/Device ");		
 		$scope.deviceList = [];
 		/*
 		 * on change of group drop down with gid as param
@@ -159,7 +177,7 @@ batsAdminHome.controller('deviceController', function($scope, $http, $interval,
 				$scope.deviceNotAvailable = true;
 				//console.log($scope.deviceNotAvailable,devlen);
 				$('#clearTextDevice span.select2-chosen').empty();
-				$('#clearTextDevice span.select2-chosen').text("- - Select Vehicle No/Device - -");
+				$('#clearTextDevice span.select2-chosen').text("Select Vehicle No/Device");
 			} else {
 				$scope.deviceNotAvailable = false;
 				//console.log($scope.deviceNotAvailable,devlen);
@@ -569,11 +587,11 @@ batsAdminHome.controller('deviceController', function($scope, $http, $interval,
 							$("#selectDevice").select2({});
 							$("#selectStatus").select2({});
 							$('#clearTextGroup span.select2-chosen').text(
-									"- - Select Group - -");
+									"Select Group ");
 							$('#clearTextDevice span.select2-chosen').text(
-									"- - Select Vehicle No/Device - -");
+									"Select Vehicle No/Device");
 							$('#clearTextDeviceStatus span.select2-chosen')
-									.text("- - Device Status - -");
+									.text(" Device Status ");
 						});// script
 			});
 

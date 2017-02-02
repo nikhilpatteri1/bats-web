@@ -1,5 +1,138 @@
-<div class="col-sm-10">
-	<h2 class="heading_title">Speedometer</h2>
+<div class="container-fluid">
+	<div class="row headerStyle">
+		<div class="col-sm-10">
+
+			<h4 class="search_heading">Search Group</h4>
+			<div class="row Dropdownpadding">
+				<div class="col-sm-3" id="clearTextGroup">
+					<!-- <select id="selectGroup" class="search_width" name="groupList"
+						ng-model="groupname" ng-change="fetchDevList(groupname)">
+						<option ng-if="groupList.length" value="" selected disabled
+							class="disable_select">Select Group</option>
+						<option ng-if="!groupList.length" selected disabled>No
+							Group Available</option>
+						<option ng-repeat="option in groupList" value="{{ option.gid }}">{{option.gname}}</option>
+					</select> -->
+
+
+					<select id="selectGroup" class="search_width" name="groupList"
+						ng-model="groupname" ng-change="fetchDevList(groupname)">
+						<option ng-if="groupList.length" value="" selected disabled
+							class="disable_select">Select Group</option>
+						<option ng-if="!groupList.length" selected disabled>No
+							Group Available</option>
+						<option ng-repeat="option in groupList" value="{{ option.gid }}">{{option.gname}}</option>
+					</select>
+
+
+				</div>
+				<div class="col-sm-3" id="clearTextDevice">
+									
+					<select id="selectDevice" class="search_width" name="devList"
+						ng-model="deviceId" ng-change="deviceSelectedMinMax()">
+						<option ng-if="devList.length" value="" selected disabled
+							class="disable_select">Select Vehicle No/Device </option>
+						<option ng-if="!devList.length" selected disabled>No
+							Device Available</option>
+						<option ng-repeat="option in devList" value="{{ option.devid }}">{{option.vehicle_num.length>0?option.vehicle_num:option.devid}}</option>
+					</select>
+
+
+				</div>
+				<section ng-hide="deviceSelectMinMax">
+					<div class="col-sm-2">
+						<div class='input-group date' id='startDateMinMaxPicker'>
+							<input type='text' class="form-control" id="startDateMinMax"
+								readonly="readonly" /> <span class="input-group-addon">
+								<span class="glyphicon glyphicon-calendar"> </span>
+							</span>
+						</div>
+
+
+						<div class="showMinMaxErr" id="startDateMinMaxError">
+							<i class="ion-information-circled"></i> This field is required!
+						</div>
+					</div>
+
+
+					<div class="col-sm-2">
+						<div class='input-group date' id='endDateMinMaxPicker'>
+							<input type='text' class="form-control" id="endDateMinMax"
+								readonly="readonly" /> <span class="input-group-addon">
+								<span class="glyphicon glyphicon-calendar"> </span>
+							</span>
+						</div>
+
+						<div class="showMinMaxErr" id="endDateMinMaxError">
+							<i class="ion-information-circled"></i> This field is required!
+						</div>
+					</div>
+					<div class="col-sm-2">
+
+						<button class="btn btn-primary btm-submit"
+							ng-click="submitMinMaxSpeed()">Submit</button>
+					</div>
+
+				</section>
+			</div>
+
+		</div>
+		<div class="col-sm-2 borderLeft">
+			<div ng-include src="'/general/subMenu'"></div>
+		</div>
+	</div>
+
+	<div class="row " id="highcharts_minmax" >
+		<div class="col-sm-6 borderBox" align="center"
+			style="width: 600px !important; margin-left:150px; margin-top:70px;">
+
+			<div class="row">
+				<div id="speedometer_highcharts-container">
+					<!-- <div class="col-sm-2"></div> -->
+					<div class="col-sm-6">
+						<!-- <h3 class="minmax_devid">Device Id: {{km.devid}}</h3> -->
+
+						<!-- <div class="speed-meter" style="width: 50%; float: left"></div> -->
+						<div id="minChart"></div>
+						<label style="color:#000;font-size:25px;">{{min}}</label><br /> <label>KmpH</label><br /> <label>Minimum</label>
+
+					</div>
+					<div class="col-sm-6">
+
+						<!-- <div class="speed-meter" style="width: 50%; float: left"></div> -->
+						<div id="maxChart"></div>
+						<label style="color:#000;font-size:25px;">{{max}}</label><br /> <label>KmpH</label><br /> <label>Maximum</label>
+					</div>
+					<!-- <div class="col-sm-2"></div> -->
+				</div>
+			</div>
+
+
+			<div ng-repeat="speed in MinMaxResult" class="min_max_dev ">
+				<div class="row " style="border-top: 1px solid #e7e7e7;">
+					<div class="col-sm-4 columStyle">
+						<h4 class="minmax_devid ">{{speed.vehicle_num}}</h4>
+						<label class="subtextStyle">Vehical Number</label>
+
+					</div>
+					<!-- <div class="col-sm-1" style="border-left:1px solid #e7e7e7;height:45px;"></div> -->
+					<div class="col-sm-4" style="border-right: 1px solid #e7e7e7;">
+						<h4 class="minmax_devid ">{{speeds}} KmpH</h4>
+						<label class="subtextStyle">Speed limit</label>
+					</div>
+					<div class="col-sm-4">
+						<h4 class="minmax_devid ">{{driver}}</h4>
+						<label class="subtextStyle">Driver</label>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- <div class="col-sm-10"> -->
+<!-- 	<h2 class="heading_title">Speedometer</h2>
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="bgloading" ng-show="httpLoading">
@@ -11,16 +144,20 @@
 				<div class="col-sm-4" id="clearTextGroup">
 					<select id="selectGroup" class="form-control" name="groupList"
 						ng-model="groupname" ng-change="fetchDevList(groupname)">
-						<option ng-if="groupList.length" value="" selected disabled class="disable_select">-- Select Group - -</option>
-						<option ng-if="!groupList.length"  selected disabled>No Group Available</option>
+						<option ng-if="groupList.length" value="" selected disabled
+							class="disable_select">-- Select Group - -</option>
+						<option ng-if="!groupList.length" selected disabled>No
+							Group Available</option>
 						<option ng-repeat="option in groupList" value="{{ option.gid }}">{{option.gname}}</option>
 					</select>
 				</div>
 				<div class="col-sm-4" id="clearTextDevice">
 					<select id="selectDevice" class="form-control" name="devList"
 						ng-model="deviceId" ng-change="deviceSelectedMinMax()">
-						<option ng-if="devList.length" value="" selected disabled class="disable_select">-- Select Vehicle No/Device --</option>
-						<option ng-if="!devList.length" selected disabled> No Device Available</option>
+						<option ng-if="devList.length" value="" selected disabled
+							class="disable_select">-- Select Vehicle No/Device --</option>
+						<option ng-if="!devList.length" selected disabled>No
+							Device Available</option>
 						<option ng-repeat="option in devList" value="{{ option.devid }}">{{option.vehicle_num.length>0?option.vehicle_num:option.devid}}</option>
 					</select>
 				</div>
@@ -29,8 +166,8 @@
 	</div>
 
 	<br>
-
-	<div class="row">
+ -->
+<!-- 	<div class="row">
 		<section ng-hide="deviceSelectMinMax">
 			<div class="col-sm-12">
 				<h5 class="label_Style">Start Date and Time</h5>
@@ -70,8 +207,8 @@
 		</section>
 
 	</div>
-
-
+ -->
+<!-- 
 	<div class="row mtop10" id="highcharts_minmax">
 		<div class="col-sm-12">
 			<div class="row mtop10">
@@ -79,8 +216,9 @@
 					<div ng-if="showResult">
 						<div ng-repeat="speed in MinMaxResult" class="min_max_dev">
 
-							<!-- <h3 class="minmax_devid">Device Id: {{speed.dev_id}}</h3> -->
-							<h3 class="minmax_devid">Vehicle Number: {{speed.vehicle_num}}</h3>
+							<h3 class="minmax_devid">Device Id: {{speed.dev_id}}</h3>
+							<h3 class="minmax_devid">Vehicle Number:
+								{{speed.vehicle_num}}</h3>
 							<highchart id="chart1" config="minSpeedChart"></highchart>
 							<br>
 							<highchart id="chart2" config="maxSpeedChart"></highchart>
@@ -90,7 +228,7 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div> -->
 
 
 

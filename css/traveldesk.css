@@ -4,21 +4,21 @@
 .vehiclelist{-webkit-padding-start: 0px;margin:10px 0px;}
 .vehiclelist li{list-style-type: none;}
 .helplist li {display: inline-block;font-size: 10px;}
-.edit_icon,.delete_icon {border: 1px solid #03A9F4;border-radius: 20px;padding: 3px 7px 3px 7px;margin: 0 0 0 15px;}
-.titleHead {margin-bottom: 40px;text-align: center;color: #03A9F4;}
+/* .edit_icon,.delete_icon {border: 1px solid #03A9F4;border-radius: 20px;padding: 3px 7px 3px 7px;margin: 0 0 0 15px;} */
+/* .titleHead {margin-bottom: 40px;text-align: center;color: #03A9F4;} */
 .help-txt {font-family: roboto;font-size: 12px;font-weight: 900;color: #ff0000;}
 .error-help{color:#ff0000;}
-.iconImageSm {width: 35px; height: 35px;}
+.iconImageSm {width: 35px; height: 35px; border:none !important;}
 .driverlist {-webkit-padding-start: 0px; margin-bottom:88px;}
-.driverlist li {list-style-type: none;margin: 10px 0px;}
-.driverlist li label{font-size:14px;color:#5a65b7;}
-.driverlist li p{font-size:12px;color:#b75a5a;margin-top:12px;}
-.search_customer_results {background: rgba(255, 255, 255, 0.5); padding: 20px 15px 5px 15px;height: 413px; overflow: auto;}
+.driverlist li {list-style-type: none;/* margin: 10px 0px; */}
+.driverlist li label{font-size:15px;color:#b0b0b0;}
+.driverlist li p{font-size:15px;color:#000000;}/* margin-top:6px; */
+.search_customer_results { padding: 20px 15px 5px 15px;height: 413px; overflow: auto;} /* background: rgba(255, 255, 255, 0.5); */
 .fixWidthHeight{width:90px;height:90px;}
 .heading_title {text-align: left;margin: 0 0 24px 0;color: #03A9F4;}
-.histHead label{font-size:14px;font-weight:700;}
+.histHead label{font-size:14px; color:#9c9c9c}
 .histValues{font-size:12px;color:#425863;font-weight:700;}
-.driverHistoryHeadList{-webkit-padding-start: 0px;border-bottom:1px solid #ccd;}
+.driverHistoryHeadList{-webkit-padding-start: 0px;border-bottom:1px solid #ccd; margin-top: -18px; }
 .driverHistoryHeadList label{font-size:12px;}
 .driverHistoryHeadList li{list-style-type: none;line-height: 3;}
 .driverHistoryList{-webkit-padding-start: 0px;}
@@ -88,7 +88,7 @@ hr{
 }
 
 .tripinputheight{
-	height:55px !important;
+	height:32px !important;
 }
 
 
@@ -107,20 +107,21 @@ font-family:Roboto, Arial, sans-serif;font-size: 11px;border-radius:2px;box-shad
 .help-block{font-size:10px;font-weight:900}
 .error-help{color:#ff0000;}
 .count_label span {font-size:24px;font-weight:900;color: red}
-#endTimeid,#startTimeid,#updateEndTime,#updateStartTime{background-color:#fff !important}
+#endTimeid,#startTimeid,#updateEndTime,#updateStartTime{background-color:#fff !important;border:none !important;}
 .userIcons a{line-height: 2;}
 
 .maplabel{
-	position: absolute;
-    top: 0px;
-    /* left: 186px; */
+	    position: absolute;
+    top: 46px;
+    left: 40px;
     z-index: 1000;
     background: #ffffff;
-    right: 15px;
+    /* right: 15px; */
     g: 4px;
-    padding: 7px;
+   padding: 7px; 
     font-size: 12px;
     color: #03A9F4;
+    width: 35%;
 }
 
 input.ng-dirty.ng-invalid{
@@ -138,5 +139,250 @@ input.ng-dirty.ng-valid{
 /* .sidebar-nav .nav > li > a:active{
 	color:#ec3f41!important;
 } */
+.panel1{
+    margin-bottom: 0px !important;
+    background-color: #ffffff !important;
+   /*  padding-top:4px !important; */
+    
+}
+
+.panel-heading1{
+    padding: 1px !important;
+    background-color: #ffffff !important;
+    border-bottom: 1px solid #ddd !important;
+}
+
+.panel2{
+    margin-bottom: 0px !important;
+    background-color: #ffffff !important;
+    padding-top:12px !important;
+    border-top:1px solid #ddd !important
+}
+
+.panel-heading2{
+    padding: 1px !important;
+    background-color: #ffffff !important;
+    /* border-bottom: 1px solid #ddd !important; */
+}
+
+.panel2 > .panel-heading2{
+	background-color: #ffffff !important;
+}
+
+.panel1 > .panel-heading1{
+	/* background-color: #ffffff !important; */
+}
+
+.panel1 > .panel-heading1 div{
+	padding:1px;
+}
+
+.vlist{
+	margin:0px !important;
+}
+
+.bind{
+	border-radius: 12px !important;
+    padding: 5px 20px !important;
+    width: 75px !important;
+    background: #00ad7c;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 900;
+}
+
+.unbind{
+	border-radius: 12px !important;
+    padding: 5px 13px !important;
+    width: 75px !important;
+    background: #eb3f50;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 900;
+}
+
+.assignBody{
+	padding:0px !important;
+}
+
+.assignSearch{
+	padding:5px 0px 25px 60px !important;
+}
+
+.driverlist1 li{
+	list-style-type:none !important;
+}
+
+.assignBtn{
+    padding: 1px 10px !important;
+    background: #02afe8 !important;
+    border-color: #02afe8 !important;
+    border-radius: 50px !important;
+}
+
+.assignLabel{
+	font-size: 14px;
+    color: #9c9c9c;
+}
+
+.assignBLabel{
+	font-size: 14px;
+    color: #000000 !important;
+}
+.driverHead{
+	padding:0px; 
+	margin-top: -1.5%
+}
+
+.pd120{
+	margin:0px !important;
+}
+
+/* .pad10{
+	padding-top: 10px;
+} */
+
+.marT{
+	margin-top:10px;
+}
+
+.marB{
+	margin-bottom:10px;
+}
+
+
+.mapHead{
+padding:14px;
+}
+
+.pd28{
+padding-left:28px;
+}
+
+.SHBtn{
+    background: #fff !important;
+    color: #949494 !important;
+    border: none !important;
+}
+
+.SHBtn:hover{
+    background: #fff !important;
+    color: #949494;
+    border: none !important;
+}
+
+.close1{
+opacity: 1 !important;
+font-weight: 100 !important;
+padding: 10px !important;
+}
+
+.searchDriverHead{
+    border: none;
+    border-top: 1px solid #ddd;
+}
+
+.panel > .searchDriverHead{
+	background-color: #fafafa !important;
+}
+.map{
+	width: 100%;
+	height: 400px;
+}
+
+.CTripinputBorder{
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.TripTime{
+    background: #fff;
+    border: none !important;
+}
+.TripTime1{
+    font-size: 18px;
+    font-weight: normal;
+}
+
+.dest{
+	    border: none !important;
+    background: #fff !important;
+}
+
+.tripBtn{
+    padding: 8px 36px !important;
+    background: #02afe8 !important;
+    border-color: #02afe8 !important;
+    border-radius: 4px !important;
+    font-size: 14px;
+}
+
+.Tripimg{
+	width: 70px !important;
+    height: 70px !important;
+    border-radius: 0% !important;
+}
+
+.mapShowBtn{
+    position: absolute !important;
+    z-index: 10 !important;
+    margin-top: 130px !important;
+    margin-left: -45px;
+    background-color:#000;
+}
+
+.bindHead{
+	padding: 12px 12px;
+    background: #e6e6e6;
+    margin: -2px;
+    border-bottom: 1px solid #d4d4d4 !important;
+    margin-bottom: 2px;
+}
+
+.bindHead1{
+	padding: 12px 12px;
+    background: #e6e6e6;
+    margin: 0px;
+    border-bottom: 1px solid #d4d4d4 !important;
+    margin-bottom: 2px;
+}
+
+.TripHeadR{
+    margin: -25px;
+}
+
+.pad0{
+	padding:0px !important;
+}
+.pad10{
+	padding:10px;
+	margin-top: -14px;  
+}
+.pd24{
+	padding-left: 38px;
+}
+
+.TripDetail{
+	padding-left: 12px;
+    /* padding-top: 12px; */
+}
+
+.tripDRow{
+   border-right: 1px solid #d4d4d4;
+    border-left: 1px solid #d4d4d4;
+}
+
+.tripDMRow{
+	border-bottom:1px solid #d4d4d4;
+}
+
+.Bheight{
+	height:438px !important;
+}
+.tripDMap{
+	width: 100%; 
+	height: 289px; 
+	border-bottom:1px solid #d9d9d9 !important;
+}
 
 

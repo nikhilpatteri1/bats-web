@@ -34,7 +34,6 @@ batsfactoryhome.config(function($routeProvider, $locationProvider) {
 		  requireBase: false
 		});
     $routeProvider
-
         // route for the home page
         .when('/factory/customer', {
             templateUrl : '/html/factory/manage_customer.html',
@@ -45,7 +44,11 @@ batsfactoryhome.config(function($routeProvider, $locationProvider) {
         .when('/factory/device', {
             templateUrl : '/html/factory/manage_device.html',
             controller  : 'deviceController'
-        });
+        })
+        .when('/factory/changePwd', {
+        templateUrl : '/html/factory/changePwd.html',
+        controller:'changePwdform'
+    });
 });
 
 batsfactoryhome.run(function($rootScope, $route, $location,$localStorage){
@@ -136,7 +139,22 @@ batsAdminHome.config(function($routeProvider, $locationProvider,$mdDateLocalePro
             templateUrl : '/html/admin/manage_driver.html',
             controller  : 'driverController',            
             cache:false
-        });
+        })
+        .when('/admin/tduser',{
+        	templateUrl : '/html/admin/tduser.html',
+        	controller:'TDcontroller',
+            cache:false
+        })
+        .when('/admin/changePwd', {
+            templateUrl : '/html/admin/changePwd.html',
+            controller  : 'changePwdformAdmin',            
+            cache:false
+        })
+        .when('/admin/subMenu', {
+            templateUrl : '/html/admin/submenu.html',                        
+            cache:false
+        })
+        ;
     $mdDateLocaleProvider.formatDate = function(date) {    	
     	if(date!=null && date!=""){    		
     		return moment(date).format('DD-MM-YYYY');
@@ -203,7 +221,12 @@ batsGeneralHome.config(function($routeProvider, $locationProvider,$mdDateLocaleP
         .when('/general/nearby_devices', {
             templateUrl : '/html/general/nearby_devices.html',
             controller  : 'batsNearbyDevices'
-        });
+        })
+                .when('/general/changePwd', {
+            templateUrl : '/html/general/changePwd.html',
+            controller  : 'changePwdformGeneral'
+        })
+        ;
     $mdDateLocaleProvider.formatDate = function(date) {    	
     	if(date!=null && date!=""){    		
     		return moment(date).format('DD-MM-YYYY');
@@ -247,6 +270,11 @@ batstravelDeskHome.config(function($routeProvider, $locationProvider,$mdDateLoca
       .when('/traveldesk/history', {
           templateUrl : '/html/traveldesk/trip_history.html',
           controller  : 'tripHistory'
+      })
+      
+      .when('/traveldesk/changePwd', {
+          templateUrl : '/html/traveldesk/changePwd.html',
+          controller  : 'changePwdformTraveldesk'
       });   
   $mdDateLocaleProvider.formatDate = function(date) {    	
   	if(date!=null && date!=""){    		

@@ -1,7 +1,8 @@
 /**
 * fetch Group list on page load based on token
 */
-batsAdminHome.controller('LatestLocationCtrl', function($scope, $http, $localStorage, NgMap){
+batsAdminHome.controller('LatestLocationCtrl', function($scope,$rootScope, $http, $localStorage, NgMap){
+	$rootScope.menuPos=3;
 	var token = $localStorage.data;
 	if(typeof $scope.token==="undefined"){
 		swal({ 

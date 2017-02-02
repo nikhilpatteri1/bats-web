@@ -1,5 +1,5 @@
 //==============Factory Login Form===============
-batsLogin.controller('loginController', function($scope, $http, $localStorage) {
+batsLogin.controller('loginController', function($rootScope,$scope, $http, $localStorage) {
 /**
  * Verify token in local storage*/
 	$scope.token = $localStorage.data;
@@ -233,7 +233,8 @@ $scope.hidePasswordMismatch = function(){
 /**
  * Change Password Admin*/
 //==============Factory User Create Form===============
-batsAdminHome.controller('changePwdformAdmin', function($scope,$http,$localStorage) {
+batsAdminHome.controller('changePwdformAdmin', function($rootScope,$scope,$http,$localStorage) {
+	$rootScope.menuPos=13;
 	$scope.changepwdjson={};
 	$scope.reset=function(){
 		document.getElementById("changePwdFrm").reset();
@@ -299,7 +300,8 @@ batsAdminHome.controller('changePwdformAdmin', function($scope,$http,$localStora
 /**
  * Change Password General*/
 //==============Factory User Create Form===============
-batsGeneralHome.controller('changePwdformGeneral', function($scope,$http,$localStorage) {
+batsGeneralHome.controller('changePwdformGeneral', function($rootScope,$scope,$http,$localStorage) {
+	$rootScope.menuPos=7;
 	$scope.changepwdjson={};
 	$scope.reset=function(){
 		document.getElementById("changePwdFrm").reset();
@@ -596,11 +598,14 @@ batsGeneralHome.controller('logoutGeneralUser', function($scope, $http, $localSt
 		  };
 	});
 //==============Travel Desk Logout===============
-batstravelDeskHome.controller('logoutTraveldeskUser', function($scope, $http, $localStorage) {
+batstravelDeskHome.controller('logoutTraveldeskUser', function($rootScope,$scope, $http, $localStorage) {
+	console.log("check");
+	$rootScope.menuPos = 3;
 	$scope.token = $localStorage.data;
 	//console.log($scope.token);
 	$scope.customer = {};
 	$scope.logoutTravelDeskSubmit = function() {
+		console.log("checksuvmut");
 		swal({   title: "Are you sure? You want to logout?",   
 	    	text: "",   
 	    	type: "warning",   

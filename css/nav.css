@@ -15,16 +15,16 @@ height:223px;}
 .menu i.fa-user:hover{color:#79C942;background:#fff}
 .menu i.fa-phone:hover{color:#FFCC66;background:#fff}
 .menu i.fa-info:hover{color:#ED1B23;background:#fff}
-.login{position:absolute;top:20px;right:20px;border:2px solid #337ab7;color:#fff;font-size:38px;padding:10px;border-radius:50%;
-width:62px;}
+/* .login{position:absolute;top:20px;right:20px;border:2px solid #337ab7;color:#fff;font-size:38px;padding:10px;border-radius:50%;
+width:62px;} */
 
 
 /* My style */
-.sidebar-nav{position:fixed;left:0;width:16%;text-align:center;height:100%;}
-.sidebar-nav .navbar-default{background:#eee;border:#eee;margin:0;border-radius:0;height:100%;overflow:auto;/* padding-bottom: 100px; */box-shadow: 0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12),0 2px 4px -1px rgba(0,0,0,.2);}
+/* .sidebar-nav{position:fixed;left:0;width:16%;text-align:center;height:100%;top: 70px;} */
+/* .sidebar-nav .navbar-default{background:#eee;border:#eee;margin:0;border-radius:0;height:100%;overflow:auto;padding-bottom: 100px;box-shadow: 0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12),0 2px 4px -1px rgba(0,0,0,.2);} */
 .sidebar-nav i{font-size:16px;background:#B4E0E1;width:30px;border-radius:26px;height:30px;padding:8px 0 0 0;float:left;}
 .sidebar-nav .nav>li{float:none}
-.sidebar-nav .nav>li:last-child{padding-bottom:100px}
+/* .sidebar-nav .nav>li:last-child{padding-bottom:100px} */
 .sidebar-nav .nav>li>a{padding:10px 0 10px 0;color:#000;background:none}
 .sidebar-nav .nav>li>a:hover{color:#03A9F4;background:none}
 .sidebar-nav .nav>li>a:focus{color:#000;background:none} 
@@ -69,7 +69,7 @@ width:62px;}
 	border-radius: 0px;
 }
 .formInput input[type="radio"]{height:10px}
-.formInput input {
+/* .formInput input {
 	border: none;
 	border-bottom: 2px solid #ddd;
 	border-radius: 0px;
@@ -78,24 +78,24 @@ width:62px;}
 	-webkit-transition: none;
 	transition: none;
 	height: 72px;
-}
+} */
 .formInput button{
 	font-size:20px;
 	padding:10px 37px;
 	border-radius:0px;
 }
-.formInput input:FOCUS {
+/* .formInput input:FOCUS {
 	border-color: transparent;
 	-webkit-box-shadow: none;
 	box-shadow: none;
 	border: none;
 	border-bottom: 2px solid #9C9A9A;
-}
+} */
 
 
 
 .navbar.navbar_home{background:#03A9F4;margin:0;height:74px;}
-.sidebar-nav p {text-align:left;font-size:12px;padding:4px 0px 0px 0px;}
+/* .sidebar-nav p {text-align:left;font-size:12px;padding:4px 0px 0px 0px;} */
 
 .show-hide.ng-hide-add, 
 .show-hide.ng-hide-remove {
@@ -153,9 +153,9 @@ width:62px;}
     z-index: 10;
 }
 
-.logout{color:#fff;font-size:20px;margin-top:19px;float:right;border:1px solid #fff;border-radius:3px;padding:5px;
+/* .logout{color:#fff;font-size:20px;margin-top:19px;float:right;border:1px solid #fff;border-radius:3px;padding:5px;
 text-align:center;}
 .logout i{background:#fcb322;padding:3px;border-radius:30px;}
 .logout span{font-size:16px;}
 .logout:hover{background:#fff;border:1px solid #fcb322;color:#fcb322;text-decoration:none;}
-.logout:hover > i{background:#fff;}
+.logout:hover > i{background:#fff;} */

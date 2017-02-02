@@ -1,5 +1,12 @@
-batsGeneralHome.controller('vehicleAlarm',function($scope, $http, $localStorage){
-
+batsGeneralHome.controller('vehicleAlarm',function($rootScope,$scope, $http, $localStorage){
+	$rootScope.menuPos=2;
+	var contentHeight=window.screen.availHeight-200;
+	$scope.histcontentheight={
+			"height":contentHeight
+	}
+	$scope.redColor={
+			"color":"#ff0000"
+	}
 	$scope.token = $localStorage.data;
 	var todayDate = new Date();
 	$scope.deviceSelectAlarm = false;
@@ -59,7 +66,7 @@ batsGeneralHome.controller('vehicleAlarm',function($scope, $http, $localStorage)
 	$scope.fetchDevList = function(groupID) {
 	$scope.httpLoading=true;
 	$('#clearTextDevice span.select2-chosen').empty();  
-	$('#clearTextDevice span.select2-chosen').text("- - Select  Vehicle No/Device - -"); 
+	$('#clearTextDevice span.select2-chosen').text("Select  Vehicle No/Device"); 
 	$scope.deviceSelectAlarm=false;
 	$scope.showResultTable = false;
 	$scope.noResultTable = false;
@@ -203,10 +210,9 @@ $scope.getDate = function(ts) {
 	  hours = hours % 12;
 	  hours = hours ? hours : 12; // the hour '0' should be '12'
 	  minutes = minutes < 10 ? '0'+minutes : minutes;
+	  hours= hours<10?'0'+hours:hours;
 	  var strTime = hours + ':' + minutes + ' ' + ampm;
-	return d.getDate() + "-" + monthVal + "-"
-			+ d.getFullYear() + " / "
-			+ strTime;
+	  return strTime+" | "+d.getDate() + "/" + monthVal + "/"+ d.getFullYear();
 };
 
 /**

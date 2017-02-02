@@ -19,12 +19,12 @@
 
 <!-- Reset CSS -->
 <link rel="stylesheet" type="text/css" href="css/reset.css">
-
+<link rel="stylesheet" type="text/css" href="css/HomePage.css">
 <!-- Custom CSS -->
 <link rel="stylesheet" type="text/css" href="css/nav.css">
 <!-- <link rel="stylesheet" type="text/css" href="css/content.css"> -->
 <link rel="stylesheet" type="text/css" href="css/carousel.css">
-<link rel="stylesheet" type="text/css" href="css/customNew.css">
+<!-- <link rel="stylesheet" type="text/css" href="css/customNew.css"> -->
 <link rel="stylesheet" type="text/css" href="assets/sweetalert/sweetalert.css">
 
 <style>
@@ -41,9 +41,104 @@
 
 
 	<!--================= Nav Header Starts =================-->
-	<nav class="navbar">
+	<nav class="navbar header">
 		<div class="container">
 			<div class="row">
+				<div class="col-xs-12">
+					<div class="col-xs-2">
+						<img src="images/logo-new-bats-white.png" alt="bydesign_logo" class="logo"/>
+					</div>
+					<div class="col-xs-10">
+					<a href="" class="login lead"  data-toggle="modal" data-target="#loginModal">Login</a>
+				    </div>
+				</div>
+				
+			
+			</div>
+			
+			<!-- ==================== Login Modal =================== -->
+						<div class="modal_login modal fade" ng-hide="header" id="loginModal" role="dialog" data-backdrop="static"  ng-controller="loginController">
+							<div class="modal-dialog cmodalWidthHight">
+								<div class="modal-content logBorder">
+									<div class="modal-header">
+										<span class="close_icon" data-direction="left" data-dismiss="modal" aria-hidden="true" ng-click="reset()" onclick="resetlabel()">×</span>
+										<img src="images/logo-new-bats.png" alt="bydesign_logo" class="loginLogo"/>
+										
+										<!-- <h4 class="modal-title">Login</h4> -->
+										
+									</div>
+									
+									<div class="modal-body">
+										<form name="userForm" class="formInput1">
+											<h6>LOGIN TO CONTINUE</h6>
+											<label class="loginUserName">User Name</label>
+												<input type="text" name="username"
+													class="form-control" ng-model="user.username"
+													 placeholder="username" ng-disabled="isSaving" style="text-transform: lowercase" required />
+												
+												<label class="loginUserName">Password</label>
+												<input type="password" name="password"
+													class="form-control" ng-model="user.password"
+													placeholder="password" ng-disabled="isSaving"  required />
+												<div class="modal-footer1">
+													<a href="" class="dialog_forgot">Forgot Password?</a>
+												</div>
+											<!-- <div class="form-group field" ng-class="{ 'has-error' : userForm.user.username.$invalid && !userForm.user.username.$pristine }">
+												<label ng-show="user.username" class="show-hide">Username</label>
+												 <input type="text" name="username"
+													class="form-control" ng-model="user.username"
+													 placeholder="username" ng-disabled="isSaving" style="text-transform: lowercase" required />
+													<p ng-show="userForm.user.username.$invalid && userForm.user.username.$pristine"
+															class="help-block">Username is required.</p>
+											</div>
+											<div class="form-group field"  ng-class="{ 'has-error' : userForm.user.password.$invalid && !userForm.user.password.$pristine }">
+												<label ng-show="user.password" class="show-hide">Password</label>
+												 <input type="password" name="password"
+													class="form-control" ng-model="user.password"
+													placeholder="password" ng-disabled="isSaving"  required />
+													<p ng-show="userForm.user.password.$invalid && userForm.user.password.$pristine"
+															class="help-block">Password is required.</p>
+											</div> -->
+											<button class="btn btn-primary" ng-disabled="userForm.$invalid" ng-click="submitLoginForm()">Login</button>
+										</form>
+									</div>
+									
+								</div>
+							</div>
+						</div>
+						
+						
+			<!-- ==================== Forget Password Modal =================== -->
+						<div class="modal_login modal fade" id="fgtModal" role="dialog" data-backdrop="static" ng-controller="forgetpwdController">
+							<div class="modal-dialog modal-lg">
+								<div class="modal-content logBorder cmodalWidthHight">
+									<div class="modal-header">
+										<!-- <button type="button" class="close" data-dismiss="modal" onclick="resetlabel()" ng-click="reset()">&times;</button>
+										<h4 class="modal-title">Forgot Password</h4> -->
+										<span class="close_icon" data-direction="left" data-dismiss="modal" aria-hidden="true" ng-click="reset()" onclick="resetlabel()">×</span>
+										<img src="images/logo-new-bats.png" alt="bydesign_logo" class="loginLogo"/>
+									</div>
+									<div class="modal-body">
+										<form name="fgtForm" class="form formInput1">
+											<div class="form-group" ng-class="{ 'has-error' : fgtForm.useremail.$invalid && !fgtForm.useremail.$pristine }">
+												<label class="loginUserName">User Name</label>
+												<!-- <label ng-show="useremail" class="show-hide">Enter Email ID</label> --> 
+												<input type="email" name="useremail" class="form-control" ng-model="useremail" 
+												ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
+												 ng-disabled="isSaving" placeholder="Enter Email Id" required />
+												<p ng-show="fgtForm.useremail.$invalid && !fgtForm.useremail.$pristine" class="help-block">Enter a valid email.</p>
+											</div>
+											<div class="modal-footer1">
+										<a href="" class="dialog_login">Click here to login</a>
+									</div>
+											<button class="btn btn-primary" ng-click="submitFgtForm(useremail)" ng-disabled="fgtForm.$invalid">Submit</button>
+										</form>
+									</div>
+									
+								</div>
+							</div>
+						</div>
+			<!-- <div class="row">
 				<div class="col-xs-12">
 					<div class="col-xs-2 car_img">
 						<img src="images/car_header.png" alt="car_logo" />
@@ -60,16 +155,16 @@
 							locations</p>
 						<a href="" class="login" data-toggle="modal"
 							data-target="#loginModal"><i class="fa fa-key"></i></a>
-						<!-- <div><a href="#" class="login" data-toggle="dropdown"><i class="fa fa-user"></i></a>
+						<div><a href="#" class="login" data-toggle="dropdown"><i class="fa fa-user"></i></a>
     <ul class="dropdown-menu" style="right:0;left:inherit;">
       <li><a href="#">Manage Customer</a></li>
       <li><a href="#">Manage Device</a></li>
       <li><a href="#">Logout</a></li>
     </ul>
-  </div> -->
+  </div>
 
 
-						<!--==================== Login Modal ===================-->
+						==================== Login Modal ===================
 						<div class="modal_login modal fade" id="loginModal" role="dialog" data-backdrop="static"  ng-controller="loginController">
 							<div class="modal-dialog modal-lg">
 								<div class="modal-content">
@@ -107,7 +202,7 @@
 						
 																	
 													
-						<!--==================== Forget Password Modal ===================-->
+						==================== Forget Password Modal ===================
 						<div class="modal_login modal fade" id="fgtModal" role="dialog" data-backdrop="static" ng-controller="forgetpwdController">
 							<div class="modal-dialog modal-lg">
 								<div class="modal-content">
@@ -117,10 +212,9 @@
 									</div>
 									<div class="modal-body">
 										<form name="fgtForm" class="form formInput">
-											<div class="form-group field" ng-class="{ 'has-error' : fgtForm.useremail.$invalid && !fgtForm.useremail.$pristine }">
-											
+											<div class="form-group" ng-class="{ 'has-error' : fgtForm.useremail.$invalid && !fgtForm.useremail.$pristine }">
 												<label ng-show="useremail" class="show-hide">Enter Email ID</label> 
-												<input type="email" name="useremaill" class="form-control" ng-model="useremail" 
+												<input type="email" name="useremail" class="form-control" ng-model="useremail" 
 												ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
 												 ng-disabled="isSaving" placeholder="Enter Email Id" required />
 												<p ng-show="fgtForm.useremail.$invalid && !fgtForm.useremail.$pristine" class="help-block">Enter a valid email.</p>
@@ -139,20 +233,36 @@
 
 					</div>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</nav>
-	<!--================= Nav Header Ends =================-->	
+	<!--================= Nav Header Ends =================-->
+	
+	
 	
 	<!--================= Content Starts =================-->
-	<div class="container marginBtm100">
+	<div class="container marginBtm100 backendImgContainer">
 		<div class="row">
 			<div class="col-sm-12">
+				
+				<!-- backend image -->
+				 <div>
+				 	<img src="images/home-image.jpg" alt="bydesign_logo" class="caroselImg"/>
+				 	<div class="imgTxtContainer">
+				 	<h3 class="imgTxt">BYDESIGN AUTOMOBILE TRACKING SYSTEM</h3>
+				 	<br>
+				 	<div class="imgTxt">Automobile vehicle tracking technology providing fleet data for a<br>  comprehensive picture of vehicle locations</div>
+				 	<a href="#two" id="know" class="knowbtn">Know More</a>
+<!-- <a ><img class="" style="width:32px"
+								alt="300x300" src="images/back-to-top-arrow.png" /></a>
+ -->				 	</div>
+				 </div>
+
 
 				<!-- Carousel ================================================== -->
 
-				<div id="myCarousel" class="carousel slide" data-ride="carousel">
-					<!-- Indicators -->
+				<!-- <div id="myCarousel" class="carousel slide" data-ride="carousel">
+					Indicators
 					<ol class="carousel-indicators">
 						<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
 						<li data-target="#myCarousel" data-slide-to="1" class=""></li>
@@ -160,11 +270,11 @@
 					</ol>
 					<div class="carousel-inner" role="listbox">
 						<div class="item active">
-							<img class="first-slide" src="images/bus_banner.png"
+							<img class="first-slide" src="images/home-image.jpg"
 								alt="First slide">
 							<div class="container">
 								<div class="carousel-caption">
-									<!-- <h1>Banner 1</h1> -->
+									<h1>Banner 1</h1>
 									<p>Automobile vehicle tracking technology providing fleet
 										data for a comprehensive picture of vehicle locations</p>
 								</div>
@@ -175,7 +285,7 @@
 								alt="Second slide">
 							<div class="container">
 								<div class="carousel-caption">
-									<!-- <h1>Banner 2</h1> -->
+									<h1>Banner 2</h1>
 									<p>Automobile vehicle tracking technology providing fleet
 										data for a comprehensive picture of vehicle locations</p>
 								</div>
@@ -186,7 +296,7 @@
 								alt="Third slide">
 							<div class="container">
 								<div class="carousel-caption">
-									<!-- <h1>Banner 3</h1> -->
+									<h1>Banner 3</h1>
 									<p>Automobile vehicle tracking technology providing fleet
 										data for a comprehensive picture of vehicle locations</p>
 								</div>
@@ -202,47 +312,52 @@
 						class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
 						<span class="sr-only">Next</span>
 					</a>
-				</div>
+				</div> -->
 				<!--=================== carousel Ends ===================-->
 
 
 
 
 
-				<div class="container marketing">
+				<div id="one" class="container marketing">
 
 					<!-- Three columns of text below the carousel -->
-					<div class="row">
+					<div class="row homeContentPadding">
 						<div class="col-lg-4">
-							<i class="fa fa-map-marker vehicle_icons"></i>
-							<h2>Vehicle Location</h2>
+						<img src="images/icons-home_0002_location.png" alt="bydesign_logo" class="subDetailImg"/>
+						
+							<!-- <i class="fa fa-map-marker vehicle_icons"></i> -->
+							<h5 class="subDetail">VEHICLE LOCATION</h5>
 							<p>Know where your vehicle is driving on a map. See accurate
 								driving path of your car</p>
-							<p>
+							<!-- <p>
 								<a class="btn btn-default" href="#" role="button">View
 									details »</a>
-							</p>
+							</p> -->
 						</div>
 						<!-- /.col-lg-4 -->
 						<div class="col-lg-4">
-							<i class="fa fa-compass vehicle_icons"></i>
-							<h2>Vehicle Speed</h2>
+							<!-- <i class="fa fa-compass vehicle_icons"></i> -->
+							<img src="images/icons-home_0000_speed.png" alt="bydesign_logo" class="subDetailImg"/>
+							
+							<h5 class="subDetail">VEHICLE SPEED</h5>
 							<p>Know the current speed of your vehicle on a map with the
 								vehicle details and driver details</p>
-							<p>
-								<a class="btn btn-default" href="#" role="button">View
+							<!-- <p>
+								<a class="btn btn-default" href="#" role="button"> View
 									details »</a>
-							</p>
+							</p> -->
 						</div>
 						<!-- /.col-lg-4 -->
 						<div class="col-lg-4">
-							<i class="fa fa-history vehicle_icons"></i>
-							<h2>Vehicle History</h2>
+							<!-- <i class="fa fa-history vehicle_icons"></i> -->
+							<img src="images/icons-home_0001_history.png" alt="bydesign_logo" class="subDetailImg"/>
+							<h5 class="subDetail">VEHICLE HISTORY</h5>
 							<p>Know the travel history and traveled route of the vehicle</p>
-							<p>
+							<!-- <p>
 								<a class="btn btn-default" href="#" role="button">View
 									details »</a>
-							</p>
+							</p> -->
 						</div>
 						<!-- /.col-lg-4 -->
 					</div>
@@ -251,57 +366,58 @@
 
 					<!-- START THE FEATURETTES -->
 
-					<hr class="featurette-divider">
+					<hr id="two" class="featurette-divider">
 
-					<div class="row featurette">
-						<div class="col-md-7">
-							<h2 class="featurette-heading">
-								Live Tracking. <span class="text-muted">It'll
-									track vehicle on map.</span>
-							</h2>
+					<div class="row featurette homeContentPadding">
+					<div class="col-md-6">
+							<img class="featurette-image img-responsive center-block ImgBlock"
+								alt="300x300" src="images/_0002_live-tracking.png" />
+						</div>
+						<div class="col-md-6 DetailPadding">
+							<h1 class="subDetail">LIVE TRACKING.</h1>
+							<h4 class="subDetailSecHead">It'll track vehicle on map.</h4>
 							<p class="lead">Live tracking of the vehicle have been done on the map.
 							It will show the last updated maximum speed of the vehicle. It also 
 							shows whether the vehicle is within the geofence area and speed limit. </p>
 						</div>
-						<div class="col-md-5">
-							<img class="featurette-image img-responsive center-block"
-								alt="300x300" src="images/live_tracking.png" />
-						</div>
+						
 					</div>
 
 					<hr class="featurette-divider">
 
-					<div class="row featurette">
-						<div class="col-md-7 col-md-push-5">
-							<h2 class="featurette-heading">
-								Vehicle History. <span class="text-muted">It'll
-									show vehicle traveled route.</span>
-							</h2>
+					<div class="row featurette homeContentPadding">
+						<div class="col-md-6 DetailPadding2">
+							<h1 class="subDetail">
+								VEHICLE HISTORY.
+							</h1>
+							<h4 class="subDetailSecHead">It'll
+									show vehicle traveled route.</h4>
 							<p class="lead">History and travel route of the vehicle has been tracked 
 							for the present and past days. History on speed and time also be tracked based on 
 							time slot.</p>
 						</div>
-						<div class="col-md-5 col-md-pull-7">
-							<img class="featurette-image img-responsive center-block"
-								alt="300x300" src="images/vehicle_history.png" />
+						<div class="col-md-6">
+							<img class="featurette-image img-responsive center-block ImgBlock"
+								alt="300x300" src="images/_0000_history.png" />
 						</div>
 					</div>
 
 					<hr class="featurette-divider">
 
-					<div class="row featurette">
-						<div class="col-md-7">
-							<h2 class="featurette-heading">
-								Automobile Analytics. <span class="text-muted">It'll
-									show analytics of vehicles.</span>
-							</h2>
+					<div class="row featurette homeContentPadding">
+						<div class="col-md-6">
+							<img class="featurette-image img-responsive center-block ImgBlock"
+								alt="300x300" src="images/_0001_analytics.png" /> 
+						</div>
+						<div class="col-md-6 DetailPadding">
+							<h1 class="subDetail">AUTOMOBILE ANALYTICS.
+							</h1>
+							<h4 class="subDetailSecHead">It'll
+									show analytics of vehicles.</h4>
 							<p class="lead">Analytics for speed and distance analysis have be shown in line and 
 							bar charts. Analytics have been done on date, week and monthly basis. </p>
 						</div>
-						<div class="col-md-5">
-							<img class="featurette-image img-responsive center-block"
-								alt="300x300" src="images/analytics.png" /> 
-						</div>
+						
 					</div>
 
 					<hr class="featurette-divider">
@@ -310,15 +426,11 @@
 
 
 					<!-- FOOTER -->
-					<footer class="footer_home">
-						<p class="pull-right">
-							<a href="#">Back to top</a>
-						</p>
-						<p>Copyright © 2016 Bydesign All rights reserved</p>
-					</footer>
+					
  
 				</div>
-
+				
+					
 
 
 
@@ -327,6 +439,15 @@
 			</div>
 		</div>
 	</div>
+	<footer class="footerCss"><!-- footer_home  -->
+						<div class="footerArrow">
+							<a href="#"><img class="arrowImg"
+								alt="300x300" src="images/back-to-top-arrow.png" /></a>
+						</div>		
+						
+						<img src="images/logo-new-bats-white.png" alt="bydesign_logo" class="logo footerImg"/>
+						<p>Copyright © 2016 Bydesign All rights reserved</p>
+					</footer>
 	<!--================= Content Ends =================-->
 
 
@@ -360,9 +481,22 @@
 	function resetlabel(){
 		//$('this > label').addClass("show-hide ng-hide");
 	}
+	
+	$('.login').click(function(){
+		$('.navbar').removeClass('header');
+		$('body').css('overflow','hidden');
+		});
+	$('.close_icon').click(function(){
+		$('.navbar').addClass('header');
+		$('body').css('overflow','scroll');
+		
+		
+		});
+	
 	 $(".dialog_forgot").on("click", function() {
 		 $("#loginModal").removeClass("fade").modal("hide");
 		 $("#fgtModal").modal("show").addClass("fade");
+		 $('.modal-open').css('overflow','hidden');
 		});
 	 $(".dialog_login").on("click", function() {
 		 $("#loginModal").modal("show").addClass("fade");

@@ -3,8 +3,8 @@ var endTimeStamp;
 var minSpeed;
 var maxSpeed;
 
-batsAdminHome.controller("MinMaxSpeedCtrl",function($http,$scope,$filter,$localStorage,$timeout){
-
+batsAdminHome.controller("MinMaxSpeedCtrl",function($http,$scope,$filter,$localStorage,$timeout,$rootScope){
+	$rootScope.menuPos=4;
 	var token = $localStorage.data;
 	if(typeof $scope.token==="undefined"){
 		swal({ 
@@ -28,15 +28,14 @@ batsAdminHome.controller("MinMaxSpeedCtrl",function($http,$scope,$filter,$localS
 	var endDateMinMaxError = document.getElementById('endDateMinMaxError');
 	
 	/**
-	* fetch Group list based on token
-	* fetch device list based on group list
-*/	
-	//$scope.hist = {"searchGroupModel":""};
-	//$scope.hist.searchDeviceModel = "";
+	 * fetch Group list based on token fetch device list based on group list
+	 */	
+	// $scope.hist = {"searchGroupModel":""};
+	// $scope.hist.searchDeviceModel = "";
 	
 	$scope.customer = {};
 	$scope.customer.token = token;
-	//console.log(JSON.stringify($scope.customer));
+	// console.log(JSON.stringify($scope.customer));
 	$http({
 	  method  : 'POST',		  
 	  url     :apiURL+'group/list',
@@ -45,7 +44,7 @@ batsAdminHome.controller("MinMaxSpeedCtrl",function($http,$scope,$filter,$localS
 	 })
 	  .success(function(data) {
 	  $scope.groupList = data.glist;
-	  //console.log(JSON.stringify($scope.groupList));
+	  // console.log(JSON.stringify($scope.groupList));
 	  })
 	  .error(function(data, status, headers, config) {
 		  console.log(data.err);
@@ -66,15 +65,15 @@ batsAdminHome.controller("MinMaxSpeedCtrl",function($http,$scope,$filter,$localS
 	$scope.fetchDevList = function(groupID) {
 		$scope.httpLoading=true;
 	$('#clearTextDevice span.select2-chosen').empty();  
-	$('#clearTextDevice span.select2-chosen').text("- - Select Vehicle No/Device - -"); 
+	$('#clearTextDevice span.select2-chosen').text(" Select Vehicle No/Device "); 
 	$scope.sel_group_device = false;
-	//$scope.hist.searchDeviceModel = "";
+	// $scope.hist.searchDeviceModel = "";
 	$scope.deviceSelectMinMax=true;
 	$scope.showResult = false;
 	$scope.deviceJson = {};
 	$scope.deviceJson.token = token;
 	$scope.deviceJson.gid = groupID;
-	//console.log(JSON.stringify($scope.deviceJson));
+	// console.log(JSON.stringify($scope.deviceJson));
 	$http({
 	method : 'POST',
 	url : apiURL + 'group/devlist',
@@ -84,7 +83,7 @@ batsAdminHome.controller("MinMaxSpeedCtrl",function($http,$scope,$filter,$localS
 	}
 	}).success(function(data) {
 	$scope.devList = data.devlist;
-	//console.log(JSON.stringify($scope.devList));
+	// console.log(JSON.stringify($scope.devList));
 	$scope.httpLoading=false;
 	})
 	.error(function(data, status, headers, config) {
@@ -107,8 +106,8 @@ batsAdminHome.controller("MinMaxSpeedCtrl",function($http,$scope,$filter,$localS
 	};
 	
 	/**
-	* Show datepicker & Submit button after device select
-	*/
+	 * Show datepicker & Submit button after device select
+	 */
 	$scope.deviceSelectedMinMax=function(deviceId){
 	$scope.sel_group_device = true;
 	$scope.deviceSelectMinMax=false;
@@ -122,32 +121,32 @@ batsAdminHome.controller("MinMaxSpeedCtrl",function($http,$scope,$filter,$localS
 
 	
 /**
-  * Onsubmit of Min/Max Speed from values 
-*/
+ * Onsubmit of Min/Max Speed from values
+ */
 $scope.submitMinMaxSpeed = function() {
-	//alert("Yes");
+	// alert("Yes");
 	var startDateMinMax = document.getElementById('startDateMinMax').value;
 	var endDateMinMax = document.getElementById('endDateMinMax').value;
-	//console.log(startDateMinMax);
-	//console.log(endDateMinMax);
+	// console.log(startDateMinMax);
+	// console.log(endDateMinMax);
 if(startDateMinMax == "" && endDateMinMax == ""){
 	startDateMinMaxError.style.display = 'block';
 	endDateMinMaxError.style.display = 'block';
-	//alert("1");
+	// alert("1");
 }
 else if(startDateMinMax == ""){
 	startDateMinMaxError.style.display = 'block';
-	//alert("2");
+	// alert("2");
 }
 else if(endDateMinMax == ""){
 	endDateMinMaxError.style.display = 'block';
-	//alert("3");
+	// alert("3");
 }
 else{
 	$scope.httpLoading=true;
 	startDateMinMaxError.style.display = 'none';
 	endDateMinMaxError.style.display = 'none';
-	//alert("4");
+	// alert("4");
 	startDate(startDateMinMax);
 	endDate(endDateMinMax);
 	                    $scope.devIdJson = {};
@@ -155,8 +154,8 @@ else{
 						$scope.devIdJson.devlist = [$scope.deviceId];
 						$scope.devIdJson.sts = startTimeStamp;
 						$scope.devIdJson.ets = endTimeStamp;
-						//$scope.devIdJson.sts = "1456893473000";
-						//$scope.devIdJson.ets = "1456893584000";
+						// $scope.devIdJson.sts = "1456893473000";
+						// $scope.devIdJson.ets = "1456893584000";
 						console.log(JSON.stringify($scope.devIdJson));
 						$http({
 							method : 'POST',
@@ -174,6 +173,10 @@ else{
 							for(i=0;i<deviceList.length;i++){
 								var deviceID = deviceList[i].dev_id;
 								var vehicleNum = deviceList[i].vehicle_num;
+								$scope.min=deviceList[i].min_speed;
+								$scope.max=deviceList[i].max_speed;
+								$scope.speeds=deviceList[i].speed_limit;
+								$scope.driver=deviceList[i].driver;
 								var finalDevStatus ={"dev_id":deviceID,"vehicle_num":vehicleNum};
 								resultDevlist.push(finalDevStatus);
 								$scope.MinMaxResult = resultDevlist;
@@ -229,9 +232,9 @@ function startDate(getStartDateMinMax){
 	var timeStr=strArra[1];
 	var tsArr=timeStr.split(":");
 	var newStDate = dateArray[1] + "/" + dateArray[0] + "/" + dateArray[2];
-	//console.log(newStDate);
+	// console.log(newStDate);
 	var sts=new Date(newStDate);
-	//console.log(sts);
+	// console.log(sts);
 	sts.setDate(dateArray[0]);
 	sts.setMonth(dateArray[1]-1);
 	if(strArra[2] == "pm"){
@@ -243,9 +246,9 @@ function startDate(getStartDateMinMax){
 		else{
 			sts.setHours(Number(tsArr[0]) + 12);
 			sts.setMinutes(tsArr[1]);
-			//console.log("if " + sts);
+			// console.log("if " + sts);
 			startTimeStamp = sts.getTime();
-			//console.log(startTimeStamp);
+			// console.log(startTimeStamp);
 		}
 	}
 	else{
@@ -257,9 +260,9 @@ function startDate(getStartDateMinMax){
 		else{
 			sts.setHours(tsArr[0]);
 			sts.setMinutes(tsArr[1]);
-			//console.log("else " + sts);
+			// console.log("else " + sts);
 			startTimeStamp = sts.getTime();
-			//console.log(startTimeStamp);
+			// console.log(startTimeStamp);
 		}
 	}
 }
@@ -272,9 +275,9 @@ function endDate(getEndDateMinMax){
 	var timeStr=strArra[1];
 	var tsArr=timeStr.split(":");
 	var newStDate = dateArray[1] + "/" + dateArray[0] + "/" + dateArray[2];
-	//console.log(newStDate);
+	// console.log(newStDate);
 	var sts=new Date(newStDate);
-	//console.log(sts);
+	// console.log(sts);
 	sts.setDate(dateArray[0]);
 	sts.setMonth(dateArray[1]-1);
 	if(strArra[2] == "pm"){
@@ -286,9 +289,9 @@ function endDate(getEndDateMinMax){
 		else{
 			sts.setHours(Number(tsArr[0]) + 12);
 			sts.setMinutes(tsArr[1]);
-			//console.log("if " + sts);
+			// console.log("if " + sts);
 			endTimeStamp = sts.getTime();
-			//console.log(endTimeStamp);	
+			// console.log(endTimeStamp);
 		}
 	}
 	else{
@@ -300,239 +303,278 @@ function endDate(getEndDateMinMax){
 		else{
 			sts.setHours(tsArr[0]);
 			sts.setMinutes(tsArr[1]);
-			//console.log("else " + sts);
+			// console.log("else " + sts);
 			endTimeStamp = sts.getTime();
-			//console.log(endTimeStamp);
+			// console.log(endTimeStamp);
 		}
 	}
 }
 
 function min_speed(minSpeedVal){
-    $scope.minSpeedChart = {
-            options: {
-                chart: {
-                    type: 'gauge',
-                    plotBackgroundColor: null,
-                    plotBackgroundImage: null,
-                    plotBorderWidth: 0,
-                    plotShadow: false,
-                    backgroundColor: "rgba(255,255,255,0.8)",
-                },
-                title: {
-                    text: 'Min Speed'
-                },
-                pane: {
-                    startAngle: -150,
-                    endAngle: 150,
-                    background: [{
-                        backgroundColor: {
-                            stops: [
-                                [0, '#FFF'],
-                                [1, '#333']
-                            ]
-                        },
-                        borderWidth: 0,
-                        outerRadius: '109%'
-                    }, {
-                        backgroundColor: {
-                            stops: [
-                                [0, '#333'],
-                                [1, '#FFF']
-                            ]
-                        },
-                        borderWidth: 1,
-                        outerRadius: '107%'
-                    }, {
-                        // default background
-                    }, {
-                        backgroundColor: '#DDD',
-                        borderWidth: 0,
-                        outerRadius: '105%',
-                        innerRadius: '103%'
-                    }]
-                }
-            },
-    	    yAxis: {
-    	        min: 0,
-    	        max: 200,   	        
-    	        minorTickInterval: 'auto',
-    	        minorTickWidth: 1,
-    	        minorTickLength: 10,
-    	        minorTickPosition: 'inside',
-    	        minorTickColor: '#666',
-    	        tickPixelInterval: 30,
-    	        tickWidth: 2,
-    	        tickPosition: 'inside',
-    	        tickLength: 10,
-    	        tickColor: '#666',
-    	        labels: {
-    	            step: 2,
-    	            rotation: 'auto'
-    	        },
-    	        title: {
-    	            text: 'km/h'
-    	        },
-    	        plotBands: [{
-    	            from: 0,
-    	            to: 120,
-    	            color: '#55BF3B' // green
-    	        }, {
-    	            from: 120,
-    	            to: 160,
-    	            color: '#DDDF0D' // yellow
-    	        }, {
-    	            from: 160,
-    	            to: 200,
-    	            color: '#DF5353' // red
-    	        }]        
-    	    },	
-    	    series: [{
-    	        name: 'Speed',
-    	        data: [minSpeedVal],
-    	        tooltip: {
-    	            valueSuffix: ' km/h'
-    	        }
-    	    }],
-        };
+    $('#minChart').highcharts().series[0].points[0].update(Number(minSpeedVal));
+   /*
+	 * $('#minChart').highcharts().setTitle({text: "<p><b>"+minSpeedVal+"<b></p><br/>KmpH</p><p></p><br/><br/><label>Minimum</label>"
+	 * });
+	 */
 }
 function max_speed(maxSpeedVal){
-    $scope.maxSpeedChart = {
-            options: {
-                chart: {
-                    type: 'gauge',
-                    plotBackgroundColor: null,
-                    plotBackgroundImage: null,
-                    plotBorderWidth: 0,
-                    plotShadow: false,
-                    backgroundColor: "rgba(255,255,255,0.8)"
-                },
-                title: {
-                    text: 'Max Speed'
-                },
-                pane: {
-                    startAngle: -150,
-                    endAngle: 150,
-                    background: [{
-                        backgroundColor: {
-                            stops: [
-                                [0, '#FFF'],
-                                [1, '#333']
-                            ]
-                        },
-                        borderWidth: 0,
-                        outerRadius: '109%'
-                    }, {
-                        backgroundColor: {
-                            stops: [
-                                [0, '#333'],
-                                [1, '#FFF']
-                            ]
-                        },
-                        borderWidth: 1,
-                        outerRadius: '107%'
-                    }, {
-                        // default background
-                    }, {
-                        backgroundColor: '#DDD',
-                        borderWidth: 0,
-                        outerRadius: '105%',
-                        innerRadius: '103%'
-                    }]
-                }
-            },
-    	    yAxis: {
-    	        min: 0,
-    	        max: 200,   	        
-    	        minorTickInterval: 'auto',
-    	        minorTickWidth: 1,
-    	        minorTickLength: 10,
-    	        minorTickPosition: 'inside',
-    	        minorTickColor: '#666',
-    	        tickPixelInterval: 30,
-    	        tickWidth: 2,
-    	        tickPosition: 'inside',
-    	        tickLength: 10,
-    	        tickColor: '#666',
-    	        labels: {
-    	            step: 2,
-    	            rotation: 'auto'
-    	        },
-    	        title: {
-    	            text: 'km/h'
-    	        },
-    	        plotBands: [{
-    	            from: 0,
-    	            to: 120,
-    	            color: '#55BF3B' // green
-    	        }, {
-    	            from: 120,
-    	            to: 160,
-    	            color: '#DDDF0D' // yellow
-    	        }, {
-    	            from: 160,
-    	            to: 200,
-    	            color: '#DF5353' // red
-    	        }]        
-    	    },	
-    	    series: [{
-    	        name: 'Speed',
-    	        data: [maxSpeedVal],
-    	        tooltip: {
-    	            valueSuffix: ' km/h'
-    	        }
-    	    }],
-        };
+	/* $('#maxChart').highcharts().setTitle({text: "<p><b>"+maxSpeedVal+"<b><br/><br/>KmpH</p><p></p><br/><br/><label>Maximum</label>"}); */
+    $('#maxChart').highcharts().series[0].points[0].update(Number(maxSpeedVal));
 }
 
+$('#minChart').highcharts({
+	 
+    chart: {
+        type: 'gauge',
+        plotBackgroundColor: null,
+        plotBackgroundImage: null,
+        plotBorderWidth: 0,
+        plotShadow: false,
+        width:'250',
+        height:'250'
+    },
+    title : {
+		text : ""
+	},
+   /*
+	 * title : { text : "<p><b>0<b><br/><br/>KmpH</p><br/<br/>><label>Minimum</label>" },
+	 */
+    pane: {
+        startAngle: -150,
+        endAngle: 150,
+        background: [{
+            backgroundColor: {
+                linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+                stops: [
+                    [0, '#FFF'],
+                    [1, '#333']
+                ]
+            },
+            borderWidth: 0,
+            outerRadius: '109%'
+        }, {
+            backgroundColor: {
+                linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+                stops: [
+                    [0, '#333'],
+                    [1, '#FFF']
+                ]
+            },
+            borderWidth: 1,
+            outerRadius: '107%'
+        }, {
+            // default background
+        }, {
+            backgroundColor: '#DDD',
+            borderWidth: 0,
+            outerRadius: '105%',
+            innerRadius: '103%'
+        }]
+    },
 
+    // the value axis
+    yAxis: {
+        min: 0,
+        max: 200,
+
+        minorTickInterval: 'auto',
+        minorTickWidth: 1,
+        minorTickLength: 10,
+        minorTickPosition: 'inside',
+        minorTickColor: '#666',
+
+        tickPixelInterval: 30,
+        tickWidth: 2,
+        tickPosition: 'inside',
+        tickLength: 10,
+        tickColor: '#666',
+        labels: {
+            step: 2,
+            rotation: 'auto'
+        },
+        title: {
+            text: 'km/h'
+        },
+        plotBands: [{
+            from: 0,
+            to: 120,
+            color: '#55BF3B' // green
+        }, {
+            from: 120,
+            to: 160,
+            color: '#DDDF0D' // yellow
+        }, {
+            from: 160,
+            to: 200,
+            color: '#DF5353' // red
+        }]
+    },
+
+    series: [{
+        name: 'Speed',
+        data: [Number(0)],
+        tooltip: {
+            valueSuffix: ' km/h'
+        }
+    }]
+
+});
+
+$('#maxChart').highcharts({
+	 
+    chart: {
+        type: 'gauge',
+        plotBackgroundColor: null,
+        plotBackgroundImage: null,
+        plotBorderWidth: 0,
+        plotShadow: false,
+        width:'250',
+        height:'250'
+    },
+
+    title : {
+		text : ""
+	},
+
+    pane: {
+        startAngle: -150,
+        endAngle: 150,
+        background: [{
+            backgroundColor: {
+                linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+                stops: [
+                    [0, '#FFF'],
+                    [1, '#333']
+                ]
+            },
+            borderWidth: 0,
+            outerRadius: '109%'
+        }, {
+            backgroundColor: {
+                linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+                stops: [
+                    [0, '#333'],
+                    [1, '#FFF']
+                ]
+            },
+            borderWidth: 1,
+            outerRadius: '107%'
+        }, {
+            // default background
+        }, {
+            backgroundColor: '#DDD',
+            borderWidth: 0,
+            outerRadius: '105%',
+            innerRadius: '103%'
+        }]
+    },
+
+    // the value axis
+    yAxis: {
+        min: 0,
+        max: 200,
+
+        minorTickInterval: 'auto',
+        minorTickWidth: 1,
+        minorTickLength: 10,
+        minorTickPosition: 'inside',
+        minorTickColor: '#666',
+
+        tickPixelInterval: 30,
+        tickWidth: 2,
+        tickPosition: 'inside',
+        tickLength: 10,
+        tickColor: '#666',
+        labels: {
+            step: 2,
+            rotation: 'auto'
+        },
+        title: {
+            text: 'km/h'
+        },
+        plotBands: [{
+            from: 0,
+            to: 120,
+            color: '#55BF3B' // green
+        }, {
+            from: 120,
+            to: 160,
+            color: '#DDDF0D' // yellow
+        }, {
+            from: 160,
+            to: 200,
+            color: '#DF5353' // red
+        }]
+    },
+
+    series: [{
+        name: 'Speed',
+        data: [Number(0)],
+        tooltip: {
+            valueSuffix: ' km/h'
+        }
+    }]
+
+});
 
 /**
- * Select Group/Device dropdown based on jquery 
-* */	
+ * Select Group/Device dropdown based on jquery
+ */	
 	$(document).ready(function() {
 		$.getScript('../assets/select_filter/select2.min.js', function() {
 			$("#selectGroup").select2({});
 			$("#selectDevice").select2({});
-			$('#clearTextGroup span.select2-chosen').text("- - Select Group - -");
-			$('#clearTextDevice span.select2-chosen').text("- - Select Vehicle No/Device - -");
+			$('#clearTextGroup span.select2-chosen').text("Select Group ");
+			$('#clearTextDevice span.select2-chosen').text("Select Vehicle No/Device");
 		});// script
 	});
 
 	
 /**
-   * Show DateTimePicker onclick in jquery 
-* */	
+ * Show DateTimePicker onclick in jquery
+ * $('#startDateMinMaxPicker').datetimepicker({ inline: true, sideBySide: true,
+ * ignoreReadonly: true, allowInputToggle: true, showClose : true,
+ * defaultDate:'now', maxDate: 'now', format: 'DD/MM/YYYY hh:mm a'
+ * }).on("dp.change",function (e) { //$("#startDateMinMax").blur();
+ * //closeResult(); }); //startDateMinMaxError.style.display = 'none'; });
+ * $(document).on('click', '#endDateMinMaxPicker', function(){
+ * $('#endDateMinMaxPicker').datetimepicker({ inline: true, sideBySide: true,
+ * ignoreReadonly: true, allowInputToggle: true, showClose : true,
+ * defaultDate:'now', maxDate: 'now', format: 'DD/MM/YYYY hh:mm a'
+ * }).on("dp.change",function (e) { //$("#endDateMinMax").blur();
+ * //closeResult(); }); //endDateMinMaxError.style.display = 'none'; });
+ */	
 	$(document).on('click', '#startDateMinMaxPicker', function(){
 		$('#startDateMinMaxPicker').datetimepicker({
-	                inline: true,
-	                sideBySide: true,
-	                ignoreReadonly: true,
-	                allowInputToggle: true,
-	                showClose : true,
-	                defaultDate:'now',
-	                maxDate: 'now',
-	                format: 'DD/MM/YYYY hh:mm a'
+			/* inline: true,
+             sideBySide: true,*/
+             ignoreReadonly: true,
+             allowInputToggle: true,
+             showClose : true,
+             defaultDate:'now',
+             maxDate: 'now',
+             format: 'DD/MM/YYYY hh:mm a'
 	            }).on("dp.change",function (e) {
-	            	//$("#startDateMinMax").blur(); 
-	            	//closeResult();
+	            	// $("#startDateMinMax").blur();
+	            	// closeResult();
 	            });
-		//startDateMinMaxError.style.display = 'none';
+		// startDateMinMaxError.style.display = 'none';
 	}); 
 	$(document).on('click', '#endDateMinMaxPicker', function(){
 		$('#endDateMinMaxPicker').datetimepicker({
-	                inline: true,
-	                sideBySide: true,
-	                ignoreReadonly: true,
-	                allowInputToggle: true,
-	                showClose : true,
-	                defaultDate:'now',
-	                maxDate: 'now',
-	                format: 'DD/MM/YYYY hh:mm a'
+			/* inline: true,
+             sideBySide: true,*/
+             ignoreReadonly: true,
+             allowInputToggle: true,
+             showClose : true,
+             defaultDate:'now',
+             maxDate: 'now',
+             format: 'DD/MM/YYYY hh:mm a'
 	            }).on("dp.change",function (e) {
-	            	//$("#endDateMinMax").blur(); 
-	            	//closeResult();
+	            	// $("#endDateMinMax").blur();
+	            	// closeResult();
 	            });
-		//endDateMinMaxError.style.display = 'none';
+		// endDateMinMaxError.style.display = 'none';
 	});
 	
 	function closeResult(){

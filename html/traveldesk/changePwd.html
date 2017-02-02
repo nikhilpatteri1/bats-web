@@ -1,0 +1,186 @@
+<div class="col-sm-10">
+	<div class="row">
+			
+		<div class="col-sm-6 col-sm-offset-3 changePwdBorder">
+			<!-- Change Password -->
+			<div class="changePwdIconSection" align="center">
+				<div class="changePwdUserIcon">
+					<i class="fa fa-lock fa-lg"></i>
+				</div>
+			</div>
+			<h6 class="titleHead">Change Password</h6>
+			<form name="changePwd" class="formInput" id="changePwdFrm">
+				<div class="control-group">
+					<div class="form-group">
+						<div class="row">
+							<div class="col-sm-12 controls">
+								<!-- <label ng-show="newpwd" class="floatlabeltxt show-hide">Enter
+									New Password</label> -->
+									<label class="labelClass">New Password</label> 
+									<input type="password" ng-model="newpwd"
+									class="form-control new_pwd" name="new_pd"
+									placeholder="Enter New Password"
+									ng-change="hidePasswordMismatch()" password-validate required>
+
+								<span class='help-inline' ng-show='changePwd.newpwd.$valid'>
+									<i class='icon-ok'></i>
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="control-group">
+					<div class="form-group">
+						<div class="row">
+							<div class="col-sm-12 controls">
+								<!-- <label ng-show="repwd && newpwd" class="floatlabeltxt show-hide">Re-Enter
+									New Password</label> -->
+									<label ng-show="newpwd" class="labelClass">Confirm Password</label>
+									 <input type="password" ng-model="repwd"
+									ng-show="newpwd" class="form-control confirm_pwd"
+									name="confirm_pd" same-as='newpwd'
+									placeholder="Re-Enter New Password" repassword-validate
+									required> <span class='help-inline'
+									ng-show='changePwd.repwd.$valid'> <i class='icon-ok'></i>
+								</span> <span class="mismatch" ng-show="isMismatch">Password
+									Mismatch</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div ng-hide="newpwd && repwd">
+					<ul class="helplist">
+						<li><strong>'Miimum 8 Characters </strong></li>
+						<li><strong>Should contain atleast one alphabet and one number'</strong></li>
+						<!-- <li>At least <strong>8 characters long</strong></li> -->
+					</ul>
+				</div>
+				<div class="form-group">
+					<div class="row">
+						<div class="col-sm-12">
+							<button class="btn btn-primary changePwdSubmit"
+								ng-disabled="!changePwd.$valid" ng-click="pwdChangeTraveldesk(repwd)">Submit</button>
+						</div>
+					</div>
+				</div>
+
+			</form>
+			<!-- ./Change Password -->
+		</div>
+	</div>
+</div>
+
+
+
+
+<!-- <div class="row">
+						<div class="col-sm-6 col-sm-offset-3">
+							Change Password
+							<h1 class="titleHead">Change Password</h1>
+							<form name="changePwd" class="formInput" id="changePwdFrm">
+								
+								<div class="control-group">
+									<div class="form-group">
+										<div class="row">
+											<div class="col-sm-12 controls">
+												<label ng-show="newpwd" class="floatlabeltxt show-hide">Enter
+													New Password</label> <input type="password" ng-model="newpwd"
+													class="form-control new_pwd" name="new_pd"
+													placeholder="Enter New Password" ng-change="hidePasswordMismatch()" password-validate required>											
+												<span class='help-inline' ng-show='changePwd.newpwd.$valid'>
+													<i class='icon-ok'></i>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								
+								<div class="control-group">
+									<div class="form-group">
+										<div class="row">
+											<div class="col-sm-12 controls">
+												<label ng-show="newpwd" class="floatlabeltxt show-hide">Enter
+													New Password</label> <input type="password" ng-model="newpwd"
+													class="form-control  new_pwd" name="new_pd"
+													placeholder="Enter New Password" ng-change="hidePasswordMismatch()" password-validate required>
+
+												<span class='help-inline' ng-show='changePwd.newpwd.$valid'>
+													<i class='icon-ok'></i>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="control-group">
+									<div class="form-group">
+										<div class="row">
+											<div class="col-sm-12 controls">
+												<label ng-show="repwd && newpwd"
+													class="floatlabeltxt show-hide">Re-Enter New
+													Password</label> <input type="password" ng-model="repwd"
+													ng-show="newpwd" class="form-control confirm_pwd"
+													name="confirm_pd" same-as='newpwd'
+													placeholder="Re-Enter New Password" repassword-validate
+													required> <span class='help-inline'
+													ng-show='changePwd.repwd.$valid'> <i class='icon-ok'></i>
+												</span> <span class="mismatch" ng-show="isMismatch">Password
+													Mistmatch</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="control-group">
+									<div class="form-group">
+										<div class="row">
+											<div class="col-sm-12 controls">
+												<label ng-show="repwd && newpwd"
+													class="floatlabeltxt show-hide">Re-Enter New
+													Password</label> <input type="password" ng-model="repwd"
+													ng-show="newpwd"
+													class="form-control confirm_pwd"
+													name="confirm_pd" same-as='newpwd'
+													placeholder="Re-Enter New Password" repassword-validate
+													required> <span class='help-inline'
+													ng-show='changePwd.repwd.$valid'> <i class='icon-ok'></i>
+												</span> <span class="mismatch" ng-show="isMismatch">Password
+													Mistmatch</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div ng-hide="newpwd && repwd">
+									<ul class="helplist">
+										<li>At least <strong>one letter</strong></li>
+										<li>At least <strong>one number</strong></li>
+										<li>At least <strong>8 characters long</strong></li>
+									</ul>
+								</div>
+								<div class="form-group">
+									<div class="row">
+										<div class="col-sm-6 col-sm-offset-3" align="center">
+											<button class="btn btn-primary chngbtn"
+												ng-disabled="!changePwd.$valid"
+												ng-click="pwdChangeTraveldesk(repwd)">Submit</button>
+										</div>
+									</div>
+								</div>
+
+							</form>
+
+							./Change Password
+						</div>
+					</div>
+ -->
+
+
+
+
+
+
+
+
+
+
+
+

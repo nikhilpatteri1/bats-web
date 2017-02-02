@@ -1,11 +1,12 @@
 var general_emailChk;
 /** Group Creation Controller 
 */
-batsAdminHome.controller('userController', function($scope, $http, $localStorage) {
+batsAdminHome.controller('userController', function($rootScope,$scope, $http, $localStorage) {
+	$rootScope.menuPos=8;
 	var group_list;
 	
 	$scope.token = $localStorage.data;
-	//console.log($scope.token);
+	console.log($scope.token);
 	if(typeof $scope.token==="undefined"){
 		swal({ 
 			   title: "Un Authorized Access",
@@ -118,20 +119,26 @@ $scope.verifyUser=function(userName){
 /**
  	* On Create User Form
     * 1) Select Group on click of checkbox & viceversa*/
-	$scope.selection = {};        
+	$scope.selection = {}; 
+	$scope.selectionLength=0;
     $scope.group = group_list;        
     $scope.$watch(function() {
         return $scope.selection.ids;
     }, function(value) {
         $scope.selection.objects = [];
         angular.forEach($scope.selection.ids, function(v, k) {
-            v && $scope.selection.objects.push(getCategoryById(k));            
+            v && $scope.selection.objects.push(getCategoryById(k));   
+           console.log($scope.selection.objects);
+           $scope.selectionLength=$scope.selection.objects.length;
         });        
     }, true);
-    
+    var temp=0;
     function getCategoryById (gid) {
         for (var i = 0; i < $scope.group.length; i++) {
+        	console.log(i+temp);
             if ($scope.group[i].gid == gid) {
+            	temp++;
+            	// $scope.selectionLength=temp;
                 return $scope.group[i];
             }
         }

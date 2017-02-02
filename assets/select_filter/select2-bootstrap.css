@@ -1,6 +1,6 @@
 .form-control .select2-choice {
     border: 0;
-    border-radius:0px;
+    border-radius:4px;
 }
 
 .form-control .select2-choice .select2-arrow {
@@ -9,12 +9,12 @@
 
 .form-control.select2-container {
     height: auto !important;
-    padding: 0;
-    border: 1px solid #03A9F4;
+    padding: 0px;
+    border: 1px solid #ddd;
 }
 
 .form-control.select2-container.select2-dropdown-open {
-    border-color: #5897FB;
+    border-color: #ddd;
     border-radius: 3px 3px 0 0;
 }
 

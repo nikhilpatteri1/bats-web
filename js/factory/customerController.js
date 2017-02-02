@@ -1,7 +1,8 @@
 var user_emailChk;
 //==============Factory Home===============
 
-batsfactoryhome.controller('customerController', function($scope, $http, $localStorage) {
+batsfactoryhome.controller('customerController', function($rootScope,$scope, $http, $localStorage) {
+	$rootScope.menuPos=0;
 	$scope.token = $localStorage.data;
 	if(typeof $scope.token==="undefined"){
 		swal({ 

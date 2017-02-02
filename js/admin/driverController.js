@@ -14,7 +14,8 @@
  *  f)language array preparation / language selection and removal based on tag input concept
  *  g)
  */
-batsAdminHome.controller('driverController', function($scope, $localStorage, $http,$timeout,$window,$location) {
+batsAdminHome.controller('driverController', function($rootScope,$scope, $localStorage, $http,$timeout,$window,$location) {
+	$rootScope.menuPos=10;
 	$scope.httpLoading=false;//loading image
 	$scope.imageUploading=false;
 	$scope.onlyImage=false;

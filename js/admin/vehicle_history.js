@@ -1,10 +1,21 @@
-batsAdminHome.controller('vehicleHistory', function($scope, $http, $localStorage){
+batsAdminHome.controller('vehicleHistory', function($scope,$rootScope, $http, $localStorage){
 	$scope.yoData=false;
 	$scope.noData=false;
 	$scope.showDatepicker=true;
 	$scope.showTimeSlot=false;
 	$scope.token = $localStorage.data;
 	$scope.todayDate=new Date();
+	$scope.greyColor={
+			color:"#637778"
+	};
+	$scope.whiteColor={
+			color:"#fff"
+	};
+	var contentHeight=window.screen.availHeight-220;
+	$scope.histcontentheight={
+			"height":contentHeight
+	}
+	$rootScope.menuPos=1;
 	var dev={};
 	var maploadedInterval;
 	var directionDisplay;
@@ -30,7 +41,6 @@ batsAdminHome.controller('vehicleHistory', function($scope, $http, $localStorage
 		var styleMap = [{"featureType":"administrative","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"landscape","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"color":"#bee4f4"},{"visibility":"on"}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"geometry.fill","stylers":[{"visibility":"on"}]},{"featureType":"transit","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#46bcec"},{"visibility":"on"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"on"},{"color":"#000000"}]}];
 	    var myOptions = {
 	        zoom: 8,	   
-	        styles: styleMap,
 	        mapTypeId: google.maps.MapTypeId.ROADMAP
 	    };
 	    address = 'India';
@@ -40,7 +50,7 @@ batsAdminHome.controller('vehicleHistory', function($scope, $http, $localStorage
 	     map.fitBounds(results[0].geometry.viewport);
 
 	    });	
-	    map = new google.maps.Map(document.getElementById("history_map"),
+	    map = new google.maps.Map(document.getElementById("hist_map"),
 	            myOptions);
 	    google.maps.event.addListenerOnce(map, 'idle', function(){
 	        // do something only the first time the map is loaded
@@ -116,7 +126,7 @@ batsAdminHome.controller('vehicleHistory', function($scope, $http, $localStorage
 		$scope.noData = false;
 		$scope.showTimeSlot=false;
 		$('#clearTextDevice span.select2-chosen').empty();  
-	    $('#clearTextDevice span.select2-chosen').text("- - Select Vehicle No/Device - -");
+	    $('#clearTextDevice span.select2-chosen').text("Select Vehicle No/Device");
 		// document.getElementById("groupNamelist").blur();
 		// console.log(groupID);
 	    $scope.initialize();
@@ -423,8 +433,8 @@ batsAdminHome.controller('vehicleHistory', function($scope, $http, $localStorage
 		$.getScript('../assets/select_filter/select2.min.js', function() {
 			$("#selectGroup").select2({});
 			$("#selectDevice").select2({});
-			$('#clearTextGroup span.select2-chosen').text("- - Select Group - -");
-			$('#clearTextDevice span.select2-chosen').text("- - Select Vehicle No/Device - -");
+			$('#clearTextGroup span.select2-chosen').text("Select Group");
+			$('#clearTextDevice span.select2-chosen').text("Select Vehicle No/Device");
 		});// script
 	});
 	/**
@@ -464,6 +474,4 @@ batsAdminHome.controller('vehicleHistory', function($scope, $http, $localStorage
 		        }
 		);
 	}
-	
-	
 });

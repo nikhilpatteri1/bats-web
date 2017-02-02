@@ -1,5 +1,6 @@
-batsAdminHome.controller('batsNearbyDevices',function($scope,$http,NgMap,
+batsAdminHome.controller('batsNearbyDevices',function($scope,$http,NgMap,$rootScope,
 		$localStorage){
+	$rootScope.menuPos=6;
 	$scope.token = $localStorage.data;
 	if (typeof $scope.token === "undefined") {
 		swal({

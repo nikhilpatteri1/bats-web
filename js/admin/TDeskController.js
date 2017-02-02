@@ -1,4 +1,6 @@
-batsAdminHome.controller('TDcontroller',function($scope,$http,$localStorage){
+batsAdminHome.controller('TDcontroller',function($rootScope,$scope,$http,$localStorage){
+	/*$scope.call=function(){alert("td");}*/
+	$rootScope.menuPos = 11;
 	$scope.token = $localStorage.data;
 	//console.log($scope.token);
 	if(typeof $scope.token==="undefined"){
@@ -45,12 +47,17 @@ batsAdminHome.controller('TDcontroller',function($scope,$http,$localStorage){
 			console.log(data);
 			if(data.err == "Travel desk user not found")
 			{
-				$('#createTDModal').modal('show');		
+				$('#createTDModal').show();
+				$('#updateTDModal').hide();
+				/*$('#createTDModal').modal('show');*/		
 			}
 		
 			else{
 				$scope.updateEditModal(data,function(){
-					$('#updateTDModal').modal('show');
+					
+					$('#updateTDModal').show();
+					$('#createTDModal').hide();
+					/*$('#updateTDModal').modal('show');*/
 				});	
 			}		
 		})
@@ -95,12 +102,14 @@ batsAdminHome.controller('TDcontroller',function($scope,$http,$localStorage){
 				confirmButtonColor:"#9afb29",
 				closeOnConfirm:true} ,
 				function(){
-				$('#createTDModal').modal('hide');
+					$('#createTDModal').hide();
+				/*$('#createTDModal').modal('hide');*/
 			});
 			})
 			.error(function(data,status,headers,config){
 				if(data.err == "Expired Session"){
-					$('#createTDModal').modal('hide');
+					/*$('#createTDModal').modal('hide');*/
+					$('#createTDModal').hide();
 					expiredSession();
 					$localStorage.$reset();	
 				}
@@ -146,7 +155,8 @@ batsAdminHome.controller('TDcontroller',function($scope,$http,$localStorage){
 				confirmButtonColor:"#9afb29",
 				closeOnConfirm:true},
 				function(){
-				$('#updateTDModal').modal('hide');
+					$('#updateTDModal').show();
+				/*$('#updateTDModal').modal('hide');*/
 				
 			});
 		})

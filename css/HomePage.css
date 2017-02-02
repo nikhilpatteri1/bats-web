@@ -1,0 +1,268 @@
+.header{
+	height: 70px;
+    width: 100%;
+    border-radius: 0;
+    background: #000000;
+    z-index: 100;
+    position: fixed;
+}
+
+/* .headerHide{
+	position: static;
+} */
+
+.logo{	
+	height: 50px;
+    width: 150px; 
+    position: relative;
+    top: 12px;
+    /* right: 90px; */
+}
+
+.login{
+	color: #fff;
+    font-size: 20px;
+    float: right;
+    top: 24px;
+    /* right: -50px; */
+    border: none !important;
+    position: relative;
+}
+
+.footerlogo{
+	color: #fff;
+    font-size: 20px;
+    float: right;
+    top: 10px;
+    /* right: -50px; */
+    border: none !important;
+    position: relative;
+}
+
+.loginModal{
+    z-index: 2;
+    opacity: 1;
+    background: #FFF;
+    padding-top: 100px;
+}
+
+.modal-backdrop{
+	z-index:0 !important;
+	opacity:1 !important;
+	background-color:#ffffff !important;
+} 
+
+.login:focus, .login:hover{
+	color: #ffffff;
+    text-decoration: none;
+}
+
+.cmodalWidthHight{
+    width: 350px !important;
+    margin: auto !important;
+    top: 100px !important;
+    /* box-shadow: 1px 13px 29px 0px #ccc; */
+}
+
+.loginUserName{
+	padding: 0px;
+    margin-top: 28px;
+    margin-bottom: 8px;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    /* color: #7b7b7b; */
+    font-weight: 100;
+}
+
+.formInput1 input {
+	border-radius: 8px;
+	border: 1px solid #cccccc !important;
+	/* border-bottom: 2px solid #ddd; */
+	/* border-radius: 0px; */
+	/* -webkit-box-shadow:1px 1px 1px #ccc; */
+	/* box-shadow: none; */
+	-webkit-transition: none;
+	transition: none;
+	/* height: 72px; */
+}
+.formInput1 button{
+	font-size:16px;
+	/* padding:10px 37px; */
+	border-radius:32px;
+	width: 100%;
+	background-color:#03adea;
+}
+.formInput1 input:FOCUS {
+	border-color: transparent;
+	border: 1px solid #2A9FD8 !important;
+	/* -webkit-box-shadow: 1px 1px 1px #2A9FD8 !important; */
+	box-shadow: none;
+}
+
+.modal-footer1 {
+    padding: 15px;
+    text-align: right;
+    border-top: 0;
+    font-size: 12px;
+    /* background: #eee;
+    text-align: left; */
+}
+
+
+.modal-header {
+    padding: 0px !important;
+    padding-top: 8px !important;
+    margin-bottom: 4px !important;
+    border-bottom: none !important; 
+}
+
+.loginLogo{
+    height: 50px;
+    width: 150px;
+    /* position: absolute; */
+    top: 12px;
+    right: 90px;
+}
+
+.logBorder{
+	background-color:#ffffff !important;
+	border: none !important;
+	padding: 16px !important;
+	/* -webkit-box-shadow:none !important; */
+}
+
+.caroselImg{
+    position: relative;
+    width: 100%;
+    height: 680px;
+    left: 0px;
+    top: 50px;
+}
+
+.backendImgContainer{
+	width:100% !important;
+	padding:0px !important;
+	position: relative !important;
+}
+
+.imgTxtContainer{
+	position: relative;
+    bottom: 400px;
+    left: 100px;
+    padding-left: 5%;
+    padding-right: 25%;
+}
+
+.imgTxt{
+	color:#ffffff;
+	line-height: 1.5;
+	/* font-size:30px !important; */
+}
+
+.knowbtn{
+	margin-top: 50px;
+    color: #ffffff;
+    background: #03A9F4;
+    border: 1px solid #03A9F4;
+    padding: 10px;
+    width: 160px;
+    position: absolute;
+    text-align: center;
+    }
+.knowbtn:hover{
+	 text-decoration: none;
+	 color:#ffffff;
+}
+
+.marketing {
+    background: #ffffff;
+    width: 100%;
+    padding: 0px !important;
+}
+.subDetailImg{
+width: 120px;
+    height: 120px;
+    }
+
+.subDetail{
+   color: #343c3f;
+    padding-bottom: 25px;
+    font-weight: bold;
+}
+
+.subDetailSecHead{
+	margin-top: -15px;  
+   	color: #343c3f;
+    padding-bottom: 25px;
+    font-weight: bold;
+}
+
+
+
+.footerCss{
+    background: black !important;
+    text-align: center !important;
+    height: 200px;
+    margin-top: 75px;
+}
+
+.arrowImg{
+	width:24px !important;
+}
+
+.footerArrow{
+	    position: relative;
+    margin: 0px auto;
+    /* margin: 0px; */
+    bottom: 27px;
+    background: black;
+    width: 58px;
+    /* border-radius: 31px; */
+    border-top-left-radius: 42px;
+    border-top-right-radius: 42px;
+    padding: 10px;
+	    /* position: relative;
+	    margin: 0px auto;
+    margin: 0px;
+    bottom: 32px;
+    background: black;
+    width: 55px; */
+}
+
+.footerImg{
+	margin-top: 21px;
+    margin-bottom: 52px;
+}
+
+.homeContentPadding{
+    width: 80%;
+    margin: 0px auto
+}
+
+.lead{
+	font-size: 17px !important;
+    margin-right: 10px !important;
+    margin-left: 0px !important;
+    line-height: 22px !important;
+    padding: 0px !important;
+}
+
+.ImgBlock{
+	width: 512px;
+    height: 512px;
+    display: block;
+}
+
+.DetailPadding{
+    padding: 0px !important;
+    padding-top: 16% !important;
+}
+
+.DetailPadding2{
+	padding: 0px !important;
+    padding-top: 15% !important;
+    text-align: right !important;
+}
+
+
+

@@ -20,7 +20,11 @@
 <!-- Reset CSS -->
 <link rel="stylesheet" type="text/css" href="../css/reset.css">
 
+
 <!-- Custom CSS -->
+<link rel="stylesheet" type="text/css" href="../css/commonY.css">
+<link rel="stylesheet" type="text/css" href="../css/commonG.css">
+<!-- <link rel="stylesheet" type="text/css" href="../css/customNew.css"> -->
 <link rel="stylesheet" type="text/css" href="../css/nav.css">
 <!-- <link rel="stylesheet" type="text/css" href="css/content.css"> -->
 <link rel="stylesheet" type="text/css" href="../css/carousel.css">
@@ -43,12 +47,11 @@ input.ng-dirty.ng-valid {
 	border-bottom: solid 2px green;
 }
 
-.titleHead {
+/* .titleHead {
 	margin-bottom: 40px;
 	text-align: center;
 	color: #03A9F4;
-}
-
+} */
 .mismatch {
 	font-size: 14px;
 	font-weight: 600;
@@ -226,33 +229,32 @@ input {
 }
 
 /* My style */
-.search_customer {
+/* .search_customer {
 	background: rgba(180, 180, 180, 0.5);
 	padding: 15px 0px 15px 32px;
-}
+} */
 
-.search_customer_results {
+/* .search_customer_results {
 	background: rgba(255, 255, 255, 0.5);
 	padding: 20px 15px 5px 15px;
 	height: 310px;
 	overflow: auto;
-}
+} */
 
-.search_heading {
+/* .search_heading {
 	color: #eee;
 	background: #424242;
 	padding: 12px 0px 10px 10px;
 	border-radius: 10px 10px 0 0;
-}
+} */
 
-select {
+/* select {
 	padding: 3px 5px 3px 5px;
 	border: 0;
 	border-radius: 3px;
 	cursor: pointer;
 	text-transform: capitalize;
-}
-
+} */
 .add_new_customer {
 	position: absolute;
 	bottom: 10px;
@@ -267,14 +269,14 @@ select {
 	font-size: 40px;
 }
 
-.edit_icon,.delete_icon {
+/* .edit_icon,.delete_icon {
 	border: 1px solid #03A9F4;
 	padding: 5px;
 	border-radius: 20px;
 	padding: 3px 7px 3px 7px;
 	margin: 0 0 0 15px;
 }
-
+ */
 /*======= Device Controller Style ========*/
 .assignedList,.newassignedList {
 	-webkit-padding-start: 5px;
@@ -304,25 +306,24 @@ select {
 }
 
 /* My style */
-.select_heading {
+/* .select_heading {
 	color: #eee;
 	background: #424242;
 	padding: 12px 0px 10px 10px;
 	border-radius: 10px 10px 0 0;
-}
-
+} */
 .select_customer {
 	background: rgba(180, 180, 180, 0.5);
 	padding: 15px 30px 15px 30px;
 }
 
-.select_device {
+/* .select_device {
 	background: rgba(180, 180, 180, 0.5);
 	padding: 15px 30px 15px 30px;
 	height: 220px;
 	overflow: auto;
 }
-
+ */
 .select_device th,.select_device td {
 	color: #fff
 }
@@ -333,53 +334,54 @@ select {
 	color: #03A9F4;
 }
 
-.helplist {
+/* .helplist {
 	-webkit-padding-start: 0px;
 	padding: 10px;
-}
-
+} */
 .helplist li {
 	display: inline-block;
 	font-size: 10px;
 }
-.bgloading{
+
+.bgloading {
 	z-index: 1000;
-    border: none;
-    margin: 0px;
-    padding: 0px;
-    width: 100%;
-    height: 100%;
-    top: 0px;
-    left: 0px;
-    opacity: 0.6;
-    cursor: wait;
-    position: fixed;
-    background-color: rgb(102, 102, 102);
+	border: none;
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+	height: 100%;
+	top: 0px;
+	left: 0px;
+	opacity: 0.6;
+	cursor: wait;
+	position: fixed;
+	background-color: rgb(102, 102, 102);
 }
+
 .titleClass {
-	font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
-    font-size: 18px;
-    font-style: normal;
-    font-variant: normal;
-    font-weight: 500;
-    line-height: 26.4px;
+	font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode",
+		"Lucida Sans", Tahoma, sans-serif;
+	font-size: 18px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+	line-height: 26.4px;
 }
 
-
-.bigbar{
+.bigbar {
 	z-index: 1011;
-    position: fixed;
-    padding: 15px;
-    margin: 0px;
-    width: 30%;
-    top: 40%;
-    left: 35%;
-    text-align: center;
-    color: rgb(255, 255, 255);
-    border: none;
-    cursor: wait;
-    border-radius: 10px;   
-    background-color: rgb(0, 0, 0);
+	position: fixed;
+	padding: 15px;
+	margin: 0px;
+	width: 30%;
+	top: 40%;
+	left: 35%;
+	text-align: center;
+	color: rgb(255, 255, 255);
+	border: none;
+	cursor: wait;
+	border-radius: 10px;
+	background-color: rgb(0, 0, 0);
 }
 </style>
 
@@ -405,98 +407,114 @@ select {
 <body ng-controller="customerController" ng-cloak>
 
 	<!--================= Nav Header Starts =================-->
-	<nav class="navbar navbar_home">
+	<!-- 	<nav class="navbar header">
 		<div class="container">
 			<div class="row">
-				<div class="col-sm-12">
-					<div class="object move-right">
-						<img src="../images/car_logo_active.png" alt="car_logo" /> <span
-							class="logo_Title">Bydesign Automobile Tracking System</span>
+				<div class="col-xs-12">
+					<div class="col-xs-2">
+						<img src="../images/logo-new-bats-white.png" alt="bydesign_logo" class="logo"/>
 					</div>
+					<div class="col-xs-10">
+					<a href="" class="logout" ng-controller="logoutFactoryUser"
+											ng-click="logoutFactorySubmit()">Logout</a>
+					<a href="" class="login" data-toggle="modal" data-target="#loginModal">Login</a>
+				    </div>
 				</div>
+			
 			</div>
 		</div>
-	</nav>
+	</nav> -->
 	<!--================= Nav Header Ends =================-->
 
 
 
 
 	<!--================= Content Starts =================-->
-	<div class="container">
+	<div class="container-fluid">
+
+
 		<div class="row">
-			<div class="col-sm-12">
 
-				<div class="row">
-
-					<div class="col-sm-2">
-						<div class="sidebar-nav">
-							<div class="navbar navbar-default" role="navigation">
-								<div class="navbar-collapse collapse sidebar-navbar-collapse">
-									<ul class="nav navbar-nav" track-active>
-										<li><a
-											ng-class="{ active: activePath=='/factory/customer' }"
-											href="/factory/customer">
-												<div class="row">
-													<div class="col-sm-4">
-														<i class="fa fa-user"></i>
-													</div>
-													<div class="col-sm-8">
-														<p>Manage Customer</p>
-													</div>
-												</div>
-										</a></li>
-										<li><a
-											ng-class="{ active: activePath=='/factory/device' }"
-											href="/factory/device">
-												<div class="row">
-													<div class="col-sm-4">
-														<i class="fa fa-cog"></i>
-													</div>
-													<div class="col-sm-8">
-														<p>Manage Device</p>
-													</div>
-												</div>
-										</a></li>
-										<li><a href="#" data-toggle="modal"
-											data-target="#changePwd">
-												<div class="row">
-													<div class="col-sm-4">
-														<i class="fa fa-key"></i>
-													</div>
-													<div class="col-sm-8">
-														<p>Change Password</p>
-													</div>
-												</div>
-										</a></li>
-										<li><a href="#" ng-controller="logoutFactoryUser"
-											ng-click="logoutFactorySubmit()">
-												<div class="row">
-													<div class="col-sm-4">
-														<i class="fa fa-sign-out"></i>
-													</div>
-													<div class="col-sm-8">
-														<p>Logout</p>
-													</div>
-												</div>
-										</a></li>
-									</ul>
-								</div>
-							</div>
+			<div class="col-sm-2">
+				<div class="sidebar-nav">
+					<div class="navbar navbar-default" role="navigation">
+						<div
+							class="navbar-collapse collapse sidebar-navbar-collapse ulPadding">
+							<ul class="nav navbar-nav" track-active>
+								<li><a class="logo" href="#"> <img
+										src="../images/menu/logo.png" alt="">
+								</a></li>
+								<li ng-click="menuPos=0"><a
+									ng-class="{ active: activePath=='/factory/customer' }"
+									href="/factory/customer">
+										<div class="row">
+											<div class="col-sm-2">
+												<div class="colmenu1"></div>
+											</div>
+											<div class="col-sm-3 listElePadding">
+												<img 
+													ng-src="{{menuPos==0?'../images/menu/A_manage-user_active.png':'../images/menu/A_manage-user.png'}}" 
+													alt="bydesign_logo"
+													class="sidebar_icons" />
+												<!-- <i class="fa fa-user"></i> -->
+												<!-- ng-src="{{img?'../images/manage-user.png':'../images/manage-user-copy.png'}}" -->
+											</div>
+											<div class="col-sm-7 listElePadding">
+												<p>Manage Customer</p>
+											</div>
+										</div>
+								</a></li>
+								<li ng-click="menuPos=1"><a ng-class="{ active: activePath=='/factory/device' }"
+									href="/factory/device">
+										<div class="row">
+											<div class="col-sm-2">
+												<div class="colmenu1"></div>
+											</div>
+											<div class="col-sm-3 listElePadding">
+												<img 
+													ng-src="{{menuPos==1?'../images/menu/A-manage-device_active.png':'../images/menu/A-manage-device.png'}}" 
+													alt="bydesign_logo"
+													class="sidebar_icons" />
+												<!-- <i class="fa fa-cog"></i> -->
+											</div>
+											<div class="col-sm-7 listElePadding">
+												<p>Manage Device</p>
+											</div>
+										</div>
+								</a></li>
+								<li ng-click="menuPos=2"><a
+									ng-class="{active: activePath=='/factory/changePwd' }"
+									href="/factory/changePwd">
+										<div class="row">
+											<div class="col-sm-2">
+												<div class="colmenu1"></div>
+											</div>
+											<div class="col-sm-3 listElePadding">
+												<img 
+													ng-src="{{menuPos==2?'../images/menu/Admin-change-password_active.png':'../images/menu/Admin-change-password.png'}}" 
+													alt="bydesign_logo"
+													class="sidebar_icons" />
+												<!-- <i class="fa fa-key"></i> -->
+											</div>
+											<div class="col-sm-7 listElePadding">
+												<p>Change Password</p>
+											</div>
+										</div>
+								</a></li>
+							</ul>
 						</div>
 					</div>
-
-
-					<!-- angular templating -->
-					<!-- this is where content will be injected -->
-					<div ng-view></div>
-
-
-
 				</div>
-
-
 			</div>
+			<div class="col-sm-10 pad0">
+
+				<!-- angular templating -->
+				<!-- this is where content will be injected -->
+				<div ng-view></div>
+			</div>
+
+
+
 		</div>
 	</div>
 	<!--================= Content Ends =================-->
@@ -518,65 +536,7 @@ select {
 						<span class="closeIcon" data-direction="left" data-dismiss="modal"
 							aria-hidden="true" ng-click="reset()">&times;</span>
 					</div>
-					<div class="row">
-						<div class="col-sm-6 col-sm-offset-3">
-							<!-- Change Password -->
-							<h1 class="titleHead">Change Password</h1>
-							<form name="changePwd" class="formInput" id="changePwdFrm">
-								<div class="control-group">
-									<div class="form-group">
-										<div class="row">
-											<div class="col-sm-12 controls">
-												<label ng-show="newpwd" class="floatlabeltxt show-hide">Enter
-													New Password</label> <input type="password" ng-model="newpwd"
-													class="form-control new_pwd" name="new_pd"
-													placeholder="Enter New Password" ng-change="hidePasswordMismatch()" password-validate required>
 
-												<span class='help-inline' ng-show='changePwd.newpwd.$valid'>
-													<i class='icon-ok'></i>
-												</span>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="control-group">
-									<div class="form-group">
-										<div class="row">
-											<div class="col-sm-12 controls">
-												<label ng-show="repwd && newpwd"
-													class="floatlabeltxt show-hide">Re-Enter New
-													Password</label> <input type="password" ng-model="repwd"
-													ng-show="newpwd" class="form-control confirm_pwd"
-													name="confirm_pd" same-as='newpwd'
-													placeholder="Re-Enter New Password" repassword-validate
-													required> <span class='help-inline'
-													ng-show='changePwd.repwd.$valid'> <i class='icon-ok'></i>
-												</span> <span class="mismatch" ng-show="isMismatch">Password
-													Mismatch</span>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div ng-hide="newpwd && repwd">
-									<ul class="helplist">
-										<li>At least <strong>one letter</strong></li>
-										<li>At least <strong>one number</strong></li>
-										<li>At least <strong>8 characters long</strong></li>
-									</ul>
-								</div>
-								<div class="form-group">
-									<div class="row">
-										<div class="col-sm-6 col-sm-offset-3" align="center">
-											<button class="btn btn-primary chngbtn"
-												ng-disabled="!changePwd.$valid" ng-click="pwdChange(repwd)">Submit</button>
-										</div>
-									</div>
-								</div>
-
-							</form>
-							<!-- ./Change Password -->
-						</div>
-					</div>
 				</div>
 			</div>
 		</div>
@@ -614,6 +574,24 @@ select {
 		function resetlabel() {
 			$('.floatlabeltxt').addClass("show-hide ng-hide");
 		}
+		$('li').click(function() {
+			/* if($(this).find('img').attr('src') == "../images/_0000s_0005_manage-user.png"){
+				$(this).find('img').attr("src", "../images/_0000s_0005_manage-user.png");
+			} */
+			/* var a = $(this).find('img').attr('src');
+			console.log(a);
+			if($(this).find('img').attr('src') == "../images/manage-user.png"){
+				$(this).find('img').attr("src", "../images/manage-user-copy.png");
+			}
+			else {
+				$(this).find('img').attr("src", "../images/manage-user-copy.png");
+			} */
+
+			$('li').removeClass('active'); // remove all active classes
+			$(this).addClass('active');
+			/* $(this).find('img').attr('img')
+			var imge = true; */
+		})
 	</script>
 
 

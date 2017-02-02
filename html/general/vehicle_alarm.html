@@ -1,94 +1,91 @@
-<div class="col-sm-10">
-	<h2 class="heading_title">Vehicle Alarm</h2>
-	<div class="row">
-		<div class="col-sm-12">
-			<div class="bgloading" ng-show="httpLoading">
-				<div class="bigbar">
-					<h1 class="titleClass">loading!...</h1>
+<div class="col-sm-12">
+	<div class="bgloading" ng-show="httpLoading">
+		<div class="bigbar">
+			<h1 class="titleClass">loading!...</h1>
+		</div>
+	</div>
+	<div class="row header_bats">
+		<div class="col-sm-10">
+			<div class="row">
+				<div class="col-sm-12">
+					<label class="custom_label">Select Vehicle</label>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-sm-6" id="clearTextGroup">
+				<div class="col-sm-3 customcol3" id="clearTextGroup">
 					<select id="selectGroup" class="form-control" name="groupList"
 						ng-model="groupname" ng-change="fetchDevList(groupname)">
-						<option ng-if="groupList.length" value="" selected disabled class="disable_select">-- Select Group - -</option>
-						<option ng-if="!groupList.length"  selected disabled>No Group Available</option>
+						<option ng-if="groupList.length" value="" selected disabled
+							class="disable_select">-- Select Group - -</option>
+						<option ng-if="!groupList.length" selected disabled>No
+							Group Available</option>
 						<option ng-repeat="option in groupList" value="{{ option.gid }}">{{option.gname}}</option>
 					</select>
 				</div>
-				<div class="col-sm-6" id="clearTextDevice">
+				<div class="col-sm-3" id="clearTextDevice">
 					<select id="selectDevice" class="form-control" name="devList"
 						ng-model="deviceId" ng-change="deviceSelectedAlarm()">
-						<option ng-if="devList.length" value="" selected disabled class="disable_select">-- Select Vehicle No/Device --</option>
-						<option ng-if="!devList.length" selected disabled> No Device Available</option>
+						<option ng-if="devList.length" value="" selected disabled
+							class="disable_select">-- Select Vehicle No/Device --</option>
+						<option ng-if="!devList.length" selected disabled>No
+							Device Available</option>
 						<option ng-repeat="option in devList" value="{{ option.devid }}">{{option.vehicle_num.length>0?option.vehicle_num:option.devid}}</option>
 					</select>
 				</div>
+				<section ng-show="deviceSelectAlarm">
+					<div class="col-sm-3 customcol3 pad0">
+						<div class="">
+							<md-content> <md-datepicker ng-model="myDate.start"
+								md-placeholder="Enter date" md-max-date="todayDate"></md-datepicker>
+							</md-content>
+						</div>
+					</div>
+					<div class="col-sm-3 customcol3 pad0">
+						<div class="">
+							<md-content> <md-datepicker ng-model="myDate.end"
+								md-placeholder="Enter date" md-max-date="todayDate"></md-datepicker>
+							</md-content>
+						</div>
+					</div>
+					<div class="col-sm-1 pad0">
+						<button class="btn btn-primary btn-sm" ng-click="submitAlarm()">Submit</button>
+					</div>
+				</section>
 			</div>
 		</div>
+		<div class="col-sm-2 borderLeft">
+			<div ng-include src="'/general/subMenu'"></div>
+		</div>
 	</div>
-	<br>
-
-	<div class="row">
-		<section ng-show="deviceSelectAlarm">
-			<div class="col-sm-6">
-				<h5 class="label_Style">Start Date</h5>
-				<div class="form-group">
-					<md-content> <md-datepicker ng-model="myDate.start"
-						md-placeholder="Enter date" md-max-date="todayDate"></md-datepicker> </md-content>
-				</div>
-			</div>
-			<div class="col-sm-6">
-				<h5 class="label_Style">End Date</h5>
-				<div class="form-group">
-					<md-content> <md-datepicker ng-model="myDate.end"
-						md-placeholder="Enter date" md-max-date="todayDate"></md-datepicker> </md-content>
-				</div>
-			</div>
-
-			<div class="col-sm-6 col-sm-offset-3" align="center">
-				<button class="btn btn-primary" ng-click="submitAlarm()">Submit</button>
-			</div>
-		</section>
-	</div>
-
-	<br>
-
-
 	<!-- Alarm History Table -->
-	<div class="row" ng-if="showResultTable">
-		<div class="col-sm-12">
-			<div class="table-responsive">
+	<div class="row">
+		<div class="col-sm-12 pad0">
+			<div class="table-responsive" ng-if="showResultTable">
 				<section class="tableSection">
-					<div class="hist-container">
+					<div class="hist-container" ng-style="histcontentheight">
 						<table class="table">
 							<thead>
-								<tr class="header">
+								<tr>
 									<th>Slno
 										<div>Slno</div>
 									</th>
-									<th>Location(Click lat,long to see address)
-										<div>Location(Click lat,long to see address)</div>
+									<th>Alarm Type
+										<div>Alarm Type</div>
 									</th>
 									<th>Speed in KMPH
 										<div>Speed in KMPH</div>
 									</th>
-									<th>Date Time
-										<div>Date Time</div>
+									<th>Time | Date
+										<div>Time | Date</div>
 									</th>
-									<th>Alarm Type
-										<div>Alarm Type</div>
+									<th>Location(Click lat,long to see address)
+										<div>Location(Click lat,long to see address)</div>
 									</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr ng-repeat='x in alarm_history'>
 									<td>{{$index+1}}</td>
-									<td><a href=""
-										ng-click="givelt(x.lat,x.long);popover.show($event);"> <span>{{x.lat}},
-												{{x.long}}</span></a></td>
-									<td>{{x.Velocity}}</td>
-									<td>{{getDate(x.ts)}}</td>
 									<!-- <td>{{x.alarm_type}}</td> -->
 									<td ng-if="x.alarm_type == '0' ">Panic Alarm</td>
 									<td ng-if="x.alarm_type == '1' ">Tamper Sim Alarm</td>
@@ -98,6 +95,11 @@
 									<td ng-if="x.alarm_type == '5' ">Geofence Alarm</td>
 									<td ng-if="x.alarm_type == '6' ">Sanity Alarm</td>
 									<td ng-if="x.alarm_type == '7' ">Power Interrupt Alarm</td>
+									<td ng-style="{{x.alarm_type == '4'?'redColor':'blackColor'}}">{{x.Velocity}}</td>
+									<td>{{getDate(x.ts)}}</td>
+									<td><a class="link" href=""
+										ng-click="givelt(x.lat,x.long);popover.show($event);"> <span>{{x.lat}},
+												{{x.long}}</span></a></td>
 								</tr>
 							</tbody>
 						</table>
@@ -109,8 +111,14 @@
 	<!-- ./Alarm History Table -->
 
 	<div class="row" ng-if="noResultTable">
-		<div class="col-sm-12">
-			<h1 style="color: #000">No data available for selected date</h1>
+		<div class="col-sm-12 verhorcenter" align="center">
+			<div class="centerData">
+				<ul class="nodata_list">
+					<li><img alt="" src="../images/no-data.png" class="nodata_img"></li>
+					<li><label style="color: #000">Nothing here!</label></li>
+					<li><span>No Data Available</span></li>
+				</ul>
+			</div>
 		</div>
 	</div>
 

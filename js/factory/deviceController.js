@@ -1,4 +1,5 @@
-batsfactoryhome.controller('deviceController', function($scope,$http,$localStorage) {
+batsfactoryhome.controller('deviceController', function($rootScope,$scope,$http,$localStorage) {
+	$rootScope.menuPos=1;
 	$scope.isSelected=true;
 	$scope.token = $localStorage.data;
 	if(typeof $scope.token==="undefined"){
@@ -66,7 +67,9 @@ batsfactoryhome.controller('deviceController', function($scope,$http,$localStora
 			  // console.log(data.stocklist[inc]);
 			   $scope.rows.push(data.stocklist[inc].devid);
 		   }
-		   
+		   $scope.FActoryStock=$scope.rows;
+		   console.log($scope.FActoryStock.length);
+		   $scope.FactoryStockCount=$scope.FActoryStock.length;
 		   var stockList = data.stocklist;
            if(stockList.length == 0){
                $scope.noDevicesFactory = true;
@@ -101,6 +104,8 @@ batsfactoryhome.controller('deviceController', function($scope,$http,$localStora
 	 * 		a) load devices in assigned devices part
 	 * 		b) change button to modify customer*/
 	$scope.chk=function(custName){
+		$scope.selection=[];
+		$scope.loadDevice();
 		$scope.selectCustomer = true;
 		$scope.isSelected=false;
 		//document.getElementById("custIdList").blur();
@@ -254,20 +259,24 @@ batsfactoryhome.controller('deviceController', function($scope,$http,$localStora
 	$scope.selection=[];
 	$scope.toggleSelection = function toggleSelection(deviceID) {
 	    var idx = $scope.selection.indexOf(deviceID);
+	    
+	    
+	    console.log( $scope.FactoryStockCount);
 	    // is currently selected
 	    if (idx > -1) {
 	      $scope.selection.splice(idx, 1);
-	      console.log($scope.selection);
-	      $scope.rows.push(deviceID);
+	     /* console.log($scope.selection);
+	      $scope.rows.push(deviceID);*/
+	      $scope.FactoryStockCount=$scope.FactoryStockCount+1;
 	    }
-
+	   
 	    // is newly selected
 	    else {
 	      $scope.selection.push(deviceID);
 	      console.log($scope.selection);
 	      var index = -1;		
 			var comArr = eval( $scope.rows );
-			//console.log($scope.rows);
+			console.log($scope.rows+"\n"+comArr);
 			for( var i = 0; i < comArr.length; i++ ) {
 				if( comArr[i] === deviceID ) {
 					index = i;
@@ -277,22 +286,67 @@ batsfactoryhome.controller('deviceController', function($scope,$http,$localStora
 			if( index === -1 ) {
 				alert( "Something gone wrong" );
 			}
-			$scope.rows.splice( index, 1 );		
+			/*$scope.rows.splice( index, 1 );*/	
+			$scope.FactoryStockCount=$scope.FactoryStockCount-1;
 	    }
+	   
 	  };
+	  
+	  
+	
+/*
+	    $scope.items = [
+	        {id: 1, title: "Can't Hold Us"},
+	        {id: 2, title: "Just Give Me A Reason"},
+	        {id: 3, title: "Mirrors"},
+	        {id: 4, title: "Get Lucky"},
+	      ];
+	    */
+	      $scope.selectedItems = 0;
+	      $scope.$watch('rows', function(rows){
+	    	  console.log(rows);
+	        var selectedItems = 0;
+	        angular.forEach(rows, function(rowContent){
+	        	console.log(rowContent);
+	          selectedItems += rowContent.selected ? 1 : 0;
+	        })
+	        $scope.selectedItems = selectedItems;
+	      }, true);        
 
+	 
+	      
+	 /* *//**
+	 	* On Create User Form
+	    * 1) Select Group on click of checkbox & viceversa*//*
+		$scope.selection = {};        
+	    $scope.group = group_list;        
+	    $scope.$watch(function() {
+	        return $scope.selection.ids;
+	    }, function(value) {
+	        $scope.selection.objects = [];
+	        angular.forEach($scope.selection.ids, function(v, k) {
+	            v && $scope.selection.objects.push(getCategoryById(k));            
+	        });        
+	    }, true);
+	    
+	    function getCategoryById (gid) {
+	        for (var i = 0; i < $scope.group.length; i++) {
+	            if ($scope.group[i].gid == gid) {
+	                return $scope.group[i];
+	            }
+	        }
+	    };
+		      */
 	  /**
 	   * On load of customer name
 	   * 1)Filter customer name
 	   * 2)Select customer name*/	  
 	  	  //var tagsData = cname;
 	  	// init jquery functions and plugins
-	       $(document).ready(function(){
-	         $.getScript('../assets/select_filter/select2.min.js',function(){
-	           $("#mySelect").select2({
-	           });
-	         });//script
-	       });	  
+	
+	  
+	 // *********************** number of checkbox selected ***********************
+	  $scope.selectedItems = 0;
 	  
 });
 

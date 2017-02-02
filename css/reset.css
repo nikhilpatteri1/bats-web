@@ -17,9 +17,10 @@ time, mark, audio, video {
     font-size:100%;
     vertical-align:baseline;
     background:transparent;
+    
 }
 
-body {
+/* body {
     line-height:1;
      background:url('../images/bg1.jpg')no-repeat center center fixed;
      -webkit-background-size: cover;
@@ -28,6 +29,22 @@ body {
   background-size: cover;
     z-index:-10;
     font-family: roboto-regular;
+} */
+@font-face{
+	font-family:"hind";
+	src:url("../assets/fonts/hind/hind.ttf");
+}
+body {
+    line-height:1;
+     background:url('../images/bg1.jpg')no-repeat center center fixed;
+     -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+    z-index:-10;
+    font-family: Roboto;
+    padding-bottom:0 !important;
+    overflow-x:hidden !important;
 }
 
 article,aside,details,figcaption,figure,
@@ -104,7 +121,7 @@ input, select {
 
 /*=================== Custom Common Styles ===================*/
 
-h1,h2,h3,h4,h5,h6{font-family: roboto-bold;}
+h1,h2,h3,h4,h5,h6{font-family: Montserrat-Regular;}
 h1{font-size:32px}
 h2{font-size:28px}
 h3{font-size:24px}
@@ -138,10 +155,42 @@ h6{font-size:12px}
 
 }
 
+@font-face {
+    font-family: 'helvetica';
+    src: url('../assets/fonts/Helvetic/helvetica-normal.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'MontserratAlternates-Bold';
+    src: url('../assets/fonts/Helvetic/MontserratAlternates-Bold.otf');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'MontserratAlternates-SemiBold';
+    src: url('../assets/fonts/Helvetic/MontserratAlternates-SemiBold.otf');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+@font-face {
+    font-family: 'Montserrat-Regular';
+    src: url('../assets/fonts/Helvetic/Montserrat-Regular.otf');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
 /*=================== Custom Scrollbar Style for Webkit browser ===================*/
 /* Let's get this party started */
 ::-webkit-scrollbar {
-    width: 12px;
+    width: 5px;
 }
 /* Track */
 ::-webkit-scrollbar-track {
@@ -153,7 +202,7 @@ h6{font-size:12px}
 ::-webkit-scrollbar-thumb {
     -webkit-border-radius: 10px;
     border-radius: 10px;
-    background: rgba(0,0,0,0.6); 
+    background: #e7e7e9; 
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
 }
 ::-webkit-scrollbar-thumb:window-inactive {
@@ -162,7 +211,7 @@ h6{font-size:12px}
 
 
 
-a.btn.btn-primary, .btn.btn-primary{background:#03A9F4;border-color:#03A9F4;cursor:pointer}
+/* a.btn.btn-primary, .btn.btn-primary{background:#03A9F4;border-color:#03A9F4;cursor:pointer} */
 
 select option{text-transform:capitalize}
 
@@ -210,10 +259,10 @@ input::-webkit-inner-spin-button {
 .padding_rt0{padding-right:0}
 .padding_lt0{padding-left:0}
 input[type="checkbox"]{width:20px}
-textarea.form-control{resize:none;border:2px solid #ddd;border-radius:0;margin-top:20px;height:80px;}
+/* textarea.form-control{resize:none;border:2px solid #ddd;border-radius:0;margin-top:20px;height:80px;} */
 
 .modal-footer {padding:15px;text-align:right; border-top:0;background:#eee;text-align:left;}
-.modal-title {color:#03A9F4;text-align:center;font-size:30px;}
+.modal-title { color: #060606;text-align:left;font-size:15px; font-family:helvetica;}
 .close_icon{position:absolute;right:20px;z-index: 100;font-size: 2.3em;text-align: center; color: #F44336;cursor: pointer;}
 
 .speedo_meter{background:#fff;height:auto;padding:0;}
@@ -303,17 +352,18 @@ a:focus{ outline: none; }
 .multiple_contact.has-error input.ng-dirty.ng-invalid {border: solid 2px red;}
 
 /*================== added on 11-07-2016 Bug Fixing=================*/
-.group_name_span{width:100%;float:left;margin-bottom:6px;}
-.group_name_selected{width:90%;padding:2px 0 0 0;word-wrap:break-word;}
+/* .group_name_span{width:100%;float:left;margin-bottom:6px;} */
+/* .group_name_selected{width:90%;padding:2px 0 0 0;word-wrap:break-word;} */
 
 
 /*================== Alarm Notifications =================*/
 .notify-row {float: right;margin-top: 30px;}
-ul.top-menu > li > a {color: #666666;font-size: 16px;border-radius: 4px;-webkit-border-radius: 4px;border: 1px solid #f0f0f8 !important;
-padding: 2px 6px;/* margin-right: 15px; */}
+/* ul.top-menu > li > a {color: #666666;font-size: 16px;border-radius: 4px;-webkit-border-radius: 4px;border: 1px solid #f0f0f8 !important; */
+/*padding: 2px 6px; margin-right: 15px; }*/
+.top-menu li {-webkit-padding-start: 0px; list-style-type: none;}
 .badge.bg-warning {background: #FCB322;}
 .notify-row .badge {position: absolute;right: -10px;top: -10px;z-index: 100;}
-.dropdown-menu.extended {max-width: 300px !important;min-width: 160px !important;top: 42px;right:0;left: inherit;
+.dropdown-menu.extended {max-width: 300px !important;min-width: 160px !important;top: 47px;right:0;left: inherit;
 width: 280px !important; padding: 0;box-shadow: 0 2px 5px rgba(0, 0, 0, 0.176) !important;border: none !important;
 border-radius: 4px;-webkit-border-radius: 4px;/* height: 400px;overflow: auto; */}
 .notify-arrow-yellow {border-color: transparent transparent #FCB322;border-bottom-color: #FCB322 !important;
@@ -422,5 +472,7 @@ top: -19px;transition: all 0.25s ease 0s;width: 0;z-index: 10;margin-top: 10px;o
     border-radius: 20px !important;
     margin-top:15px !important;
 }
+.borderLeft{border-left:3px solid #e0e4e5}
+.logoutBtn{cursor:pointer;}
 
 

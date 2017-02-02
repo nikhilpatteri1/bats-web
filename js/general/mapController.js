@@ -1,6 +1,7 @@
 /*================== Map Script ===================*/
-	batsGeneralHome.controller('GeneralController', function($scope, $interval, $http,$rootScope,$uibModal,
+	batsGeneralHome.controller('GeneralController', function($rootScope,$scope, $interval, $http,$rootScope,$uibModal,
 		$localStorage,$window,$timeout) {
+		$rootScope.menuPos=0;
 		var reqTime = 12;
 		$scope.token = $localStorage.data;
 		$scope.showTrafficLayerBtn = false;
@@ -66,7 +67,6 @@
 			    var styleMap = [{"featureType":"administrative","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"landscape","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"color":"#bee4f4"},{"visibility":"on"}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"geometry.fill","stylers":[{"visibility":"on"}]},{"featureType":"transit","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#46bcec"},{"visibility":"on"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"on"},{"color":"#000000"}]}];
 			    var myOptions = {
 			      zoom: 16,
-			      styles: styleMap,
 			      mapTypeId: google.maps.MapTypeId.ROADMAP
 			    };
 			    // console.log(document.getElementById("map_canvas"));
@@ -641,8 +641,8 @@
 		 */
 		$scope.fetchDevicelist = function(groupID) {
 			$scope.httpLoading=true;
-		    $('#clearTextDevice span.select2-chosen').empty();  
-		    $('#clearTextDevice span.select2-chosen').text("- - Select  Vehicle No/Device - -"); 
+		    /*$('#clearTextDevice span.select2-chosen').empty();  
+		    $('#clearTextDevice span.select2-chosen').text("- - Select  Vehicle No/Device - -"); */
 			storage_arr=[];// clearing the matched array on change of group id
 							// dropdown
 			setMapOnAll(null);			
@@ -920,7 +920,10 @@
 					$scope.truckCount = 0;
 					icon.path = markerIcon;
 					}
-					
+					$scope.speedSpeedOmeter=speedValue;
+					$scope.vehnoSpeedOmeter=data[0].vehicle_num;
+					$scope.speedlimitSpeedOmeter=speedlimit;
+					$scope.dateTimeSpeedOmeter=getDateTime(data[0].values[0].ts);
 					updateSpeed(data[0].vehicle_num,data[0].values[0].Velocity,data[0].speed_limit,getDateTime(data[0].values[0].ts));				
 					// storedltlng.lat=data[0].values[0].lat;
 					/* vehichleRouting(data,data[0].values[0].lat,data[0].values[0].long,data[0].values[0].lat,data[0].values[0].long); */
@@ -1025,10 +1028,6 @@
 		 */
 		function updateSpeed(vehNo,speed,speed_limit,ts) {	
 			// console.log("sas");
-			$('#container').highcharts().setTitle({text: "<label>Vehicle No:</label><p>" + vehNo
-				+ "</p><br/><br/><label>Speed Limit:</label><p><b>"
-				+ speed_limit + "<b>KmpH</p><br/><br/><label>DateTime:</label><b>"
-				+ts+"</b>"});
 			$('#container').highcharts().series[0].points[0].update(Number(speed));		
 		}
 		 $('#container').highcharts({
@@ -1039,14 +1038,12 @@
 		            plotBackgroundImage: null,
 		            plotBorderWidth: 0,
 		            plotShadow: false,
-		            width:'300',
-		            height:'300'
+		            width:'200',
+		            height:'200'
 		        },
 
 		        title : {
-					text : "<label>Device ID:</label><p>" + devIDval
-							+ "</p><br/><br/><label>Speed Limit:</label><p><b>"
-							+ speedlimit + "<b>KmpH</p>"
+					text : ""
 				},
 
 		        pane: {
@@ -1169,7 +1166,7 @@
 				$("#selectDevice").select2({});
 				$('#clearTextGroup span.select2-chosen').text("- - Select Group - -");
 				$('#clearTextDevice span.select2-chosen').text("- - Select Vehicle No/Device - -");
-			});// script
+			});/// script
 			$(document).on('input','.select2-input',function(){
 				console.log("input");
 				$('.dropdownSection').css('top','20%');				

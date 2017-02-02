@@ -1,0 +1,42 @@
+
+<div class="row verhorcenter pad20">
+	<div class="col-sm-6">
+	 	<!-- notification dropdown start-->
+	 	<ul class="top-menu">
+	 	<li id="header_notification_bar" class="dropdown">
+	 	<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+		<img 	ng-click="hideNotifyCount()" src="/images/menu/notification.png"
+			class="sidebar_icons" /> <span class="badge bg-warning">{{notifyLength}}</span></a>
+			
+		<ul class="dropdown-menu extended notification">
+			<div class="notify-arrow notify-arrow-yellow"></div>
+			<h5 ng-if="noNotification" class="no_notifications">No
+				Notifications Available</h5>
+			<span ng-if="showNotification">
+				<li>
+					<p class="yellow">You have {{notifyLength}} new notifications</p>
+			</li>
+				<li ng-repeat="showNotify in notifyStatus"><a href="#"
+					ng-click="showNotifyModal(showNotify)" data-toggle="modal"
+					data-target="#showNotificationModal"> <span
+						class="label label-danger custom-label-danger">{{showNotify.alarm_type_One}}</span>
+						There is an {{showNotify.alarm_type_Two}} for
+						{{showNotify.vehicle_num}} on <mydate>{{showNotify.ts |
+						date:'dd/MM/yyyy hh:mm a'}}</mydate>.
+				</a></li>
+				<li ng-if="viewMoreNotify"><a href="/admin/alarm"
+					style="text-align: center"> <span>View More</span>
+				</a></li>
+			</span>
+		</ul>
+		</li>
+	</ul>	
+		<!-- notification dropdown end -->
+	</div>
+	<div class="col-sm-6">
+		<div class="verhorcenter logoutBtn" ng-controller="logoutAdminUser"
+			ng-click="logoutAdminSubmit()">
+			<img src="/images/menu/logout.png" class="sidebar_icons" />Logout
+		</div>
+	</div>
+</div>

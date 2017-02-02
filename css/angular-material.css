@@ -10525,7 +10525,7 @@ md-datepicker {
   border-bottom-style: solid;
   display: inline-block;
   width: auto;
-  margin-left: 12px; }
+ /*  margin-left: 12px;  */}
   .md-datepicker-input-container.md-datepicker-focused {
     border-bottom-width: 2px; }
 

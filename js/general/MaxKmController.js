@@ -1,8 +1,8 @@
 var startTimeStampKm;
 var endTimeStampKm;
 
-batsGeneralHome.controller("GeneralMaxKmCtrl",function($http,$scope,$filter,$localStorage,$timeout){
-	
+batsGeneralHome.controller("GeneralMaxKmCtrl",function($rootScope,$http,$scope,$filter,$localStorage,$timeout){
+	$rootScope.menuPos=5;
 	var token = $localStorage.data;
 	if(typeof $scope.token==="undefined"){
 		swal({ 
@@ -26,15 +26,14 @@ batsGeneralHome.controller("GeneralMaxKmCtrl",function($http,$scope,$filter,$loc
 	var endDateMaxKmError = document.getElementById('endDateMaxKmError');
 	
 /**
-	* fetch Group list based on token
-	* fetch device list based on group list
-*/	
-	//$scope.hist = {"searchGroupModel":""};
-	//$scope.hist.searchDeviceModel = "";
+ * fetch Group list based on token fetch device list based on group list
+ */	
+	// $scope.hist = {"searchGroupModel":""};
+	// $scope.hist.searchDeviceModel = "";
 	
 	$scope.customer = {};
 	$scope.customer.token = token;
-	//console.log(JSON.stringify($scope.customer));
+	// console.log(JSON.stringify($scope.customer));
 	$http({
 	  method  : 'POST',		  
 	  url     :apiURL+'group/list',
@@ -43,7 +42,7 @@ batsGeneralHome.controller("GeneralMaxKmCtrl",function($http,$scope,$filter,$loc
 	 })
 	  .success(function(data) {
 	  $scope.groupList = data.glist;
-	  //console.log(JSON.stringify($scope.groupList));
+	  // console.log(JSON.stringify($scope.groupList));
 	  })
 	  .error(function(data, status, headers, config) {
 		  console.log(data.err);
@@ -63,16 +62,18 @@ batsGeneralHome.controller("GeneralMaxKmCtrl",function($http,$scope,$filter,$loc
 	
 	$scope.fetchDevList = function(groupID) {
 		$scope.httpLoading=true
-	$('#clearTextDevice span.select2-chosen').empty();  
-	$('#clearTextDevice span.select2-chosen').text("- - Select  Vehicle No/Device - -"); 
+	/*
+	 * $('#clearTextDevice span.select2-chosen').empty(); $('#clearTextDevice
+	 * span.select2-chosen').text("- - Select Vehicle No/Device - -");
+	 */ 
 	$scope.sel_group_device = false;
-	//$scope.hist.searchDeviceModel = "";
+	// $scope.hist.searchDeviceModel = "";
 	$scope.deviceSelectMaxKm=true;
 	$scope.showResultMaxKm = false;
 	$scope.deviceJson = {};
 	$scope.deviceJson.token = token;
 	$scope.deviceJson.gid = groupID;
-	//console.log(JSON.stringify($scope.deviceJson));
+	// console.log(JSON.stringify($scope.deviceJson));
 	$http({
 	method : 'POST',
 	url : apiURL + 'group/devlist',
@@ -82,7 +83,7 @@ batsGeneralHome.controller("GeneralMaxKmCtrl",function($http,$scope,$filter,$loc
 	}
 	}).success(function(data) {
 	$scope.devList = data.devlist;
-	//console.log(JSON.stringify($scope.devList));
+	// console.log(JSON.stringify($scope.devList));
 	})
 	.error(function(data, status, headers, config) {
 		console.log(data.err);
@@ -104,8 +105,8 @@ batsGeneralHome.controller("GeneralMaxKmCtrl",function($http,$scope,$filter,$loc
 	};
 
 /**
-* Show datepicker & Submit button after device select
-*/
+ * Show datepicker & Submit button after device select
+ */
 $scope.deviceSelectedMaxKm=function(deviceId){
 deviceGlobal = deviceId;
 $scope.sel_group_device = true;
@@ -119,10 +120,10 @@ document.getElementById('endDateMaxKm').value = "";
 
 
 /**
-  * Onsubmit of Max KM Covered from values 
-*/
+ * Onsubmit of Max KM Covered from values
+ */
 $scope.submitMaxKm = function(){
-	//alert("Yes");
+	// alert("Yes");
 	var startDateMaxKm = document.getElementById('startDateMaxKm').value;
 	var endDateMaxKm = document.getElementById('endDateMaxKm').value;
 if(startDateMaxKm == "" && endDateMaxKm == ""){
@@ -146,8 +147,8 @@ else {
 						$scope.devIdJson.devlist = [$scope.deviceId];
 						$scope.devIdJson.sts = startTimeStampKm;
 						$scope.devIdJson.ets = endTimeStampKm;
-						//$scope.devIdJson.sts = "1456893473000";
-						//$scope.devIdJson.ets = "1456893584000";
+						// $scope.devIdJson.sts = "1456893473000";
+						// $scope.devIdJson.ets = "1456893584000";
 						console.log(JSON.stringify($scope.devIdJson));
 						$http({
 							method : 'POST',
@@ -166,6 +167,8 @@ else {
 								var vehicleNum = deviceList[i].vehicle_num;
 								var distance_tofix = deviceList[i].distance;
 								var distance = distance_tofix.toFixed(2);
+								$scope.speed=deviceList[i].speed_limit;
+								$scope.driver=deviceList[i].driver;
 								var finalDevStatus ={"devid":deviceID,"vehicle_num":vehicleNum,"distance":distance};
 								resultDevlist.push(finalDevStatus);
 								$scope.MaxKmResult = resultDevlist;
@@ -215,9 +218,9 @@ function startDate(getStartDateMinMax){
 	var timeStr=strArra[1];
 	var tsArr=timeStr.split(":");
 	var newStDate = dateArray[1] + "/" + dateArray[0] + "/" + dateArray[2];
-	//console.log(newStDate);
+	// console.log(newStDate);
 	var sts=new Date(newStDate);
-	//console.log(sts);
+	// console.log(sts);
 	sts.setDate(dateArray[0]);
 	sts.setMonth(dateArray[1]-1);
 	if(strArra[2] == "pm"){
@@ -229,9 +232,9 @@ function startDate(getStartDateMinMax){
 		else{
 			sts.setHours(Number(tsArr[0]) + 12);
 			sts.setMinutes(tsArr[1]);
-			//console.log("if " + sts);
+			// console.log("if " + sts);
 			startTimeStampKm = sts.getTime();
-			//console.log(startTimeStamp);
+			// console.log(startTimeStamp);
 		}
 	}
 	else{
@@ -243,9 +246,9 @@ function startDate(getStartDateMinMax){
 		else{
 			sts.setHours(tsArr[0]);
 			sts.setMinutes(tsArr[1]);
-			//console.log("else " + sts);
+			// console.log("else " + sts);
 			startTimeStampKm = sts.getTime();
-			//console.log(startTimeStamp);
+			// console.log(startTimeStamp);
 		}
 	}
 }
@@ -257,9 +260,9 @@ function endDate(getEndDateMinMax){
 	var timeStr=strArra[1];
 	var tsArr=timeStr.split(":");
 	var newStDate = dateArray[1] + "/" + dateArray[0] + "/" + dateArray[2];
-	//console.log(newStDate);
+	// console.log(newStDate);
 	var sts=new Date(newStDate);
-	//console.log(sts);
+	// console.log(sts);
 	sts.setDate(dateArray[0]);
 	sts.setMonth(dateArray[1]-1);
 	if(strArra[2] == "pm"){
@@ -271,9 +274,9 @@ function endDate(getEndDateMinMax){
 		else{
 			sts.setHours(Number(tsArr[0]) + 12);
 			sts.setMinutes(tsArr[1]);
-			//console.log("if " + sts);
+			// console.log("if " + sts);
 			endTimeStampKm = sts.getTime();
-			//console.log(endTimeStamp);	
+			// console.log(endTimeStamp);
 		}
 	}
 	else{
@@ -285,61 +288,67 @@ function endDate(getEndDateMinMax){
 		else{
 			sts.setHours(tsArr[0]);
 			sts.setMinutes(tsArr[1]);
-			//console.log("else " + sts);
+			// console.log("else " + sts);
 			endTimeStampKm = sts.getTime();
-			//console.log(endTimeStamp);
+			// console.log(endTimeStamp);
 		}
 	}
 }
 
 
 /**
- * Select Group/Device dropdown based on jquery 
-* */	
-	$(document).ready(function() {
-		$.getScript('../assets/select_filter/select2.min.js', function() {
-			$("#selectGroup").select2({});
-			$("#selectDevice").select2({});
-			$('#clearTextGroup span.select2-chosen').text("- - Select Group - -");
-			$('#clearTextDevice span.select2-chosen').text("- - Select  Vehicle No/Device - -");
-		});// script
-	});
+ * Select Group/Device dropdown based on jquery
+ */	
+	/*
+	 * $(document).ready(function() {
+	 * $.getScript('../assets/select_filter/select2.min.js', function() {
+	 * $("#selectGroup").select2({}); $("#selectDevice").select2({});
+	 * $('#clearTextGroup span.select2-chosen').text("- - Select Group - -");
+	 * $('#clearTextDevice span.select2-chosen').text("- - Select Vehicle
+	 * No/Device - -"); });// script });
+	 */
 
 	
 /**
-   * Show DateTimePicker onclick in jquery 
-* */	
+ * Show DateTimePicker onclick in jquery $(document).on('click',
+ * '#startDateMaxKmPicker', function(){
+ * $('#startDateMaxKmPicker').datetimepicker({ inline: true, sideBySide: true,
+ * ignoreReadonly: true, allowInputToggle: true, showClose : true,
+ * defaultDate:'now', maxDate: 'now', format: 'DD/MM/YYYY hh:mm a'
+ * }).on("dp.change",function (e) { //$("#startDateMaxKm").blur();
+ * //closeResult(); }); //startDateMaxKmError.style.display = 'none'; });
+ * $(document).on('click', '#endDateMaxKmPicker', function(){
+ * $('#endDateMaxKmPicker').datetimepicker({ inline: true, sideBySide: true,
+ * ignoreReadonly: true, allowInputToggle: true, showClose : true,
+ * defaultDate:'now', maxDate: 'now', format: 'DD/MM/YYYY hh:mm a'
+ * }).on("dp.change",function (e) { //$("#endDateMaxKm").blur();
+ * //closeResult(); }); //endDateMaxKmError.style.display = 'none'; });
+ */	
 			$(document).on('click', '#startDateMaxKmPicker', function(){
 				$('#startDateMaxKmPicker').datetimepicker({
-			                inline: true,
-			                sideBySide: true,
-			                ignoreReadonly: true,
-			                allowInputToggle: true,
-			                showClose : true,
-			                defaultDate:'now',
-			                maxDate: 'now',
-			                format: 'DD/MM/YYYY hh:mm a'
+					format: 'DD/MM/YYYY hh:mm a',
+					defaultDate:'now',        
+			        maxDate: 'now',        		
+					ignoreReadonly:true,
 			            }).on("dp.change",function (e) {
-			            	//$("#startDateMaxKm").blur(); 
-			            	//closeResult();
+			            	// $("#startDateMaxKm").blur();
+			            	// closeResult();
 			            });
-				//startDateMaxKmError.style.display = 'none';
+				// startDateMaxKmError.style.display = 'none';
 			}); 
 			$(document).on('click', '#endDateMaxKmPicker', function(){
 				$('#endDateMaxKmPicker').datetimepicker({
-			                inline: true,
-			                sideBySide: true,
-			                ignoreReadonly: true,
-			                allowInputToggle: true,
-			                showClose : true,
-			                defaultDate:'now',
-			                maxDate: 'now',
-			                format: 'DD/MM/YYYY hh:mm a'
+					 ignoreReadonly: true,
+		                allowInputToggle: true,
+		                showClose : true,
+		                defaultDate:'now',
+		                maxDate: 'now',
+		                format: 'DD/MM/YYYY hh:mm a',
 			            }).on("dp.change",function (e) {
-			            	//$("#endDateMaxKm").blur(); 
-			            	//closeResult();
+			            	// $("#endDateMaxKm").blur();
+			            	// closeResult();
 			            });
-				//endDateMaxKmError.style.display = 'none';
+				// endDateMaxKmError.style.display = 'none';
 			});
 			
 			function closeResult(){

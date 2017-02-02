@@ -72,7 +72,7 @@ body {
 /* MARKETING CONTENT
 -------------------------------------------------- */
 
-.marketing{background:rgba(238,238,238,1);width:100%;padding-top:25px;}
+/* .marketing{background:rgba(238,238,238,1);width:100%;padding-top:25px;} */
 
 /* Center align the text within the three columns below the carousel */
 .marketing .col-lg-4 {
@@ -94,9 +94,9 @@ body {
 /* Featurettes
 ------------------------- */
 
-.featurette-divider {
-  margin: 40px 0; /* Space out the Bootstrap <hr> more */
-}
+/* .featurette-divider {
+  margin: 40px 0; Space out the Bootstrap <hr> more
+} */
 
 /* Thin out the marketing headings */
 .featurette-heading {

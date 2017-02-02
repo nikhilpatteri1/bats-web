@@ -1,4 +1,5 @@
-batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$http,$timeout,travelDeskFactory,travelDeskService) {
+batstravelDeskHome.controller('tripManagement', function($rootScope,$scope, $localStorage,$http,$timeout,travelDeskFactory,travelDeskService) {
+	$rootScope.menuPos = 1;
 	$scope.token = $localStorage.data;
 	var pathWays;
 	var destinations;
@@ -20,8 +21,25 @@ batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$
 	var CEndStamp;
 	var UEndStamp;
 	
+	$scope.redColor={
+			"background-color":"#ff0000",
+			"color":"#ff0000" 
+	}
 	
-
+	/*$scope.whiteColor={
+			"background-color":"#ffffff"
+	}*/
+	
+	$scope.toggleEventInfo = function(driverd) {
+	    if ($scope.isEventShown(driverd)) {
+	      $scope.shownEvent = null;
+	    } else {
+	      $scope.shownEvent = driverd;
+	    }
+	  };
+	  $scope.isEventShown = function(driverd) {
+	    return $scope.shownEvent === driverd;
+	  };
 	
 	
 	$scope.initMap =function() {
@@ -460,6 +478,8 @@ batstravelDeskHome.controller('tripManagement', function($scope, $localStorage,$
 	}
 	
 	$scope.initTriplistMap = function(tripdetail){
+		document.getElementById('initTriplistMap'+tripdetail.trip_id).style.display = 'none';
+		
 		marker="";
 		directionsService = new google.maps.DirectionsService();
 		triplist_map = new google.maps.Map(document.getElementById('triplist_map'+tripdetail.trip_id), {

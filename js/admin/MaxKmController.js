@@ -1,8 +1,8 @@
 var startTimeStampKm;
 var endTimeStampKm;
 
-batsAdminHome.controller("MaxKmCtrl",function($http,$scope,$filter,$localStorage,$timeout){
-	
+batsAdminHome.controller("MaxKmCtrl",function($http,$scope,$rootScope,$filter,$localStorage,$timeout){
+	$rootScope.menuPos=5;
 	var token = $localStorage.data;
 	if(typeof $scope.token==="undefined"){
 		swal({ 
@@ -63,8 +63,8 @@ batsAdminHome.controller("MaxKmCtrl",function($http,$scope,$filter,$localStorage
 	
 	$scope.fetchDevList = function(groupID) {
 		$scope.httpLoading=true
-	$('#clearTextDevice span.select2-chosen').empty();  
-	$('#clearTextDevice span.select2-chosen').text("- - Select Vehicle No/Device - -"); 
+	/*$('#clearTextDevice ').empty();  
+	$('#clearTextDevice ').text("- - Select Vehicle No/Device - -"); */
 	$scope.sel_group_device = false;
 	//$scope.hist.searchDeviceModel = "";
 	$scope.deviceSelectMaxKm=true;
@@ -166,6 +166,8 @@ else {
 								var vehicleNum = deviceList[i].vehicle_num;
 								var distance_tofix = deviceList[i].distance;
 								var distance = distance_tofix.toFixed(2);
+								$scope.speed=deviceList[i].speed_limit;
+								$scope.driver=deviceList[i].driver;
 								var finalDevStatus ={"devid":deviceID,"vehicle_num":vehicleNum,"distance":distance};
 								resultDevlist.push(finalDevStatus);
 								$scope.MaxKmResult = resultDevlist;
@@ -300,17 +302,23 @@ function endDate(getEndDateMinMax){
 		$.getScript('../assets/select_filter/select2.min.js', function() {
 			$("#selectGroup").select2({});
 			$("#selectDevice").select2({});
-			$('#clearTextGroup span.select2-chosen').text("- - Select Group - -");
-			$('#clearTextDevice span.select2-chosen').text("- - Select Vehicle No/Device - -");
+			$('#clearTextGroup span.select2-chosen').text("Select Group");
+			$('#clearTextDevice span.select2-chosen').text("Select Vehicle No/Device");
 		});// script
 	});
 
 
-	
+/*	$(document).on('click', '#startTimePicker', function(){
+		$('#startTimePicker').datetimepicker({
+			format: 'DD/MM/YYYY hh:mm a',
+			defaultDate:'now',        
+	        minDate: 'now',        		
+			ignoreReadonly:true,
+	    });	
+		});*/
 /**
    * Show DateTimePicker onclick in jquery 
-* */	
-		$(document).on('click', '#startDateMaxKmPicker', function(){
+   * $(document).on('click', '#startDateMaxKmPicker', function(){
 			$('#startDateMaxKmPicker').datetimepicker({
 		                inline: true,
 		                sideBySide: true,
@@ -336,6 +344,31 @@ function endDate(getEndDateMinMax){
 		                defaultDate:'now',
 		                maxDate: 'now',
 		                format: 'DD/MM/YYYY hh:mm a'
+		            }).on("dp.change",function (e) {
+		            	//$("#endDateMaxKm").blur(); 
+		            	//closeResult();
+		            });
+			//endDateMaxKmError.style.display = 'none';
+		});
+* */	
+		$(document).on('click', '#startDateMaxKmPicker', function(){
+			$('#startDateMaxKmPicker').datetimepicker({
+				format: 'DD/MM/YYYY hh:mm a',
+				defaultDate:'now',        
+				 maxDate: 'now',   		
+				ignoreReadonly:true,
+		            }).on("dp.change",function (e) {
+		            	//$("#startDateMaxKm").blur(); 
+		            	//closeResult();
+		            });
+			//startDateMaxKmError.style.display = 'none';
+		}); 
+		$(document).on('click', '#endDateMaxKmPicker', function(){
+			$('#endDateMaxKmPicker').datetimepicker({
+				format: 'DD/MM/YYYY hh:mm a',
+				defaultDate:'now',        
+				 maxDate: 'now',       		
+				ignoreReadonly:true,
 		            }).on("dp.change",function (e) {
 		            	//$("#endDateMaxKm").blur(); 
 		            	//closeResult();

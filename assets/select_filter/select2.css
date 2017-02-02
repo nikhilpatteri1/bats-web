@@ -27,8 +27,8 @@ Version: 3.4.8 Timestamp: Thu May  1 09:50:32 EDT 2014
 
 .select2-container .select2-choice {
     display: block;
-    height: 38px;
-    padding: 6PX 0 0 8px;
+    height: 30px;
+    padding: 2PX 0 0 8px;
     overflow: hidden;
     position: relative;
     border: 1px solid #aaa;
@@ -72,12 +72,16 @@ Version: 3.4.8 Timestamp: Thu May  1 09:50:32 EDT 2014
     margin-right: 26px;
     display: block;
     overflow: hidden;
-
+	text-align:left;
     white-space: nowrap;
-
     text-overflow: ellipsis;
     float: none;
     width: auto;
+    font-family:Roboto;
+    font-size: 14px;
+    font-weight:100;
+    color: #989191;
+    
 }
 
 .select2-container .select2-choice abbr {
@@ -153,7 +157,7 @@ Version: 3.4.8 Timestamp: Thu May  1 09:50:32 EDT 2014
 }
 
 .select2-drop-active {
-    border: 1px solid #5897fb;
+    border: 1px solid #ddd;
     border-top: none;
 }
 
@@ -177,10 +181,10 @@ Version: 3.4.8 Timestamp: Thu May  1 09:50:32 EDT 2014
     position: absolute;
     right: 0;
     top: 0;
-    border-left: 1px solid #03A9F4;
+    border-left: 1px solid #fff;
     border-radius: 0 0px 0px 0;
     background-clip: padding-box;
-    background: #03A9F4;
+    background: #fff;
     /* background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #ccc), color-stop(0.6, #eee));
     background-image: -webkit-linear-gradient(center bottom, #ccc 0%, #eee 60%);
     background-image: -moz-linear-gradient(center bottom, #ccc 0%, #eee 60%);
@@ -192,7 +196,7 @@ Version: 3.4.8 Timestamp: Thu May  1 09:50:32 EDT 2014
     display: block;
     width: 100%;
     height: 100%;
-    background: url('img/select2x2.png') no-repeat 3px -3px;
+    background: url('img/select2x2.png') no-repeat 3px -9px;
 }
 
 .select2-search {
