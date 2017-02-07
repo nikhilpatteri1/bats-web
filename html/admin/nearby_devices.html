@@ -11,7 +11,7 @@
 				<div class="col-sm-12">
 					<div class="row">
 						<div class="col-sm-12">
-							<label class="custom_label">Select Vehicle</label>
+							<label class="custom_label">Search Vehicle</label>
 						</div>
 					</div>
 					<div class="row">
@@ -52,14 +52,25 @@
 			<div ng-hide="noData" class="mtop10">
 				<h1>Kindly Check For other Dates</h1>
 			</div>
-			<div ng-hide="noNearbyDevice" class="mtop10">
-				<h1>No Nearby Devices Available For This Device</h1>
+
+			<div class="row" ng-hide="noNearbyDevice">
+				<div class="col-sm-12 verhorcenter" align="center">
+					<div class="centerData">
+						<ul class="nodata_list">
+							<li><img alt="" src="../images/no-data.png"
+								class="nodata_img"></li>
+							<li><label style="color: #000">Nothing here!</label></li>
+							<li><span>No Data Available</span></li>
+						</ul>
+					</div>
+				</div>
 			</div>
-			<div ng-if="yoData" class="mtop10">
+
+			<div ng-if="yoData" class="">
 				<div data-tap-disabled="true">
+
 					<ng-map id="nearbyId" zoom="{{nearByMap.zoom}}"
-						center="{{nearByMap.center}}">
-						<!-- styles="[{'featureType':'administrative','elementType':'labels.text.fill','stylers':[{'color':'#444444'}]},
+						center="{{nearByMap.center}}" ng-style="mapHeight"> <!-- styles="[{'featureType':'administrative','elementType':'labels.text.fill','stylers':[{'color':'#444444'}]},
 								{'featureType':'landscape','elementType':'all','stylers':[{'color':'#f2f2f2'}]},
 								{'featureType':'landscape','elementType':'labels','stylers':[{'visibility':'on'}]},
 								{'featureType':'poi','elementType':'all','stylers':[{'visibility':'off'}]},
@@ -81,10 +92,24 @@
 												   origin: [2,2],
 												   anchor: [16,16]}"
 						on-click="showInfo(event,pos)"> </marker> </ng-map>
+
 				</div>
 			</div>
 
 			<div class="space_bottom"></div>
+		</div>
+	</div>
+	<div class="row" ng-if="blankTable">
+		<div class="col-sm-12 verhorcenter" align="center">
+			<div class="centerData" style="margin-top: 100px;">
+				<ul class="nodata_list">
+					<li><img alt="" src="../images/select-dropdown.png"
+						class="nodata_img"></li>
+					<li><label style="color: #000; margin-left: 35px">
+							Select Vehicle!</label></li>
+					<li><span>Shows nearby vehicle with time & location</span></li>
+				</ul>
+			</div>
 		</div>
 	</div>
 </div>

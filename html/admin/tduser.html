@@ -1,7 +1,12 @@
 <div class="col-sm-12" ng-init="userinfo()">
 	<div class="row header_bats">
 		<div class="col-sm-10">
-			<h5 class="headerTitle">Manage Travel Desk User</h5>
+			<div class="row">
+				<div class="col-sm-12">
+					<label class="custom_label manageUserH">Manage Travel Desk User</label>
+				</div>
+			</div>
+			<!-- <h5 class="headerTitle">Manage Travel Desk User</h5> -->
 		</div>
 		<div class="col-sm-2 borderLeft">
 			<div ng-include src="'/admin/subMenu'"></div>
@@ -28,7 +33,7 @@
 										<label class="labelClass">Name</label>
 										<!-- <label ng-show="travelDesk.Tdname"
 													class="floatlabeltxt show-hide">Enter the Name</label> -->
-										<input type="text" class="form-control" name="Tdname"
+										<input type="text" class="form-control TDinput" name="Tdname"
 											ng-model="travelDesk.Tdname"
 											placeholder="Enter Travel Desk User name" ng-maxlength="25"
 											required />
@@ -49,10 +54,11 @@
 										ng-class="{'has-error':travelDeskForm.useremail.$invalid && !travelDeskForm.useremail.$pristine}">
 										<!-- <label ng-show="travelDesk.Email"
 													class="floatlabeltxt show-hide">Enter Email Id</label> -->
-										<label class="labelClass">Email</label> <input type="email"
+										<label class="labelClass">Email</label> 
+										<input type="email"
 											ng-model="travelDesk.Email"
 											ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
-											name="useremail" class="form-control"
+											name="useremail" class="form-control TDinput"
 											placeholder="Enter Email Id" required />
 										<p
 											ng-show="travelDeskForm.useremail.$touched  && travelDeskForm.useremail.$invalid"
@@ -71,7 +77,7 @@
 													class="floatlabeltxt show-hide">Enter the Contact
 													Number</label> -->
 										<label class="labelClass">Phone Number</label> <input
-											type="text" class="form-control"
+											type="text" class="form-control TDinput"
 											ng-model="travelDesk.tdcontact" name="Tdcontact"
 											ng-minlength="10" ng-maxlength="10" numbers-only
 											placeholder="Enter Phone Number" required />
@@ -97,7 +103,7 @@
 													class="floatlabeltxt show-hide">Description</label> -->
 										<label class="labelClass">Description</label>
 										<textarea ng-model="travelDesk.desc" name="desc"
-											class="form-control" placeholder="Description" required></textarea>
+											class="form-control TDinput" placeholder="Description" required></textarea>
 										<p
 											ng-show="travelDeskForm.desc.$touched && travelDeskForm.desc.$invalid"
 											class="help-block error-help">Description is required.</p>
@@ -112,7 +118,7 @@
 										<!-- <label ng-show="travelDesk.tdpassword"
 													class="floatlabeltxt show-hide">Enter Password</label> -->
 										<label class="labelClass">Password</label> <input
-											name="Tdpassword" type="password" class="form-control"
+											name="Tdpassword" type="password" class="form-control TDinput"
 											ng-model="travelDesk.tdpassword"
 											ng-pattern="/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/"
 											placeholder="Set Password" required />
@@ -167,7 +173,7 @@
 									<!-- <label ng-show="travelDesk.Tdname"
 													class="floatlabeltxt show-hide">Enter User Name</label> -->
 									<label class="labelClass">Name</label> <input type="text"
-										ng-model="travelDesk.Tdname" name="uname" class="form-control"
+										ng-model="travelDesk.Tdname" name="uname" class="form-control TDinput"
 										placeholder="Enter User Name"
 										style="text-transform: lowercase" readonly required />
 									<p
@@ -187,7 +193,7 @@
 										ng-model="travelDesk.Email"
 										ng-keyup="verifyEmail(userUpdate.email)"
 										ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
-										name="useremail" class="form-control"
+										name="useremail" class="form-control TDinput"
 										placeholder="Enter Email Id" required />
 									<p
 										ng-show="updateUserForm.useremail.$invalid && !updateUserForm.useremail.$pristine"
@@ -211,7 +217,7 @@
 															Number</label> -->
 											<label class="labelClass">Phone Number</label> <input
 												type="text" ng-model="travelDesk.tdcontact" numbers-only
-												name="contact_no" class="form-control" string-to-number
+												name="contact_no" class="form-control TDinput" string-to-number
 												placeholder="Enter Mobile Number" ng-minlength="10"
 												ng-maxlength="10" required />
 										</div>
@@ -261,7 +267,7 @@
 													class="floatlabeltxt show-hide">Description</label> -->
 							<label class="labelClass">Description</label>
 							<textarea ng-model="travelDesk.desc" name="desc"
-								placeholder="Description" class="form-control " required></textarea>
+								placeholder="Description" class="form-control TDinput" required></textarea>
 							<p
 								ng-show="updateUserForm.desc.$invalid && !updateUserForm.desc.$pristine"
 								class="help-block">Description is required.</p>
@@ -271,7 +277,7 @@
 				</div>
 
 				<div class="row">
-					<div class="col-sm-12" align="right">
+					<div class="col-sm-12 TDinput" align="right" >
 						<button class="btn btn-primary updatebtn"
 							ng-disabled="updateUserForm.$invalid"
 							ng-show="updateUserForm.$valid && !name.length"

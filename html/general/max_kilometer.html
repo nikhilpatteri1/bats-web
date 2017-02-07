@@ -1,11 +1,28 @@
-<div class="container-fluid">
-	<div class="row headerStyle">
+<div class="col-sm-12">
+	<div class="bgloading" ng-show="httpLoading">
+		<div class="bigbar">
+			<h1 class="titleClass">loading!...</h1>
+		</div>
+	</div>
+	<div class="row header_bats">
 		<div class="col-sm-10">
-
-			<h4 class="search_heading">Search Group</h4>
-			<div class="row Dropdownpadding">
+			<div class="row">
+							<div class="col-sm-12">
+								<label class="custom_label">Search Group</label>
+							</div>
+		</div>
+			<!-- //	<h4 class="search_heading">Search Group</h4> -->
+			<div class="row ">
 				<div class="col-sm-3" id="clearTextGroup">
-					<select id="selectGroup" class="search_width" name="groupList"
+					<!-- <select id="selectGroup" class="search_width" name="groupList"
+						ng-model="groupname" ng-change="fetchDevList(groupname)">
+						<option ng-if="groupList.length" value="" selected disabled
+							class="disable_select">Select Group</option>
+						<option ng-if="!groupList.length" selected disabled>No
+							Group Available</option>
+						<option ng-repeat="option in groupList" value="{{ option.gid }}">{{option.gname}}</option>
+					</select> -->
+					<select id="selectGroup" class="form-control" name="groupList"
 						ng-model="groupname" ng-change="fetchDevList(groupname)">
 						<option ng-if="groupList.length" value="" selected disabled
 							class="disable_select">Select Group</option>
@@ -13,10 +30,11 @@
 							Group Available</option>
 						<option ng-repeat="option in groupList" value="{{ option.gid }}">{{option.gname}}</option>
 					</select>
+
 				</div>
 
 				<div class="col-sm-3" id="clearTextDevice">
-					<select id="selectDevice" class="search_width" name="devList"
+					<select id="selectDevice" class="form-control" name="devList"
 						ng-model="deviceId" ng-change="deviceSelectedMaxKm()">
 						<option ng-if="devList.length" value="" selected disabled
 							class="disable_select">Select Vehicle</option>
@@ -26,30 +44,33 @@
 					</select>
 				</div>
 
+
+
+
 				<section ng-hide="deviceSelectMaxKm">
 					<div class="col-sm-2">
-						<div class='input-group date' id='startDateMaxKmPicker'>
-							<input type='text' class="form-control" id="startDateMaxKm"
-								readonly="readonly" placeholder="Start Date" /> <span
-								class="input-group-addon"> <span
+						<div class='input-group date SpddateB' id='startDateMaxKmPicker'>
+							<input type='text' class="form-control SpddateNB"
+								id="startDateMaxKm" readonly="readonly" placeholder="Start Date" />
+							<span class="input-group-addon SpddateNB"> <span
 								class="glyphicon glyphicon-calendar"> </span>
 							</span>
 						</div>
 						<div class="showMinMaxErr" id="startDateMaxKmError">
-							<i class="ion-information-circled"></i> This field is required!
+							<i class="ion-information-circled"></i> required!
 						</div>
 					</div>
 
 					<div class="col-sm-2">
-						<div class='input-group date' id='endDateMaxKmPicker'>
-							<input type='text' class="form-control" id="endDateMaxKm"
-								readonly="readonly" placeholder="End Date" /> <span
-								class="input-group-addon"> <span
+						<div class='input-group date SpddateB' id='endDateMaxKmPicker'>
+							<input type='text' class="form-control SpddateNB"
+								id="endDateMaxKm" readonly="readonly" placeholder="End Date" />
+							<span class="input-group-addon SpddateNB"> <span
 								class="glyphicon glyphicon-calendar"> </span>
 							</span>
 						</div>
 						<div class="showMinMaxErr" id="endDateMaxKmError">
-							<i class="ion-information-circled"></i> This field is required!
+							<i class="ion-information-circled"></i> required!
 						</div>
 					</div>
 					<div class="col-sm-2">
@@ -78,15 +99,16 @@
 
 
 
-	<div class="bgloading" ng-show="httpLoading">
+	<!-- <div class="bgloading" ng-show="httpLoading">
 		<div class="bigbar">
 			<h1 class="titleClass">loading!...</h1>
 		</div>
-	</div>
+	</div> -->
 
 
 
-	<div class="row" id="highcharts_minmax" align="center" style="margin-top:70px;">
+	<div class="row" id="highcharts_minmax" align="center"
+		style="margin-top: 70px;">
 		<div class="col-sm-12">
 
 			<div ng-if="showResultMaxKm">
@@ -127,6 +149,18 @@
 
 		</div>
 	</div>
+
+<div class="row" ng-if="blankTable">
+		<div class="col-sm-12 verhorcenter" align="center">
+			<div class="centerData" style="margin-top:100px;">
+				<ul class="nodata_list" >
+					<li><img alt="" src="../images/select-dropdown.png" class="nodata_img"></li>
+					<li><label style="color: #000;margin-left:35px">  Select Group!</label></li>
+					<li><span style="margin-left:35px">Shows Kilometer travelled by the vehicle</span></li>
+				</ul>
+			</div>
+		</div>
+</div>
 
 </div>
 

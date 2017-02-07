@@ -1,7 +1,12 @@
 batsGeneralHome.controller('vehicleHistory',function($rootScope,$scope, $http, $localStorage,uiGmapGoogleMapApi,uiGmapIsReady){
 	$rootScope.menuPos=1;
+	var dynamicMapHeight=window.screen.availHeight-100;
+	$scope.mapHeight={
+			height:dynamicMapHeight
+	}
 	$scope.yoData=false;
 	$scope.noData=false;
+	$scope.blankTable=true;
 	$scope.showDatepicker=true;
 	$scope.showTimeSlot=false;
 	$scope.token = $localStorage.data;
@@ -125,6 +130,7 @@ batsGeneralHome.controller('vehicleHistory',function($rootScope,$scope, $http, $
 		$scope.showDatepicker=true;
 		$scope.noData = false;
 		$scope.showTimeSlot=false;
+		$scope.blankTable=false;
 	/*	$('#clearTextDevice span.select2-chosen').empty();  
 	    $('#clearTextDevice span.select2-chosen').text("- - Select  Vehicle No/Device - -");*/
 		// document.getElementById("groupNamelist").blur();

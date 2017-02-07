@@ -2,7 +2,7 @@
 	<div class="row header_bats">
 		<div class="col-sm-10">
 			<h4 class="search_heading">Search Trip</h4>
-		<div class="row Dropdownpadding">
+		<div class="row Dropdownpadding" style="margin-bottom: 10px;">
 			<div class="col-sm-7">
 				<!-- <input type="text" class="form-control" ng-model="searchDriver"
 					ng-change="countChild()"
@@ -105,7 +105,8 @@
 							<li
 								ng-repeat="tripdetail in triplistObject |tripFilter:searchTrip">
 								<div class="panel panel-default panel1">
-									<div class="panel-heading panel-heading1" ng-style="{{isEventShown(tripdetail) == true?'redColor':'whiteColor'}}">
+									<div class="panel-heading panel-heading1" ng-class="{'pending-delete': isEventShown(tripdetail) == true}" >
+										<!-- ng-style="{{isEventShown(tripdetail) == true?'redColor':'whiteColor'}}" -->
 										<div class="row">
 											<!-- Driver Name -->
 											<div class="col-sm-2">
@@ -160,13 +161,12 @@
 													<div class="col-sm-4">
 														
 														<button type="button" class="btn btn-info btn-xs SHBtn"
-																		
 																		data-toggle="collapse"
 																		data-target="#{{tripdetail.trip_id}}"
-																		ng-click="toggleEventInfo(tripdetail)">
+																		ng-click="toggleEventInfo(tripdetail)" ng-class="{'pending-delete': isEventShown(tripdetail) == true}" >
 																		{{isEventShown(tripdetail)?"Hide":"Show"}} info &nbsp;
 																		<i class="icon" ng-class="isEventShown(tripdetail)?'fa fa-angle-up':'fa fa-angle-down'"></i>
-														</button>{{isEventShown(tripdetail)}}
+														</button>
 														
 														<!-- id="id_{{driverdetail.driver_id}}" -->
 														
@@ -382,7 +382,7 @@
 												<!-- <div id="map" class="map"></div> -->
 												<div id="triplist_map{{tripdetail.trip_id}}"
 													class="tripDMap">
-													<img src="../images/map-image.jpg">
+													<img class="tripDMap" src="../images/map-image.jpg">
 													</div>
 											</div>
 										</div>
@@ -447,7 +447,7 @@
 							<div id="map" class="map"></div>
 							<a class="clear_btn" ng-click="undoMap();">Clear Map</a>
 						</div>
-			<div class="modal-body">
+			<div class="modal-body my_modalBody">
 				<form id="createTripf" name="createTripForm" class="form formInput">
 					<!-- <div id="createclose" class="col-sm-2 col-sm-offset-10"
 						align="right">

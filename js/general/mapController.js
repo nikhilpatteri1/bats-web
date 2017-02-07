@@ -2,6 +2,12 @@
 	batsGeneralHome.controller('GeneralController', function($rootScope,$scope, $interval, $http,$rootScope,$uibModal,
 		$localStorage,$window,$timeout) {
 		$rootScope.menuPos=0;
+		
+		var dynamicMapHeight=window.screen.availHeight-100;
+		$scope.mapHeight={
+				height:dynamicMapHeight
+		}
+		
 		var reqTime = 12;
 		$scope.token = $localStorage.data;
 		$scope.showTrafficLayerBtn = false;
@@ -49,7 +55,7 @@
 		    strokeColor: 'white',
 		    strokeWeight: 0,
 		    fillOpacity: 1,
-		    fillColor: '#f44336',
+		    fillColor: '#000000',
 		    offset: '5%',
 		    // rotation: parseInt(heading[i]),
 		    anchor: new google.maps.Point(10, 25) // orig 10,50 back of car,
@@ -144,7 +150,7 @@
 		function createMarker(latlng, deviceID,vehNo,vehModel,html,type) {
 			// console.log(deviceID+"=="+type);
 			var contentString; 
-			if(type==0){icon.fillColor='#f44336';}
+			if(type==0){icon.fillColor='#000000';}
 			else if(type==1){icon.fillColor='#ffde01';}
 			else if(type==2){icon.fillColor='#e59305';}
 			else if(type==3){icon.fillColor='#043a08';}

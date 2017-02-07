@@ -3,6 +3,7 @@ batsAdminHome.controller('vehicleHistory', function($scope,$rootScope, $http, $l
 	$scope.noData=false;
 	$scope.showDatepicker=true;
 	$scope.showTimeSlot=false;
+	$scope.blankTable=true;
 	$scope.token = $localStorage.data;
 	$scope.todayDate=new Date();
 	$scope.greyColor={
@@ -125,6 +126,7 @@ batsAdminHome.controller('vehicleHistory', function($scope,$rootScope, $http, $l
 		$scope.showDatepicker=true;
 		$scope.noData = false;
 		$scope.showTimeSlot=false;
+		$scope.blankTable=false;
 		$('#clearTextDevice span.select2-chosen').empty();  
 	    $('#clearTextDevice span.select2-chosen').text("Select Vehicle No/Device");
 		// document.getElementById("groupNamelist").blur();
@@ -215,8 +217,10 @@ batsAdminHome.controller('vehicleHistory', function($scope,$rootScope, $http, $l
 					if(data.values[0].data!=true && data.values[1].data!=true&&data.values[2].data!=true&&data.values[3].data!=true){						
 						$scope.showTimeSlot=false;
 						swal({title:"No history available for the selected date"});
+						$scope.no_history=false;
 					}
 					else{
+						$scope.no_history=true;
 						$scope.showTimeSlot=true;
 					}
 		}).error(function(data, status, headers,config) {
@@ -245,6 +249,7 @@ batsAdminHome.controller('vehicleHistory', function($scope,$rootScope, $http, $l
 	 */
 	$scope.slotHistory=function(slot_num,noDataVal){
 		if(noDataVal!=0){
+			//$scope.no_history=true;
 			if(slot_num==1){			
 			historyApiCall(getTimestamp(0,0,0),getTimestamp(5,59,0));
 		}
@@ -259,7 +264,9 @@ batsAdminHome.controller('vehicleHistory', function($scope,$rootScope, $http, $l
 			historyApiCall(getTimestamp(18,0,0),getTimestamp(23,59,0));
 		}
 			}
-		else{swal("Kindly check for available slot(s)");}
+		else{swal("Kindly check for available slot(s)");
+		//$scope.no_history=false;
+		}
 		
 	};
 	function getTimestamp(hr,mins,sec){		

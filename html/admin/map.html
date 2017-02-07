@@ -8,7 +8,7 @@
 					<div class="col-sm-12">
 						<div class="row">
 							<div class="col-sm-12">
-								<label class="custom_label">Select Vehicle</label>
+								<label class="custom_label">Search Vehicle</label>
 							</div>
 						</div>
 						<div class="row">
@@ -23,7 +23,7 @@
 										value="{{ option.gid }}">{{option.gname}}</option>
 								</select>
 							</div>
-							<div class="col-sm-4" id="clearTextDevice">
+							<div class="col-sm-3" id="clearTextDevice">
 								<!-- <div ng-show="deviceloading"><img src="../../images/loading.gif" width="10px" height="10px"/></div> -->
 								<select id="selectDevice" class="form-control" name="deviceList"
 									ng-model="deviceId" ng-change="fetchDeviceDetail(gid,deviceId)">
@@ -127,7 +127,8 @@
 					<div class="row">
 						<!-- style="margin: 0 -15px 0 -38px" -->
 						<div class="col-sm-12 pad0">
-							<div id="map_section" ng-class="{fullMap:activeFull==='1'}">
+							<div id="map_section" ng-class="{fullMap:activeFull==='1'}"
+								ng-style="mapHeight">
 								<div id="map_canvas"></div>
 								<a class="traffic_layer_btn" ng-click="showTrafficLayer()"
 									ng-hide="showTrafficLayerBtn">Traffic Layer</a> <a
@@ -143,83 +144,79 @@
 			</div>
 		</div>
 		<!-- Vehicle Count -->
-		<div class="row">
-			<div class="col-sm-12">
-				<div class="row count_label">
-					<div class="col-sm-1 mleft">
-						<div class="row countSection">
-							<div class="col-sm-4 verhorcentericon pad0 iconBg">
-								<div class="countImage">
-									<img src="../images/mapIcon/car.png">
-								</div>
-							</div>
-							<div class="col-sm-8 verhorcentericon pad0">
-								<div class="countText">
-									<div>
-										<label>{{carCount}}</label>
-									</div>
-									<div>
-										<span>CAR</span>
-									</div>
-								</div>
-							</div>
+		<div class="row count_label">
+			<div class="col-sm-1 mleft">
+				<div class="row countSection">
+					<div class="col-sm-4 verhorcentericon pad0 iconBg">
+						<div class="countImage">
+							<img src="../images/mapIcon/car.png">
 						</div>
 					</div>
-					<div class="col-sm-1 mleft">
-						<div class="row countSection">
-							<div class="col-sm-4 verhorcentericon pad0 iconBg">
-								<img src="../images/mapIcon/bus.png">
+					<div class="col-sm-8 verhorcentericon pad0">
+						<div class="countText">
+							<div>
+								<label>{{carCount}}</label>
 							</div>
-							<div class="col-sm-8 verhorcentericon pad0">
-								<div class="countText">
-									<div>
-										<label>{{busCount}}</label>
-									</div>
-									<div>
-										<span>BUS</span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-sm-1 mleft">
-						<div class="row countSection">
-							<div class="col-sm-4 verhorcentericon pad0 iconBg">
-								<img src="../images/mapIcon/truck.png">
-							</div>
-							<div class="col-sm-8 verhorcentericon pad0">
-								<div class="countText">
-									<div>
-										<label>{{truckCount}}</label>
-									</div>
-									<div>
-										<span>TRUCK</span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-sm-1 mleft">
-						<div class="row countSection">
-							<div class="col-sm-4 verhorcentericon pad0 iconBg">
-								<img src="../images/mapIcon/bike.png">
-							</div>
-							<div class="col-sm-8 verhorcentericon pad0">
-								<div class="countText">
-									<div>
-										<label>{{bikeCount}}</label>
-									</div>
-									<div>
-										<span>BIKE</span>
-									</div>
-								</div>
+							<div>
+								<span>CAR</span>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<!-- ./Vehicle Count -->
+			<div class="col-sm-1 mleft">
+				<div class="row countSection">
+					<div class="col-sm-4 verhorcentericon pad0 iconBg">
+						<img src="../images/mapIcon/bus.png">
+					</div>
+					<div class="col-sm-8 verhorcentericon pad0">
+						<div class="countText">
+							<div>
+								<label>{{busCount}}</label>
+							</div>
+							<div>
+								<span>BUS</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-1 mleft">
+				<div class="row countSection">
+					<div class="col-sm-4 verhorcentericon pad0 iconBg">
+						<img src="../images/mapIcon/truck.png">
+					</div>
+					<div class="col-sm-8 verhorcentericon pad0">
+						<div class="countText">
+							<div>
+								<label>{{truckCount}}</label>
+							</div>
+							<div>
+								<span>TRUCK</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-1 mleft">
+				<div class="row countSection">
+					<div class="col-sm-4 verhorcentericon pad0 iconBg">
+						<img src="../images/mapIcon/bike.png">
+					</div>
+					<div class="col-sm-8 verhorcentericon pad0">
+						<div class="countText">
+							<div>
+								<label>{{bikeCount}}</label>
+							</div>
+							<div>
+								<span>BIKE</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
+		<!-- ./Vehicle Count -->
 	</div>
 	<!-- Smart COntroller -->
 	<div class="row">
@@ -239,115 +236,5 @@
 			<!-- Legend Section -->
 		</div>
 	</div>
-	<!-- <div class="row">
-		<div class="col-sm-12">
-			ng-controller='smartcontroller' Starts Here
-			<div ng-controller='smartcontroller' ng-init="initialize()">
-				<div class="bgloading" ng-show="httpLoading">
-					<div class="bigbar">
-						<h1 class="titleClass">loading!...</h1>
-					</div>
-				</div>
 
-				<div class="row">
-					<div class="col-sm-4" id="clearTextGroup">
-						<select id="selectGroup" class="form-control" name="groupList"
-							ng-model="groupname" ng-change="fetchDevicelist(groupname)">
-							<option value="" selected disabled class="disable_select">-
-								- Select Group - -</option>
-							<option ng-repeat="option in groupList" value="{{ option.gid }}">{{option.gname}}</option>
-						</select>
-					</div>
-					<div class="col-sm-4" id="clearTextDevice">
-						<div ng-show="deviceloading"><img src="../../images/loading.gif" width="10px" height="10px"/></div>
-						<select id="selectDevice" class="form-control" name="deviceList"
-							ng-model="deviceId" ng-change="fetchDeviceDetail(gid,deviceId)">
-							<option value="" selected disabled class="disable_select">-
-								- Select Device - -</option>
-							<option ng-repeat="option in deviceList" value="{{ option }}">{{option}}</option>
-						</select>
-					</div>
-				</div>
-				<div class="row mtop10">
-					<div class="col-sm-8">
-						<div class="row mtop10">
-							<div class="col-sm-12">
-								<div id="map_canvas" style="width: 100%; height: 50vh;"></div>
-								<a class="traffic_layer_btn" ng-click="showTrafficLayer()"
-									ng-hide="showTrafficLayerBtn">Traffic Layer</a> <a
-									class="traffic_layer_btn select_traffic"
-									ng-click="hideTrafficLayer()" ng-hide="hideTrafficLayerBtn">Traffic
-									Layer</a>
-							</div>
-						</div>
-						<div ng-controller="ModalDemoCtrl"></div>
-						<span class="reCenter" ng-hide="isZoomed" ng-click="reCenter()">RE-CENTER</span>
-						<span class="reCenter" ng-hide="singleDeviceZoomed"
-							ng-click="reCenterDevice()">RE-CENTER</span>
-						<div class="row mtop10 count_label">
-							<div class="col-sm-3">
-
-								<label>Car: <span>{{carCount}}</span></label>
-							</div>
-							<div class="col-sm-3">
-								<label>Bus: <span>{{busCount}}</span></label>
-							</div>
-							<div class="col-sm-3">
-								<label>Truck: <span>{{truckCount}}</span></label>
-							</div>
-							<div class="col-sm-3">
-								<label>Bike: <span>{{bikeCount}}</span></label>
-							</div>
-						</div>
-						<div class="row legendBG">
-							<div class="col-sm-3 make20" align="center">
-								<div class="geo"></div>
-								<p class="textColor">Crossed Geo Fence</p>
-							</div>
-							<div class="col-sm-3 make20" align="center">
-								<div class="speed"></div>
-								<p class="textColor">Crossed Speed</p>
-							</div>
-							<div class="col-sm-3 make20" align="center">
-								<div class="geospeed"></div>
-								<p class="textColor">Crossed Geo Fence and Speed</p>
-							</div>
-							<div class="col-sm-3 make20" align="center">
-								<div class="normalVehicle"></div>
-								<p class="textColor">Normal State</p>
-							</div>
-							<div class="col-sm-3 make20" align="center">
-								<div class="aliveVehicle"></div>
-								<p class="textColor">No-Response State</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-sm-4 speedo_meter">
-						<h5 class="speedTitle">Last Updated Speed of Vehicle</h5>
-						<table class="table" ng-show="multiDevice">
-							<thead>
-								<tr>
-									<td>Slno</td>
-									<td>Device ID</td>
-									<td>Device Speed<b>(kmph)</b></td>
-								</tr>
-							</thead>
-							<tbody>
-								<tr ng-repeat="(devId,devSpeed) in devData">
-									<td>{{$index+1}}</td>
-									<td>{{devId}}</td>
-									<td>{{devSpeed}}</td>
-								</tr>
-							</tbody>
-						</table>
-						<div ng-show="singleDevice" id="speedometer_highcharts-container">
-							<div class="speed-meter" style="width: 50%; float: left"></div>
-							<div id="container"></div>
-						</div>
-					</div>
-				</div>
-			</div>
-			ng-controller='smartcontroller' Ends Here
-		</div>
-	</div> -->
 </div>

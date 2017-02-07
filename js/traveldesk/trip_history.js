@@ -26,7 +26,8 @@
  * 		a) localStorage in built serivice
  * 		b) travelDeskFactory (custom factory) for Rest API calls($http method)  
  * */
-batstravelDeskHome.controller('tripHistory', function($scope, $localStorage,travelDeskFactory,travelDeskService,$interval) {
+batstravelDeskHome.controller('tripHistory', function($rootScope,$scope, $localStorage,travelDeskFactory,travelDeskService,$interval) {
+	$rootScope.menuPos = 2;
 	$scope.token = $localStorage.data;//for token
 	$scope.driverBased=true;//on choice of driver based history
 	$scope.vehicleBased=false;//on choice of vehicle based history

@@ -13,6 +13,7 @@ batsAdminHome.controller('vehicleAlarm',function($scope,$rootScope, $http, $loca
 	$scope.deviceSelectAlarm = false;
 	$scope.myDate = {"start":todayDate,"end":todayDate};
 	$scope.showResultTable = false;
+	$scope.blankTable=true;
 	$scope.noResultTable = false;
 	$scope.todayDate=new Date();
 	var startTimeStamp;
@@ -70,6 +71,7 @@ batsAdminHome.controller('vehicleAlarm',function($scope,$rootScope, $http, $loca
 	$('#clearTextDevice span.select2-chosen').text("Select Vehicle No/Device"); 
 	$scope.deviceSelectAlarm=false;
 	$scope.showResultTable = false;
+	
 	$scope.noResultTable = false;
 	$scope.deviceJson = {};
 	$scope.deviceJson.token = $scope.token;
@@ -144,6 +146,7 @@ batsAdminHome.controller('vehicleAlarm',function($scope,$rootScope, $http, $loca
 								console.log(JSON.stringify(data));
 								if(data_value.length == 0){
 									$scope.showResultTable = false;
+									$scope.blankTable=false;
 									$scope.noResultTable = true;
 									$scope.httpLoading=false;
 								}
@@ -151,6 +154,7 @@ batsAdminHome.controller('vehicleAlarm',function($scope,$rootScope, $http, $loca
 									$scope.httpLoading=false;
 									$scope.noResultTable = false;
 									$scope.showResultTable = true;
+									$scope.blankTable=false;
 									$scope.alarm_history = data_value;
 								}
 							})

@@ -1,6 +1,11 @@
 batsGeneralHome.controller('batsNearbyDevices', function($rootScope,$scope, $http, NgMap,
 		$localStorage) {
+	var dynamicMapHeight=window.screen.availHeight-100;
+	$scope.mapHeight={
+			height:dynamicMapHeight
+	}
 	$rootScope.menuPos=6;
+	$scope.blankTable=true;
 	$scope.token = $localStorage.data;
 	if (typeof $scope.token === "undefined") {
 		swal({
@@ -156,6 +161,7 @@ batsGeneralHome.controller('batsNearbyDevices', function($rootScope,$scope, $htt
 			// console.log(JSON.stringify(data));
 			var length_nearby = data.res_data.length;
 			$scope.nearbyData = data;
+			$scope.blankTable=false;
 			if (length_nearby == 0) {
 				$scope.yoData = false;
 				$scope.noNearbyDevice = false;

@@ -179,7 +179,7 @@
 			<div class="tab-pane fade" id="tab3">
 				<table class="table">
 					<thead>
-						<tr class="header">
+						<tr >
 							<th>Slno</th>
 							<th>Latitude</th>
 							<th>Longitude</th>
@@ -211,11 +211,12 @@
 								</div>
 							</div> -->
 							<div class="form-group">
-								<div class="field">					
-									<label ng-show="device.speed_limit" class="show-hide">Set
-										Speed Limit in KmpH</label> <input type="text" class="form-control"
+								<div >					
+									<label>Set
+										Speed Limit in KmpH</label> <!--ng-show="device.speed_limit" class="show-hide"  -->
+										<input type="text" class="form-control"
 										ng-model="device.speed_limit" name="speedlimit" min="10" max="200"
-										placeholder="Set Speed Limit in KmpH" numbers-only setlimit required />
+										 numbers-only setlimit required />
 										<div ng-messages="deviceSettings.speedlimit.$error" style="color:maroon" role="alert">
 											<div ng-if="isNotNumber">Kindly enter numbers only</div>
 											<div ng-if="isNotLimit">Kindly set speed limit starting 10 kmph till 200 Kmph </div>
@@ -254,7 +255,7 @@
 									ng-show="deviceSettings.contact_num.$error.minlength && deviceSettings.contact_num.$error.maxlength"
 									class="help-block">Mobile Number max 10 numbers.</p>
 							</div> -->
-							<button class="btn btn-primary" ng-click="submitSettings()"
+							<button class="btn btn-primary createuser" ng-click="submitSettings()"
 								ng-disabled="deviceSettings.$invalid" ng-disabled="btnDisabled">Submit</button>
 						</form>
 					</div>

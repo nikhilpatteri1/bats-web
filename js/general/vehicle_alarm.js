@@ -10,6 +10,7 @@ batsGeneralHome.controller('vehicleAlarm',function($rootScope,$scope, $http, $lo
 	$scope.token = $localStorage.data;
 	var todayDate = new Date();
 	$scope.deviceSelectAlarm = false;
+	$scope.blankTable=true;
 	$scope.myDate = {"start":todayDate,"end":todayDate};
 	$scope.showResultTable = false;
 	$scope.noResultTable = false;
@@ -143,6 +144,7 @@ batsGeneralHome.controller('vehicleAlarm',function($rootScope,$scope, $http, $lo
 								console.log(JSON.stringify(data));
 								if(data_value.length == 0){
 									$scope.showResultTable = false;
+									$scope.blankTable=false;
 									$scope.noResultTable = true;
 									$scope.httpLoading=false;
 								}
@@ -150,6 +152,7 @@ batsGeneralHome.controller('vehicleAlarm',function($rootScope,$scope, $http, $lo
 									$scope.httpLoading=false;
 									$scope.noResultTable = false;
 									$scope.showResultTable = true;
+									$scope.blankTable=false;
 									$scope.alarm_history = data_value;
 								}
 							})

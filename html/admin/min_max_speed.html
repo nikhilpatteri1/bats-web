@@ -1,11 +1,15 @@
 <div class="container-fluid">
-<div class="row headerStyle">
+<div class="row header_bats">
 	<div class="col-sm-10">
-
-		<h4 class="search_heading">Search Group</h4>
-		<div class="row Dropdownpadding">
+		<div class="row">
+							<div class="col-sm-12">
+								<label class="custom_label">Search Group</label>
+							</div>
+		</div>
+		<!-- <h4 class="search_heading">Search Group</h4> -->
+		<div class="row">
 			<div class="col-sm-3" id="clearTextGroup">
-				<select id="selectGroup" class="search_width" name="groupList"
+				<select id="selectGroup" class="form-control" name="groupList"
 					ng-model="groupname" ng-change="fetchDevList(groupname)">
 					<option ng-if="groupList.length" value="" selected disabled
 						class="disable_select">Select Group</option>
@@ -15,7 +19,7 @@
 				</select>
 			</div>
 			<div class="col-sm-3" id="clearTextDevice">
-				<select id="selectDevice" class="search_width" name="devList"
+				<select id="selectDevice" class="form-control" name="devList"
 					ng-model="deviceId" ng-change="deviceSelectedMinMax()">
 					<option ng-if="devList.length" value="" selected disabled
 						class="disable_select">Select Vehicle</option>
@@ -27,10 +31,10 @@
 			</div>
 			<section ng-hide="deviceSelectMinMax">
 				<div class="col-sm-2">
-					<div class='input-group date' id='startDateMinMaxPicker'>
-						<input type='text' class="form-control" id="startDateMinMax"
+					<div class='input-group date SpddateB' id='startDateMinMaxPicker'>
+						<input type='text' class="form-control SpddateNB" id="startDateMinMax"
 							readonly="readonly" placeholder="Start Date" /> <span
-							class="input-group-addon"> <span
+							class="input-group-addon SpddateNB"> <span
 							class="glyphicon glyphicon-calendar"> </span>
 						</span>
 
@@ -43,10 +47,10 @@
 				</div>
 
 				<div class="col-sm-2">
-					<div class='input-group date' id='endDateMinMaxPicker'>
-						<input type='text' class="form-control" id="endDateMinMax"
+					<div class='input-group date SpddateB' id='endDateMinMaxPicker'>
+						<input type='text' class="form-control SpddateNB" id="endDateMinMax"
 							readonly="readonly" placeholder="End Date" /> <span
-							class="input-group-addon"> <span
+							class="input-group-addon SpddateNB"> <span
 							class="glyphicon glyphicon-calendar"> </span>
 						</span>
 					</div>

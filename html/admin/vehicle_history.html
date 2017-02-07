@@ -8,15 +8,30 @@
 		<div class="col-sm-10">
 			<div class="row">
 				<div class="col-sm-4">
-					<label class="slot_label">Select Vehicle</label>
+					<label class="custom_label" Style>Search Vehicle</label>
 				</div>
 				<div class="col-sm-4"></div>
 				<div class="col-sm-4">
-					<label class="slot_label" ng-show="showTimeSlot">Select Slot</label>
+					<div class="row">
+						<div class="col-sm-5">
+							<label class="slot_label" ng-show="showTimeSlot">Select
+								Slot</label>
+						</div>
+						<div class="col-sm-7">
+						<label class="slot_label" ng-show="showTimeSlot">	<span class="wrap_type availableStol" > </span>Available Slot</label>
+						</div>
+					</div>
+					<!-- <div class="legendSection">
+						<ul class="legendlist">
+							<li><span class="wrap_type normalVehicle"></span>Normal
+								State</li>
+						</ul>
+					</div> -->
+
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-sm-3 customcol3" id="clearTextGroup">
+				<div class="col-sm-2 customcol3" id="clearTextGroup">
 					<select id="selectGroup" class="form-control" name="groupList"
 						ng-model="groupname" ng-change="fetchDevicelistHistory(groupname)">
 						<option ng-if="groupList.length" value="" selected disabled
@@ -26,7 +41,7 @@
 						<option ng-repeat="option in groupList" value="{{ option.gid }}">{{option.gname}}</option>
 					</select>
 				</div>
-				<div class="col-sm-3" id="clearTextDevice">
+				<div class="col-sm-3 customcol3" id="clearTextDevice">
 					<select id="selectDevice" class="form-control" name="deviceList"
 						ng-model="deviceId"
 						ng-change="fetchDeviceDetailHistory(deviceId);activeMenu = '5'">
@@ -39,8 +54,8 @@
 					</select>
 				</div>
 				<section ng-hide="showDatepicker">
-					<div class="col-sm-3 customcol3 pad0">
-						<div class="">
+					<div class="col-sm-3 customcol3 ">
+						<div class="datepickerDivStyle">
 							<md-content> <md-datepicker ng-model="myDate"
 								md-placeholder="Enter date"
 								ng-change="myDateChange(myDate);activeMenu = '5'"
@@ -110,6 +125,7 @@
 								<ui-gmap-polyline ng-repeat="p in historyMap.polylines"
 									path="p.path" stroke="p.stroke" visible='p.visible'
 									geodesic='p.geodesic' fit="false" editable="p.editable"
+							
 									draggable="p.draggable"> </ui-gmap-polyline> </ui-gmap-google-map> -->
 						</div>
 					</div>
@@ -158,12 +174,23 @@
 			</div>
 		</div>
 	</div>
+	<div class="row" ng-if="blankTable">
+		<div class="col-sm-12 verhorcenter" align="center">
+			<div class="centerData" style="margin-top:100px;">
+				<ul class="nodata_list" >
+					<li><img alt="" src="../images/select-dropdown.png" class="nodata_img"></li>
+					<li><label style="color: #000;margin-left:35px">  Select Group!</label></li>
+					<li><span>Shows travelled route of the vehicle with time & location</span></li>
+				</ul>
+			</div>
+		</div>
+	</div>
 </div>
 <script>
 $(function() {
 	$(".table-header").on("click", function() {
 		$expand = $('.table-header');
-		$showTable=$('#hist_table');
+		$showTable=$('.tp3');
 		if ($expand.text() == "< Info") {
 			$expand.text("> Info");
 			$showTable.css("right","0px");
@@ -171,7 +198,7 @@ $(function() {
 		else if($expand.text() == "> Info") 
 		{
 			$expand.text("< Info");
-			$showTable.css("right","-330px");
+			$showTable.css("right","-200px");
 		}
 	});
 });

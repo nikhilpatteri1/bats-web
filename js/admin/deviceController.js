@@ -4,6 +4,10 @@
 batsAdminHome.controller('deviceController', function($rootScope,$scope, $http, $interval,
 		$localStorage, $timeout) {
 	$rootScope.menuPos=9;
+	var contentHeight=window.screen.availHeight-200;
+	$scope.histcontentheight={
+			"height":contentHeight
+	}
 	$scope.token = $localStorage.data;
 	$scope.groupList = [];
 	$scope.deviceList = [];

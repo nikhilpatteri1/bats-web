@@ -27,7 +27,16 @@ input.ng-dirty.ng-invalid {
 input.ng-dirty.ng-valid {
 	border-bottom: solid 2px green;
 }
-
+.SpddateB{
+	border: 1px solid #ddd;
+}
+.SpddateNB{
+	background:#fff!important;
+	border:none!important;
+}
+.SpddateNB:focus{
+	box-shadow:none !important;
+}
 /* .titleHead {
 	margin-bottom: 40px;
 	text-align: center;
@@ -334,8 +343,11 @@ select {
 	color: #fff
 }
 .count_label {
+	position:absolute;
+	z-index:1000;
 	margin-top: 45px;
 	text-align: center;
+	width:100%;	
 }
 
 .count_label label {
@@ -379,8 +391,8 @@ select.select_group,select.select_device {
 /*============== History Table ================*/
 .tableSection {
 	position: relative;
-	padding:37px 10px 10px;
-	background: #e7e7e7;
+	padding:37px 0px 0px;
+background: #e7e7e7; 
 }
 
 .hist-container {
@@ -390,7 +402,7 @@ select.select_group,select.select_device {
 
 .hist-container>table {
 	border-spacing: 0;
-	background: #fff;
+	background: #fff; 
 	margin-bottom: 0px;
 	width: 100%;
 }
@@ -498,7 +510,7 @@ select.select_group,select.select_device {
 .normalVehicle {
 	width: 20%;
 	height: 30px;
-	background-color: #043a08;
+	background-color: #000000;
 }
 .aliveVehicle{
 	width: 20%;
@@ -574,7 +586,7 @@ select.select_group,select.select_device {
 .encircle{border: 2px solid #000;width: 40px;height: 40px;border-radius: 20px;line-height: 37px;text-align: center;}
 .encircle:hover{cursor:pointer;}
 .encircleactive{border-color:#ddd;background-color:#637778;color:#fff!important;}
-.encircleavailable{background-color:#637778;color:#000;}
+.encircleavailable{background-color:#2e9c53;color:#000;}
 .slotDiv{width: 75px;height: 32px;border: 1px solid #ddd; padding: 10px 0px;font-size: 11px;}
 /* .slotlegend{float: left;position: absolute;left: 7%;z-index: 1000;} */
 /* .slotlegend{float: right;position: absolute;top:0%;right: 7%;z-index: 1000;} */
@@ -678,21 +690,53 @@ font-family:Roboto, Arial, sans-serif;font-size: 11px;border-radius:2px;box-shad
 }
 
 #map_section {
-	position: fixed;
+	/* position: fixed;
 	top: 11.8%;
 	height: 83.9%;
-	width: 84%;
+	width: 84%; */
+	position: absolute;   
+    width: 100%;
 }
-.legendSection {position: fixed;bottom: 0px;background: #fff;width: 100%;left: 16.6667%;padding: 5px 0px;height: 27px;border-top: 2px solid #c2c2c2;}
+.legendSection {
+	position: fixed;
+	bottom: 0px;
+	background: #fff;
+	width: 100%;
+	left: 16.6667%;
+	padding: 5px 0px;
+	height: 27px;
+	border-top: 2px solid #c2c2c2;
+	z-index:10000;
+	
+}
 .legendlist li {font-family: 'Roboto';font-size: 12px;list-style: none;padding: 4px 0px 4px 0px;color: #b9b9b9;	float: left;}
 .wrap_type {width: 10px;height: 10px;border-radius: 50%;float: left;margin: 0 12px 0 12px;}
 .geo {background-color:#f44336;}
 .speed {background-color:#ffde01;}
 .geospeed {background-color:#e59305;}
-.normalVehicle {background-color:#043a08;}
+.normalVehicle {background-color:#000;}
+.availableStol {background-color:#2e9c53;}
 .aliveVehicle {background-color:#0540E5;}
 .loadingImage{width:20px;height:20px}
-#latestLocationId {position: fixed;top: 11.8%;height: 88.23%;width: 84%;}
+#latestLocationId {
+	/* position: fixed;
+	top: 11.8%;
+	height: 88.23%;
+	width: 84%; */
+	position: fixed;
+    /* top: 11.8%; */
+    height: 92.23%;
+    width: 84%;
+}
+
+#nearbyId{
+	height: 100%;
+	width: 100%;
+	/* top: 0;
+	left: 0; */
+	position: fixed;
+	/* z-index: 200; */
+}
 .customcol3{width:22%;}
 .customcol4{width:31%;}
 .nodata_img{width:250px; height:250px;}
@@ -705,9 +749,14 @@ font-family:Roboto, Arial, sans-serif;font-size: 11px;border-radius:2px;box-shad
 .iconBg{background-color:#363636;}
 .verhorcentericon {display: flex;align-items: center; justify-content: center; height: 32px;}
 .slotLabel{color:#647678;}
-#hist_map_section{position: fixed;top: 11.8%;height: 88.23%;width: 84%;}
+#hist_map_section {
+	position: fixed;
+    /* top: 11.8%; */
+    height: 92.23%;
+    width: 84%;
+}
 .table-header{background: #000;color:#fff;font-size:14px;padding:2px 0px;cursor:pointer;}
-.tp3{margin-top:-3px;position: absolute;right: -330px;}
+.tp3{margin-top:-3px;position: absolute;right: -200px;}
 .select2-container.ng-dirty.ng-valid {border-color: #ddd;}
 .link{color:#2ab3ea;font-weight:600;font-size:13px;}
 .verhorcentericon {display: flex;align-items: center;justify-content: center;height: 32px;}

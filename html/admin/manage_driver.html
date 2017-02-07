@@ -1,5 +1,5 @@
 <div class="container-fluid">
-	<div class="row headerStyle">
+	<div class="row header_bats">
 		<div class="col-sm-10">
 			<h4 class="search_heading">Search Group</h4>
 			<div class="row Dropdownpadding">
@@ -33,18 +33,20 @@
 
 	<div class="row">
 		<div class="col-sm-12 pad0">
-			<div class="table-responsive" >
-				<table class="table ">
-					<thead class="tableHeading">
+
+			<div class="table-container" ng-style="histcontentheight">
+				<table class="tablestyle">
+					<thead class="theadStyle tablethead">
 						<tr>
-							<td></td>
-							<td><label>Driver Name</label></td>
-							<td><label>Phone Number </label></td>
-							<td></td>
+							<th></th>
+							<th><div>Driver Name</div></th>
+							<th><div>Phone Number</div></th>
+							<th></th>
 						</tr>
 					</thead>
-					<tbody style="height:500px;"class="tableBodyStyle">
-						<tr
+
+					<tbody class="tbodyStyle">
+						<tr class="tbodytr tabletbodytr"
 							ng-repeat="driverdetail in driverlist | driverFilter:searchDriver">
 							<td><p class="culomPad">
 									<img
@@ -57,25 +59,55 @@
 								ng-click="fetchdriverInfo(driverdetail.driver_id)"
 								data-toggle="modal" data-target="#updateUserModal"><i
 									class="fa fa-pencil"></i></a> <a href="#" class="delete_icon"
-								ng-click="deleteDriver(driverdetail.driver_id)"><i
+								ng-click="deleteDriver(driverdetail.driver_id)"> <i
 									class="fa fa-trash"></i></a></td>
 						</tr>
 					</tbody>
+
 				</table>
+			</div>
+
+
+		</div>
+	</div>
+	<div class="row"
+		ng-show="(driverlist| driverFilter:searchDriver).length==0">
+		<div class="col-sm-12 verhorcenter" align="center">
+			<div class="centerData">
+				<ul class="nodata_list">
+					<li><img alt="" src="../images/no-data.png" class="nodata_img"></li>
+					<li><label style="color: #000">Nothing here!</label></li>
+					<li><span>No Driver Available</span></li>
+				</ul>
 			</div>
 		</div>
 	</div>
+	<div class="row" ng-show="!driverlist.length">
+		<div class="col-sm-12 verhorcenter" align="center">
+			<div class="centerData">
+				<ul class="nodata_list">
+					<li><img alt="" src="../images/no-data.png" class="nodata_img"></li>
+					<li><label style="color: #000">Nothing here!</label></li>
+					<li><span>No Driver Available</span></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="row" ng-init="listDrivers()">
+		<div class="col-sm-12"></div>
+	</div>
 </div>
 
-<p ng-show="(driverlist| driverFilter:searchDriver).length==0"
+<!-- <p ng-show="(driverlist| driverFilter:searchDriver).length==0"
 	class="help-block error-help">No drivers available for this search
-	criteria !!!</p>
-<p ng-show="!driverlist.length" class="help-warning">No driver
-	created yet</p>
+	criteria !!!</p> -->
 
-<div class="row" ng-init="listDrivers()">
-	<div class="col-sm-12"></div>
-</div>
+
+
+<!-- <p ng-show="!driverlist.length" class="help-warning">No driver
+	created yet</p> -->
+
+
 
 
 
@@ -92,7 +124,7 @@
 				<h4 class="modal-title">Add Driver</h4>
 			</div>
 
-			<div class="modal-body">
+			<div class="modal-body my_modalBody">
 				<form id="driverCreateform" name="driverform"
 					class="form driverformInput">
 					<!-- <div class="col-sm-2 col-sm-offset-10" align="right">
@@ -447,10 +479,10 @@
 										<input type="text" class="form-control" name="driverStreet"
 											ng-maxlength="100" ng-model="driver.street" required />
 										<p
-											ng-show="driverupdateform.driverStreet.$touched && driverupdateform.driverStreet.$invalid"
+											ng-show="driverform.driverStreet.$touched && driverform.driverStreet.$invalid"
 											class="help-block error-help">Street details required</p>
 										<p
-											ng-show="driverupdateform.driverStreet.$error.maxlength && !driverupdateform.driverStreet.$pristine"
+											ng-show="driverform.driverStreet.$error.maxlength && !driverform.driverStreet.$pristine"
 											class="help-block">Max characters 100</p>
 									</div>
 								</div>
@@ -665,7 +697,7 @@
 			</div>
 
 
-			<div class="modal-body">
+			<div class="modal-body my_modalBody">
 				<form name="driverupdateform" class="form driverformInput">
 					<!-- <div class="col-sm-2 col-sm-offset-10" align="right">
 						<a class="close" ng-disabled="driverform.$invalid"
@@ -730,7 +762,7 @@
 										</div>
 									</div>
 
-								
+
 
 								</div>
 								<div class="col-sm-6">
@@ -798,11 +830,10 @@
 								<div class="col-sm-4">
 									<div class="form-group"
 										ng-class="{'has-error':driverupdateform.driverAadhaar.$invalid && !driverupdateform.driverAadhaar.$pristine}">
-										<label >
-											Aadhaar Number</label> <input type="text" class="form-control"
-											name="driverAadhaar" ng-minlength="12" ng-maxlength="12"
-											ng-model="driver.aadhar" 
-											numbers-only ng-required="false" />
+										<label> Aadhaar Number</label> <input type="text"
+											class="form-control" name="driverAadhaar" ng-minlength="12"
+											ng-maxlength="12" ng-model="driver.aadhar" numbers-only
+											ng-required="false" />
 										<p
 											ng-if="driverupdateform.driverAadhaar.$error.minlength && !driverupdateform.driverAadhaar.$pristine"
 											class="help-block">Min 12 charcters</p>
@@ -971,7 +1002,7 @@
 															<option ng-repeat="option in lang">{{option}}</option>														
 														</select> -->
 											<select
-												class="js-example-basic-multiple js-example-basic-multiple-limit js-states form-control" 
+												class="js-example-basic-multiple js-example-basic-multiple-limit js-states form-control"
 												id="updatelangSelect" multiple="multiple">
 												<option ng-repeat="option in lang">{{option}}</option>
 											</select>
@@ -1006,7 +1037,7 @@
 										<div class="row">
 											<div class="col-sm-12">
 												<select ng-model="driver.country" name="driverCountry"
-													class="select_widht_customer"required>
+													class="select_widht_customer" required>
 													<!-- ng-click="onSelectCountry()" -->
 													<option disabled value="">- - Select Country - -</option>
 													<option ng-show="editformselect" selected>{{driver.country}}</option>
@@ -1030,8 +1061,8 @@
 										<div class="row">
 											<div class="col-sm-12">
 												<select ng-model="driver.state" name="driverState"
-													class="select_widht_customer"
-													ng-change="clearcity()" required>
+													class="select_widht_customer" ng-change="clearcity()"
+													required>
 													<option disabled value="">- - Select State - -</option>
 													<option ng-show="editformselect" selected>{{driver.state}}</option>
 													<option ng-repeat="s in statesu">{{s}}</option>
@@ -1114,15 +1145,13 @@
 												<label>Country</label>
 												<div class="row">
 													<div class="col-sm-12">
-														<<select
-																ng-model="driver.pcountry" name="pcountry"
-															class="select_widht_customer"
-																ng-required="false">
-																<!-- ng-change="onSelectCountry()" -->
-																
-																<option ng-show="editformselect" selected>{{driver.pcountry}}</option>
-																<!-- <option ng-repeat="c in country" value="{{c}}">{{c}}</option> -->
-															</select>
+														<select ng-model="driver.pcountry" name="pcountry"
+															class="select_widht_customer" ng-required="false">
+															<!-- ng-change="onSelectCountry()" -->
+
+															<option ng-show="editformselect" selected>{{driver.pcountry}}</option>
+															<!-- <option ng-repeat="c in country" value="{{c}}">{{c}}</option> -->
+														</select>
 													</div>
 												</div>
 											</div>
@@ -1173,17 +1202,17 @@
 											<div class="col-sm-4">
 												<div class="form-group"
 													ng-class="{'has-error':driverupdateform.driverpPincode.$invalid && !driverupdateform.driverpPincode.$pristine}">
-													<label>Pincode</label> <input
-																type="text" class="form-control" name="driverpPincode"
-																ng-maxlength="6" ng-minlength="6"
-																ng-model="driver.ppincode" placeholder="Enter Pincode"
-																numbers-only ng-required="false" />
-															<p
-																ng-show="driverupdateform.driverpPincode.$error.minlength && !driverupdateform.driverpPincode.$pristine"
-																class="help-block">Min digits 6</p>
-															<p
-																ng-show="driverupdateform.driverpPincode.$error.maxlength && !driverupdateform.driverpPincode.$pristine"
-																class="help-block">Max digits 6</p>
+													<label>Pincode</label> <input type="text"
+														class="form-control" name="driverpPincode"
+														ng-maxlength="6" ng-minlength="6"
+														ng-model="driver.ppincode" placeholder="Enter Pincode"
+														numbers-only ng-required="false" />
+													<p
+														ng-show="driverupdateform.driverpPincode.$error.minlength && !driverupdateform.driverpPincode.$pristine"
+														class="help-block">Min digits 6</p>
+													<p
+														ng-show="driverupdateform.driverpPincode.$error.maxlength && !driverupdateform.driverpPincode.$pristine"
+														class="help-block">Max digits 6</p>
 												</div>
 											</div>
 

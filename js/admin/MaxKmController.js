@@ -353,29 +353,52 @@ function endDate(getEndDateMinMax){
 * */	
 		$(document).on('click', '#startDateMaxKmPicker', function(){
 			$('#startDateMaxKmPicker').datetimepicker({
+				/* inline: true,
+                 sideBySide: true,*/
 				format: 'DD/MM/YYYY hh:mm a',
 				defaultDate:'now',        
-				 maxDate: 'now',   		
+		        maxDate: 'now',        		
 				ignoreReadonly:true,
 		            }).on("dp.change",function (e) {
 		            	//$("#startDateMaxKm").blur(); 
 		            	//closeResult();
 		            });
 			//startDateMaxKmError.style.display = 'none';
+			var dt=new Date().getTime();
+			$('#startDateMaxKm').val(showTime(dt));
 		}); 
 		$(document).on('click', '#endDateMaxKmPicker', function(){
 			$('#endDateMaxKmPicker').datetimepicker({
-				format: 'DD/MM/YYYY hh:mm a',
-				defaultDate:'now',        
-				 maxDate: 'now',       		
-				ignoreReadonly:true,
+				 /*inline: true,
+                 sideBySide: true,*/
+				ignoreReadonly: true,
+	             maxDate: 'now',
+	             format: 'DD/MM/YYYY hh:mm a',
+	             defaultDate:'now',
 		            }).on("dp.change",function (e) {
 		            	//$("#endDateMaxKm").blur(); 
 		            	//closeResult();
 		            });
 			//endDateMaxKmError.style.display = 'none';
+			var dt=new Date().getTime();
+			$('#endDateMaxKm').val(showTime(dt));
 		});
-		
+		function showTime (ts) {
+			//console.log(ts);
+			var d = new Date(Number(ts));
+			var day = d.getDate();
+			var month = d.getMonth()+1;
+			var year = d.getFullYear();
+			var hours = d.getHours();
+			var minutes = d.getMinutes();
+			var ampm = hours >= 12 ? 'pm' : 'am';
+			hours = hours % 12;
+			hours = hours ? hours : 12; // the hour '0' should be '12'
+			minutes = minutes < 10 ? '0' + minutes : minutes;
+			var strTime = day+"/"+month+"/"+year+" "+ hours + ':' + minutes + ' ' + ampm;
+			//console.log(strTime);
+			return strTime;
+		};
 		function closeResult(){
 			$timeout(function () {
 				$scope.showResultMaxKm = false;

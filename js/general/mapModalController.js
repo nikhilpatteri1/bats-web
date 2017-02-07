@@ -113,13 +113,16 @@
 							-----------------------------------------------------------------------------*/
 							$scope.whatVehicle = function() {
 								if ($scope.dev.devtype == "car") {
-									$scope.url = 'https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQnBx8Czkt93BZhCcIWGh-3eHuv8CH613GrTCpah6RP9b7LyxIJjw';
+									$scope.url = '../images/driver.png';
 								} else if ($scope.dev.devtype == "bus") {
-									$scope.url = 'http://www.myiconfinder.com/uploads/iconsets/256-256-3ac514df5b4f36e2d8d525fe7f63b83c.png'
+									$scope.url = '../images/driver.png';
 								} else if ($scope.dev.devtype == "jeep") {
-									$scope.url = 'https://www.google.co.in/imgres?imgurl=https://cdn4.iconfinder.com/data/icons/transportation-front-view/80/Transportation_cars-01-512.png&imgrefurl=https://www.iconfinder.com/icons/215247/4x4_automobile_cars_front_view_jeep_machine_quadro_transportation_travel_vehicle_icon&h=512&w=512&tbnid=o3WW9QtjG1UktM:&docid=CoqPwHHUjs97UM&ei=EJeMVt2QOZKiugTW-JOYCw&tbm=isch&ved=0ahUKEwjd2Njgq5TKAhUSkY4KHVb8BLMQMwgkKAkwCQ';
+									$scope.url = '../images/driver.png';
 								} else if ($scope.dev.devtype == "truck") {
-									$scope.url = 'http://www.wpclipart.com/transportation/car/icons_BW/flatbed_truck_BW_icon.png';
+									$scope.url = '../images/driver.png';
+								}
+								else{
+									$scope.url = '../images/driver.png';
 								}
 							}
 							/**

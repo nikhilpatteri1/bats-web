@@ -45,9 +45,27 @@
 <link rel="stylesheet" type="text/css" href="../css/admin.css">
 
 <!-- Media Screens -->
-<!-- <link rel='stylesheet' media='screen and (min-width: 701px) and (max-width: 900px)' href='css/medium.css' />
+ <!--<link rel='stylesheet' media='screen and (min-width: 1920px)' href='../css/ExtraLargeScreen.css' />
 <link rel='stylesheet' media='screen and (min-width: 701px) and (max-width: 900px)' href='css/medium.css' />
 <link rel='stylesheet' media='screen and (min-width: 701px) and (max-width: 900px)' href='css/medium.css' /> -->
+<style>
+/* @media screen and (min-width: 1280px) and (max-width:1280px) {
+   #map_section,#nearbyId {
+    position: fixed;
+    top: 8.5%;
+    height: 88.9%;
+    width: 84%;
+}
+ }
+ @media screen and (min-width: 1920px) and (max-width:1920px) {
+   #map_section,#nearbyId {
+    position: fixed;
+    top: 7.8%;
+    height: 89.9%;
+    width: 84%;
+}
+ } */
+</style>
 </head>
 <body class="adminBody" ng-controller="AdminController" ng-cloak>
 
@@ -313,7 +331,7 @@
 													<!-- <i class="fa fa-map"></i> -->
 												</div>
 												<div class="col-sm-7 listElePadding">
-													<p>Map</p>
+													<p>Live Tracking</p>
 												</div>
 											</div>
 									</a></li>
@@ -331,7 +349,7 @@
 													<!-- <i class="fa fa-history"></i> -->
 												</div>
 												<div class="col-sm-7 listElePadding">
-													<p>Vehicle History</p>
+													<p>Travel Route History</p>
 												</div>
 											</div>
 									</a></li>
@@ -349,7 +367,7 @@
 													<!-- <i class="fa fa-bell"></i> -->
 												</div>
 												<div class="col-sm-7 listElePadding">
-													<p>Vehicle Alarm</p>
+													<p>Events History</p>
 												</div>
 											</div>
 									</a></li>
@@ -404,7 +422,7 @@
 													<!-- <i class="fa fa-level-up"></i> -->
 												</div>
 												<div class="col-sm-7 listElePadding">
-													<p>Kilometers Traveled</p>
+													<p>Kilometers Covered</p>
 												</div>
 											</div>
 									</a></li>
@@ -450,10 +468,11 @@
 											</div>
 											<div class="col-sm-7 listElePadding">
 												<p class="settings_text">
-													Settings<span class="right-arrow">+</span>
+													Settings<span class="right-arrow" style="padding-left: 60px;">+</span>
 												</p>
 											</div>
 										</div>
+										
 										<ul class="settingsDetail" track-active>
 											<li ng-click="menuPos=7"><a
 												ng-class="{ active: activePath=='/admin/group' }"

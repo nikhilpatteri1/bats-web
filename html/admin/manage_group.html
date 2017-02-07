@@ -1,33 +1,31 @@
-<script>
-	$(function() {
-		$("#includedContent").load("submenu.html");
-	});
-</script>
 <div class="container-fluid">
-	<div class="row header_bats ">
+	<div class="row header_bats">
 		<div class="col-sm-10">
-
-			<h4 class="search_heading">Search Group</h4>
-			<div class="row Dropdownpadding">
-				<div class="col-sm-3">
+			<div class="row">
+							<div class="col-sm-12">
+								<label class="custom_label">Search Group</label>
+							</div>
+			</div>      
+			<div class="row">
+				<div class="col-sm-3" id="clearTextCountry">
 					<div class="country">
-						<select ng-model="selectedcountry" class="search_width"
+						<select id="selectCountry" ng-model="selectedcountry" class="form-control"
 							ng-options="group.country as group.country for group in glist | unique:'country'">
 							<option value="">Select Country</option>
 						</select>
 					</div>
 				</div>
-				<div class="col-sm-3">
+				<div class="col-sm-3" id="clearTextState">
 					<div class="country">
-						<select ng-model="selectedstate" class="search_width"
+						<select id="selectState" ng-model="selectedstate" class="form-control"
 							ng-options="group.state as group.state for group in glist | unique:'state' | filter:{country:selectedcountry}">
 							<option value="">Select State</option>
 						</select>
 					</div>
 				</div>
-				<div class="col-sm-3">
+				<div class="col-sm-3" id="clearTextGroup">
 					<div class="country">
-						<select ng-model="selectedgnames" class="search_width"
+						<select id="selectGroup" ng-model="selectedgnames" class="form-control"
 							ng-options="group.gname as group.gname for group in glist | filter:{country:selectedcountry,state:selectedstate}">
 							<option value="">Select Group</option>
 						</select>
@@ -50,34 +48,37 @@
 	<!-- <h2 class="heading_title">Manage Group</h2> -->
 	<div class="row" ng-show="yesGrouplist">
 		<div class="col-sm-12 pad0">
-			<div class="table-responsive">
-				<table class="table " >
-					<thead class="tableHeading">
-						<tr>
-							<td><label>Sl No.</label></td>
-							<td><label>Group Name</label></td>
-							<td><label>Group ID</label></td>
-							<td></td>
-						</tr>
-					</thead>
-					<tbody class="tableBodyStyle">
-						<tr
-							ng-repeat="group in glist | filterMultiple:{country:selectedcountry,state:selectedstate,gname:selectedgnames}">
-							<td><p class="culomPad">{{$index+1}}</p></td>
-							<td><p>{{group.gname}}</p></td>
-							<td><p>{{group.gid}}</p></td>
-							<td><a href="#" class="edit_icon"
-								ng-click="submitEditGroup(group.gid)" data-toggle="modal"
-								data-target="#createGroupModal"><i class="fa fa-pencil"></i></a>
-								<a href="#" class="delete_icon"
-								ng-click="submitDeleteGroup(group.gid)"><i
-									class="fa fa-trash"></i></a></td>
-						</tr>
-					</tbody>
-				</table>
+			<div class="table-container" ng-style="histcontentheight">
+				<table class="tablestyle">
+					<thead class="theadStyle tablethead">
+								<tr>
+									<th style="background-color:#e7e7e7"><div>Sl No.</div></th>
+									<th><div>Group Name</div></th>
+									<th><div>Group ID</div></th>
+									<th></th> 
+								</tr>
+							</thead>
+							<tbody class="tbodyStyle">
+								<tr class="tbodytr tabletbodytr"
+									ng-repeat="group in glist | filterMultiple:{country:selectedcountry,state:selectedstate,gname:selectedgnames}">
+									<td><p class="culomPad">{{$index+1}}</p></td>
+									<td><p>{{group.gname}}</p></td>
+									<td><p>{{group.gid}}</p></td>
+									<td><a href="#" class="edit_icon"
+										ng-click="submitEditGroup(group.gid)" data-toggle="modal"
+										data-target="#createGroupModal"><i class="fa fa-pencil"></i></a>
+										<a href="#" class="delete_icon"
+										ng-click="submitDeleteGroup(group.gid)"><i
+											class="fa fa-trash"></i></a></td>
+								</tr>
+								
+							</tbody>
+						</table>
+					</div>
+				
 			</div>
 		</div>
-	</div>
+
 
 	<div class="row" ng-show="noGroupList">
 		<div class="col-sm-12 verhorcenter" align="center">
@@ -108,7 +109,8 @@
 				<h4 class="modal-title" ng-show="title.update">Update Group</h4>
 			</div>
 			<div class="xyz">
-				<div class="modal-body " ng-class="{'bodyStyle':applyClass}">
+				<div class="modal-body my_modalBody"
+					ng-class="{'bodyStyle':applyClass}">
 					<form name="createGroupForm" class="form formInput"
 						ng-init="loadDevices()" novalidate>
 						<!-- <div class="col-sm-2 col-sm-offset-10" align="right">
@@ -132,10 +134,9 @@
 												ng-readonly="truefalse" style="text-transform: lowercase"
 												required />
 											<p
-												ng-show="createGroupForm.gname.$invalid && !createGroupForm.gname.$pristine"
-												class="help-block">Group name is required.</p>
+												ng-show="createGroupForm.gname.$touched && createGroupForm.gname.$invalid"
+												class="help-block error-help">Group name is required.</p>
 											<span class="help-block chk_frm_server" ng-show="error.gname">{{status}}</span>
-
 											<input type="hidden" ng-model="group.gid" name="gid"
 												class="form-control" />
 										</div>
@@ -162,8 +163,8 @@
 												</div>
 											</div>
 											<p
-												ng-show="createGroupForm.country.$invalid && !createGroupForm.country.$pristine"
-												class="help-block">Country is required.</p>
+												ng-show="createGroupForm.country.$invalid && createGroupForm.country.$touched"
+												class="help-block error-help">Country is required.</p>
 										</div>
 									</div>
 								</div>
@@ -189,9 +190,8 @@
 													</select>
 												</div>
 											</div>
-											<p
-												ng-show="createGroupForm.state.$invalid && !createGroupForm.state.$pristine"
-												class="help-block">State is required.</p>
+											<p ng-show="createGroupForm.state.$invalid && createGroupForm.state.$touched"
+												class="help-block error-help">State is required.</p>
 										</div>
 									</div>
 									<div class="col-sm-6">
@@ -207,12 +207,14 @@
 											<!-- <p
 											ng-show="createGroupForm.speed_limit.$invalid && !createGroupForm.speed_limit.$pristine"
 											class="help-block">Speed Limit is required in number.</p> -->
+											<p ng-show="createGroupForm.speed_limit.$invalid && createGroupForm.speed_limit.$touched"
+												class="help-block error-help">Speed Limit is required.</p>
 											<div ng-messages="deviceSettings.speedlimit.$error"
-												style="color: maroon" role="alert">
+												 class="help-block" role="alert">
 												<div ng-if="isNotNumber">Kindly enter numbers only</div>
 												<div ng-if="isNotLimit">Kindly set speed limit
 													starting 10 kmph till 200 Kmph</div>
-											</div>
+											</div>  
 										</div>
 									</div>
 								</div>
@@ -246,6 +248,9 @@
 																		name="contact_name{{$index+1}}"
 																		class="dynamicBlockInput" ng-minlength="2"
 																		ng-maxlength="70" required />
+																		<p ng-show="createGroupForm.contact_name{{$index+1}}.$invalid && createGroupForm.contact_name{{$index+1}}.$touched"
+																class="help-block error-help">Name is
+																required.</p>
 																	<p
 																		ng-show="createGroupForm.contact_name{{$index+1}}.$error.maxlength"
 																		class="help-block dynamicBlockHelp">Name field of
@@ -270,6 +275,9 @@
 																		class="dynamicBlockInput"
 																		name="contact_email{{$index+1}}"
 																		ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" />
+																		<p ng-show="createGroupForm.contact_email{{$index+1}}.$invalid && createGroupForm.contact_email{{$index+1}}.$touched"
+																class="help-block error-help">Email is
+																required.</p>
 																	<p
 																		ng-show="createGroupForm.contact_email.$invalid && !createGroupForm.contact_email.$pristine"
 																		class="help-block dynamicBlockHelp">Enter a valid
@@ -284,7 +292,7 @@
 															<label>Mobile Number</label>
 															<!-- ng-show="group.contact_num"
 															class="floatlabeltxt show-hide" -->
-															<div class="row">
+															<div class="row">  
 																<div class="col-sm-12">
 																	<input type="text" ng-model="group.contact_num"
 																		class="dynamicBlockInput" numbers-only
@@ -293,6 +301,9 @@
 																		required />
 																</div>
 															</div>
+															<p ng-show="createGroupForm.contact_num{{$index+1}}.$invalid && createGroupForm.contact_num{{$index+1}}.$touched"
+																class="help-block error-help">Mobile no is
+																required.</p>
 															<p
 																ng-show="createGroupForm.contact_num{{$index+1}}.$invalid && !createGroupForm.contact_num{{$index+1}}.$pristine"
 																class="help-block dynamicBlockHelp">Enter Valid
@@ -316,8 +327,8 @@
 																name="contact_desc{{$index+1}}"
 																class="form-control dynamicBlockText" required></textarea>
 															<p
-																ng-show="createGroupForm.contact_desc{{$index+1}}.$invalid && !createGroupForm.contact_desc{{$index+1}}.$pristine"
-																class="help-block dynamicBlockHelp">Description is
+																ng-show="createGroupForm.contact_desc{{$index+1}}.$invalid && createGroupForm.contact_desc{{$index+1}}.$touched"
+																class="help-block dynamicBlockHelp error-help">Description is
 																required.</p>
 														</div>
 													</div>
@@ -364,7 +375,7 @@
 																	<span>
 																		{{devices.vehicle_num.length>0?devices.vehicle_num:devices.devid}}</span></label>
 															</span>
-															<h2 ng-show="noDevices">No Devices Available</h2>
+															<h2 ng-show="noDevices" Style="font-size:15px;text-align:center;">No Devices Available</h2>
 														</div>
 													</div>
 												</div>
@@ -387,7 +398,7 @@
 
 											</div>
 											<div class=" select_device">
-												<div class="panel-body " style="height: 256px;">
+												<div class="panel-body pad16" style="height: 256px;">
 													<ul>
 														<li ng-repeat="item in selection"
 															ng-click="toggleSelectDevice(item.devid)">{{item.vehicle_num.length>0?item.vehicle_num:item.devid}}
@@ -467,11 +478,11 @@
 									</div>
 									<div class="col-sm-6">
 										<div class="row" ng-if="IsgeoFence('1')">
-											<div class="col-sm-6 col-sm-offset-3" align="center">
+											<div class="col-sm-6 col-sm-offset-3" align="right">
 												<div class="form-group">
-													<a class="btn btn-primary btn_anchor" id="showMap"
+													<a class="btn btn-primary creategroup" id="showMap"
 														ng-hide="!selection.length || gname"
-														ng-click="changeStyle()">Draw Geofence from map</a>
+														ng-click="changeStyle()">Continue</a>
 												</div>
 											</div>
 										</div>
@@ -481,7 +492,7 @@
 												<div class="form-group">
 													<div class="row">
 														<div class="col-sm-6 col-sm-offset-3" align="center">
-															<a class="btn btn-primary create_button btn_anchor"
+															<a class="btn btn-primary create_button btn_anchor "
 																ng-click="submitCreateGroupForm()"
 																ng-disabled="btn.create"
 																ng-hide="createGroupForm.$invalid || !selection.length || gname">Create</a>
@@ -556,5 +567,3 @@
 		</div>
 	</div>
 </div>
-
-

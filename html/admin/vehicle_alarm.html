@@ -8,7 +8,7 @@
 		<div class="col-sm-10">
 			<div class="row">
 				<div class="col-sm-12">
-					<label class="custom_label">Select Vehicle</label>
+					<label class="custom_label">Search Vehicle</label>
 				</div>
 			</div>
 			<div class="row">
@@ -33,15 +33,15 @@
 					</select>
 				</div>
 				<section ng-show="deviceSelectAlarm">
-					<div class="col-sm-3 customcol3 pad0">
-						<div class="">
+					<div class="col-sm-3 customcol3 ">
+						<div class="datepickerDivStyle">
 							<md-content> <md-datepicker ng-model="myDate.start"
 								md-placeholder="Enter date" md-max-date="todayDate"></md-datepicker>
 							</md-content>
 						</div>
 					</div>
-					<div class="col-sm-3 customcol3 pad0">
-						<div class="">
+					<div class="col-sm-3 customcol3 ">
+						<div class="datepickerDivStyle">
 							<md-content> <md-datepicker ng-model="myDate.end"
 								md-placeholder="Enter date" md-max-date="todayDate"></md-datepicker>
 							</md-content>
@@ -61,54 +61,58 @@
 	<div class="row">
 		<div class="col-sm-12 pad0">
 			<div class="table-responsive" ng-if="showResultTable">
-				<section class="tableSection">
-					<div class="hist-container" ng-style="histcontentheight">
-						<table class="table">
-							<thead>
-								<tr>
-									<th>Slno
-										<div>Slno</div>
-									</th>
-									<th>Alarm Type
-										<div>Alarm Type</div>
-									</th>
-									<th>Speed in KMPH
-										<div>Speed in KMPH</div>
-									</th>
-									<th>Time | Date
-										<div>Time | Date</div>
-									</th>
-									<th>Location(Click lat,long to see address)
-										<div>Location(Click lat,long to see address)</div>
-									</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr ng-repeat='x in alarm_history'>
-									<td>{{$index+1}}</td>
-									<!-- <td>{{x.alarm_type}}</td> -->
-									<td ng-if="x.alarm_type == '0' ">Panic Alarm</td>
-									<td ng-if="x.alarm_type == '1' ">Tamper Sim Alarm</td>
-									<td ng-if="x.alarm_type == '2' ">Tamper Top Alarm</td>
-									<td ng-if="x.alarm_type == '3' ">Battery Alarm</td>
-									<td ng-if="x.alarm_type == '4' ">Overspeed Alarm</td>
-									<td ng-if="x.alarm_type == '5' ">Geofence Alarm</td>
-									<td ng-if="x.alarm_type == '6' ">Sanity Alarm</td>
-									<td ng-if="x.alarm_type == '7' ">Power Interrupt Alarm</td>
-									<td ng-style="{{x.alarm_type == '4'?'redColor':'blackColor'}}">{{x.Velocity}}</td>
-									<td>{{getDate(x.ts)}}</td>
-									<td><a class="link" href=""
-										ng-click="givelt(x.lat,x.long);popover.show($event);"> <span>{{x.lat}},
-												{{x.long}}</span></a></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
+				<div class="table-container" ng-style="histcontentheight">
+					<table class="tablestyle">
+						<thead class="theadStyle tablethead">
+							<tr>
+								<th>Slno</th>
+								<th>Alarm Type</th>
+								<th>Speed in KMPH</th>
+								<th>Time | Date</th>
+								<th>Location(Click lat,long to see address)</th>
+							</tr>
+						</thead>
+						<tbody class="tbodyStyle">
+							<tr class="tbodytr tabletbodytr" ng-repeat='x in alarm_history'>
+								<td>{{$index+1}}</td>
+								<!-- <td>{{x.alarm_type}}</td> -->
+								<td ng-if="x.alarm_type == '0' ">Panic Alarm</td>
+								<td ng-if="x.alarm_type == '1' ">Tamper Sim Alarm</td>
+								<td ng-if="x.alarm_type == '2' ">Tamper Top Alarm</td>
+								<td ng-if="x.alarm_type == '3' ">Battery Alarm</td>
+								<td ng-if="x.alarm_type == '4' ">Overspeed Alarm</td>
+								<td ng-if="x.alarm_type == '5' ">Geofence Alarm</td>
+								<td ng-if="x.alarm_type == '6' ">Sanity Alarm</td>
+								<td ng-if="x.alarm_type == '7' ">Power Interrupt Alarm</td>
+								<td ng-style="{{x.alarm_type == '4'?'redColor':'blackColor'}}">{{x.Velocity}}</td>
+								<td>{{getDate(x.ts)}}</td>
+								<td><a class="link" href=""
+									ng-click="givelt(x.lat,x.long);popover.show($event);"> <span>{{x.lat}},
+											{{x.long}}</span></a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 				</section>
 			</div>
 		</div>
 	</div>
 	<!-- ./Alarm History Table -->
+
+	<div class="row" ng-if="blankTable">
+		<div class="col-sm-12 verhorcenter" align="center">
+			<div class="centerData" style="margin-top: 100px;">
+				<ul class="nodata_list">
+					<li><img alt="" src="../images/select-dropdown.png"
+						class="nodata_img"></li>
+					<li><label style="color: #000; margin-left: 35px">
+							Select Vehicle!</label></li>
+					<li><span>Shows event history of the vehicle with
+							location</span></li>
+				</ul>
+			</div>
+		</div>
+	</div>
 
 	<div class="row" ng-if="noResultTable">
 		<div class="col-sm-12 verhorcenter" align="center">

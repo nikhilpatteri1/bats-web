@@ -4,6 +4,7 @@ var endTimeStampKm;
 batsGeneralHome.controller("GeneralMaxKmCtrl",function($rootScope,$http,$scope,$filter,$localStorage,$timeout){
 	$rootScope.menuPos=5;
 	var token = $localStorage.data;
+	$scope.blankTable=true;
 	if(typeof $scope.token==="undefined"){
 		swal({ 
 			   title: "Un Authorized Access",
@@ -69,6 +70,7 @@ batsGeneralHome.controller("GeneralMaxKmCtrl",function($rootScope,$http,$scope,$
 	$scope.sel_group_device = false;
 	// $scope.hist.searchDeviceModel = "";
 	$scope.deviceSelectMaxKm=true;
+	$scope.blankTable=false;
 	$scope.showResultMaxKm = false;
 	$scope.deviceJson = {};
 	$scope.deviceJson.token = token;
@@ -324,7 +326,18 @@ function endDate(getEndDateMinMax){
  * }).on("dp.change",function (e) { //$("#endDateMaxKm").blur();
  * //closeResult(); }); //endDateMaxKmError.style.display = 'none'; });
  */	
-			$(document).on('click', '#startDateMaxKmPicker', function(){
+			
+$(document).ready(function() {
+	$.getScript('../assets/select_filter/select2.min.js', function() {
+		$("#selectGroup").select2({});
+		$("#selectDevice").select2({});
+		$('#clearTextGroup span.select2-chosen').text(" Select Group ");
+		$('#clearTextDevice span.select2-chosen').text("Select  Vehicle No/Device");
+	});// script
+});
+
+
+$(document).on('click', '#startDateMaxKmPicker', function(){
 				$('#startDateMaxKmPicker').datetimepicker({
 					format: 'DD/MM/YYYY hh:mm a',
 					defaultDate:'now',        
@@ -335,6 +348,8 @@ function endDate(getEndDateMinMax){
 			            	// closeResult();
 			            });
 				// startDateMaxKmError.style.display = 'none';
+				var dt=new Date().getTime();
+				$('#startDateMaxKm').val(showTime(dt));
 			}); 
 			$(document).on('click', '#endDateMaxKmPicker', function(){
 				$('#endDateMaxKmPicker').datetimepicker({
@@ -349,7 +364,26 @@ function endDate(getEndDateMinMax){
 			            	// closeResult();
 			            });
 				// endDateMaxKmError.style.display = 'none';
+				var dt=new Date().getTime();
+				$('#endDateMaxKm').val(showTime(dt));
 			});
+			
+			function showTime (ts) {
+				//console.log(ts);
+				var d = new Date(Number(ts));
+				var day = d.getDate();
+				var month = d.getMonth()+1;
+				var year = d.getFullYear();
+				var hours = d.getHours();
+				var minutes = d.getMinutes();
+				var ampm = hours >= 12 ? 'pm' : 'am';
+				hours = hours % 12;
+				hours = hours ? hours : 12; // the hour '0' should be '12'
+				minutes = minutes < 10 ? '0' + minutes : minutes;
+				var strTime = day+"/"+month+"/"+year+" "+ hours + ':' + minutes + ' ' + ampm;
+				//console.log(strTime);
+				return strTime;
+			};
 			
 			function closeResult(){
 				$timeout(function () {

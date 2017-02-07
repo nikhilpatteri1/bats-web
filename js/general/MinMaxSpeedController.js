@@ -594,6 +594,8 @@ $('#maxChart').highcharts({
 		            	// closeResult();
 		            });
 			// startDateMinMaxError.style.display = 'none';
+			var dt=new Date().getTime();
+			$('#startDateMinMax').val(showTime(dt));
 		}); 
 		$(document).on('click', '#endDateMinMaxPicker', function(){
 			$('#endDateMinMaxPicker').datetimepicker({
@@ -611,7 +613,27 @@ $('#maxChart').highcharts({
 		            	// closeResult();
 		            });
 			// endDateMinMaxError.style.display = 'none';
+			var dt=new Date().getTime();
+			$('#endDateMinMax').val(showTime(dt));
 		});
+		
+		function showTime (ts) {
+			//console.log(ts);
+			var d = new Date(Number(ts));
+			var day = d.getDate();
+			var month = d.getMonth()+1;
+			var year = d.getFullYear();
+			var hours = d.getHours();
+			var minutes = d.getMinutes();
+			var ampm = hours >= 12 ? 'pm' : 'am';
+			hours = hours % 12;
+			hours = hours ? hours : 12; // the hour '0' should be '12'
+			minutes = minutes < 10 ? '0' + minutes : minutes;
+			var strTime = day+"/"+month+"/"+year+" "+ hours + ':' + minutes + ' ' + ampm;
+			//console.log(strTime);
+			return strTime;
+		};
+		
 		
 		function closeResult(){
 			$timeout(function () {

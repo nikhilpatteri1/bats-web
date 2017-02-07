@@ -252,7 +252,7 @@ batstravelDeskHome.controller('tripManagement', function($rootScope,$scope, $loc
 	$(document).on('click', '#startTimePicker', function(){
 	$('#startTimePicker').datetimepicker({
 		format: 'DD/MM/YYYY hh:mm a',
-		defaultDate:'now',        
+		/*defaultDate:'now',*/        
         minDate: 'now',        		
 		ignoreReadonly:true,
     });	
@@ -268,7 +268,7 @@ batstravelDeskHome.controller('tripManagement', function($rootScope,$scope, $loc
 	$(document).on('click', '#startTimePickerU', function(){
 		 $('#startTimePickerU').datetimepicker({
 			 format: 'DD/MM/YYYY hh:mm a',
-			 defaultDate:'now',
+			 /*defaultDate:'now',*/
 		     minDate: 'now',
 			 ignoreReadonly:true,
 	    });

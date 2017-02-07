@@ -4,6 +4,10 @@ var general_emailChk;
 batsAdminHome.controller('userController', function($rootScope,$scope, $http, $localStorage) {
 	$rootScope.menuPos=8;
 	var group_list;
+	var contentHeight=window.screen.availHeight-200;
+	$scope.histcontentheight={
+			"height":contentHeight
+	}
 	
 	$scope.token = $localStorage.data;
 	console.log($scope.token);

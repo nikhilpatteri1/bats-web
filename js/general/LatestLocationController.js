@@ -3,6 +3,10 @@
 */
 batsGeneralHome.controller('GeneralLatestLocationCtrl', function($rootScope,$scope, $http, $localStorage, NgMap){
 	$rootScope.menuPos=3;
+	/*var dynamicMapHeight=window.screen.availHeight-100;
+	$scope.mapHeight={
+			height:dynamicMapHeight
+	}*/
 	var token = $localStorage.data;
 	if(typeof $scope.token==="undefined"){
 		swal({ 

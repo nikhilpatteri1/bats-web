@@ -16,6 +16,10 @@
  */
 batsAdminHome.controller('driverController', function($rootScope,$scope, $localStorage, $http,$timeout,$window,$location) {
 	$rootScope.menuPos=10;
+	var contentHeight=window.screen.availHeight-200;
+	$scope.histcontentheight={
+			"height":contentHeight
+	}
 	$scope.httpLoading=false;//loading image
 	$scope.imageUploading=false;
 	$scope.onlyImage=false;

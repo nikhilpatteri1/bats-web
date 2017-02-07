@@ -2,6 +2,10 @@
 */
 batsAdminHome.controller('groupController', function($rootScope,$scope, $http, $localStorage) {
 	$rootScope.menuPos=7;
+	var contentHeight=window.screen.availHeight-200;
+	$scope.histcontentheight={
+			"height":contentHeight
+	}
 	var posArray;
 	var geofence;
 	var centerVal = {lat: 21.0000, lng: 78.0000};
@@ -941,6 +945,18 @@ $scope.back2Form=function(){
 	$('#show1').show();
 	$scope.applyClass=false;
 }
+
+$(document).ready(function() {
+	$.getScript('../assets/select_filter/select2.min.js', function() {
+		$("#selectGroup").select2({});
+		$("#selectState").select2({});
+		$("#selectCountry").select2({});
+		$('#clearTextGroup span.select2-chosen').text("Select Group ");
+		$('#clearTextCountry span.select2-chosen').text("Select Country ");
+		$('#clearTextState span.select2-chosen').text("Select State");
+	});// script
+});
+
 $scope.applyClass=false;
 $scope.changeStyle=function(){
 	$scope.applyClass=true;

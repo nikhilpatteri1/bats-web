@@ -1,18 +1,18 @@
 <div class="container-fluid">
-	<div class="row headerStyle">
+	<div class="row header_bats">
 		<div class="col-sm-10">
-			<div class="row Dropdownpadding">
-				<div class="col-sm-9 " style="padding-top: 10px;">
-					<h4 class="search_heading">Manage User</h4>
+			<div class="row">
+				<div class="col-sm-7">
+					<label class="custom_label manageUserH">Manage User</label>
 				</div>
-				<div class="col-sm-3 paddingbutton"
-					style="border-right: 2px solid #e7e7e7;">
+				<div class="col-sm-5 paddingbutton">
 					<button type="button" class="btn btn-primary btn-sm"
 						ng-click="showCreateBtn()" data-toggle="modal"
 						data-target="#createUserModal" ng-show="addUser">Create
 						User</button>
 				</div>
 			</div>
+
 		</div>
 		<div class="col-sm-2 borderLeft">
 			<div ng-include src="'/admin/subMenu'"></div>
@@ -20,23 +20,27 @@
 
 
 	</div>
-
 	<div ng-init="loadGroups()" class="row pad0">
 		<div class="col-sm-12 pad0">
-
-			<div class="table-responsive" style="height:650px;">
-				<table class="table ">
-					<thead class="tableHeading">
-						<tr >
-							<td ><label>Sl No.</label></td>
-							<td><label>User Name</label></td>
-							<td><label>Group </label></td>
-							<td><label>Contact Number </label></td>
-							<td></td>
+			<div class="table-container" ng-style="histcontentheight">
+				<table class="tablestyle">
+					<thead class="theadStyle tablethead">
+						<tr>
+							<th><div>Sl No.</div></th>
+							<th><div>User Name</div></th>
+							<th><div>Group</div></th>
+							<th><div>Contact Number</div></th>
+							<th></th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr ng-repeat="user in ulist">
+					<tbody class="tbodyStyle">
+						<!--   <tr class="tbodytr tabletbodytr" >
+                <td>content1</td>
+                <td>content2</td>
+                <td>content3</td>
+                <td>content4</td> <td>content4</td>
+            </tr> -->
+						<tr class="tbodytr tabletbodytr" ng-repeat="user in ulist">
 							<td><p class="culomPad">{{$index+1}}</p></td>
 							<td><p>{{user.uname}}</p></td>
 							<td><p ng-repeat="user1 in user.glist">{{user1.gname}}</p></td>
@@ -47,18 +51,120 @@
 								<a href="#" class="delete_icon"
 								ng-click="submitDeleteuser(user.uname)"><i
 									class="fa fa-trash"></i></a></td>
+
 						</tr>
+
 					</tbody>
 				</table>
 			</div>
-
-			<div class="bgloading" ng-show="httpLoading">
-				<div class="bigbar">
-					<h1 class="titleClass">loading!...</h1>
-				</div>
-			</div>
 		</div>
 	</div>
+	<!-- <table class="table ">
+		<thead class="tableHeading borderNone">
+			<tr>
+				<th><div>Sl No.</div></th>
+				<th><div>User Name</div></th>
+				<th><div>Group</div></th>
+				<th><div>Contact Number</div></th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="user in ulist">
+				<td><p class="culomPad">{{$index+1}}</p></td>
+				<td><p>{{user.uname}}</p></td>
+				<td><p ng-repeat="user1 in user.glist">{{user1.gname}}</p></td>
+				<td><p>{{user.contact_no}}</p></td>
+				<td><a href="#" class="edit_icon"
+					ng-click="submitEditUser(user.uname)" data-toggle="modal"
+					data-target="#updateUserModal"><i class="fa fa-pencil"></i></a> <a
+					href="#" class="delete_icon"
+					ng-click="submitDeleteuser(user.uname)"><i class="fa fa-trash"></i></a></td>
+
+			</tr>
+
+
+
+
+		</tbody>
+	</table> -->
+	<!-- <div ng-init="loadGroups()" class="row pad0">
+		<div class="col-sm-12 pad0">
+			<div class="table-container">
+				<table>
+					<thead>
+						<tr>
+							<th><div>Sl No.</div></th>
+							<th><div>User Name</div></th>
+							<th><div>Group</div></th>
+							<th><div>Contact Number</div></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div> -->
+	<!-- <section class="tableSection">
+				<div class="hist-container" ng-style="histcontentheight"
+					ng-hide="noUsers">
+
+					<table class="table ">
+						<thead class="tableHeading borderNone">
+							<tr>
+								<th><div>Sl No.</div></th>
+								<th><div>User Name</div></th>
+								<th><div>Group</div></th>
+								<th><div>Contact Number</div></th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="user in ulist">
+								<td><p class="culomPad">{{$index+1}}</p></td>
+								<td><p>{{user.uname}}</p></td>
+								<td><p ng-repeat="user1 in user.glist">{{user1.gname}}</p></td>
+								<td><p>{{user.contact_no}}</p></td>
+								<td><a href="#" class="edit_icon"
+									ng-click="submitEditUser(user.uname)" data-toggle="modal"
+									data-target="#updateUserModal"><i class="fa fa-pencil"></i></a>
+									<a href="#" class="delete_icon"
+									ng-click="submitDeleteuser(user.uname)"><i
+										class="fa fa-trash"></i></a></td>
+
+							</tr>
+
+
+
+
+						</tbody>
+					</table>
+				</div>
+			</section>
+ -->
+	<div class="bgloading" ng-show="httpLoading">
+		<div class="bigbar">
+			<h1 class="titleClass">loading!...</h1>
+		</div>
+	</div>
+</div>
+</div>
+
+<!-- <h2 ng-show="noUsers">No Users Available</h2> -->
+
+<div class="row" ng-show="noUsers">
+	<div class="col-sm-12 verhorcenter" align="center">
+		<div class="centerData">
+			<ul class="nodata_list">
+				<li><img alt="" src="../images/no-data.png" class="nodata_img"></li>
+				<li><label style="color: #000">Nothing here!</label></li>
+				<li><span>No Users Available</span></li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+
 </div>
 
 
@@ -72,26 +178,29 @@
 				<h4 class="modal-title">Create New User</h4>
 			</div>
 
-			<div class="modal-body">
+			<div class="modal-body my_modalBody">
 				<form name="createUserForm" class="form formInput">
 					<!-- <div class="col-sm-2 col-sm-offset-10" align="right">
 					<span class="closeIcon" data-direction="left" data-dismiss="modal"
 						aria-hidden="true" ng-click="reset()" onclick="resetlabel()">&times;</span>
 				</div>  -->
-					<br>
+					<!-- 	<br> -->
 					<div class="row">
 						<div class="col-sm-12">
 							<div class="row">
 								<div class="col-sm-5">
-									<div class="form-group"
+									<div class="form-group "
 										ng-class="{ 'has-error' : createUserForm.uname.$invalid && !createUserForm.uname.$pristine }">
 										<label> User name</label> <input type="text"
 											ng-model="user.uname" name="uname"
 											ng-blur="verifyUser(user.uname)" class="form-control"
 											style="text-transform: lowercase" required />
+										<!-- <p
+											ng-show="createUserForm.uname.$invalid  && !createUserForm.uname.$pristine"
+											class="help-block error-help">Username is required.</p> -->
 										<p
-											ng-show="createUserForm.uname.$invalid && !createUserForm.uname.$pristine"
-											class="help-block">Username is required.</p>
+											ng-show="createUserForm.uname.$invalid && createUserForm.uname.$touched"
+											class="help-block error-help">Username is required.</p>
 										<span class="help-block chk_frm_server" ng-show="error.uname">{{status}}</span>
 									</div>
 								</div>
@@ -115,6 +224,9 @@
 																characters long</strong></li>
 													</ul>
 												</div>
+												<p
+													ng-show="createUserForm.password.$invalid && createUserForm.password.$touched"
+													class="help-block error-help">Password is required.</p>
 											</div>
 										</div>
 									</div>
@@ -134,6 +246,9 @@
 										<p
 											ng-show="createUserForm.useremail.$invalid && !createUserForm.useremail.$pristine"
 											class="help-block">Enter a valid email.</p>
+										<p
+											ng-show="createUserForm.useremail.$invalid && createUserForm.useremail.$touched"
+											class="help-block error-help">Email is required</p>
 										<span class="help-block chk_frm_server"
 											ng-show="error_mail.umail">{{statusMail}}</span>
 									</div>
@@ -157,6 +272,9 @@
 											ng-show="createUserForm.contact_no.$invalid && !createUserForm.contact_no.$pristine"
 											class="help-block">Enter Valid Mobile Number.</p>
 										<p
+											ng-show="createUserForm.contact_no.$invalid && createUserForm.contact_no.$touched"
+											class="help-block error-help">Mobile Number Required.</p>
+										<p
 											ng-show="createUserForm.contact_no.$error.minlength && createUserForm.contact_no.$error.maxlength"
 											class="help-block">Mobile Number max 10 numbers.</p>
 										<!-- <span class="help-block">{{mobstatus}}</span> -->
@@ -170,6 +288,9 @@
 										<label>Description</label>
 										<textarea ng-model="user.desc" name="desc"
 											class="form-control" required></textarea>
+										<p
+											ng-show="createUserForm.desc.$invalid && createUserForm.desc.$touched"
+											class="help-block error-help">Description is required.</p>
 										<p
 											ng-show="createUserForm.desc.$invalid && !createUserForm.desc.$pristine"
 											class="help-block">Description is required.</p>
@@ -235,8 +356,9 @@
 													<div class="col-sm-12">
 														<ul class="assignedList{{$index+1}}"
 															ng-repeat="name in selection">
-															<li ng-repeat="name1 in name" style="margin-top:10px;">{{name1.gname}}</li>
-															<li ng-show="!name.length" style="margin-top:10px;">No Group Selected</li>
+															<li ng-repeat="name1 in name" style="margin-top: 10px;">{{name1.gname}}</li>
+															<li ng-show="!name.length" style="margin-top: 10px;">No
+																Group Selected</li>
 														</ul>
 													</div>
 												</div>
@@ -290,18 +412,36 @@
 						<div class="col-sm-12">
 							<div class="row">
 								<div class="col-sm-6">
-									<div class="form-group"
-										ng-class="{ 'has-error' : updateUserForm.uname.$invalid && !updateUserForm.uname.$pristine }">
-										<label> User Name</label>
-										<!--ng-show="userUpdate.uname"
+									<div class="row">
+										<div class="col-sm-12">
+											<div class="form-group"
+												ng-class="{ 'has-error' : updateUserForm.uname.$invalid && !updateUserForm.uname.$pristine }">
+												<label> User Name</label>
+												<!--ng-show="userUpdate.uname"
 											class="floatlabeltxt show-hide"  -->
-										<input type="text" ng-model="userUpdate.uname" name="uname"
-											class="form-control" style="text-transform: lowercase"
-											readonly required />
-										<p
-											ng-show="updateUserForm.uname.$invalid && !updateUserForm.uname.$pristine"
-											class="help-block">Username is required.</p>
-										<!-- <span class="help-block chk_frm_server" ng-show="error.uname">{{status}}</span> -->
+												<input type="text" ng-model="userUpdate.uname" name="uname"
+													class="form-control" style="text-transform: lowercase"
+													readonly required />
+												<p
+													ng-show="updateUserForm.uname.$invalid && !updateUserForm.uname.$pristine"
+													class="help-block">Username is required.</p>
+												<!-- <span class="help-block chk_frm_server" ng-show="error.uname">{{status}}</span> -->
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-12">
+											<div class="form-group">
+												<label> Password</label>
+												<!--ng-show="userUpdate.uname"
+											class="floatlabeltxt show-hide"  -->
+												<input type="password" ng-model="userUpdate.uname"
+													name="uname" class="form-control"
+													style="text-transform: lowercase" readonly required />
+
+												<!-- <span class="help-block chk_frm_server" ng-show="error.uname">{{status}}</span> -->
+											</div>
+										</div>
 									</div>
 								</div>
 								<div class="col-sm-6">
@@ -434,15 +574,17 @@
 
 										</div>
 										<!-- <h4 class="select_heading">Selected Groups</h4> -->
-										<div class="select_group " style="height: 256px; ">
+										<div class="select_group " style="height: 256px;">
 											<div class="panel-body">
 												<!-- <div class=" select_group"> -->
 												<div class="row">
 													<div class="col-sm-12">
 														<ul class="assignedList{{$index+1}}"
 															ng-repeat="name in selection">
-															<li ng-repeat="name1 in name" ng-init="check()" style="margin-top:10px;">{{name1.gname}}</li>
-															<li ng-show="!name.length" style="margin-top:10px;">No Group Selected</li>
+															<li ng-repeat="name1 in name" ng-init="check()"
+																style="margin-top: 10px;">{{name1.gname}}</li>
+															<li ng-show="!name.length" style="margin-top: 10px;">No
+																Group Selected</li>
 														</ul>
 													</div>
 												</div>
