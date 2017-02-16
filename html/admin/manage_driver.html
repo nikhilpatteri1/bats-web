@@ -9,7 +9,7 @@
 						placeholder="Search by name or phone number" />
 				</div>
 
-				<div class="col-sm-3">
+				<div class="col-sm-5">
 					<button type="button" class="btn btn-primary btn-sm"
 						data-toggle="modal" data-target="#driverCreateModal">Add
 						Driver</button>
@@ -37,11 +37,24 @@
 			<div class="table-container" ng-style="histcontentheight">
 				<table class="tablestyle">
 					<thead class="theadStyle tablethead">
-						<tr>
+						<tr ng-hide="(driverlist| driverFilter:searchDriver).length==0">
 							<th></th>
 							<th><div>Driver Name</div></th>
 							<th><div>Phone Number</div></th>
 							<th></th>
+						</tr>
+						<tr>
+							<div class="row" ng-show="(driverlist| driverFilter:searchDriver).length==0">
+								<div class="col-sm-12 verhorcenter" align="center">
+									<div class="centerData">
+										<ul class="nodata_list">
+											<li><img alt="" src="../images/no-data.png" class="nodata_img"></li>
+											<li><label style="color: #000">Nothing here!</label></li>
+											<li><span>No Driver Available</span></li>
+										</ul>
+									</div>
+								</div>
+							</div>
 						</tr>
 					</thead>
 
@@ -70,18 +83,8 @@
 
 		</div>
 	</div>
-	<div class="row"
-		ng-show="(driverlist| driverFilter:searchDriver).length==0">
-		<div class="col-sm-12 verhorcenter" align="center">
-			<div class="centerData">
-				<ul class="nodata_list">
-					<li><img alt="" src="../images/no-data.png" class="nodata_img"></li>
-					<li><label style="color: #000">Nothing here!</label></li>
-					<li><span>No Driver Available</span></li>
-				</ul>
-			</div>
-		</div>
-	</div>
+	
+	
 	<div class="row" ng-show="!driverlist.length">
 		<div class="col-sm-12 verhorcenter" align="center">
 			<div class="centerData">
@@ -126,7 +129,7 @@
 
 			<div class="modal-body my_modalBody">
 				<form id="driverCreateform" name="driverform"
-					class="form driverformInput">
+					class="form formInput">
 					<!-- <div class="col-sm-2 col-sm-offset-10" align="right">
 						<a class="close" ng-disabled="driverform.$invalid"
 							ng-click="reset()" data-dismiss="modal">&times;</a>
@@ -335,12 +338,20 @@
 										<!-- Employment Type Choices -->
 										<div class="col-sm-12">
 											<div class="form-group">
-												<label class="radio-inline"><input id="perid"
+											<div class="row">
+											<div class="col-sm-6">
+												<label class="radio-inline">
+												<input id="perid" class="driverRadio"
 													type="radio" ng-model='driver.etype' ng-value='"Permanent"'
-													name="rdoResult">Permanent</label> <label
-													class="radio-inline"><input type="radio"
+													name="rdoResult">Permanent</label></div>
+												<div class="col-sm-6">
+													 <label
+													class="radio-inline">
+													<input type="radio" class="driverRadio"
 													ng-model='driver.etype' ng-value='"Temporary"'
 													name="rdoResult">Temporary</label>
+												</div>   
+											</div>
 											</div>
 										</div>
 									</div>
@@ -534,7 +545,7 @@
 										<div class="row">
 											<div class="col-sm-12">
 												<select ng-model="driver.city" name="driverCity"
-													class="form-control floatlabel floatlabel_select" required>
+													class="select_widht_customer" required>
 
 													<option ng-repeat="c in getCities(driver.state)">{{c.name}}</option>
 												</select>
@@ -566,10 +577,16 @@
 									</div>
 								</div>
 							</div>
-							<input type="checkbox" id="confirmAddress" ng-checked="true"
-								name="confirmAddress" ng-model="driver.confirmAddress"
+							<div class="row">
+							<div class=col-sm-12>
+							<label>Permanent address is same as Present address</label>
+								<input type="checkbox" id="confirmAddress" ng-checked="true"
+								name="confirmAddress" class="checkwidth" ng-model="driver.confirmAddress"
 								ng-click="usePresentAddress(driver.confirmAddress)" />
-							permanent address is same as present address
+							
+							</div>
+							</div>
+							
 
 
 							<div id="permanentAddr">

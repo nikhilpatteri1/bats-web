@@ -59,7 +59,7 @@ a {
 	color: #bfbaba;
 	font-family: helvetica;
 }
-
+ 
 
 .creategroup,.update_createGroup{
 	
@@ -132,11 +132,10 @@ a {
 	/* width: 15% !important; */
 	/* margin-left: 80% !important; */
 	font-family: helvetica !important;
-	background-color: #03adea;
+	background-color: #f37a1f;
 	border-color: rgba(10, 3, 234, 0) !important;
 	float: right;
 }
-
 .sibebarPadding {
 	border: 1px solid #e7e7e7;
 	padding: 15px;
@@ -622,7 +621,19 @@ text.highcharts-credits {
 	font-family: helvetica;
 	font-size: 20px;
 	padding-bottom: 8px;
-	padding-left: 25px;
+	/* padding-left: 25px; */
+}
+.nodata_list {
+	-webkit-padding-start: 0px;
+}
+
+.centerData {
+	position: relative;
+}
+
+.nodata_img {
+	width: 250px;
+	height: 250px;
 }
 
 .totalCount {

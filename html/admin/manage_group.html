@@ -52,7 +52,7 @@
 				<table class="tablestyle">
 					<thead class="theadStyle tablethead">
 								<tr>
-									<th style="background-color:#e7e7e7"><div>Sl No.</div></th>
+									<th ><div>Sl No.</div></th>
 									<th><div>Group Name</div></th>
 									<th><div>Group ID</div></th>
 									<th></th> 
@@ -278,8 +278,7 @@
 																		<p ng-show="createGroupForm.contact_email{{$index+1}}.$invalid && createGroupForm.contact_email{{$index+1}}.$touched"
 																class="help-block error-help">Email is
 																required.</p>
-																	<p
-																		ng-show="createGroupForm.contact_email.$invalid && !createGroupForm.contact_email.$pristine"
+																	<p ng-show="createGroupForm.contact_email{{$index+1}}.$error.pattern"
 																		class="help-block dynamicBlockHelp">Enter a valid
 																		email.</p>
 																</div>

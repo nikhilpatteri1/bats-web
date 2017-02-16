@@ -30,7 +30,7 @@
 	border: none !important;
 	position: relative;
 }
-
+ 
 .logout {
 	color: #000 !important;	
 }
@@ -339,15 +339,36 @@ background: #24a3c9 !important;
 table {
 	/* border: 1px solid lightgrey; */
 }
-
 table td,table th {
 	padding: 12px;
 	border-bottom: 1px solid lightgrey;
 	    vertical-align: middle;
+	    font-size:15px;
+	    font-family:helvetica;
+	    color:black;
 }
 
 table th {
 	/* border: 1px solid grey;*/
 	    padding: 12px;
 	
+}
+
+.nodata_list li {
+    list-style-type: none;
+}
+.nodata_list li>label {
+    font-size: 18px;
+}
+.nodata_list li>span {
+    font-size: 12px;
+    color: #333;
+    font-weight: 800;
+}
+
+.managedivH {
+    border: none;
+}
+.managedivH>li.active>a {
+    border-radius: 12px 12px 0px 0px;
 }

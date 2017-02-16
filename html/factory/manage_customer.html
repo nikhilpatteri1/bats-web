@@ -1,17 +1,14 @@
-
-
 <div ng-controller="customerControllerInner">
 	<!-- <div class="col-sm-1"></div> -->
 	<div class="container-fluid">
-
-		<div class="row headerStyle">
+		<div class="row header_bats" style="height: 80px;">
 			<div class="col-sm-10">
 
 				<h4 class="search_heading">Search Group</h4>
-				<div class="row Dropdownpadding">
+				<div class="row ">
 					<div class="col-sm-3">
 						<div class="country">
-							<select ng-model="selectedcountry" class="search_width"
+							<select ng-model="selectedcountry" class="form-control"
 								ng-options="customer.country as customer.country for customer in home | unique:'country'">
 								<option value="">Select Country</option>
 							</select>
@@ -19,7 +16,7 @@
 					</div>
 					<div class="col-sm-3">
 						<div class="country">
-							<select ng-model="selectedstate" class="search_width"
+							<select ng-model="selectedstate" class="form-control"
 								ng-options="customer.state as customer.state for customer in home | unique:'state' | filter:{country:selectedcountry}">
 								<option value="">Select State</option>
 							</select>
@@ -27,7 +24,7 @@
 					</div>
 					<div class="col-sm-3">
 						<div class="country">
-							<select ng-model="selectedunames" class="search_width"
+							<select ng-model="selectedunames" class="form-control"
 								ng-options="customer.uname as customer.uname for customer in home | filter:{country:selectedcountry,state:selectedstate}">
 								<option value="">Select Group</option>
 							</select>
@@ -42,9 +39,8 @@
 
 			</div>
 			<div class="col-sm-2 borderLeft">
-			<div ng-include src="'/factory/subMenu'"></div>
-		</div>
-
+				<div ng-include src="'/factory/subMenu'"></div>
+			</div>
 		</div>
 
 
@@ -63,21 +59,21 @@
 
 
 
-		<div class="row">
+		<div class="row" ng-hide="noCustomer">
 			<div class="col-sm-12 pad0">
-				<div class="table-responsive" style="height: 650px;">
-					<table class="table ">
-						<thead class="tableHeading">
+				<div class="table-container" ng-style="histcontentheight">
+					<table class="tablestyle">
+						<thead class="theadStyle tablethead">
 							<tr>
-								<td><label>Sl No.</label></td>
-								<td><label>Customer Name</label></td>
-								<td><label>Customer Contact</label></td>
-								<td><label>Device Count</label></td>
+								<td><div>Sl No.</div></td>
+								<td>Customer Name</td>
+								<td>Customer Contact</td>
+								<td>Device Count</td>
 								<td></td>
 							</tr>
 						</thead>
-						<tbody>
-							<tr
+						<tbody class="tbodyStyle">
+							<tr class="tbodytr tabletbodytr"
 								ng-repeat="customer in home |
 			filterMultiple:{country:selectedcountry,state:selectedstate,uname:selectedunames}">
 								<td><p class="culomPad">{{$index+1}}</p></td>
@@ -96,87 +92,25 @@
 					<input type="hidden" value="{{customer.country}}" /> <input
 						type="hidden" value="{{customer.state}}" />
 
-					<h2 ng-show="noCustomer">No Customers Available</h2>
+
 				</div>
 			</div>
 		</div>
 
-
-		<!-- <div class="tableHeading">
-			<div class="row">
-				<div class="col-sm-1">
-					<label>Sl No.</label>
-				</div>
-				<div class="col-sm-3">
-					<label>Customer Name</label>
-				</div>
-				<div class="col-sm-3">
-					<label>Customer Contact</label>
-				</div>
-				<div class="col-sm-3">
-					<label>Device Count</label>
-				</div>
-				<div class="col-sm-2"></div>
-			</div>
-		</div>
-
-
-		<div
-			ng-repeat="customer in home |
-			filterMultiple:{country:selectedcountry,state:selectedstate,uname:selectedunames}">
-
-			<div class="row padding">
-				<div class="col-sm-1">
-					<p>{{$index+1}}</p>
-				</div>
-				<div class="col-sm-3">
-
-					<p>{{customer.uname}}</p>
-				</div>
-				<div class="col-sm-3">
-
-					<p>{{customer.contact_no}}</p>
-				</div>
-				<div class="col-sm-3">
-
-					<p>{{customer.device_count}}</p>
-				</div>
-				<div class="col-sm-2">
-					<a href="#" class="edit_icon"
-										ng-click="submitEditUser(user.uname)" data-toggle="modal"
-										data-target="#updateUserModal"><i class="fa fa-pencil"></i></a>
-									<a href="#" class="delete_icon"
-										ng-click="submitDeleteuser(user.uname)"><i
-										class="fa fa-trash"></i></a>
-					<a href="#" class="edit_icon"
-						ng-click="submitEditCustomer(customer.uname)" data-toggle="modal"
-						data-target="#editModal"><i class="fa fa-pencil"></i></a> <a
-						href="#" class="delete_icon"
-						ng-click="submitDeleteCustomer(customer.uname)"><i
-						class="fa fa-trash"></i></a>
+		<!-- <h2 ng-show="noCustomer">No Customers Available</h2> -->
+		<div class="row" ng-show="noCustomer">
+			<div class="col-sm-12 verhorcenter" align="center">
+				<div class="centerData">
+					<ul class="nodata_list">
+						<li><img alt="" src="../images/no-data.png"
+							class="nodata_img"></li>
+						<li><label style="color: #000">Nothing here!</label></li>
+						<li><span>No Data Available</span></li>
+					</ul>
 				</div>
 			</div>
-			<input type="hidden" value="{{customer.country}}" /> <input
-				type="hidden" value="{{customer.state}}" />
-
-			<h2 ng-show="noCustomer">No Customers Available</h2>
 		</div>
- -->
-
-		<!-- </div>
-	<div class="panel-footer">
-		<button type="button" class="btn btn-primary btn-sm"
-			data-toggle="modal" data-target="#createModal">Add Customer</button>
-
-		<button type="button" class="btn btn-primary btn-sm"
-					ng-click="showCreateBtn()" data-toggle="modal"
-					data-target="#createUserModal" ng-show="addUser">Add User</button>
-	</div> -->
-
-
 	</div>
-
-
 	<!--==================== Create Modal ===================-->
 	<div class="modal fade" id="createModal" role="dialog"
 		data-backdrop="static" ng-controller="factoryCreate">
@@ -215,10 +149,10 @@
 												style="text-transform: lowercase" required />
 											<!-- placeholder="Customer Name" -->
 											<p
-												ng-show="createForm.custname.$invalid && !createForm.custname.$pristine"
-												class="help-block">Customer name is required.</p>
+												ng-show="createForm.custname.$invalid  && createForm.custname.$touched"
+												class="help-block error-help">Customer name is required.</p>
 											<p class="help-block chk_frm_server"
-												ng-hide="(createForm.custname.$invalid && !createForm.custname.$pristine) || !error.cname">{{status}}</p>
+												ng-hide="(createForm.custname.$invalid && createForm.custname.$touched) || !error.cname">{{status}}</p>
 										</div>
 									</div>
 									<div class="col-sm-2"></div>
@@ -262,8 +196,8 @@
 												ng-change="hideErrorCustEmail()" name="useremail"
 												class="form-control floatlabel" required />
 											<p
-												ng-show="createForm.useremail.$invalid && !createForm.useremail.$pristine"
-												class="help-block">Enter a valid email.</p>
+												ng-show="createForm.useremail.$invalid && createForm.useremail.$touched"
+												class="help-block error-help">Enter a valid email.</p>
 											<p class="help-block chk_frm_server"
 												ng-hide="(createForm.useremail.$invalid && !createForm.useremail.$pristine) || !error_mail.cmail">{{statusMail}}</p>
 										</div>
@@ -285,8 +219,8 @@
 												</div>
 											</div>
 											<p
-												ng-show="createForm.contact_no.$invalid && !createForm.contact_no.$pristine"
-												class="help-block">Enter Valid Mobile Number.</p>
+												ng-show="createForm.contact_no.$invalid && createForm.contact_no.$touched"
+												class="help-block error-help">Enter Valid Mobile Number.</p>
 											<p
 												ng-show="createForm.contact_no.$error.minlength && createForm.contact_no.$error.maxnlength"
 												class="help-block">Mobile Number max 10 numbers.</p>
@@ -309,7 +243,7 @@
 											<div class="row">
 												<!-- <div class="col-sm-3 padding_rt0"><h4 class="plus_91">+91</h4></div> -->
 												<div class="col-sm-12 ">
-													<select ng-model="customer.country"
+													<select ng-model="customer.country" name="country"
 														ng-change="onSelectCountry()" required
 														class="select_widht_customer">
 
@@ -319,8 +253,10 @@
 											</div>
 
 											<!--  class="form-control floatlabel floatlabel_select"-->
-											<p ng-show="createForm.country.$invalid && !createForm.country.$pristine"
-												class="help-block">Enter Country Name.</p>
+											<p
+												ng-show="createForm.country.$invalid && createForm.country.$touched"
+												class="help-block error-help">Enter Country Name.</p>
+												
 										</div>
 									</div>
 									<div class="col-sm-2"></div>
@@ -349,8 +285,8 @@
 											</div>
 
 											<p
-												ng-show="createForm.state.$invalid && !createForm.state.$pristine"
-												class="help-block">Enter State Name.</p>
+												ng-show="createForm.state.$invalid && createForm.state.$touched"
+												class="help-block error-help">Enter State Name.</p>
 										</div>
 									</div>
 								</div>
@@ -368,10 +304,10 @@
 														ng-change="hideErrorOrgName()"
 														class="form-control floatlabel" required />
 													<p
-														ng-show="createForm.orgName.$invalid && !createForm.orgName.$pristine"
-														class="help-block">Enter Organization Name.</p>
+														ng-show="createForm.orgName.$invalid && createForm.orgName.$touched"
+														class="help-block error-help">Enter Organization Name.</p>
 													<p class="help-block chk_frm_server"
-														ng-hide="(createForm.orgName.$invalid && !createForm.orgName.$pristine) || !error.orgname">{{status}}</p>
+														ng-hide="(createForm.orgName.$invalid && createForm.orgName.$touched) || !error.orgname">{{status}}</p>
 												</div>
 											</div>
 										</div>
@@ -386,8 +322,8 @@
 														numbers-only name="user_acc_limit"
 														class="form-control floatlabel" required />
 													<p
-														ng-show="createForm.user_acc_limit.$invalid && !createForm.user_acc_limit.$pristine"
-														class="help-block">Enter User Count.</p>
+														ng-show="createForm.user_acc_limit.$invalid && createForm.user_acc_limit.$touched"
+														class="help-block error-help">Enter User Count.</p>
 												</div>
 											</div>
 										</div>
@@ -402,8 +338,8 @@
 											<textarea ng-model="customer.desc" name="desc"
 												class="form-control" required></textarea>
 											<p
-												ng-show="createForm.desc.$invalid && !createForm.desc.$pristine"
-												class="help-block">Description is required.</p>
+												ng-show="createForm.desc.$invalid && createForm.desc.$touched"
+												class="help-block error-help">Description is required.</p>
 										</div>
 									</div>
 								</div>
@@ -529,9 +465,9 @@
 											<!--ng-show="edit.country" class="floatlabeltxt show-hide"  -->
 											<div class="row">
 												<!-- <div class="col-sm-3 padding_rt0"><h4 class="plus_91">+91</h4></div> -->
-												<div class="col-sm-12 ">{{edit.country}}
-													<select ng-model="edit.country" name="country" required
-														class="select_widht_customer">
+												<div class="col-sm-12 ">
+													{{edit.country}} <select ng-model="edit.country" name="country"
+														name="country" required class="select_widht_customer">
 														<!-- <option disabled value="">- - Select Country - -</option> -->
 														<option selected value="{{edit.country}}" ng-show>{{edit.country}}</option>
 														<option ng-repeat="c in country" value="{{c}}">{{c}}</option>

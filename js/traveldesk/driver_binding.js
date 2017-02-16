@@ -1,8 +1,15 @@
 batstravelDeskHome.controller('batsDriverBinding', function($rootScope,$scope, $localStorage,travelDeskFactory) {
 	$rootScope.menuPos = 0;
+	var contentHeight=window.screen.availHeight-200;
+	$scope.histcontentheight={
+			"height":contentHeight
+	}
 	$scope.httpLoading=false;//loading image
 	$scope.token = $localStorage.data;
 	$scope.veh_details;
+	$scope.yesdata = false;
+	$scope.blankTable=true;
+	$scope.nodevice= false;
 	/*====================================================>>>>>> Start of Basic function <<<<<=================================================*/
 	/*
 	 *  check for token availability
@@ -57,10 +64,21 @@ batstravelDeskHome.controller('batsDriverBinding', function($rootScope,$scope, $
 		$scope.listDeviceJson={};
 		$scope.listDeviceJson.token=$scope.token;
 		$scope.listDeviceJson.gid=groupname;
-		travelDeskFactory.callApi("POST",apiURL+"traveldesk/getgroupdevices",$scope.listDeviceJson,function(result){
+		travelDeskFactory.callApi("POST",apiURL+"traveldesk/getgroupdevices",$scope.listDeviceJson,
+			  function(result){
 		      //console.log(result);	
 		      $scope.devlistObject=result;
-		      $scope.httpLoading=false;
+		      $scope.httpLoading=false; 
+		      $scope.yesdata = true;
+		      $scope.blankTable=false;
+		      console.log(result[0].bind);
+		      /*if(result.bind[0].length == 0){
+		    	  alert("no bind");
+		      }*/
+		      
+		      //$scope.nodevice=true;
+		      //console.log(result.bind.length);
+		      /*if(result.bind.length == 0 && result.)*/
 		});
 	}
 	/*
@@ -70,10 +88,15 @@ batstravelDeskHome.controller('batsDriverBinding', function($rootScope,$scope, $
 		$scope.listDriversJson={};
 		$scope.listDriversJson.token=$scope.token;
 		$scope.listDriversJson.type=1;
-		travelDeskFactory.callApi("POST",apiURL+"driver/list",$scope.listDriversJson,function(result){			
+		travelDeskFactory.callApi("POST",apiURL+"driver/list",$scope.listDriversJson,function(result){
+			if(result.length >0){
 			$scope.driverCount=result.length;
 		      $scope.driverlist=result;
 		      $scope.httpLoading=false;
+			}
+			else{
+				//
+			}
 		});
 	}
 	/*

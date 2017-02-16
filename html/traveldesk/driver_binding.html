@@ -1,14 +1,17 @@
 <div class="col-sm-12">
 <div class="row header_bats">
   <div class="col-sm-10">
-     <h5 class="search_heading">Search Group</h5>
+     <!-- <h5 class="search_heading">Search Group</h5> -->
                <!-- vehicle driver binding -->
-		<div class="row Dropdownpadding" ng-init="showDrivers()">
+		<div class="row" ng-init="showDrivers()">
 		<div class="col-sm-12">
+			<div class="row">
+							<div class="col-sm-12">
+								<label class="custom_label">Search Group</label>
+							</div>
+			</div>
 			<!-- sorting /filtering part -->
-			
-				
-					<div class="row">
+			<div class="row">
 						
 						<div class="col-sm-4" id="clearTextGroup">
 							<select id="selectGroup" class="form-control" name="groupList"
@@ -42,8 +45,11 @@
 								<option value="binded">Binded Vehicle</option>
 								<option value="unbind">Un-Binded Vehicle</option>
 							</select>
+							
 						</div>
 					</div>
+				
+					
 				
 			
 			<!-- ./sorting /filtering part -->
@@ -60,23 +66,129 @@
 <div class="col-sm-2 borderLeft">
                        <div ng-include src="'/traveldesk/subMenu'"></div>
 </div>
+</div>
+<div class="row" ng-show="yesdata">
+<div class="col-sm-12 pad0">
+<div class="table-container" ng-style="histcontentheight">
+							<table class="tablestyle">
+								<thead class="theadStyle tablethead">
+									<tr>
+										<th><div>Vehicle No</div></th>
+										<th><div>Vehicle model</div></th>
+										<th><div>Driver Name</div></th>
+										<th><div>Binding Status</div></th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody class="tbodyStyle">    
+									<tr class="tbodytr tabletbodytr"
+										ng-repeat="device in devlistObject |  filter:{'bind':bindStatus}">
+										<!-- <td><p class="culomPad">{{$index+1}}</p></td> -->
+										<td><p>{{device.vehicle_num.length>0?device.vehicle_num:device.devid}}</p></td>
+										<td><p>{{device.vehicle_model}}</p></td>
+										<td><p>{{device.driver_name}}</p></td>
+										<td><div
+													ng-show="{{device.driver_name.length>0 ? 'false':'true'}}">
+													<!-- <a href="#" class="edit_icon"
+														ng-click="showDriverModal(device)"> 
+													</a>--> <span class="unbind">UnBinded</span> 
+												</div>
+												<div
+													ng-show="{{device.driver_name.length>0 ? 'true':'false'}}">
+													<!-- <a href="#" class="edit_icon"
+														ng-click="unBindDriver(device)">
+													</a> --><span class="bind">Binded</span>
+												</div></td>
+												    
+												
+										<td><div
+													ng-show="{{device.driver_name.length>0 ? 'false':'true'}}">
+													<a href="#" class="edit_icon"
+														ng-click="showDriverModal(device)">
+														<img src="../images/bind.png"
+																		class="img-responsive img-circle img-thumbnail iconImageSm" />
+														 <!-- <i
+														class="fa fa-paperclip" aria-hidden="true"></i> -->
+													</a> <!-- <span class="help-block">Bind Driver</span> -->
+												</div>
+										<div  
+													ng-show="{{device.driver_name.length>0 ? 'true':'false'}}">
+													<a href="#" class="edit_icon"
+														ng-click="unBindDriver(device)">
+														<img src="../images/unbind.png"
+																		class="img-responsive img-circle img-thumbnail iconImageSm" />
+														 <!-- <i
+														class="fa fa-refresh" aria-hidden="true"></i> -->
+													</a> <!-- <span class="help-block">Un Bind Driver</span> -->
+												</div></td>
+										<!-- <td><p>{{devicedet.devid}}</p></td> -->
+										
+									</tr>
+									
+								</tbody>
+							</table>
+							
+							
+						</div>
+						<!-- <div class="row"
+											ng-show="(devlistObject | filter:{'bind':bindStatus}.length==0">
+											<div class="col-sm-12 verhorcenter" align="center">
+												<div class="centerData">
+													<ul class="nodata_list">
+														<li><img alt="" src="../images/no-data.png" class="nodata_img"></li>
+														<li><label style="color: #000">Nothing here!</label></li>
+														<li><span>No Driver Available</span></li>
+													</ul>
+												</div>
+											</div> 
+							</div> -->
 
-<div class="row">
+</div>
+</div> 
+
+
+
+<!-- <div class="row" ng-show="nodevice">
+		<div class="col-sm-12 verhorcenter" align="center">
+			<div class="centerData">
+				<ul class="nodata_list">
+					<li><img alt="" src="../images/no-data.png" class="nodata_img"></li>
+					<li><label style="color: #000">Nothing here!</label></li>
+					<li><span>No Data Available</span></li>
+				</ul>
+			</div>
+		</div>
+</div> -->
+
+<div class="row" ng-if="blankTable">
+		<div class="col-sm-12 verhorcenter" align="center">
+			<div class="centerData" style="margin-top:100px;">
+				<ul class="nodata_list" >
+					<li><img alt="" src="../images/select-dropdown.png" class="nodata_img"></li>
+					<li><label style="color: #000;margin-left:35px">  Select Group!</label></li>
+					<li><span>Shows Binded and unbinded status of devices</span></li>
+				</ul>
+			</div>
+		</div>
+	</div> 
+
+
+<!-- <div class="row">
 	<div class="col-sm-12">  
 					<div class="row bindHead">
-											<!-- Vehicle Number -->
+											Vehicle Number
 											<div class="col-sm-2">
 												<label>Vehicle No</label>
 												
 											</div>
-											<!-- ./Vehicle Number -->
-											<!-- Vehicle Model -->
+											./Vehicle Number
+											Vehicle Model
 											<div class="col-sm-2">
 												<label>Vehicle model</label>
-												<!-- <p>{{device}}</p> -->
+												<p>{{device}}</p>
 											</div>
-											<!-- ./Vehicle Model -->
-											<!-- Driver Name -->
+											./Vehicle Model
+											Driver Name
 											<div class="col-sm-2">
 												<label>Driver Name</label>
 												
@@ -85,9 +197,9 @@
 												<label>Binding Status</label>
 												
 											</div>
-											<!-- Driver Name -->
-											<!-- Driver Assign -->
-											<!-- <div class="col-sm-3">
+											Driver Name
+											Driver Assign
+											<div class="col-sm-3">
 												<div
 													ng-show="{{device.driver_name.length>0 ? 'false':'true'}}">
 													<a href="#" class="edit_icon"
@@ -102,54 +214,54 @@
 														class="fa fa-refresh" aria-hidden="true"></i>
 													</a> <span class="help-block">Un Bind Driver</span>
 												</div>
-											</div> -->
-											<!-- Driver Assign -->
-										</div>
+											</div>
+											Driver Assign
+										</div> 
 									
 								
 							
-						<ul class="vehiclelist vlist"
+						 <ul class="vehiclelist vlist"
 							ng-repeat="device in devlistObject | filter:deviceId | filter:{'bind':bindStatus}">
 							<li>
 								<div class="panel panel-default panel1">
 									<div class="panel-heading panel-heading1">
 										<div class="row pd120">
-											<!-- Vehicle Number -->
+											Vehicle Number
 											<div class="col-sm-2">
-												<!-- <label>Vehicle No</label> -->
+												<label>Vehicle No</label>
 												<p>{{device.vehicle_num.length>0?device.vehicle_num:device.devid}}</p>
 											</div>
-											<!-- ./Vehicle Number -->
-											<!-- Vehicle Model -->
+											./Vehicle Number
+											Vehicle Model
 											<div class="col-sm-2">
-												<!-- <label>Vehicle Model</label> -->
-												<!-- <p>{{device}}</p> -->      
+												<label>Vehicle Model</label>
+												<p>{{device}}</p>      
 											</div>
-											<!-- ./Vehicle Model -->
-											<!-- Driver Name -->
+											./Vehicle Model
+											Driver Name
 											<div class="col-sm-2">   
-												<!-- <label>Driver Name</label> -->
+												<label>Driver Name</label>
 												<p>{{device.driver_name}}</p>
 											</div>
-											<!-- Driver Name -->
+											Driver Name
 											
 											<div class="col-sm-2">
 												<div
 													ng-show="{{device.driver_name.length>0 ? 'false':'true'}}">
-													<!-- <a href="#" class="edit_icon"
-														ng-click="showDriverModal(device)"> -->
+													<a href="#" class="edit_icon"
+														ng-click="showDriverModal(device)">
 													</a> <span class="bind">Binded</span> 
 												</div>
 												<div
 													ng-show="{{device.driver_name.length>0 ? 'true':'false'}}">
-													<!-- <a href="#" class="edit_icon"
+													<a href="#" class="edit_icon"
 														ng-click="unBindDriver(device)">
-													</a> --><span class="unbind">UnBinded</span>
+													</a><span class="unbind">UnBinded</span>
 												</div>
 											</div>
 											
 											
-											<!-- Driver Assign -->
+											Driver Assign
 											<div class="col-sm-2">
 												<div
 													ng-show="{{device.driver_name.length>0 ? 'false':'true'}}">
@@ -157,9 +269,9 @@
 														ng-click="showDriverModal(device)">
 														<img src="../images/bind.png"
 																		class="img-responsive img-circle img-thumbnail iconImageSm" />
-														 <!-- <i
-														class="fa fa-paperclip" aria-hidden="true"></i> -->
-													</a> <!-- <span class="help-block">Bind Driver</span> -->
+														 <i
+														class="fa fa-paperclip" aria-hidden="true"></i>
+													</a> <span class="help-block">Bind Driver</span>
 												</div>
 												<div
 													ng-show="{{device.driver_name.length>0 ? 'true':'false'}}">
@@ -167,20 +279,20 @@
 														ng-click="unBindDriver(device)">
 														<img src="../images/unbind.png"
 																		class="img-responsive img-circle img-thumbnail iconImageSm" />
-														 <!-- <i
-														class="fa fa-refresh" aria-hidden="true"></i> -->
-													</a> <!-- <span class="help-block">Un Bind Driver</span> -->
+														 <i
+														class="fa fa-refresh" aria-hidden="true"></i>
+													</a> <span class="help-block">Un Bind Driver</span>
 												</div>
 											</div>
-											<!-- Driver Assign -->  
+											Driver Assign  
 										</div>
 									</div>
 								</div>
 							</li>
-						</ul>
+						</ul> 
 
 	</div>
-	</div>
+	</div>-->
 	<!-- <h2 class="heading_title">Vehicle Driver Binding</h2> -->
 	<div class="bgloading" ng-show="httpLoading">
 		<div class="bigbar">
@@ -215,7 +327,7 @@
 							<!-- ./search driver -->
 							
 							
-							<ul>
+							<ul ng-hide="(driverlist| driverFilter:searchDriver).length==0">
 												<!-- list drivers repeater -->
 												<li>
 
@@ -485,10 +597,20 @@
 												</li>
 												<!-- ./list drivers repeater -->
 											</ul>
-											<p
-												ng-show="(driverlist| driverFilter:searchDriver).length==0"
+											<div class="row" ng-show="(driverlist| driverFilter:searchDriver).length==0">
+												<div class="col-sm-12 verhorcenter" align="center">
+													<div class="centerData">
+														<ul class="nodata_list">
+															<li><img alt="" src="../images/no-data.png" class="nodata_img"></li>
+															<li><label style="color: #000">Nothing here!</label></li>
+															<li><span>No Data Available</span></li>
+														</ul>
+													</div>
+												</div>
+											</div> 
+											<!-- <p ng-show="(driverlist| driverFilter:searchDriver).length==0"
 												class="help-block error-help">No drivers available for
-												this search criteria !!!</p>
+												this search criteria !!!</p> -->
 										</div>
 									</div>
 								</div>
@@ -502,4 +624,5 @@
 		</div>
 	</div>
 	<!-- ./driver list modal -->
+
 </div>

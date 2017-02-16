@@ -72,10 +72,13 @@ batsfactoryhome.controller('deviceController', function($rootScope,$scope,$http,
 		   $scope.FactoryStockCount=$scope.FActoryStock.length;
 		   var stockList = data.stocklist;
            if(stockList.length == 0){
+        	   console.log(stockList.length);
+        	   console.log(stockList);
                $scope.noDevicesFactory = true;
                $scope.devicesTable = false;
            }
            else{
+        	   console.log(stockList.length);
                $scope.noDevicesFactory = false;
                $scope.devicesTable = true;
            }

@@ -54,9 +54,12 @@
 					</select>
 				</div>
 				<section ng-hide="showDatepicker">
-					<div class="col-sm-3 customcol3 ">
+					<div class="col-sm-3 customcol3">
 						<div class="datepickerDivStyle">
-							<md-content> <md-datepicker ng-model="myDate"
+							<md-content> 
+							<!-- <md-icon src="../images/calender.png"></md-icon> -->
+							<!-- <img src="../images/calender.png" alt="Bookmark"> -->
+							<md-datepicker ng-model="myDate"
 								md-placeholder="Enter date"
 								ng-change="myDateChange(myDate);activeMenu = '5'"
 								md-max-date="todayDate"></md-datepicker> </md-content>
@@ -109,7 +112,7 @@
 								<li><label style="color: #000">Nothing here!</label></li>
 								<li><span>No Data Available</span></li>
 							</ul>
-						</div>
+						</div>  
 					</div>
 					<!-- HistoryMap -->
 					<!-- <div id="loading_icon" align="center">

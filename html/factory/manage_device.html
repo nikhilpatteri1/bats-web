@@ -1,18 +1,19 @@
-<div ng-controller='deviceController' class="container-fluid" ng-init="loadCustomer()">
-	<div class="row headerStyle">
+<div ng-controller='deviceController' class="container-fluid"
+	ng-init="loadCustomer()">
+	<div class="row header_bats" style="height: 80px;">
 		<div class="col-sm-10">
 
 			<h4 class="search_heading">Search customer</h4>
 			<div class="row Dropdownpadding">
 				<div class="col-sm-6">
-					<select id="mySelect" class="search_width" name="customerList"
+					<select id="mySelect" class="form-control" name="customerList"
 						ng-model="custname" ng-change="chk(custname)">
 						<option value="" selected class="disable_select"
 							ng-disabled="selectCustomer">Select Customer</option>
 						<option ng-repeat="x in customerName" value="{{ x }}">{{x}}</option>
 					</select>
 				</div>
-				
+
 			</div>
 
 		</div>
@@ -25,13 +26,13 @@
 
 
 
-	
-		<div class="bgloading" ng-show="httpLoading">
-			<div class="bigbar">
-				<h1 class="titleClass">loading!...</h1>
-			</div>
+
+	<div class="bgloading" ng-show="httpLoading">
+		<div class="bigbar">
+			<h1 class="titleClass">loading!...</h1>
 		</div>
-		
+	</div>
+
 	<!-- <div class="row">
 		<div class="col-sm-12 pad0">
 			<div class="table-responsive" style="height:650px;">
@@ -79,82 +80,92 @@
 		</div>
  -->
 
-		
-		<!-- ----------------------------  factory stol and allocation  --------------------------- -->
-		<div class="row">
-			<div class="col-sm-6">
-				<div class="panel panel-default" style="border:1px solid #e7e7e7;">
-					<div class="panel-heading">
 
-						<h4 class="select_heading">
-							Factory Stock <span class="totalCount">
-								{{FactoryStockCount}} </span>
-						</h4>
+	<!-- ----------------------------  factory stol and allocation  --------------------------- -->
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="panel panel-default" style="border: 1px solid #e7e7e7;">
+				<div class="panel-heading">
 
-					</div>
-					<!-- <div class=" select_device"> -->
-					<div class="panel-body " style="height:250px;">
-						<!-- <div class=" select_group"> -->
-						<div class="row">
-							<div class="col-sm-12">
-								<span ng-repeat="rowContent in rows" class="group_name_span"
-									ng-show="devicesTable"> <label
-									class="group_name_selected"> <input type="checkbox"
-										name="{{rowContent}}" ng-disabled="isSelected"
-										ng-click="toggleSelection(rowContent)" /> <!-- <input type="checkbox" ng-model="selection.ids[user.gid]" class="selectGroupUser pull-left" /> -->
-										<span> {{rowContent}} </span></label>
-								</span>
-								<h2 ng-show="noDevicesFactory">No Devices Available in
-									Factory Stock</h2>
-							</div>
-						</div>
-					</div>
-					<!-- </div> -->
-					<!-- </div> -->
-					<div class="panel-footer">
-						<div class="row">
-							<div class="col-sm-5">Device Selected :
-								{{selection.length}}</div>
-							<div class="col-sm-7">
-								<button class="btn btn-primary btn-sm-sm"
-									ng-click="addDevice(custname)"
-									ng-show="IsVisible && selection.length">Add Devices</button>
-								<button class="btn btn-primary btn-sm-sm"
-									ng-click="modifyDevice(custname)"
-									ng-show="modify && selection.length">Add Devices</button>
-							</div>
-						</div>
-					</div>
-
+					<h4 class="select_heading">
+						Factory Stock <span class="totalCount">
+							{{FactoryStockCount}} </span>
+					</h4>
 
 				</div>
-			</div>
-			<div class="col-sm-6">
-				<div class="panel panel-default" style="border:1px solid #e7e7e7;">
-					<div class="panel-heading">
-
-						<h4 class="select_heading">Allocated Device</h4>
-
+				<!-- <div class=" select_device"> -->
+				<div class="panel-body " style="height: 250px;">
+					<!-- <div class=" select_group"> -->
+					<div class="row">
+						<div class="col-sm-12">
+							<span ng-repeat="rowContent in rows" class="group_name_span"
+								ng-show="devicesTable"> <label
+								class="group_name_selected"> <input type="checkbox"
+									name="{{rowContent}}" ng-disabled="isSelected"
+									ng-click="toggleSelection(rowContent)" /> <!-- <input type="checkbox" ng-model="selection.ids[user.gid]" class="selectGroupUser pull-left" /> -->
+									<span> {{rowContent}} </span></label>
+							</span>
+							<!-- <div class="row" ng-show="noDevicesFactory">
+								<div class="col-sm-12 verhorcenter" align="center">
+									<div class="centerData">
+										<ul class="nodata_list">
+											<li><img alt="" src="../images/no-device1.png"
+												class="nodata_img"></li>
+											<li><label style="color: #000">Nothing here!</label></li>
+											<li><span>No Device Available</span></li>
+										</ul>
+									</div>
+								</div>
+							</div> --><!-- {{noDevicesFactory}} -->
+							 <h2 ng-show="noDevicesFactory">No Devices Available in
+								Factory Stock</h2> 
+						</div>
 					</div>
-					<!-- <div class=" select_device"> -->
-					<div class="panel-body " style="height:250px;">
-						<ul>
-							<li ng-repeat="item in assignedList" class="bubblestyle">{{item.devid}}</li>
-						</ul>
-						<ul>
-							<li ng-repeat="item in selection"
-								ng-click="toggleSelection(item)" class="bubblestyle">{{item}}
-							</li>
-							<li ng-show="!selection.length && !assignedList.length"></li>
-						</ul>
-					</div>
-
-					<!-- </div> -->
-					<div class="panel-footer">Device Selected : {{selectedItems}}</div>
 				</div>
+				<!-- </div> -->
+				<!-- </div> -->
+				<div class="panel-footer">
+					<div class="row">
+						<div class="col-sm-5">Device Selected : {{selection.length}}</div>
+						<div class="col-sm-7">
+							<button class="btn btn-primary btn-sm-sm"
+								ng-click="addDevice(custname)"
+								ng-show="IsVisible && selection.length">Add Devices</button>
+							<button class="btn btn-primary btn-sm-sm"
+								ng-click="modifyDevice(custname)"
+								ng-show="modify && selection.length">Add Devices</button>
+						</div>
+					</div>
+				</div>
+
+
 			</div>
 		</div>
+		<div class="col-sm-6">
+			<div class="panel panel-default" style="border: 1px solid #e7e7e7;">
+				<div class="panel-heading">
 
+					<h4 class="select_heading">Allocated Device</h4>
+
+				</div>
+				<!-- <div class=" select_device"> -->
+				<div class="panel-body " style="height: 250px;">
+					<ul>
+						<li ng-repeat="item in assignedList" class="bubblestyle">{{item.devid}}</li>
+					</ul>
+					<ul>
+						<li ng-repeat="item in selection" ng-click="toggleSelection(item)"
+							class="bubblestyle">{{item}}</li>
+						<li ng-show="!selection.length && !assignedList.length"></li>
+					</ul>
+				</div>
+
+				<!-- </div> -->
+				<div class="panel-footer">Device Selected : {{selectedItems}}</div>
+			</div>
+		</div>
 	</div>
+
+</div>
 
 </div>

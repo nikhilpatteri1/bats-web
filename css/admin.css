@@ -858,7 +858,7 @@ md-content.md-default-theme, md-content {
 	left: 80%; /* This moves it to the bottom (initial state) */
 	width: 240px;
 	transition: left 1s;
-	z-index: 10009;
+	z-index: 1000;
 	background: #fbfbfb;
 	line-height: 1;
 	border: 1px solid #ddd;
@@ -1410,6 +1410,14 @@ border-radius: 5px !important;
     padding: 9px 30px !important;
     font-size: 15px !important;
 } */
-
-
+.driverRadio{
+	margin-left: 50px !important;
+    margin-top: 0px !important;
+}
+.checkwidth{  
+	width:6% !important;
+}
+/* .md-datepicker-button {
+  display: none;
+} */
 

@@ -166,7 +166,8 @@ batsLogin.controller('forgetpwdController', function($scope, $http, $localStorag
 /**
  * Change Password Factory*/
 //==============Factory User Create Form===============
-batsfactoryhome.controller('changePwdform', function($scope,$http,$localStorage) {
+batsfactoryhome.controller('changePwdform', function($rootScope,$scope,$http,$localStorage) {
+	$rootScope.menuPos=2;    
 	$scope.changepwdjson={};
 	$scope.reset=function(){
 		document.getElementById("changePwdFrm").reset();
@@ -366,7 +367,10 @@ batsGeneralHome.controller('changePwdformGeneral', function($rootScope,$scope,$h
  * ============================================>>>>>> Change Password <<<<<<===========================================
  * */
 
-batstravelDeskHome.controller('changePwdformTraveldesk', function($scope,$http,$localStorage) {
+/*-------------------------------Change password for Traveldesk-----------------------*/
+
+batstravelDeskHome.controller('changePwdformTraveldesk', function($rootScope,$scope,$http,$localStorage) {
+	$rootScope.menuPos= 3; 
 	$scope.changepwdjson={};
 	$scope.reset=function(){
 		document.getElementById("changePwdFrm").reset();
@@ -598,9 +602,9 @@ batsGeneralHome.controller('logoutGeneralUser', function($scope, $http, $localSt
 		  };
 	});
 //==============Travel Desk Logout===============
-batstravelDeskHome.controller('logoutTraveldeskUser', function($rootScope,$scope, $http, $localStorage) {
+batstravelDeskHome.controller('logoutTraveldeskUser', function($scope, $http, $localStorage) {
 	console.log("check");
-	$rootScope.menuPos = 3;
+	/*$rootScope.menuPos = 3;*/
 	$scope.token = $localStorage.data;
 	//console.log($scope.token);
 	$scope.customer = {};

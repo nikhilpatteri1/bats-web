@@ -189,6 +189,7 @@ batsAdminHome.controller('vehicleHistory', function($scope,$rootScope, $http, $l
 	};
 	
 	$scope.myDateChange=function(myDate){
+		console.log("datechange");
 		$scope.yoData=false;
 		$scope.httpLoading=true;
 		$scope.initialize();

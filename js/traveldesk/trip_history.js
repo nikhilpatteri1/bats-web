@@ -207,6 +207,8 @@ batstravelDeskHome.controller('tripHistory', function($rootScope,$scope, $localS
 							function() {
 						$("#selectTrip").select2({});
 						$('#selectTripSection span.select2-chosen').text(" Select Trip");
+						$("#selectTrip1").select2({});
+						$('#selectTripSection1 span.select2-chosen').text(" Select Trip");
 						$("#selectDriver").select2({});
 						$('#selectDriverSection span.select2-chosen').text("Select Driver ");
 						$("#selectGroup").select2({});

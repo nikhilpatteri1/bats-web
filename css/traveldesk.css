@@ -99,7 +99,7 @@ hr{
 .elelist li textarea{ width:100%;}
 .elelist li:last-child{ text-align: center;}
 
-.clear_btn{background:#fff;color:#565656;padding:11px;position:absolute;top:10px;left:130px;
+.clear_btn{background:#fff;color:#565656;padding:11px;position:fixed;top:13%;left:130px;
 font-family:Roboto, Arial, sans-serif;font-size: 11px;border-radius:2px;box-shadow:rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px;
  width: 90px; text-align: center;z-index:100;cursor:pointer;font-weight:normal;}
 /* .traffic_layer_btn.select_traffic{color:#000;font-weight:500;cursor:pointer;} */
@@ -111,17 +111,17 @@ font-family:Roboto, Arial, sans-serif;font-size: 11px;border-radius:2px;box-shad
 .userIcons a{line-height: 2;}
 
 .maplabel{
-	    position: absolute;
-    top: 46px;
-    left: 40px;
+	position: fixed;
+    top: 17%;
+    left: 3%;
     z-index: 1000;
     background: #ffffff;
     /* right: 15px; */
-    g: 4px;
-   padding: 7px; 
+    g: 4px;  
+   /* padding: 7px;  */
     font-size: 12px;
     color: #03A9F4;
-    width: 35%;
+    width: 40%;
 }
 
 input.ng-dirty.ng-invalid{
@@ -141,15 +141,15 @@ input.ng-dirty.ng-valid{
 } */
 .panel1{
     margin-bottom: 0px !important;
-    background-color: #ffffff !important;
+    background-color:rgba(250, 250, 250, 0) !important;
    /*  padding-top:4px !important; */
     
 }
 
 .panel-heading1{
     padding: 1px !important;
-    background-color: #ffffff !important;
-    border-bottom: 1px solid #ddd !important;
+    background-color: rgba(250, 250, 250, 0) !important;
+    border-bottom: none !important;
 }
 
 .panel2{
@@ -244,6 +244,7 @@ input.ng-dirty.ng-valid{
 
 .marT{
 	margin-top:10px;
+	margin-bottom: 10px;
 }
 
 .marB{
@@ -305,9 +306,23 @@ padding: 10px !important;
 }
 
 .dest{
-	    border: none !important;
+	border: none !important;
     background: #fff !important;
+    box-shadow: none;
+    margin-top: 9px;
 }
+.dest:focus{
+	box-shadow: none;
+}
+
+.destIcon{
+    background: #fff;
+    border: none;
+    font-size: x-large;
+    color: red;
+    padding-top: 14px;
+}
+
 
 .tripBtn{
     padding: 8px 36px !important;
@@ -336,8 +351,8 @@ padding: 10px !important;
     background: #e6e6e6;
     margin: -2px;
     border-bottom: 1px solid #d4d4d4 !important;
-    margin-bottom: 2px;
-}
+    margin-bottom: 2px;  
+} 
 
 .bindHead1{
 	padding: 12px 12px;
@@ -359,7 +374,7 @@ padding: 10px !important;
 	margin-top: -14px;  
 }
 .pd24{
-	padding-left: 38px;
+	padding: 12px 0px 0px 25px;
 }
 
 .TripDetail{
@@ -375,6 +390,9 @@ padding: 10px !important;
 .tripDMRow{
 	border-bottom:1px solid #d4d4d4;
 }
+.tripDMRow label{
+	color: rgba(171, 170, 170, 0.88);;    
+}
 
 .Bheight{
 	height:438px !important;
@@ -387,5 +405,12 @@ padding: 10px !important;
 
 .pending-delete { background-color: #f7e481 !important; }
 
+.triptable td{
+	    padding: 0px !important;
+}
+
+.listNone li{
+	list-style-type:none!important;
+}
 
 

@@ -5,7 +5,10 @@ batstravelDeskHome.controller('tripManagement', function($rootScope,$scope, $loc
 	var destinations;
 	$scope.trip_create={};
 	$scope.updateTrip={};
-	
+	var contentHeight=window.screen.availHeight-200;
+	$scope.histcontentheight={
+			"height":contentHeight
+	}
 	/*=========================BASIC FUNCTIONS==============================*/
 	$scope.token = $localStorage.data;
 	var map;
@@ -20,6 +23,7 @@ batstravelDeskHome.controller('tripManagement', function($rootScope,$scope, $loc
 	var UTrip_duration;
 	var CEndStamp;
 	var UEndStamp;
+	$scope.noTripList = false;
 	
 	$scope.redColor={
 			"background-color":"#ff0000",
@@ -368,9 +372,13 @@ batstravelDeskHome.controller('tripManagement', function($rootScope,$scope, $loc
 		$scope.listToken.token = $scope.token;
 		travelDeskFactory.callApi("POST",apiURL+"trip/list",$scope.listToken,function(result){
 			if(result.status == "trips not available"){
-				swal({title:"No Trips Created Yet"});
+				$scope.noTripList = true;
+				$scope.yesTriplist = false;
+				/*swal({title:"No Trips Created Yet"});*/
 			}
 			else{
+				$scope.yesTriplist = true;
+				$scope.noTripList = false;
 		      $scope.triplistObject= result.list;
 		      $scope.httpLoading=false;
 			}
@@ -838,7 +846,8 @@ batstravelDeskHome.controller('tripManagement', function($rootScope,$scope, $loc
 	         			   			   confirmButtonColor: "#9afb29",   
 	         			   			   closeOnConfirm: true }, 
 	         			   			   function(){
-	         			   			   $scope.tripList();	
+	         			   				
+	         			   			   $scope.tripList();
 	         			   		 });
 	         				}
 	         			});

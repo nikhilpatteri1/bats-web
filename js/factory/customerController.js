@@ -3,6 +3,10 @@ var user_emailChk;
 
 batsfactoryhome.controller('customerController', function($rootScope,$scope, $http, $localStorage) {
 	$rootScope.menuPos=0;
+	var contentHeight=window.screen.availHeight-200;
+	$scope.histcontentheight={
+			"height":contentHeight
+	}
 	$scope.token = $localStorage.data;
 	if(typeof $scope.token==="undefined"){
 		swal({ 

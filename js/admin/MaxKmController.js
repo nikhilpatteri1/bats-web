@@ -4,6 +4,7 @@ var endTimeStampKm;
 batsAdminHome.controller("MaxKmCtrl",function($http,$scope,$rootScope,$filter,$localStorage,$timeout){
 	$rootScope.menuPos=5;
 	var token = $localStorage.data;
+	$scope.blankTable=true;
 	if(typeof $scope.token==="undefined"){
 		swal({ 
 			   title: "Un Authorized Access",
@@ -63,6 +64,7 @@ batsAdminHome.controller("MaxKmCtrl",function($http,$scope,$rootScope,$filter,$l
 	
 	$scope.fetchDevList = function(groupID) {
 		$scope.httpLoading=true
+		$scope.blankTable=false;
 	/*$('#clearTextDevice ').empty();  
 	$('#clearTextDevice ').text("- - Select Vehicle No/Device - -"); */
 	$scope.sel_group_device = false;

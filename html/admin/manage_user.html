@@ -59,110 +59,28 @@
 			</div>
 		</div>
 	</div>
-	<!-- <table class="table ">
-		<thead class="tableHeading borderNone">
-			<tr>
-				<th><div>Sl No.</div></th>
-				<th><div>User Name</div></th>
-				<th><div>Group</div></th>
-				<th><div>Contact Number</div></th>
-				<th></th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr ng-repeat="user in ulist">
-				<td><p class="culomPad">{{$index+1}}</p></td>
-				<td><p>{{user.uname}}</p></td>
-				<td><p ng-repeat="user1 in user.glist">{{user1.gname}}</p></td>
-				<td><p>{{user.contact_no}}</p></td>
-				<td><a href="#" class="edit_icon"
-					ng-click="submitEditUser(user.uname)" data-toggle="modal"
-					data-target="#updateUserModal"><i class="fa fa-pencil"></i></a> <a
-					href="#" class="delete_icon"
-					ng-click="submitDeleteuser(user.uname)"><i class="fa fa-trash"></i></a></td>
 
-			</tr>
-
-
-
-
-		</tbody>
-	</table> -->
-	<!-- <div ng-init="loadGroups()" class="row pad0">
-		<div class="col-sm-12 pad0">
-			<div class="table-container">
-				<table>
-					<thead>
-						<tr>
-							<th><div>Sl No.</div></th>
-							<th><div>User Name</div></th>
-							<th><div>Group</div></th>
-							<th><div>Contact Number</div></th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
-			</div> -->
-	<!-- <section class="tableSection">
-				<div class="hist-container" ng-style="histcontentheight"
-					ng-hide="noUsers">
-
-					<table class="table ">
-						<thead class="tableHeading borderNone">
-							<tr>
-								<th><div>Sl No.</div></th>
-								<th><div>User Name</div></th>
-								<th><div>Group</div></th>
-								<th><div>Contact Number</div></th>
-								<th></th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr ng-repeat="user in ulist">
-								<td><p class="culomPad">{{$index+1}}</p></td>
-								<td><p>{{user.uname}}</p></td>
-								<td><p ng-repeat="user1 in user.glist">{{user1.gname}}</p></td>
-								<td><p>{{user.contact_no}}</p></td>
-								<td><a href="#" class="edit_icon"
-									ng-click="submitEditUser(user.uname)" data-toggle="modal"
-									data-target="#updateUserModal"><i class="fa fa-pencil"></i></a>
-									<a href="#" class="delete_icon"
-									ng-click="submitDeleteuser(user.uname)"><i
-										class="fa fa-trash"></i></a></td>
-
-							</tr>
-
-
-
-
-						</tbody>
-					</table>
-				</div>
-			</section>
- -->
 	<div class="bgloading" ng-show="httpLoading">
 		<div class="bigbar">
 			<h1 class="titleClass">loading!...</h1>
 		</div>
 	</div>
-</div>
-</div>
 
-<!-- <h2 ng-show="noUsers">No Users Available</h2> -->
 
-<div class="row" ng-show="noUsers">
-	<div class="col-sm-12 verhorcenter" align="center">
-		<div class="centerData">
-			<ul class="nodata_list">
-				<li><img alt="" src="../images/no-data.png" class="nodata_img"></li>
-				<li><label style="color: #000">Nothing here!</label></li>
-				<li><span>No Users Available</span></li>
-			</ul>
+
+	<!-- <h2 ng-show="noUsers">No Users Available</h2> -->
+
+	<div class="row" ng-show="noUsers">
+		<div class="col-sm-12 verhorcenter" align="center">
+			<div class="centerData">
+				<ul class="nodata_list">
+					<li><img alt="" src="../images/no-data.png" class="nodata_img"></li>
+					<li><label style="color: #000">Nothing here!</label></li>
+					<li><span>No Users Available</span></li>
+				</ul>
+			</div>
 		</div>
 	</div>
-</div>
 
 
 </div>

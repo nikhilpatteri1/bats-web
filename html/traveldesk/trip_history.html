@@ -1,13 +1,12 @@
 <div class="container-fluid" ng-init="initMap()">
-	<div class="row header_bats_tripH" >
+	<div class="row header_bats" >
 		<div class="col-sm-10">
-
-			<h4 class="search_heading">Search Trip</h4>
-			<!-- <ul class="nav nav-tabs" style="margin-left: 20px;">
-				<li class="active"><a data-toggle="tab" href="#driver">Driver</a></li>
-				<li><a data-toggle="tab" href="#vehical">Vehicle</a></li>
-			</ul> -->
-			<ul class="nav nav-tabs ">
+			<div class="row">
+							<div class="col-sm-12">
+								<label class="custom_label">Search Group</label>
+							</div>
+			</div>
+			<ul class="nav nav-tabs managedivH">    
 				<li ng-class="{ active: isSet(1) }"><a href
 					ng-click="setTab(1)">Driver</a></li>
 				<li ng-class="{ active: isSet(2) }"><a href
@@ -93,8 +92,8 @@
 					</div>
 
 					<div class="col-sm-4" ng-show="showTripDropDown">
-						<div id="selectTripSection" class="col-sm-12">
-							<select class="form-control" id="selectTrip" ng-model="tripName"
+						<div id="selectTripSection1" class="col-sm-12">
+							<select class="form-control" id="selectTrip1" ng-model="tripName"
 								ng-options="tripDet.trip_name for tripDet in tripDetails track by tripDet.trip_id"
 								ng-change=showHistoryData(tripName)>
 							</select>

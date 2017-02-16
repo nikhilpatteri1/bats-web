@@ -150,11 +150,18 @@
 		function createMarker(latlng, deviceID,vehNo,vehModel,html,type) {
 			// console.log(deviceID+"=="+type);
 			var contentString; 
-			if(type==0){icon.fillColor='#000000';}
+			/*if(type==0){icon.fillColor='#000000';}
 			else if(type==1){icon.fillColor='#ffde01';}
 			else if(type==2){icon.fillColor='#e59305';}
 			else if(type==3){icon.fillColor='#043a08';}
+			else if(type==4){icon.fillColor='#0540E5';}*/
+			
+			if(type==0){icon.fillColor='#ea0909';}
+			else if(type==1){icon.fillColor='#ffde01';}
+			else if(type==2){icon.fillColor='#e59305';}
+			else if(type==3){icon.fillColor='#000000';}
 			else if(type==4){icon.fillColor='#0540E5';}
+			
 			var geocoder = new google.maps.Geocoder();		
 			geocoder.geocode({       
 			        latLng: latlng     

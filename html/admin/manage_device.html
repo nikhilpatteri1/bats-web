@@ -378,8 +378,8 @@
 										<input type="text" ng-model="device.vehicle_model"
 											name="vehicle_model" class="form-control"
 											placeholder="Vehicle Model" required />
-										<p
-											ng-show="updateDeviceForm.vehicle_model.$invalid && !updateDeviceForm.vehicle_model.$pristine">Vehicle
+										<p  ng-show="updateDeviceForm.vehicle_model.$invalid && !updateDeviceForm.vehicle_model.$pristine"
+											class="help-block">Vehicle
 											Model is Required</p>
 									</div>
 									<!-- ./Vehicle Model field added 08/08/2016 for cp release -->
@@ -395,8 +395,7 @@
 										<input type="text" ng-model="device.driver_name"
 											name="driver_name" class="form-control"
 											placeholder="Driver Name" required />
-										<p
-											ng-show="updateDeviceForm.driver_name.$invalid && !updateDeviceForm.driver_name.$pristine"
+										<p ng-show="updateDeviceForm.driver_name.$invalid && !updateDeviceForm.driver_name.$pristine"
 											class="help-block">Driver Name is required.</p>
 									</div>
 								</div>
@@ -426,8 +425,7 @@
 										<!--  ng-show="device.desc" class="floatlabeltxt show-hide"-->
 										<textarea ng-model="device.desc" name="desc"
 											class="form-control" placeholder="Description" required></textarea>
-										<p
-											ng-show="updateDeviceForm.desc.$invalid && !updateDeviceForm.desc.$pristine"
+										<p ng-show="updateDeviceForm.desc.$invalid && !updateDeviceForm.desc.$pristine"
 											class="help-block">Description is required.</p>
 									</div>
 								</div>
