@@ -34,17 +34,31 @@
 				</div>
 				<section ng-show="deviceSelectAlarm">
 					<div class="col-sm-3 customcol3 ">
-						<div class="datepickerDivStyle">
+						<!-- <div class="datepickerDivStyle">
 							<md-content> <md-datepicker ng-model="myDate.start"
 								md-placeholder="Enter date" md-max-date="todayDate"></md-datepicker>
 							</md-content>
+						</div> -->
+						<div class='input-group date SpddateB' id='GVAStartTimePic'>
+							<input type='text' class="form-control SpddateNB" id="GVAStartTime"
+								readonly="readonly" placeholder="Start Date" /> <span
+								class="input-group-addon SpddateNB"> <span
+								class="glyphicon glyphicon-calendar"> </span>
+							</span>
 						</div>
 					</div>
 					<div class="col-sm-3 customcol3 ">
-						<div class="datepickerDivStyle">
+						<!-- <div class="datepickerDivStyle">
 							<md-content> <md-datepicker ng-model="myDate.end"
 								md-placeholder="Enter date" md-max-date="todayDate"></md-datepicker>
 							</md-content>
+						</div> -->
+						<div class='input-group date SpddateB' id='GVAEndTimePic'>
+							<input type='text' class="form-control SpddateNB" id="GVAEndTime"
+								readonly="readonly" placeholder="End Date" /> <span
+								class="input-group-addon SpddateNB"> <span
+								class="glyphicon glyphicon-calendar"> </span>
+							</span>
 						</div>
 					</div>
 					<div class="col-sm-1 pad0">

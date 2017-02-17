@@ -188,7 +188,56 @@ batsAdminHome.controller('vehicleHistory', function($scope,$rootScope, $http, $l
 		$scope.initialize();
 	};
 	
-	$scope.myDateChange=function(myDate){
+	$(document).on('click', '#trvelRouteHstTimePic', function(){
+		$('#trvelRouteHstTimePic').datetimepicker({
+			/* inline: true,
+             sideBySide: true,*/
+			format: 'DD/MM/YYYY',
+	        maxDate: 'now',        		
+			ignoreReadonly:true,
+	            }).on("dp.change",function (e) {
+	            	//$("#startDateMaxKm").blur(); 
+	            	//closeResult();
+	            	console.log(e);
+	            	console.log(e.date);
+	            	console.log(e.date._d);
+	            	$scope.MyDate = e.date._d;
+	            	$scope.myDateChange();
+	            	$scope.activeMenu = '5';
+	            });
+		//startDateMaxKmError.style.display = 'none';
+		var dt=new Date().getTime();
+		$('#trvelRouteHstTime').val(showTime(dt));
+	});
+	
+	function showTime (ts) {
+		//console.log(ts);
+		var d = new Date(Number(ts));
+		var day = d.getDate();
+		var month = d.getMonth()+1;
+		var year = d.getFullYear();
+		var hours = d.getHours();
+		var minutes = d.getMinutes();
+		var ampm = hours >= 12 ? 'pm' : 'am';
+		hours = hours % 12;
+		hours = hours ? hours : 12; // the hour '0' should be '12'
+		minutes = minutes < 10 ? '0' + minutes : minutes;
+		var strTime = day+"/"+month+"/"+year;
+		//console.log(strTime);
+		return strTime;
+	};
+	
+	function startDate(getStartDateMinMax){
+		var datetimeVal=getStartDateMinMax;
+		console.log(getStartDateMinMax);
+		/*strArra=datetimeVal.split(" ");*/
+		var dateArray=datetimeVal.split("/");
+		var newStDate = dateArray[1] + "/" + dateArray[0] + "/" + dateArray[2];
+		var sts=new Date(newStDate);
+		return sts.getTime();
+	}
+	
+	$scope.myDateChange=function(){
 		console.log("datechange");
 		$scope.yoData=false;
 		$scope.httpLoading=true;
@@ -271,19 +320,23 @@ batsAdminHome.controller('vehicleHistory', function($scope,$rootScope, $http, $l
 		
 	};
 	function getTimestamp(hr,mins,sec){		
-		var d=new Date($scope.myDate);
-		d.setHours(hr);
-		d.setMinutes(mins);
-		d.setSeconds(sec);
-		return d.getTime();
+		var trvelRouteHstTime=document.getElementById('trvelRouteHstTime').value;
+		var selectDateTS=startDate(trvelRouteHstTime);
+		var timeStamp=new Date(selectDateTS);
+		timeStamp.setHours(hr);
+		timeStamp.setMinutes(mins);
+		timeStamp.setSeconds(sec);
+		return timeStamp.getTime();
 	}
 	$scope.showHistory = function(mydate) {
+		console.log(mydate);
 		var sts=new Date(mydate).getTime();
 		var d=new Date(mydate);
 		d.setHours(23);
 		d.setMinutes(59);
 		d.setSeconds(59);
 		var ets=d.getTime();
+		console.log(ets);
 		historyApiCall(sts,ets);
 	};
 	function historyApiCall(sts,ets){
@@ -377,11 +430,26 @@ batsAdminHome.controller('vehicleHistory', function($scope,$rootScope, $http, $l
 				plottedObj.ts = historyStatus.timestamp;
 				polyPathArray.push(arr);
 				$scope.plottedData.push(plottedObj);
+				//console.log($scope.plottedData.length);
+				/*if($scope.plottedData.length <= 1){
+					swal({title:"Vehicle in stationary"});
+				}
+				else{
+					//nothing
+				}*/
+				
 				lat_tot += Number(historyStatus.latitude);
 				lg_tot += Number(historyStatus.longitude);
 		  	});
 		  	
 		  }
+		if($scope.plottedData.length <= 1){
+			swal({title:"Stationary Vehicle"});
+		}
+		else{
+			//nothing
+		}
+		console.log($scope.plottedData.length);
 		function executeHisory(latitude,longitude,velocity,timestamp,mapHistory){
 			// if(velocity>5){
 				var historyStatus={"latitude":latitude,"longitude":longitude,"velocity":velocity,"timestamp":timestamp};

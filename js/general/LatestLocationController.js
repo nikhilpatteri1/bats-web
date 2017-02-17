@@ -192,7 +192,7 @@ var request = {
 geocoder.geocode(request, function(data, status) {
 	if (status == google.maps.GeocoderStatus.OK) {
 		if (data[0] != null) {
-		var content = "<b>Vehicle Number :</b> " + device.vehicle_num + "<br> <b>Address :</b> " + data[0].formatted_address + "<br>";
+			var content = "<label>Vehicle Number :</label>" + device.vehicle_num + "<br> <label>Address :</label> <p>" + data[0].formatted_address + "</p><br>";
 		infowindow.setContent(content);
 		} else {
 		var content = "<b>Vehicle Number :</b> " + device.vehicle_num + "<br> <b>Address :</b> No address available";

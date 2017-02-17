@@ -55,16 +55,30 @@
 				</div>
 				<section ng-hide="showDatepicker">
 					<div class="col-sm-3 customcol3">
-						<div class="datepickerDivStyle">
+					<!-- <div class="datepickerDivStyle">
 							<md-content> 
-							<!-- <md-icon src="../images/calender.png"></md-icon> -->
-							<!-- <img src="../images/calender.png" alt="Bookmark"> -->
+							
 							<md-datepicker ng-model="myDate"
 								md-placeholder="Enter date"
 								ng-change="myDateChange(myDate);activeMenu = '5'"
 								md-max-date="todayDate"></md-datepicker> </md-content>
+					
+					 </div> -->
+					 
+						<div class='input-group date SpddateB' id='trvelRouteHstTimePic'>
+						<input type='text' class="form-control SpddateNB" id="trvelRouteHstTime"
+							readonly="readonly" placeholder="Start Date" /> <span
+							class="input-group-addon SpddateNB"> <span
+							class="glyphicon glyphicon-calendar"> </span>
+						</span>
 						</div>
+						<!-- <div class="showMinMaxErr" id="startDateMaxKmError">
+						<i class="ion-information-circled"></i> This field is required!
+						</div> -->
+					
 					</div>
+					
+					
 					<div class="col-sm-4 customcol4 pad0">
 						<div class="row" ng-show="showTimeSlot">
 							<div class="col-sm-3 pad0" align="center"
@@ -137,7 +151,7 @@
 						<!-- History Table -->
 						<div class="row">
 							<div class="col-sm-5 col-sm-push-7 pad0">
-								<div id="hist_table" class="table-responsive tp3">
+								<div id="hist_table" class="table-responsive tp3"  ng-show="yoData">
 									<div class="table-header">< Info</div>
 									<section class="tableSection">
 										<div class="hist-container"  ng-style="histcontentheight">
@@ -190,6 +204,8 @@
 	</div>
 </div>
 <script>
+
+
 $(function() {
 	$(".table-header").on("click", function() {
 		$expand = $('.table-header');
@@ -205,4 +221,4 @@ $(function() {
 		}
 	});
 });
-</script>
+</script> 

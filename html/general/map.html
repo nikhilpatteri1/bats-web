@@ -63,7 +63,20 @@
 				<section class="speedometerSection"
 					ng-show="multiDevice || singleDevice">
 					<div class="table-responsive" ng-show="multiDevice">
-						<table class="table mapTable">
+						<div class="col-sm-12"><label>Available Devices</label></div>
+						<div class="col-sm-12">
+							<ul class="multiplDeviceTable">
+								<li ng-repeat="device in devData">
+									<ul class="deviceRowList">
+										<li><span class="barStyle" ng-style='{{getColor(device.type)}}'></span></li>
+										<li>{{$index+1}}</li>
+										<li><span class="helpText">Vehicle No</span><p class="actualText">{{device.devid}}</p></li>
+										<li><span class="helpText">Speed</span><p class="actualText">{{device.speed}}Kmph</p></li>
+									</ul>
+								</li>
+							</ul>	
+						</div>
+						<!-- <table class="table mapTable">
 							<thead>
 								<tr>
 									<td>Slno</td>
@@ -78,7 +91,7 @@
 									<td>{{devSpeed}}</td>
 								</tr>
 							</tbody>
-						</table>
+						</table> -->
 					</div>
 					<div class="row margin0" ng-show="singleDevice">
 						<div class="col-sm-12" align="left">
@@ -127,7 +140,7 @@
 					<div class="row">
 						<!-- style="margin: 0 -15px 0 -38px" -->
 						<div class="col-sm-12 pad0">
-							<div id="map_section" ng-class="{fullMap:activeFull==='1'}"ng-style="mapHeight">
+							<div id="map_section" ng-class="{fullMap:activeFull==='1'}">
 								<div id="map_canvas"></div>
 								<a class="traffic_layer_btn" ng-click="showTrafficLayer()"
 									ng-hide="showTrafficLayerBtn">Traffic Layer</a> <a

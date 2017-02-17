@@ -24,6 +24,7 @@ batsAdminHome.controller("MaxKmCtrl",function($http,$scope,$rootScope,$filter,$l
 	$scope.showResultMaxKm = true;
 	$scope.sel_group_device = false;
 	var startDateMaxKmError = document.getElementById('startDateMaxKmError');
+	console.log(startDateMaxKmError);
 	var endDateMaxKmError = document.getElementById('endDateMaxKmError');
 	
 /**
@@ -126,6 +127,7 @@ document.getElementById('endDateMaxKm').value = "";
 $scope.submitMaxKm = function(){
 	//alert("Yes");
 	var startDateMaxKm = document.getElementById('startDateMaxKm').value;
+	console.log(startDateMaxKm);
 	var endDateMaxKm = document.getElementById('endDateMaxKm').value;
 if(startDateMaxKm == "" && endDateMaxKm == ""){
 	startDateMaxKmError.style.display = 'block';

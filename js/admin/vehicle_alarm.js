@@ -1,3 +1,7 @@
+var startTimeStampKm;
+var endTimeStampKm;
+
+
 batsAdminHome.controller('vehicleAlarm',function($scope,$rootScope, $http, $localStorage){
 	$rootScope.menuPos=2;
 	console.log(window.screen.availHeight);
@@ -123,16 +127,83 @@ batsAdminHome.controller('vehicleAlarm',function($scope,$rootScope, $http, $loca
 	/**
 	  * Onsubmit of Min/Max Speed from values 
 	*/
+	
+	$(document).on('click', '#VAStartTimePic', function(){
+		$('#VAStartTimePic').datetimepicker({
+			/* inline: true,
+             sideBySide: true,*/
+			format: 'DD/MM/YYYY hh:mm a',
+	        maxDate: 'now',        		
+			ignoreReadonly:true,
+	            }).on("dp.change",function (e) {
+	            	//$("#startDateMaxKm").blur(); 
+	            	//closeResult();
+	            	/*console.log(e);
+	            	console.log(e.date);
+	            	console.log(e.date._d);
+	            	$scope.MyDate = e.date._d;*/
+	            });
+		//startDateMaxKmError.style.display = 'none';
+		var dt=new Date().getTime();
+		$('#VAStartTime').val(showTime(dt));
+	});
+	
+	$(document).on('click', '#VAEndTimePic', function(){
+		$('#VAEndTimePic').datetimepicker({
+			/* inline: true,
+             sideBySide: true,*/
+			format: 'DD/MM/YYYY hh:mm a',
+	        maxDate: 'now',        		
+			ignoreReadonly:true,
+	            }).on("dp.change",function (e) {
+	            	//$("#startDateMaxKm").blur(); 
+	            	//closeResult();
+	            	/*console.log(e);
+	            	console.log(e.date);
+	            	console.log(e.date._d);
+	            	$scope.MyDate = e.date._d;*/
+	            	
+	            });
+		//startDateMaxKmError.style.display = 'none';
+		var dt=new Date().getTime();
+		$('#VAEndTime').val(showTime(dt));
+	});
+	
+	
+	function showTime (ts) {
+		//console.log(ts);
+		var d = new Date(Number(ts));
+		var day = d.getDate();
+		var month = d.getMonth()+1;
+		var year = d.getFullYear();
+		var hours = d.getHours();
+		var minutes = d.getMinutes();
+		var ampm = hours >= 12 ? 'pm' : 'am';
+		hours = hours % 12;
+		hours = hours ? hours : 12; // the hour '0' should be '12'
+		minutes = minutes < 10 ? '0' + minutes : minutes;
+		var strTime = day+"/"+month+"/"+year+" "+ hours + ':' + minutes + ' ' + ampm;
+		//console.log(strTime);
+		return strTime;
+	};
+	
+	
+	
 	$scope.submitAlarm = function() {
+		var startDateMaxKm = document.getElementById('VAStartTime').value;
+		console.log(startDateMaxKm);
+		var endDateMaxKm = document.getElementById('VAEndTime').value;
 		$scope.httpLoading=true;
-		console.log($scope.myDate.start);
+		startDate(startDateMaxKm);
+		endDate(endDateMaxKm);
+		/*console.log($scope.myDate.start);
 		getSTS($scope.myDate.start);
-		getETS($scope.myDate.end);
+		getETS($scope.myDate.end);*/
 		                    $scope.devIdJson = {};
 							$scope.devIdJson.token = $scope.token;
 							$scope.devIdJson.devid = $scope.deviceId;
-							$scope.devIdJson.sts = startTimeStamp;
-							$scope.devIdJson.ets = endTimeStamp;
+							$scope.devIdJson.sts = startTimeStampKm;
+							$scope.devIdJson.ets = endTimeStampKm;
 							console.log(JSON.stringify($scope.devIdJson));
 							$http({
 								method : 'POST',
@@ -184,7 +255,94 @@ batsAdminHome.controller('vehicleAlarm',function($scope,$rootScope, $http, $loca
 									$scope.httpLoading=false;
 								});
 	};	
+
 	
+	
+	function startDate(getStartDateMinMax){
+		var datetimeVal=getStartDateMinMax;
+		var strArra=datetimeVal.split(" ");
+		var dateVal=strArra[0];
+		var dateArray=dateVal.split("/");
+		var timeStr=strArra[1];
+		var tsArr=timeStr.split(":");
+		var newStDate = dateArray[1] + "/" + dateArray[0] + "/" + dateArray[2];
+		//console.log(newStDate);
+		var sts=new Date(newStDate);
+		//console.log(sts);
+		sts.setDate(dateArray[0]);
+		sts.setMonth(dateArray[1]-1);
+		if(strArra[2] == "pm"){
+			if(tsArr[0] == "12"){
+				sts.setHours(tsArr[0]);
+				sts.setMinutes(tsArr[1]);
+				startTimeStampKm = sts.getTime();
+			}
+			else{
+				sts.setHours(Number(tsArr[0]) + 12);
+				sts.setMinutes(tsArr[1]);
+				//console.log("if " + sts);
+				startTimeStampKm = sts.getTime();
+				//console.log(startTimeStamp);
+			}
+		}
+		else{
+			if(tsArr[0] == "12"){
+				sts.setHours(Number(tsArr[0]) - 12);
+				sts.setMinutes(tsArr[1]);
+				startTimeStampKm = sts.getTime();
+			}
+			else{
+				sts.setHours(tsArr[0]);
+				sts.setMinutes(tsArr[1]);
+				//console.log("else " + sts);
+				startTimeStampKm = sts.getTime();
+				//console.log(startTimeStamp);
+			}
+		}
+	}
+	function endDate(getEndDateMinMax){
+		var datetimeVal=getEndDateMinMax;
+		var strArra=datetimeVal.split(" ");
+		var dateVal=strArra[0];
+		var dateArray=dateVal.split("/");
+		var timeStr=strArra[1];
+		var tsArr=timeStr.split(":");
+		var newStDate = dateArray[1] + "/" + dateArray[0] + "/" + dateArray[2];
+		//console.log(newStDate);
+		var sts=new Date(newStDate);
+		//console.log(sts);
+		sts.setDate(dateArray[0]);
+		sts.setMonth(dateArray[1]-1);
+		if(strArra[2] == "pm"){
+			if(tsArr[0] == "12"){
+				sts.setHours(tsArr[0]);
+				sts.setMinutes(tsArr[1]);
+				endTimeStampKm = sts.getTime();
+			}
+			else{
+				sts.setHours(Number(tsArr[0]) + 12);
+				sts.setMinutes(tsArr[1]);
+				//console.log("if " + sts);
+				endTimeStampKm = sts.getTime();
+				//console.log(endTimeStamp);	
+			}
+		}
+		else{
+			if(tsArr[0] == "12"){
+				sts.setHours(Number(tsArr[0]) - 12);
+				sts.setMinutes(tsArr[1]);
+				endTimeStampKm = sts.getTime();
+			}
+			else{
+				sts.setHours(tsArr[0]);
+				sts.setMinutes(tsArr[1]);
+				//console.log("else " + sts);
+				endTimeStampKm = sts.getTime();
+				//console.log(endTimeStamp);
+			}
+		}
+	}
+
 
 function getSTS(){		
 	var d=new Date($scope.myDate.start);

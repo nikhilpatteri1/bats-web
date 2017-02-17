@@ -191,6 +191,57 @@ batsGeneralHome.controller('vehicleHistory',function($rootScope,$scope, $http, $
 		$scope.initialize();
 	};
 	
+	
+	
+	$(document).on('click', '#GtrvelRouteHstTimePic', function(){
+		$('#GtrvelRouteHstTimePic').datetimepicker({
+			/* inline: true,
+             sideBySide: true,*/
+			format: 'DD/MM/YYYY',
+	        maxDate: 'now',        		
+			ignoreReadonly:true,
+	            }).on("dp.change",function (e) {
+	            	//$("#startDateMaxKm").blur(); 
+	            	//closeResult();
+	            	console.log(e);
+	            	console.log(e.date);
+	            	console.log(e.date._d);
+	            	$scope.MyDate = e.date._d;
+	            	$scope.myDateChange($scope.MyDate);
+	            	$scope.activeMenu = '5';
+	            });
+		//startDateMaxKmError.style.display = 'none';
+		var dt=new Date().getTime();
+		$('#GtrvelRouteHstTime').val(showTime(dt));
+	});
+	
+	function showTime (ts) {
+		//console.log(ts);
+		var d = new Date(Number(ts));
+		var day = d.getDate();
+		var month = d.getMonth()+1;
+		var year = d.getFullYear();
+		var hours = d.getHours();
+		var minutes = d.getMinutes();
+		var ampm = hours >= 12 ? 'pm' : 'am';
+		hours = hours % 12;
+		hours = hours ? hours : 12; // the hour '0' should be '12'
+		minutes = minutes < 10 ? '0' + minutes : minutes;
+		var strTime = day+"/"+month+"/"+year;
+		//console.log(strTime);
+		return strTime;
+	};
+	
+	function startDate(getStartDateMinMax){
+		var datetimeVal=getStartDateMinMax;
+		console.log(getStartDateMinMax);
+		/*strArra=datetimeVal.split(" ");*/
+		var dateArray=datetimeVal.split("/");
+		var newStDate = dateArray[1] + "/" + dateArray[0] + "/" + dateArray[2];
+		var sts=new Date(newStDate);
+		return sts.getTime();
+	}
+	
 	$scope.myDateChange=function(myDate){
 		$scope.initialize();
 		$scope.yoData=false;
@@ -264,12 +315,19 @@ batsGeneralHome.controller('vehicleHistory',function($rootScope,$scope, $http, $
 			}
 		else{swal("Kindly check for available slot(s)");}
 	};
-	function getTimestamp(hr,mins,sec){		
-		var d=new Date($scope.myDate);
+	function getTimestamp(hr,mins,sec){
+		var trvelRouteHstTime=document.getElementById('GtrvelRouteHstTime').value;
+		var selectDateTS=startDate(trvelRouteHstTime);
+		var timeStamp=new Date(selectDateTS);
+		timeStamp.setHours(hr);
+		timeStamp.setMinutes(mins); 
+		timeStamp.setSeconds(sec);
+		return timeStamp.getTime();
+		/*var d=new Date($scope.myDate);
 		d.setHours(hr);
 		d.setMinutes(mins);
 		d.setSeconds(sec);
-		return d.getTime();
+		return d.getTime();*/
 	}
 	$scope.showHistory = function(mydate) {
 		var sts=new Date(mydate).getTime();
