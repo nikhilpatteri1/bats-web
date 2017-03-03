@@ -16,6 +16,9 @@ batsAdminHome.controller('deviceController', function($rootScope,$scope, $http, 
 	$scope.ready2activate = [];
 	$scope.pendingArray = [];
 	$scope.deviceNotAvailable = false;
+	$scope.noDevicesAllocated = false;
+	$scope.noDevicesUnAllocated = false;
+	
 	var pageRefresh;
 	// console.log($scope.token);
 	if (typeof $scope.token === "undefined") {

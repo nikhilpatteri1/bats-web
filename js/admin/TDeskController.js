@@ -69,7 +69,8 @@ batsAdminHome.controller('TDcontroller',function($rootScope,$scope,$http,$localS
 		       	  else if(data.err == "Invalid User"){
 		       		  invalidUser();
 		   			  $localStorage.$reset();  
-		       	  }   	  
+		       	  } 
+		       	 
 		})
 		
 	}
@@ -103,6 +104,7 @@ batsAdminHome.controller('TDcontroller',function($rootScope,$scope,$http,$localS
 				closeOnConfirm:true} ,
 				function(){
 					$('#createTDModal').hide();
+					//$('#updateTDModal').show();
 				/*$('#createTDModal').modal('hide');*/
 			});
 			})
@@ -113,11 +115,17 @@ batsAdminHome.controller('TDcontroller',function($rootScope,$scope,$http,$localS
 					expiredSession();
 					$localStorage.$reset();	
 				}
-				else if (dat.err == "Invalid User"){
+				else if (data.err == "Invalid User"){
 					/*$('#driverCreateModal').modal('hide');*/
 		       		  invalidUser();
 		   			  $localStorage.$reset();
 				}	
+				else if (data.msg == "User with this name already exist."){
+		       		swal("Email Id already exists. Enter different mail id.");  
+		       	  }
+				 else if (data.msg == "user with this email already exist."){
+			       		swal("Email Id already exists. Enter different mail id.");  
+			       	  }
 			});
 		}
 	

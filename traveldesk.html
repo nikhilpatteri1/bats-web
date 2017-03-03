@@ -43,7 +43,7 @@
 
 <link rel="stylesheet" type="text/css" href="../css/commonY.css">
 <link rel="stylesheet" type="text/css" href="../css/commonG.css">
-
+<link rel="stylesheet" type="text/css" href="../css/dashboard.css">
 
 <link rel="stylesheet" type="text/css" href="../css/reset.css">		
 <link rel="stylesheet" type="text/css" href="../css/traveldesk.css">
@@ -104,6 +104,23 @@
 										<li><a class="logo" href="#"> <img
 											src="../images/menu/logo.png" alt="">
 									</a></li>
+									<li ng-click="menuPos=4"><a
+												ng-class="{ active: activePath=='/traveldesk/dashboard' }"
+												href="/traveldesk/dashboard">
+													<div class="row">
+														<div class="col-sm-2">
+															<div class="colmenu1"></div>
+														</div>
+														<div class="col-sm-3 listElePadding">
+															<img
+																ng-src="{{menuPos==4?'../images/menu/dashboard_active.png':'../images/menu/dashboard.png'}}"
+																alt="bydesign_logo" class="sidebar_icons" />
+														</div>
+														<div class="col-sm-7 listElePadding">
+															<p>Dashboard</p>
+														</div>
+													</div>
+											</a></li>
 										<li ng-click="menuPos=0"> 
 										
 										<a ng-class="{ active: activePath=='/traveldesk/binding' }"
@@ -241,7 +258,11 @@
 	<script type="text/javascript" src="../js/app.js"></script>
 	<script type="text/javascript" src="../js/global.js"></script>
 	<script type="text/javascript" src="../js/loginController.js"></script>
+	<script type="text/javascript" src="../js/common/commonFactory.js"></script>
+	<script type="text/javascript" src="../js/common/commonService.js"></script>
+	
 	<script type="text/javascript" src="../assets/angular/angular-animate.js"></script>
+	<script type="text/javascript" src="../js/traveldesk/dashboardController.js"></script>
 	<script type="text/javascript" src="../js/traveldesk/driver_binding.js"></script>
 	<script type="text/javascript" src="../js/traveldesk/trip_management.js"></script>
 	<script type="text/javascript" src="../js/traveldesk/trip_history.js"></script>
@@ -250,7 +271,7 @@
 	<script type="text/javascript" src="../js/traveldesk/factory.js"></script>
 	<script type="text/javascript" src="../js/traveldesk/filter.js"></script>
 	<script type="text/javascript" src="../assets/sweetalert/sweetalert-dev.js"></script>
-	
+	<script src="http://code.highcharts.com/highcharts.js"></script>
 	<!-- Material Design Calendar -->
 	<script
 		src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js'></script>

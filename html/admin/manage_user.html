@@ -25,12 +25,25 @@
 			<div class="table-container" ng-style="histcontentheight">
 				<table class="tablestyle">
 					<thead class="theadStyle tablethead">
-						<tr>
+						<tr ng-hide="noUsers">
 							<th><div>Sl No.</div></th>
 							<th><div>User Name</div></th>
 							<th><div>Group</div></th>
 							<th><div>Contact Number</div></th>
 							<th></th>
+						</tr>
+						<tr>
+							<div class="row" ng-show="noUsers">
+								<div class="col-sm-12 verhorcenter" align="center">
+									<div class="centerData">
+										<ul class="nodata_list">
+											<li><img alt="" src="../images/no-data.png" class="nodata_img"></li>
+											<li><label style="color: #000">Nothing here!</label></li>
+											<li><span>No Users Available</span></li>
+										</ul>
+									</div>
+								</div>
+							</div>
 						</tr>
 					</thead>
 					<tbody class="tbodyStyle">
@@ -70,17 +83,7 @@
 
 	<!-- <h2 ng-show="noUsers">No Users Available</h2> -->
 
-	<div class="row" ng-show="noUsers">
-		<div class="col-sm-12 verhorcenter" align="center">
-			<div class="centerData">
-				<ul class="nodata_list">
-					<li><img alt="" src="../images/no-data.png" class="nodata_img"></li>
-					<li><label style="color: #000">Nothing here!</label></li>
-					<li><span>No Users Available</span></li>
-				</ul>
-			</div>
-		</div>
-	</div>
+	
 
 
 </div>

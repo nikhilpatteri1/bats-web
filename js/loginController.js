@@ -15,12 +15,12 @@ batsLogin.controller('loginController', function($rootScope,$scope, $http, $loca
 	  	  else if($scope.token.charAt(9)==="1"){
 	  		$('#loginModal').modal('hide');
 	  		$localStorage.data = $scope.token;
-	  		window.location = "/admin/map";
+	  		window.location = "/admin/dashboard";
 	  	  }
 	  	  else if($scope.token.charAt(9)==="2"){
 	  		$('#loginModal').modal('hide');
-	  		$localStorage.data = $scope.token;
-	  		window.location = "/general/map";
+	  		$localStorage.data = $scope.token;	  		
+	  		window.location = "/general/dashboard";
 	  	  }
 	  	 else if($scope.token.charAt(9)==="3"){
 		  		$('#loginModal').modal('hide');
@@ -64,17 +64,17 @@ batsLogin.controller('loginController', function($rootScope,$scope, $http, $loca
 			  	  else if($scope.token.charAt(9)==="1"){
 			  		$('#loginModal').modal('hide');
 			  		//$localStorage.data = $scope.token;
-			  		window.location = "/admin/map";
+			  		window.location = "/admin/dashboard";
 			  	  }
 			  	  else if($scope.token.charAt(9)==="2"){
 			  		$('#loginModal').modal('hide');
 			  		//$localStorage.data = $scope.token;
-			  		window.location = "/general/map";
+			  		window.location = "/general/dashboard";
 			  	  }
 			  	else if($scope.token.charAt(9)==="3"){
 			  		$('#loginModal').modal('hide');
 			  		//$localStorage.data = $scope.token;
-			  		window.location = "/traveldesk/binding";
+			  		window.location = "/traveldesk/dashboard";
 			  	  }
 			  	  
 			  });
@@ -635,8 +635,10 @@ batstravelDeskHome.controller('logoutTraveldeskUser', function($scope, $http, $l
 	    			  $localStorage.$reset();
 	    			  window.location = apiURL;
 	    			  console.log(JSON.stringify($scope.data));
+	    			  console.log("checkS");
 	    			  })
 	    			  .error(function(data, status, headers, config) {
+	    				  console.log("checkE")
 	    				  console.log(data);
 	    				  if(data.err == "Expired Session")
 	    				  {

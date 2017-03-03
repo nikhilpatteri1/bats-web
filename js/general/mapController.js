@@ -618,7 +618,7 @@
 		$scope.truckCount = 0;
 		$scope.admingroup = {};
 		$scope.admingroup.token = $scope.token;
-		// console.log($scope.admingroup);
+		 console.log($scope.admingroup);
 		$http({
 			method : 'POST',
 			url : apiURL + 'group/list',
@@ -630,6 +630,7 @@
 			// console.log(JSON.stringify(data));
 			listGroup(data);
 		}).error(function(data, status, headers, config) {
+			console.log(data);
 			if (data.err == "Expired Session") {
 				expiredSession();
 				$localStorage.$reset();

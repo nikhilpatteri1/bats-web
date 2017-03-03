@@ -19,6 +19,11 @@ time, mark, audio, video {
     background:transparent;
     
 }
+html,body {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
 .error-help {
 	color: #ff0000;
 }
@@ -478,4 +483,4 @@ top: -19px;transition: all 0.25s ease 0s;width: 0;z-index: 10;margin-top: 10px;o
 .borderLeft{border-left:3px solid #e0e4e5}
 .logoutBtn{cursor:pointer;}
 .mapTable td ,.mapTable th{font-size:14px;border:none;border-top:none !important;}
-
+.xAuto{overflow-y:auto;overflow-x:hidden; }

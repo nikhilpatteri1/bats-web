@@ -8,13 +8,15 @@ var batsfactoryhome = angular.module('batsfactoryhome', ['ngStorage', 'ngRoute',
 var reset = angular.module('resetPwd', []);
 
 //==============Admin Home===============
-var batsAdminHome = angular.module('batsAdminHome', ['ngStorage', 'ngRoute','ngAnimate', 'ui.bootstrap','ngMaterial', 'ngMessages', 'uiGmapgoogle-maps', 'ngMap', 'highcharts-ng']);
+var batsAdminHome = angular.module('batsAdminHome', ['ngStorage', 'ngRoute','ngAnimate', 'ui.bootstrap','ngMaterial', 'ngMessages', 'uiGmapgoogle-maps', 'ngMap', 'highcharts-ng','commonApp']);
 
 //==============General Home===============
-var batsGeneralHome = angular.module('batsGeneralHome', ['ngStorage', 'ngRoute', 'uiGmapgoogle-maps','ngAnimate', 'ui.bootstrap','ngMaterial', 'ngMessages', 'highcharts-ng', 'ngMap']);
+var batsGeneralHome = angular.module('batsGeneralHome', ['ngStorage', 'ngRoute', 'uiGmapgoogle-maps','ngAnimate', 'ui.bootstrap','ngMaterial', 'ngMessages', 'highcharts-ng', 'ngMap','resetPwd','commonApp']);
 
 //==============Travel Desk=================
-var batstravelDeskHome =angular.module('batstravelDeskHome',['ngStorage', 'ngRoute','ngAnimate','ngMaterial']);
+var batstravelDeskHome =angular.module('batstravelDeskHome',['ngStorage', 'ngRoute','ngAnimate','ngMaterial','commonApp']);
+
+var commonApp = angular.module('commonApp', []);
 
 var lt, lg;
 var markerArray = [];
@@ -80,9 +82,19 @@ batsAdminHome.config(function($routeProvider, $locationProvider,$mdDateLocalePro
 		  requireBase: false
 		});
     $routeProvider
+	    .when('/admin/dashboard', {
+	        templateUrl : '/html/admin/dashboard.html',
+	        controller  : 'dashboardController',
+	        cache:false
+	    })
         .when('/admin/map', {
             templateUrl : '/html/admin/map.html',
             controller  : 'AdminController',
+            cache:false
+        })
+        .when('/admin/replayRoute', {
+            templateUrl : '/html/admin/replay_history.html',
+            controller  : 'replayHistory',
             cache:false
         })
         .when('/admin/history', {
@@ -153,7 +165,7 @@ batsAdminHome.config(function($routeProvider, $locationProvider,$mdDateLocalePro
         .when('/admin/subMenu', {
             templateUrl : '/html/admin/submenu.html',                        
             cache:false
-        })
+        })      
         ;
     $mdDateLocaleProvider.formatDate = function(date) {    	
     	if(date!=null && date!=""){    		
@@ -171,8 +183,11 @@ batsAdminHome.run(function($rootScope, $route, $location,$localStorage){
 	   $rootScope.$on('$locationChangeSuccess', function() {		   
 	        $rootScope.actualLocation = $location.path();	        
 	        var tokenCheck=$localStorage.data;
+	        console.log(tokenCheck);
 	        if(tokenCheck.charAt(9)!='1'){
+	        	
 	        	window.location = apiURL;
+	        	
 	        }
 	    });        
 
@@ -190,9 +205,19 @@ batsGeneralHome.config(function($routeProvider, $locationProvider,$mdDateLocaleP
 		  requireBase: false
 		});
     $routeProvider
+	    .when('/general/dashboard', {
+	        templateUrl : '/html/general/dashboard.html',
+	        controller  : 'dashboardController',
+	        cache:false
+	    })
         .when('/general/map', {
             templateUrl : '/html/general/map.html',
             controller  : 'GeneralController'
+        })
+        .when('/general/replayRoute', {
+            templateUrl : '/html/general/replay_history.html',
+            controller  : 'replayHistory',
+            cache:false
         })
         .when('/general/history', {
             templateUrl : '/html/general/vehicle_history.html',
@@ -256,11 +281,16 @@ batstravelDeskHome.config(function($routeProvider, $locationProvider,$mdDateLoca
 	  //$locationProvider.html5Mode(true);
 	  $locationProvider.html5Mode({
 		  enabled: true,
-		  requireBase: false
+		  requireBase: false  
 		});
   $routeProvider
+	  .when('/traveldesk/dashboard', {
+	      templateUrl : '/html/traveldesk/dashboard.html',
+	      controller  : 'dashboardController',
+	      cache:false
+	  })
       .when('/traveldesk/binding', {
-          templateUrl : '/html/traveldesk/driver_binding.html',
+          templateUrl : '/html/traveldesk/driver_binding.html',  
           controller  : 'batsDriverBinding'
       })
       .when('/traveldesk/trip', {

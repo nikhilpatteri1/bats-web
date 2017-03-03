@@ -5,6 +5,8 @@ batsAdminHome.controller('userController', function($rootScope,$scope, $http, $l
 	$rootScope.menuPos=8;
 	var group_list;
 	var contentHeight=window.screen.availHeight-200;
+	$scope.noUsers = false;
+	
 	$scope.histcontentheight={
 			"height":contentHeight
 	}
@@ -183,7 +185,7 @@ $scope.verifyUser=function(userName){
 	$scope.user.uname=angular.lowercase($scope.user.uname);
 	//$scope.user.contact_no = '+91'+$scope.user.contact_no;
 	//console.log(JSON.stringify($scope.user));
-	$('#createUserModal').modal('hide');
+	
     $http({
       method  : 'POST',		  
       url     : apiURL+'user/create',
@@ -200,6 +202,7 @@ $scope.verifyUser=function(userName){
 				   $scope.data = data;
 				   //console.log(JSON.stringify($scope.data));
 				   location.reload();
+				   $('#createUserModal').modal('hide');
 		});
       })
       .error(function(data, status, headers, config) {

@@ -1,0 +1,627 @@
+.header_bats{background:#f8f8f8; padding:5px;height:75px;border-bottom:2px solid #ddd;}
+.custom_label{font-size:20px;padding:0px;margin-bottom:7px;}
+.manageUserH{
+        padding-top: 38px;
+}
+.managedivH {
+    border: none;
+}
+.managedivH>li.active>a {
+    border-radius: 12px 12px 0px 0px;
+}
+.borderLeft{border-left:3px solid #e0e4e5}
+
+.svgWidth{
+   width: 68%;
+    padding: 8px 16px;
+}
+
+.svgWidth{
+   width: 78%;
+   padding: 7px 50px;
+   
+}
+
+.mar0{
+	margin: 0px
+}
+
+.trackerDiv{
+    text-align: center;
+    box-shadow: 1px 2px 26px 4px #eee;
+    margin: 39px 0px 40px 20px;
+    background: #fff;
+    width: 94%;
+    padding-top: 28px;
+    padding-bottom: 28px;
+   /*  padding-right: 56px; */
+}
+/* .trackerTxt{
+margin-right: -50px;
+} */
+
+.trackerBTxt{
+	/* margin-right: -50px; */
+	color:#dddddd;
+}
+
+.trackerProgessRow{
+	    margin-top: 48px;
+    /* margin-left: 0px; */
+    padding: 0px;
+    padding-left: 67px;
+    padding-right: 36px;
+}
+.trackerProgess{
+	/* background-color:#fff; */
+	-webkit-box-shadow:none;
+	box-shadow:none;
+	height:7px;
+}
+
+.pBarNotWorking{
+	    background-color: #e54a4e;
+}
+.pBarAllocated{
+	    background-color: #008cdc;
+}
+.pBarUnallocated{
+	    background-color: #b3b3b3;
+}
+
+.DriverProBarAvail{
+	    background-color: #00af81;
+}
+.DriverProBarOntrip{
+	    background-color: #43aae5;
+}
+
+
+.trackerProgessText{
+    text-align: left;
+    padding-bottom: 8px;
+}
+
+.trackerProgessCountAllo{
+    font-size: 25px;
+    padding: 10px;
+    color:#008cdc;
+}
+
+.trackerProgessCountUna{
+    font-size: 25px;
+    padding: 10px;
+    color:#b3b3b3;
+}
+.trackerProgessCountNotW{
+    font-size: 25px;
+    padding: 10px;
+    color:#e54a4e;
+}
+
+.driverProgessCountAvail{
+	font-size: 25px;
+    padding: 10px;
+    color:#00af81;
+}
+
+.driverProgessCountOntrip{
+	font-size: 25px;
+    padding: 10px;
+    color:#43aae5;
+}
+.activeDiv{
+	margin: 0px auto;
+    /* padding: 15px 20px; */
+    text-align: center;
+    box-shadow: 1px 2px 26px 4px #eee;
+    /* margin: 63px; */
+    background: #fff;
+     width: 96%;
+    padding-top: 10px;
+    /* padding-bottom: 10px; */
+}
+.activeDivText{
+    width: 88%;
+    padding: 1px 1px;
+}
+.text{
+	display:inline-block;
+	
+}
+.iconPos{
+    margin-left: -56px;
+    margin-right: 19px;
+}
+.activeCount{
+	font-size:28px;
+}
+
+.activeTableStyle{
+	display: flex;
+    flex-flow: column;
+    height: 100%;
+    width: 94%;
+    margin-left: 3%;
+    margin-top: 3%;
+    margin-bottom: 3%;
+}
+
+.tableThickline{
+	height: 63px;
+    width: 8px;
+    padding: 0px;
+    background: #01ae81;
+    margin: -12px;
+}
+.tableThickTxt{
+    margin-top: -41px;
+    margin-left: 14px;
+    font-size: 20px;
+    margin-bottom: 5px;
+    color: #757373;
+}
+
+.activeImg{
+    width: 28px;
+    width: 26px;
+    /* padding: 0px; */
+    margin-bottom: -3%;
+    margin-left: -27%;
+    margin-right: 17%;
+}
+
+.activeTableStyle thead{
+	background-color:#f5f3f3;
+}
+.activeTableStyle th{
+	background-color:#f5f3f3 !important;
+}
+
+.activeTableStyle th:first-child{
+	background-color:#f5f3f3;  
+}
+
+
+.shapeborder { border:0px solid black; }
+.circle { border-radius: 50%; }
+
+.outer {
+    background-color: #eee;
+    width: 120px;
+    height: 120px;
+    position: relative;
+    margin: 0 auto;
+    /* display: inline-block; */
+    margin-top: 18px;
+    margin-bottom: 30px;
+}
+
+.inner {
+   /* background-color: #6668a5; */
+   top: 13%;
+    left: 13%;
+    width: 74%;
+    height: 74%;
+    position: relative;
+}
+
+.trackerInnerColor{
+	background-color: #6668a5;
+}
+.vehicleInnerColor{
+	background-color: #2ec9f9;
+}
+.sheduleInnerColor{
+	background-color: #008cdc;
+}
+
+.runningInnerColor{
+	background-color: #00af81;
+}
+.delayedInnerColor{
+	background-color: #665cbd;
+}
+.cancelledInnerColor{
+	background-color: #ee4423;
+}
+.droopedInnerColor{
+	background-color: #ffcc33;
+}
+.completedInnerColor{
+	background-color: #f6fffe;
+}
+.innerTxt{
+	top: 32%;
+    left: 11%;
+    width: 74%;
+    height: 74%;
+    position: relative;
+    color: #fff;
+    font-size: 30px;
+}
+
+.CompTxt{
+	color:#45668f;
+}
+.CompDivTxt{
+	color:#fff;
+}
+#ActiveRings,#NotActiveRings,#BatteryRings,#TamperedRings {
+    position: relative;
+    text-align: center;
+    /* width: 200px; */
+    height: 120px;
+    margin: 0 auto;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    -webkit-tap-highlight-color: transparent;
+}
+
+#ActiveRings1,#NotActiveRings1,#BatteryRings1,#TamperedRings1 {
+    position: relative;
+    text-align: center;
+    /* width: 200px; */
+    height: 120px;
+    margin: 0 auto;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    -webkit-tap-highlight-color: transparent;
+}
+.ActiveRingsTxt{
+	top: 29%;
+    left: 11%;
+    width: 74%;
+    height: 74%;
+    position: relative;
+    color: #000;
+    font-size: 26px;
+}
+
+
+#ActiveFirst-ring, #NotActiveFirst-ring,#BatteryFirst-ring,#TamperedFirst-ring {
+   /*  position: absolute; */
+    border: 8px solid #4698f2;
+    /* border-top-color: #eee; */
+        margin: 0px auto;
+    text-align: center;
+    width: 100px;
+    height: 100px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    /* -webkit-animation: turn_clockwise 10s infinite;
+    -moz-animation: turn_clockwise 10s infinite;
+    animation: turn_clockwise 10s infinite; */   
+}
+#ActiveFirst-ring1, #NotActiveFirst-ring1,#BatteryFirst-ring1,#TamperedFirst-ring1 {
+   /*  position: absolute; */
+    border: 8px solid #4698f2;
+    /* border-top-color: #eee; */
+        margin: 0px auto;
+    text-align: center;
+    width: 100px;
+    height: 100px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    /* -webkit-animation: turn_clockwise 10s infinite;
+    -moz-animation: turn_clockwise 10s infinite;
+    animation: turn_clockwise 10s infinite; */   
+}
+ 
+#ActiveFirst-ring,#ActiveThird-ring{
+	border: 8px solid #e6f7f1;
+}
+ 
+#ActiveFirst-ring1,#ActiveThird-ring1{
+	border: 8px solid #e6f7f1;
+}
+
+#NotActiveFirst-ring,#NotActiveThird-ring{
+	border: 8px solid #edeef0;
+}
+#NotActiveFirst-ring1,#NotActiveThird-ring1{
+	border: 8px solid #edeef0;
+}
+ 
+#BatteryFirst-ring,#BatteryThird-ring{
+	border: 8px solid #fbedec;
+}
+#BatteryFirst-ring1,#BatteryThird-ring1{
+	border: 8px solid #fbedec;
+}
+
+#TamperedFirst-ring,#TamperedThird-ring{
+	border: 8px solid #fff8e6;
+}
+#TamperedFirst-ring1,#TamperedThird-ring1{
+	border: 8px solid #fff8e6;
+}
+
+#ActiveSecond-ring{
+	border: 5px solid #01ae81;
+}
+#ActiveSecond-ring1{
+	border: 5px solid #01ae81;
+}
+
+ #NotActiveSecond-ring{
+ 	border: 5px solid #5d686c;
+ }
+ #NotActiveSecond-ring1{
+ 	border: 5px solid #5d686c;
+ }
+#BatterySecond-ring{
+	border: 5px solid #e64a4e;
+}
+#BatterySecond-ring1{
+	border: 5px solid #e64a4e;
+}
+#TamperedSecond-ring{
+	border: 5px solid #ffd875;	
+}
+#TamperedSecond-ring1{
+	border: 5px solid #ffd875;	
+}
+#ActiveSecond-ring, #NotActiveSecond-ring,#BatterySecond-ring,#TamperedSecond-ring {
+    position: absolute;
+    /* border: 5px solid #f00; */
+    /* border-top-color: #fff; */
+    border-bottom-color: #fff;
+       width: 88px;
+    height: 88px;
+    margin: -2px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+   -webkit-animation: turn_counter_clockwise ;
+    -moz-animation: turn_counter_clockwise ;
+    animation: turn_counter_clockwise ; 
+}
+#ActiveSecond-ring1, #NotActiveSecond-ring1,#BatterySecond-ring1,#TamperedSecond-ring1 {
+    position: absolute;
+    /* border: 5px solid #f00; */
+    /* border-top-color: #fff; */
+    border-bottom-color: #fff;
+       width: 88px;
+    height: 88px;
+    margin: -2px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+   -webkit-animation: turn_counter_clockwise ;
+    -moz-animation: turn_counter_clockwise ;
+    animation: turn_counter_clockwise ; 
+}
+
+#ActiveThird-ring, #NotActiveThird-ring,#BatteryThird-ring,#TamperedThird-ring {
+    position: absolute;
+    /* border: 6px solid #315379; */
+    /* border-bottom-color: #eee; */
+    margin: 1px;
+    width: 77px;
+    height: 77px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+   /*  -webkit-animation: turn_clockwise 10s infinite;
+    -moz-animation: turn_clockwise 10s infinite;
+    animation: turn_clockwise 10s infinite; */
+}
+#ActiveThird-ring1, #NotActiveThird-ring1,#BatteryThird-ring1,#TamperedThird-ring1 {
+    position: absolute;
+    /* border: 6px solid #315379; */
+    /* border-bottom-color: #eee; */
+    margin: 1px;
+    width: 77px;
+    height: 77px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+   /*  -webkit-animation: turn_clockwise 10s infinite;
+    -moz-animation: turn_clockwise 10s infinite;
+    animation: turn_clockwise 10s infinite; */
+}
+
+.TripMap{
+	width: 96%;
+    height: 400px;
+    margin: 1% 2%;
+}
+
+.TripCircleDiv
+{
+    text-align: center;
+    box-shadow: 1px 2px 26px 4px #c7c7c7;
+    margin: 10px 0px 10px 2px;
+    background: #fff;
+    width: 100%;
+    padding-top: 14px;
+    /* padding-bottom: 1px; */
+}
+.CompleteDiv{
+    background: #22446f;
+}
+
+.TripOuterCircle {
+    background-color: #eee;
+    width: 100px;
+    height: 100px;
+    position: relative;
+    margin: 0 auto;
+    /* display: inline-block; */
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.SOutCircle{
+	background-color: #e3f4fb;
+}
+.ROutCircle{
+	background-color: #e6f6f3;    
+}
+.DOutCircle{
+	background-color: #f0eef9;
+}
+.COutCircle{
+	background-color: #fce9eb;
+}
+.DrpOutCircle{
+	background-color: #fff9e9;
+}
+.CompOutCircle{
+	background-color: #59779d;
+}
+
+
+.scheduleLine {
+  height:4px;
+  background: #008cdc; /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(left, #008cdc , #c8b4fc); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(right, #008cdc, #c8b4fc); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(right, #008cdc, #c8b4fc); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to right, #008cdc , #c8b4fc); /* Standard syntax */
+}
+
+.runningLine {
+  height:4px;
+  background: #00af81; /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(left, #00af81 , #a7d3f6); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(right, #00af81, #a7d3f6); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(right, #00af81, #a7d3f6); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to right, #00af81, #a7d3f6); /* Standard syntax */
+}
+.delayedLine {
+  height:4px;
+  background: #665cbd; /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(left, #665cbd , #eca8d7); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(right, #665cbd, #eca8d7); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(right, #665cbd, #eca8d7); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to right, #665cbd, #eca8d7); /* Standard syntax */
+}
+.cancelledLine {
+  height:4px;
+  background: #ee4423; /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(left, #ee4423 , #e8afdc); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(right, #ee4423, #e8afdc); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(right, #ee4423, #e8afdc); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to right, #ee4423, #e8afdc); /* Standard syntax */
+}
+.droppedLine {
+  height:4px;
+  background: #ffcc33; /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(left, #ffcc33 , #a3eba9); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(right, #ffcc33, #a3eba9); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(right, #ffcc33, #a3eba9); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to right, #ffcc33, #a3eba9); /* Standard syntax */
+}
+.completedLine {
+  height:4px;
+  background: #a3eba9; /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(left, #a3eba9 , #c2a9ea); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(right, #a3eba9, #c2a9ea); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(right, #a3eba9, #c2a9ea); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to right, #a3eba9, #c2a9ea); /* Standard syntax */
+}
+
+.overspeedLine {
+  height:5px;
+  background: #ec3f53; /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(left, #ec3f53 , #ac8aeb); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(right, #ec3f53, #ac8aeb); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(right, #ec3f53, #ac8aeb); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to right, #ec3f53 , #ac8aeb); /* Standard syntax */
+}
+
+.GeofenceLine {
+  height:5px;
+  background: #6668a5; /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(left, #6668a5 , #88d9ea); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(right, #6668a5, #88d9ea); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(right, #6668a5, #88d9ea); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to right, #6668a5 , #88d9ea); /* Standard syntax */
+}
+.panicLine{
+	height:5px;
+  background: #fdd40a; /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(left, #fdd40a , #e97568); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(right, #fdd40a, #e97568); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(right, #fdd40a, #e97568); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to right, #fdd40a , #e97568); /* Standard syntax */
+}
+
+
+.vehicleOverTxt{
+	font-size: 35px;
+    /* margin: 0 auto; */
+    margin-top: 32%;
+    margin-left: -30%;
+}
+.vehIconWidth{
+    width: 55%;
+}
+
+.VehicleRings{
+	position: relative;
+    text-align: center;
+    /* width: 200px; */
+    height: 120px;
+    margin: 0 auto;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.VehicleFirst-ring{
+	    border: 8px solid #e6f7f1;
+	margin: 0px auto;
+    text-align: center;
+    width: 130px;
+    height: 130px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+}
+.VehicleSecond-ring{
+	    position: absolute;
+        border: 5px solid #01ae81;
+    /* border-top-color: #fff; */
+    border-bottom-color: #fff;
+    width: 112px;
+    height: 112px;
+    margin: 1px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    -webkit-animation: turn_counter_clockwise;
+    -moz-animation: turn_counter_clockwise;
+    animation: turn_counter_clockwise;
+}
+
+.VehicleThird-ring{
+	    position: absolute;
+       border: 8px solid #e6f7f1;
+    /* border-bottom-color: #eee; */
+    margin: 1px;
+    width: 100px;
+    height: 101px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.vehicleCoverLimitTxt{
+	margin-bottom: 39px;
+    color: #bdbdbd;
+    font-size: 14px;
+    margin-right: 50px; 
+}
+
+.iconImageSm {
+	width: 35px;
+	height: 35px;
+}
+.borderBtm{
+	border-bottom:1px solid lightgrey;
+}

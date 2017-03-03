@@ -290,6 +290,7 @@ batsAdminHome.controller('groupController', function($rootScope,$scope, $http, $
 		showPrev();
 	};
 	$scope.group = {};
+	
 	$scope.submitCreateGroupForm = function() {
 	$scope.group.token = $scope.token;
 	$scope.group.geofence = posArray;
@@ -324,7 +325,7 @@ batsAdminHome.controller('groupController', function($rootScope,$scope, $http, $
 	}
 	//console.log(JSON.stringify(json_cont_num));
 	console.log(JSON.stringify($scope.group));
-	$('#createGroupModal').modal('hide');
+	
     $http({
       method  : 'POST',		  
       url     : apiURL+'group/create',
@@ -342,6 +343,7 @@ batsAdminHome.controller('groupController', function($rootScope,$scope, $http, $
 				   $scope.data = data;
 				   console.log(JSON.stringify($scope.data));
 				   location.reload();
+				   $('#createGroupModal').modal('hide');
 		});
       })
       .error(function(data, status, headers, config) {

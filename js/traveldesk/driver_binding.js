@@ -1,4 +1,5 @@
 batstravelDeskHome.controller('batsDriverBinding', function($rootScope,$scope, $localStorage,travelDeskFactory) {
+	console.log("td cont");
 	$rootScope.menuPos = 0;
 	var contentHeight=window.screen.availHeight-200;
 	$scope.histcontentheight={
@@ -84,20 +85,31 @@ batstravelDeskHome.controller('batsDriverBinding', function($rootScope,$scope, $
 	/*
 	 * list drivers*/
 	$scope.showDrivers=function(){
+		console.log("driver list");
 		$scope.httpLoading=true;
 		$scope.listDriversJson={};
 		$scope.listDriversJson.token=$scope.token;
+		console.log($scope.listDriversJson.token);
 		$scope.listDriversJson.type=1;
 		travelDeskFactory.callApi("POST",apiURL+"driver/list",$scope.listDriversJson,function(result){
+			
 			if(result.length >0){
+			console.log(result);
 			$scope.driverCount=result.length;
 		      $scope.driverlist=result;
 		      $scope.httpLoading=false;
+		      $scope.nodriver= false;
 			}
 			else{
+				//swal({title:"There is No Drivers"});
+				console.log("nores");
+				$scope.nodriver= true;
+				$scope.blankTable=false;
+				$scope.httpLoading=false;
 				//
 			}
 		});
+		console.log($scope.token);
 	}
 	/*
 	 * Show Driver Modal*/

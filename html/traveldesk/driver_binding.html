@@ -172,6 +172,17 @@
 		</div>
 	</div> 
 
+<div class="row" ng-show="nodriver">
+												<div class="col-sm-12 verhorcenter" align="center">
+													<div class="centerData">
+														<ul class="nodata_list">
+															<li><img alt="" src="../images/no-data.png" class="nodata_img"></li>
+															<li><label style="color: #000">Nothing here!</label></li>
+															<li><span>No Data Available</span></li>
+														</ul>
+													</div>
+												</div>
+											</div>
 
 <!-- <div class="row">
 	<div class="col-sm-12">  
@@ -399,7 +410,7 @@
 											
 											
 											
-											<ul class="driverlist1">
+											<ul class="driverlist1">      
 												<!-- list drivers repeater -->
 												<li
 													ng-repeat="driverdetail in driverlist | driverFilter:searchDriver">
@@ -409,9 +420,11 @@
 															<div class="row pd120" >
 																<!-- image of driver/avatar -->
 																<div class="col-sm-1">
+																<p>{{driverdetail.image_src.length}}</p>
 																	<img
 																		src="{{driverdetail.image_src.length>0?driverdetail.image_src:'../images/driver.png'}}"
 																		class="img-responsive img-circle img-thumbnail iconImageSm" />
+																		<p>{{driverdetail.image_src.length>0?driverdetail.image_src:'../images/driver.png'}}</p>
 																</div>
 																<!-- ./image of driver/avatar -->
 																<!-- Driver Name -->

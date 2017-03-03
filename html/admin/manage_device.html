@@ -87,7 +87,7 @@
 						<div class="table-container" ng-style="histcontentheight">
 							<table class="tablestyle">
 								<thead class="theadStyle tablethead">
-									<tr>
+									<tr ng-hide="noDevicesAllocated">
 										<th><div>Sl No.</div></th>
 										<th><div>Group Name</div></th>
 										<!-- <td><label>Group ID</label></td> -->
@@ -100,6 +100,20 @@
 												<input type="checkbox" ng-model="master"
 													ng-change="isSelectAll()">
 											</div></th>
+									</tr>
+									<tr>
+										<div class="row" ng-show="noDevicesAllocated">
+											<div class="col-sm-12 verhorcenter" align="center">
+												<div class="centerData">
+													<ul class="nodata_list">
+														<li><img alt="" src="../images/no-data.png"
+															class="nodata_img"></li>
+														<li><label style="color: #000">Nothing here!</label></li>
+														<li><span>No Devices Allocated</span></li>
+													</ul>
+												</div>
+											</div>
+										</div>
 									</tr>
 								</thead>
 								<tbody class="tbodyStyle">
@@ -145,7 +159,7 @@
 							selection !...</h1> -->
 				</div>
 				<!-- <h2 ng-show="noDevicesAllocated">No Devices Allocated</h2> -->
-				<div class="row" ng-if="deviceNotAvailable">
+				<!-- <div class="row" ng-if="deviceNotAvailable">
 					<div class="col-sm-12 verhorcenter" align="center">
 						<div class="centerData">
 							<ul class="nodata_list">
@@ -156,19 +170,8 @@
 							</ul>
 						</div>
 					</div>
-				</div>
-				<div class="row" ng-show="noDevicesAllocated">
-					<div class="col-sm-12 verhorcenter" align="center">
-						<div class="centerData">
-							<ul class="nodata_list">
-								<li><img alt="" src="../images/no-data.png"
-									class="nodata_img"></li>
-								<li><label style="color: #000">Nothing here!</label></li>
-								<li><span>No Devices Allocated</span></li>
-							</ul>
-						</div>
-					</div>
-				</div>
+				</div> -->
+				
 			</div>
 
 			<div ng-show="isSet(2)">
@@ -178,11 +181,27 @@
 					<div class="table-container" ng-style="histcontentheight">
 						<table class="tablestyle">
 							<thead class="theadStyle tablethead">
-								<tr>
+								<tr ng-hide="noDevicesUnAllocated">
 									<th>Sl No.</th>
 									<th>Device ID</th>
 
 								</tr>
+								<tr>
+									<div class="row" ng-show="noDevicesUnAllocated">
+									<div class="col-sm-12 verhorcenter" align="center">
+										<div class="centerData">
+											<ul class="nodata_list">
+												<li><img alt="" src="../images/no-data.png"
+													class="nodata_img"></li>
+												<li><label style="color: #000">Nothing here!</label></li>
+												<li><span>No Devices Allocated</span></li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								</tr>
+								
+								
 							</thead>
 							<tbody class="tbodyStyle">
 								<tr class="tbodytr tabletbodytr"
@@ -202,18 +221,7 @@
 						</table>
 					</div>
 				</div>
-				<div class="row" ng-show="noDevicesUnAllocated">
-					<div class="col-sm-12 verhorcenter" align="center">
-						<div class="centerData">
-							<ul class="nodata_list">
-								<li><img alt="" src="../images/no-data.png"
-									class="nodata_img"></li>
-								<li><label style="color: #000">Nothing here!</label></li>
-								<li><span>No Devices Allocated</span></li>
-							</ul>
-						</div>
-					</div>
-				</div>
+				
 				<!-- 	<h2 ng-show="noDevicesUnAllocated">No Devices Un-Allocated</h2> -->
 
 				<!-- <div class="margin40">

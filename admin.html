@@ -29,6 +29,8 @@
 <link rel="stylesheet" type="text/css" href="../css/carousel.css">
 <link rel="stylesheet" type="text/css" href="../css/commonY.css">
 <link rel="stylesheet" type="text/css" href="../css/commonG.css">
+<link rel="stylesheet" type="text/css" href="../css/dashboard.css">
+
 
 <link rel="stylesheet" type="text/css"
 	href="../assets/sweetalert/sweetalert.css">
@@ -317,6 +319,23 @@
 									<li><a class="logo" href="#"> <img
 											src="../images/menu/logo.png" alt="">
 									</a></li>
+									<li ng-click="menuPos=14"><a
+												ng-class="{ active: activePath=='/admin/dashboard' }"
+												href="/admin/dashboard">
+													<div class="row">
+														<div class="col-sm-2">
+															<div class="colmenu1"></div>
+														</div>
+														<div class="col-sm-3 listElePadding">
+															<img
+																ng-src="{{menuPos==14?'../images/menu/dashboard_active.png':'../images/menu/dashboard.png'}}"
+																alt="bydesign_logo" class="sidebar_icons" />
+														</div>
+														<div class="col-sm-7 listElePadding">
+															<p>dashboard</p>
+														</div>
+													</div>
+											</a></li>
 									<li ng-click="menuPos=0"><a
 										ng-class="{ active: activePath=='/admin/map' }"
 										href="/admin/map">
@@ -332,6 +351,24 @@
 												</div>
 												<div class="col-sm-7 listElePadding">
 													<p>Live Tracking</p>
+												</div>
+											</div>
+									</a></li>
+									<li ng-click="menuPos=15"><a
+										ng-class="{ active: activePath=='/admin/replayRoute' }"
+										href="/admin/replayRoute">
+											<div class="row">
+												<div class="col-sm-2">
+													<div class="colmenu1"></div>
+												</div>
+												<div class="col-sm-3 listElePadding">
+													<img
+														ng-src="{{menuPos==15?'../images/menu/replay_active.png':'../images/menu/replay.png'}}"
+														alt="bydesign_logo" class="sidebar_icons" />
+													<!-- <i class="fa fa-history"></i> -->
+												</div>
+												<div class="col-sm-7 listElePadding">
+													<p>Replay Route</p>
 												</div>
 											</div>
 									</a></li>
@@ -581,6 +618,7 @@
 														</div>
 													</div>
 											</a></li>
+											
 										</ul>
 									</li>
 									<!-- <li><a href="#" ng-controller="logoutAdminUser"
@@ -716,6 +754,9 @@
 	<script type="text/javascript" src="../js/app.js"></script>
 	<script type="text/javascript" src="../js/global.js"></script>
 	<script type="text/javascript" src="../js/loginController.js"></script>
+	<script type="text/javascript" src="../js/common/commonFactory.js"></script>
+	<script type="text/javascript" src="../js/common/commonService.js"></script>
+	
 	<!-- <script type="text/javascript" src="../assets/js/scrolltable.js"></script> -->
 	<script src="../assets/angular/angular-animate.js"></script>
 	<script src='../assets/angular/angular-google-maps.js'></script>
@@ -734,6 +775,7 @@
 	<script type="text/javascript" src="../js/admin/mapController.js"></script>
 	<script type="text/javascript" src="../js/admin/mapModalController.js"></script>
 	<script type="text/javascript" src="../js/admin/vehicle_history.js"></script>
+	<script type="text/javascript" src="../js/admin/replay_history.js"></script>
 	<script src="../js/admin/vehicle_alarm.js"></script>
 	<script src="../js/admin/speedometer.js"></script>
 	<script type="text/javascript"
@@ -752,8 +794,8 @@
 	<script type="text/javascript" src="../js/admin/directive.js"></script>
 	<script type="text/javascript" src="../js/admin/filter.js"></script>
 	<script type="text/javascript" src="../js/admin/TDeskController.js"></script>
-	<script type="text/javascript"
-		src="../assets/sweetalert/sweetalert-dev.js"></script>
+	<script type="text/javascript" src="../js/admin/dashboardController.js"></script>
+	<script type="text/javascript" src="../assets/sweetalert/sweetalert-dev.js"></script>
 	<!-- Material Design Calendar -->
 	<script
 		src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js'></script>
