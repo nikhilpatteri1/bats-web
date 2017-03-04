@@ -2,27 +2,75 @@ batsGeneralHome.controller('dashboardController', function($scope, $http, $rootS
 	console.log("dashboard"); 
 	$scope.token = $localStorage.data;
 	$rootScope.menuPos=9;
+	
 	$scope.tab = 1;
-	$scope.setTab = function(newTab){
-    	/*google.maps.event.trigger(map, 'resize');*///$scope.tripDetails="";
-    	console.log("in setTab");
-    	//clearField();
-      $scope.tab = newTab;
-    };
+	$scope.setTab = function(newTab) {
+		/* google.maps.event.trigger(map, 'resize'); */// $scope.tripDetails="";
+		/* console.log("in setTab"); */
+		// clearField();
+		$scope.tab = newTab;
+	};
 
-    $scope.isSet = function(tabNum){
-    	//$scope.showTripDropDown=false;
-    	//$scope.tripDetails="";
-    	//console.log("in isSetTab");
-    	
-      return $scope.tab === tabNum;
-    }; 
-   var data=[
-             {name: 03,y: 30, color: '#b3b3b3'},
-             {name: 02,y: 10, color: '#e54a4e'},
-             {name: 07,y: 60, color: '#008cdc' },          
-            ];
-    commonAppService.donutChart('container',data);
+	$scope.isSet = function(tabNum) {
+		// $scope.showTripDropDown=false;
+		// $scope.tripDetails="";
+		/* console.log("in isSetTab"); */
+
+		return $scope.tab === tabNum;
+	};
+
+	/* $scope.totalDevices=commonAppService.plotValues(); */
+	$scope.TrackerCount;
+	$scope.TrackerActList;
+
+	commonAppService.tracker(function(result) {
+		console.log(result);
+		$scope.TrackerCount = result;
+		
+		console.log($scope.TrackerCount);
+		console.log($scope.TrackerCount.nonworking);
+		var data = [ {
+			name : "Notworking",
+			y : $scope.TrackerCount.nonworking,
+			color : '#e54a4e'
+		}, ];
+		commonAppService.donutChart('container', data);
+
+		$scope.getPercentage = function(a, b) {
+			return ((b * 100) / a).toFixed(2);
+		}
+		/*
+		 * $scope.getTotal = function () { return $scope.allocatedTotal; }
+		 */
+
+	});
+	var status
+	$scope.getList = function(state) {
+		status = state;
+
+		if (status == 0) {
+			$scope.stateCheck = "0";
+		} else if (status == 1) {
+			$scope.stateCheck = "1";
+		} else if (status == 2) {
+			$scope.stateCheck = "2";
+		} else if (status == 3) {
+			$scope.stateCheck = "3";
+		} else if (status == 4) {
+			$scope.stateCheck = "4";
+		} else if (status == 5) {
+			$scope.stateCheck = "5";
+		}
+		else if(status == 6){
+			$scope.stateCheck = "6";
+		}
+		commonAppService.trackerList(status, function(result) {
+			console.log(result);
+			$scope.TrackerActList = result;
+			console.log($scope.TrackerActList);
+		});
+	}
+
     
 });
 /**
@@ -48,8 +96,8 @@ batsGeneralHome.controller('dashboardTripController', function($scope, $http, $r
 			var dummyData=[];
 			dummyData.push(data1);
 			dummyData.push(data2);
-			commonAppService.plotVehicleMarker(dummyData);
-			//commonAppService.plotVehicleMarker(result.trip_running);
+			//commonAppService.plotVehicleMarker(dummyData);
+			commonAppService.plotVehicleMarker(result.trip_running);
 		}
 		else{
 			$scope.scheduled=0;

@@ -331,7 +331,7 @@ a.button.active {
 }
 
 body {
-	overflow: hidden;
+	overflow: scroll;
 }
 
 .historyTitle {

@@ -1,7 +1,9 @@
 batsAdminHome.controller('dashboardController', function($scope, $http, $rootScope,$localStorage,commonAppService){	 
 	$scope.token = $localStorage.data;
 	$rootScope.menuPos=14;
+	
 	$scope.tab = 1;
+	$scope.noUsers = false;
 	$scope.setTab = function(newTab){
     	/*google.maps.event.trigger(map, 'resize');*///$scope.tripDetails="";
     	/*console.log("in setTab");*/
@@ -72,8 +74,13 @@ batsAdminHome.controller('dashboardController', function($scope, $http, $rootSco
     	}
     	commonAppService.trackerList(status,function(result){
     	console.log(result);
+    	/*if(result.length == null){
+    		alert("nolist");
+    		$scope.noUsers = true;
+    	}*/
     	$scope.TrackerActList = result;
     	console.log($scope.TrackerActList);
+    	
     });
     }
     
@@ -103,8 +110,8 @@ batsAdminHome.controller('dashboardTripController', function($scope, $http, $roo
 			var dummyData=[];
 			dummyData.push(data1);
 			dummyData.push(data2);
-			commonAppService.plotVehicleMarker(dummyData);
-			//commonAppService.plotVehicleMarker(result.trip_running);
+			//commonAppService.plotVehicleMarker(dummyData);
+			commonAppService.plotVehicleMarker(result.trip_running);
 		}
 		else{
 			$scope.scheduled=0;

@@ -1,5 +1,5 @@
 batstravelDeskHome.controller('dashboardController', function($scope, $http,
-		$rootScope, $localStorage, commonAppService) {
+	$rootScope, $localStorage, commonAppService) {
 	$scope.token = $localStorage.data;
 	$rootScope.menuPos = 4;
 	$scope.tab = 1;
@@ -98,8 +98,8 @@ batstravelDeskHome.controller('dashboardTripController', function($scope, $http,
 			var dummyData=[];
 			dummyData.push(data1);
 			dummyData.push(data2);
-			commonAppService.plotVehicleMarker(dummyData);
-			//commonAppService.plotVehicleMarker(result.trip_running);
+			//commonAppService.plotVehicleMarker(dummyData);
+			commonAppService.plotVehicleMarker(result.trip_running);
 		}
 		else{
 			$scope.scheduled=0;

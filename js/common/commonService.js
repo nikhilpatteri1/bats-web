@@ -14,7 +14,8 @@ commonApp.service('commonAppService',function(commonFactory,$localStorage){
 	                renderTo: chartID,
 	                type: 'pie',
 	                height: 222,
-	                width:250
+	                width:250,
+	                
 	            },
 	            title: {
 	                text: ''
@@ -23,7 +24,8 @@ commonApp.service('commonAppService',function(commonFactory,$localStorage){
 	            plotOptions: {
 	                pie: {
 	                    borderColor: '#fff',
-	                    innerSize: '70%'
+	                    innerSize: '70%',
+	                    /*borderColor: '#000000'*/
 	                }
 	            },
 	            series: [{
