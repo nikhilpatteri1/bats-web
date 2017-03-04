@@ -806,7 +806,7 @@
 							</div>
 						</div>
 
-						<div class="col-sm-4" ng-click="getVehiclesDataByStatus('overspeed');txtHead='geofence';hideSpeed=true">
+						<div class="col-sm-4" ng-click="getVehiclesDataByStatus('geofence');txtHead='Geofence';hideSpeed=true">
 							<div class="activeDiv">
 								<div class="row">
 									<div class="col-sm-6">
@@ -821,7 +821,7 @@
 								<div class="GeofenceLine"></div>
 							</div>
 						</div>
-						<div class="col-sm-4" ng-click="getVehiclesDataByStatus('overspeed');txtHead='panic';hideSpeed=true">
+						<div class="col-sm-4" ng-click="getVehiclesDataByStatus('panic');txtHead='Panic';hideSpeed=true">
 							<div class="activeDiv">
 								<div class="row">
 									<div class="col-sm-6">
@@ -861,7 +861,7 @@
 										</tr>										
 									</thead>
 									<tbody class="tbodyStyle">										
-										<tr class="tbodytr tabletbodytr" ng-repeat="veh in vehiclesData">
+										<tr class="tbodytr tabletbodytr" ng-repeat="veh in vehiclesData.data">
 											<td><p class="culomPad">{{$index+1}}</p></td>
 											<td><p>{{veh.devid}}</p></td>
 											<td><p>{{veh.vehicle_num}}</p></td>

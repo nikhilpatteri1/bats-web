@@ -204,6 +204,7 @@ batsAdminHome.controller('dashboardDriverController', function($scope,$localStor
 batsAdminHome.controller('dashboardVehicleController', function($scope,$localStorage,commonAppService){
 	$scope.hideVehiclesTable=true;
 	commonAppService.getVehicleData(function(result){
+		console.log(result);
 		$scope.totalPanic=result.panic;
 		$scope.totaloverspeed=result.overspeed;
 		$scope.totalgeofence=result.geofence;
@@ -211,15 +212,20 @@ batsAdminHome.controller('dashboardVehicleController', function($scope,$localSto
 		$scope.totalmax_lmt_cross=result.max_lmt_cross;
 	});
 	$scope.getVehiclesDataByStatus=function(status){
+		console.log(status);
 			commonAppService.getVehiclesByStatus(status,function(result){
-				   console.log(result);
+				
+				   /*console.log(result);
+				   $scope.vehiclesData=result;
+				   console.log(JSON.stringify(result));
+				   $scope.hideVehiclesTable=false;*/
 				   if(result.data!="data not found"){
 					   $scope.hideVehiclesTable=false;
 					   $scope.vehiclesData=result;
 				   }
 				   else{
 					   $scope.hideVehiclesTable=true;
-					   alert(result.data);
+					   /*alert(result.data);*/
 				   }				   
 			});		
 	};

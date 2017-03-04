@@ -50,20 +50,108 @@
 				            <circle cx="80" cy="80" r="50" fill='#6668a5' stroke-width="20" stroke='#eee'/> 
 				           <text class="activeCount" x="50%" y="50%" text-anchor="middle" stroke="#ffffff" stroke-width="0px" dx=".9em" dy="0.7em">10</text>
 				        </svg> -->
-				        <div class="trackerBTxt">Trackers</div>
+				       <!--  <div class="trackerBTxt">Trackers</div> -->
+				        <div class="notWorking" ng-click="getList(6)">Not Working  {{TrackerCount.nonworking}}</div>
 				        </div>
 					</div>
 					<div class="col-sm-8">
-						<div class="trackerDiv">
+						<div class="trackerDiv1">
 							<div class="row">
 							<div class="col-sm-12">
-								<div class="col-sm-5">
+								<!-- <div class="col-sm-4">
 									<div id="container" style="width: 200px; height: 200px;"></div>
 								
+								</div> -->
+								<div class="col-sm-3">
+									<div class="activeDiv">
+									
+									<img alt="" src="../images/activated.png" class="activeImg">
+									<!-- <i class="fa fa-user fa-2x iconPos"></i> -->
+									<div class="text">Activated</div>
+									
+									<!-- <svg class="activeDivText">
+							            <circle cx="80" cy="80" r="50" fill='#ffffff' stroke-width="5" stroke='#e4f3ef'/>
+							            <circle cx="80" cy="80" r="40" fill='#ffffff' stroke-width="5" stroke='#e4f3ef'/>
+							             <text class="activeCount" x="50%" y="50%" text-anchor="middle" stroke="#000000" stroke-width="1px" dy=".6em">10</text>
+							        </svg> -->
+							        
+							        <div id="ActiveRings1">
+									    <div id="ActiveFirst-ring1">
+									        <div id="ActiveSecond-ring1">
+									            <div id="ActiveThird-ring1" ng-click="getList(2)">
+									            <div class="ActiveRingsTxt">{{TrackerCount.active}}</div>
+									            </div>
+									        </div>
+									    </div>
+									</div>
+							        </div>
 								</div>
+									<div class="col-sm-3">
+										<div class="activeDiv">    
+										<img alt="" src="../images/not-activated.png" class="activeImg">
+										<div class="text">Not activated</div>
+										<!-- <svg class="activeDivText">
+								           <circle cx="80" cy="80" r="50" fill='#ffffff' stroke-width="5" stroke='#eee'/>
+								            <circle cx="80" cy="80" r="40" fill='#ffffff' stroke-width="5" stroke='#eee'/>
+								             <text class="activeCount" x="50%" y="50%" text-anchor="middle" stroke="#000000" stroke-width="1px" dy=".6em">10</text>
+								        </svg> -->
+								        <div id="NotActiveRings1">
+										    <div id="NotActiveFirst-ring1">
+										        <div id="NotActiveSecond-ring1">
+										            <div id="NotActiveThird-ring1" ng-click="getList(3)">
+										            <div class="ActiveRingsTxt">{{TrackerCount.inactive}}</div>
+										            </div>
+										        </div>
+										    </div>
+										</div>
+								        
+								        </div>
+									</div>
+									<div class="col-sm-3">
+										<div class="activeDiv">
+										<img alt="" src="../images/battery-low.png" class="activeImg">
+										<div class="text">Battery Low</div>
+										<!-- <svg class="activeDivText">
+								            <circle cx="80" cy="80" r="50" fill='#ffffff' stroke-width="5" stroke='#eee'/>
+								            <circle cx="80" cy="80" r="40" fill='#ffffff' stroke-width="5" stroke='#eee'/>
+								             <text class="activeCount" x="50%" y="50%" text-anchor="middle" stroke="#000000" stroke-width="1px" dy=".6em">10</text>
+								        </svg> -->
+								        <div id="BatteryRings1">
+										    <div id="BatteryFirst-ring1">
+										        <div id="BatterySecond-ring1">
+										            <div id="BatteryThird-ring1" ng-click="getList(4)">
+										            	<div class="ActiveRingsTxt">{{TrackerCount.batterylow}}</div>
+										            </div>
+										        </div>
+										    </div>
+										</div>
+								        
+								        </div>
+									</div>
+									<div class="col-sm-3">
+										<div class="activeDiv">
+										<img alt="" src="../images/tampered.png" class="activeImg">
+										<div class="text">Tampered</div>
+										<!-- <svg class="activeDivText">
+								            <circle cx="80" cy="80" r="50" fill='#ffffff' stroke-width="5" stroke='#eee'/>
+								            <circle cx="80" cy="80" r="40" fill='#ffffff' stroke-width="5" stroke='#eee'/>
+								             <text class="activeCount" x="50%" y="50%" text-anchor="middle" stroke="#000000" stroke-width="1px" dy=".6em">10</text>
+								        </svg> -->
+								        <div id="TamperedRings1">
+										    <div id="TamperedFirst-ring1">
+										        <div id="TamperedSecond-ring1">
+										            <div id="TamperedThird-ring1" ng-click="getList(5)">
+										            <div class="ActiveRingsTxt">{{TrackerCount.tampered}}</div>
+										            </div>
+										        </div>
+										    </div>
+										</div>
+								        
+								        </div>
+									</div>
 							
-								<div class="col-sm-7 trackerProgessRow">
-								<!-- <div class="row">
+								<!-- <div class="col-sm-7 trackerProgessRow">
+								<div class="row">
 									<div class="col-sm-8">
 										<p class="trackerProgessText">Allocated</p>
 										<div class="progress trackerProgess">
@@ -88,7 +176,7 @@
 									<div class="col-sm-4">
 										<div class="trackerProgessCountUna">{{TrackerCount.unallocated}}</div>
 									</div>
-								</div> -->
+								</div>
 								<div class="row">
 									<div class="col-sm-8" ng-click="getList(6)">
 										<p class="trackerProgessText">Not Working</p>
@@ -103,25 +191,25 @@
 									</div>
 								</div>
 									
-								</div>
+								</div> -->
 							</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="row mar0"> 
-					<div class="col-sm-3">
+				<!-- <div class="row mar0">  -->
+					<!-- <div class="col-sm-3">
 						<div class="activeDiv">
 						
 						<img alt="" src="../images/activated.png" class="activeImg">
-						<!-- <i class="fa fa-user fa-2x iconPos"></i> -->
+						<i class="fa fa-user fa-2x iconPos"></i>
 						<div class="text">Activated</div>
 						
-						<!-- <svg class="activeDivText">
+						<svg class="activeDivText">
 				            <circle cx="80" cy="80" r="50" fill='#ffffff' stroke-width="5" stroke='#e4f3ef'/>
 				            <circle cx="80" cy="80" r="40" fill='#ffffff' stroke-width="5" stroke='#e4f3ef'/>
 				             <text class="activeCount" x="50%" y="50%" text-anchor="middle" stroke="#000000" stroke-width="1px" dy=".6em">10</text>
-				        </svg> -->
+				        </svg>
 				        
 				        <div id="ActiveRings1">
 						    <div id="ActiveFirst-ring1">
@@ -138,11 +226,11 @@
 						<div class="activeDiv">    
 						<img alt="" src="../images/not-activated.png" class="activeImg">
 						<div class="text">Not activated</div>
-						<!-- <svg class="activeDivText">
+						<svg class="activeDivText">
 				           <circle cx="80" cy="80" r="50" fill='#ffffff' stroke-width="5" stroke='#eee'/>
 				            <circle cx="80" cy="80" r="40" fill='#ffffff' stroke-width="5" stroke='#eee'/>
 				             <text class="activeCount" x="50%" y="50%" text-anchor="middle" stroke="#000000" stroke-width="1px" dy=".6em">10</text>
-				        </svg> -->
+				        </svg>
 				        <div id="NotActiveRings1">
 						    <div id="NotActiveFirst-ring1">
 						        <div id="NotActiveSecond-ring1">
@@ -159,11 +247,11 @@
 						<div class="activeDiv">
 						<img alt="" src="../images/battery-low.png" class="activeImg">
 						<div class="text">Battery Low</div>
-						<!-- <svg class="activeDivText">
+						<svg class="activeDivText">
 				            <circle cx="80" cy="80" r="50" fill='#ffffff' stroke-width="5" stroke='#eee'/>
 				            <circle cx="80" cy="80" r="40" fill='#ffffff' stroke-width="5" stroke='#eee'/>
 				             <text class="activeCount" x="50%" y="50%" text-anchor="middle" stroke="#000000" stroke-width="1px" dy=".6em">10</text>
-				        </svg> -->
+				        </svg>
 				        <div id="BatteryRings1">
 						    <div id="BatteryFirst-ring1">
 						        <div id="BatterySecond-ring1">
@@ -180,11 +268,11 @@
 						<div class="activeDiv">
 						<img alt="" src="../images/tampered.png" class="activeImg">
 						<div class="text">Tampered</div>
-						<!-- <svg class="activeDivText">
+						<svg class="activeDivText">
 				            <circle cx="80" cy="80" r="50" fill='#ffffff' stroke-width="5" stroke='#eee'/>
 				            <circle cx="80" cy="80" r="40" fill='#ffffff' stroke-width="5" stroke='#eee'/>
 				             <text class="activeCount" x="50%" y="50%" text-anchor="middle" stroke="#000000" stroke-width="1px" dy=".6em">10</text>
-				        </svg> -->
+				        </svg>
 				        <div id="TamperedRings1">
 						    <div id="TamperedFirst-ring1">
 						        <div id="TamperedSecond-ring1">
@@ -196,9 +284,9 @@
 						</div>
 				        
 				        </div>
-					</div>
+					</div> -->
 				
-				</div>
+				<!-- </div> -->
 				<!-- <div class="row" ng-show="stateCheck =='0'">
 					<div class="row">
 						<div class="col-sm-12">
@@ -845,12 +933,12 @@
 							</div>
 						</div>
 					</div>
-					<div class="row mar0">
+					<div class="row mar0"> 
 						<div class="col-sm-4" ng-click="getVehiclesDataByStatus('overspeed');txtHead='OverSpeed';hideSpeed=false">
 							<div class="activeDiv">
 								<div class="row">
 									<div class="col-sm-6">
-										<!-- <i class="fa fa-user fa-2x iconPos"></i> -->
+										<i class="fa fa-user fa-2x iconPos"></i>
 										<div class="">Overspeed</div>
 										<img alt="" src="../images/overspeed.png" class="vehIconWidth">
 									</div>
@@ -860,9 +948,9 @@
 								</div>
 								<div class="overspeedLine"></div>
 							</div>
-						</div>
+						</div> 
 
-						<div class="col-sm-4" ng-click="getVehiclesDataByStatus('overspeed');txtHead='geofence';hideSpeed=true">
+						<div class="col-sm-4" ng-click="getVehiclesDataByStatus('geofence');txtHead='Geofence';hideSpeed=true">
 							<div class="activeDiv">
 								<div class="row">
 									<div class="col-sm-6">
@@ -877,7 +965,7 @@
 								<div class="GeofenceLine"></div>
 							</div>
 						</div>
-						<div class="col-sm-4" ng-click="getVehiclesDataByStatus('overspeed');txtHead='panic';hideSpeed=true">
+						<div class="col-sm-4" ng-click="getVehiclesDataByStatus('panic');txtHead='Panic';hideSpeed=true">
 							<div class="activeDiv">
 								<div class="row">
 									<div class="col-sm-6">
@@ -917,7 +1005,7 @@
 										</tr>										
 									</thead>
 									<tbody class="tbodyStyle">										
-										<tr class="tbodytr tabletbodytr" ng-repeat="veh in vehiclesData">
+										<tr class="tbodytr tabletbodytr" ng-repeat="veh in vehiclesData.data">
 											<td><p class="culomPad">{{$index+1}}</p></td>
 											<td><p>{{veh.devid}}</p></td>
 											<td><p>{{veh.vehicle_num}}</p></td>
