@@ -8,7 +8,7 @@ var batsfactoryhome = angular.module('batsfactoryhome', ['ngStorage', 'ngRoute',
 var reset = angular.module('resetPwd', []);
 
 //==============Admin Home===============
-var batsAdminHome = angular.module('batsAdminHome', ['ngStorage', 'ngRoute','ngAnimate', 'ui.bootstrap','ngMaterial', 'ngMessages', 'uiGmapgoogle-maps', 'ngMap', 'highcharts-ng','commonApp']);
+var batsAdminHome = angular.module('batsAdminHome', ['ngStorage', 'ngRoute','ngAnimate', 'ui.bootstrap','ngMaterial', 'ngMessages', 'uiGmapgoogle-maps', 'ngMap', 'highcharts-ng','duScroll','commonApp']);
 
 //==============General Home===============
 var batsGeneralHome = angular.module('batsGeneralHome', ['ngStorage', 'ngRoute', 'uiGmapgoogle-maps','ngAnimate', 'ui.bootstrap','ngMaterial', 'ngMessages', 'highcharts-ng', 'ngMap','resetPwd','commonApp']);

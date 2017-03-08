@@ -127,6 +127,7 @@ commonApp.service('commonAppService',function(commonFactory,$localStorage){
   				lng : 77.658968
   			}
           });
+          
 	}	
 	this.getTripData=function(cb){
 		var getTripDataJson={};
@@ -156,6 +157,7 @@ commonApp.service('commonAppService',function(commonFactory,$localStorage){
 				lng : 77.658968
 			}
         });
+        
 		var infoWindow = new google.maps.InfoWindow(),marker;
 		var bounds = new google.maps.LatLngBounds();
 		function createMarker(tripID,lt,lg,vel,vol,ts){

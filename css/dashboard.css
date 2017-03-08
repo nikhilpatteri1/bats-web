@@ -28,7 +28,7 @@
 
 .trackerDiv{
     text-align: center;
-    box-shadow: 1px 2px 26px 4px #eee;
+    box-shadow: 1px 2px 26px 4px #d0d0d0;
     margin: 25px 0px 25px 20px;
     background: #fff;
     width: 94%;
@@ -114,7 +114,7 @@ margin-right: -50px;
 	margin: 0px auto;
     /* padding: 15px 20px; */
     text-align: center;
-    box-shadow: 1px 2px 26px 4px #eee;
+    box-shadow: 1px 2px 26px 4px #d0d0d0;
     /* margin: 63px; */
     background: #fff;
      width: 96%;
@@ -140,7 +140,7 @@ margin-right: -50px;
 .activeTableStyle{
 	display: flex;
     flex-flow: column;
-    height: 100%;
+    height: 25em;
     width: 94%;
     margin-left: 3%;
     margin-top: 3%;
@@ -148,18 +148,41 @@ margin-right: -50px;
 }
 
 .tableThickline{
-	height: 63px;
+	height: 58px;
     width: 8px;
     padding: 0px;
-    background: #01ae81;
+    /* background: #01ae81; */
     margin: -12px;
+    margin-left: 0px;
 }
+
+/* .tableThicklineAllocate{
+	background: #008cdc;
+}
+.tableThicklineunallocate{
+	background: #b3b3b3;
+}
+.tableThicklineNotworkin{
+	background: #e54a4e;
+}
+.tableThicklineActive{
+	background: #01ae81;
+}
+.tableThicklineNotactive{
+	background: #5d686c;
+}
+.tableThicklineBatterylow{
+	background: #e64a4e;
+}
+.tableThicklineTampered{
+	background: #ffd875;
+} */
+
 .tableThickTxt{
-    margin-top: -41px;
-    margin-left: 14px;
     font-size: 20px;
-    margin-bottom: 5px;
-    color: #757373;
+    margin-left: -25px;
+    margin-right: -73px;
+    color:#757373;
 }
 
 .activeImg{
@@ -176,13 +199,28 @@ margin-right: -50px;
 }
 .activeTableStyle th{
 	background-color:#f5f3f3 !important;
+	padding: 0px;
+    padding-top: 12px;
+    padding-bottom: 12px;
 }
 
-.activeTableStyle th:first-child{
-	background-color:#f5f3f3;  
+
+
+
+table.activeTableStyle thead th:first-child { 
+    text-align: center;
+    color:#fff;
+    background-color:#000;
+    width: 44px;
 }
 
-
+table.activeTableStyle tbody td:first-child { 
+    text-align: center;
+    color:#000;
+   /*  background-color:#000; */
+     width: 44px;
+}
+ 
 .shapeborder { border:0px solid black; }
 .circle { border-radius: 50%; }
 
@@ -368,8 +406,8 @@ margin-right: -50px;
     position: absolute;
     /* border: 5px solid #f00; */
     /* border-top-color: #fff; */
-    border-bottom-color: #fff;
-       width: 88px;
+   /*  border-bottom-color: #fff; */
+       width: 88px; 
     height: 88px;
     margin: -2px;
     -webkit-border-radius: 50%;
@@ -383,7 +421,7 @@ margin-right: -50px;
     position: absolute;
     /* border: 5px solid #f00; */
     /* border-top-color: #fff; */
-    border-bottom-color: #fff;
+    /* border-bottom-color: #fff; */
        width: 88px;
     height: 88px;
     margin: -2px;
@@ -587,7 +625,7 @@ margin-right: -50px;
 	    position: absolute;
         border: 5px solid #01ae81;
     /* border-top-color: #fff; */
-    border-bottom-color: #fff;
+    /* border-bottom-color: #fff; */
     width: 112px;
     height: 112px;
     margin: 1px;
@@ -642,3 +680,44 @@ text-align: center;
     /* padding-top: 28px; */
     /* padding-bottom: 28px; */   
 }
+
+/* table th.shrink {
+  white-space: nowrap;
+  width: 10px !important;
+}
+table td.shrink {
+  white-space: nowrap;
+  width: 10px !important;
+} */
+
+#passopt{
+    text-decoration: none !important;
+    position: relative;
+    margin-top: -80%;
+    margin-left: -8px;
+    background: ghostwhite;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+    
+   #vehicleHover{
+    text-decoration: none !important;
+    position: absolute;
+    margin-top: -9%;
+    margin-left: 34%;
+    background: ghostwhite;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+   }
+/* table .dashboard-container{
+	height: 20em;
+} */
+.dashboardTab>li>a
+{
+	padding: 5px 40px;
+	margin-right: 0px;
+	border-right: 1px solid #ddd;
+	border-radius: 0px;
+}
+
+

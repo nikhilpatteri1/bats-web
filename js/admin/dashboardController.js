@@ -1,9 +1,10 @@
-batsAdminHome.controller('dashboardController', function($scope, $http, $rootScope,$localStorage,commonAppService){	 
+batsAdminHome.controller('dashboardController', function($scope, $http, $rootScope,$localStorage,$location,$document, $anchorScroll,commonAppService){	 
 	$scope.token = $localStorage.data;
 	$rootScope.menuPos=14;
-	
+	//$anchorScroll.yOffset = 50;
 	$scope.tab = 1;
 	$scope.noUsers = false;
+	$scope.hideVehiclesTable=true;
 	$scope.setTab = function(newTab){
     	/*google.maps.event.trigger(map, 'resize');*///$scope.tripDetails="";
     	/*console.log("in setTab");*/
@@ -27,6 +28,7 @@ batsAdminHome.controller('dashboardController', function($scope, $http, $rootSco
     	console.log(result);
     	$scope.TrackerCount = result;
     	console.log($scope.TrackerCount);
+    	console.log($scope.TrackerCount.unallocated);
     	var data=[
   	            {name: "allocated",y: $scope.TrackerCount.allocated, color: '#008cdc'},
   	            {name: "unalloacted",y: $scope.TrackerCount.unallocated, color: '#b3b3b3'},
@@ -34,19 +36,13 @@ batsAdminHome.controller('dashboardController', function($scope, $http, $rootSco
   	           ];
     	commonAppService.donutChart('container',data);
     	
-    	
-    	
-    	
-    	
     	$scope.getPercentage = function (a,b) {
     	    return ((b * 100) / a).toFixed(2);
     	}
     	/*$scope.getTotal = function () {
     	    return $scope.allocatedTotal;
     	}*/
-    	
-    	
-    });
+    }); 
     var status
     $scope.getList =function(state){
     	status = state;
@@ -74,17 +70,31 @@ batsAdminHome.controller('dashboardController', function($scope, $http, $rootSco
     	}
     	commonAppService.trackerList(status,function(result){
     	console.log(result);
-    	/*if(result.length == null){
-    		alert("nolist");
-    		$scope.noUsers = true;
-    	}*/
-    	$scope.TrackerActList = result;
-    	console.log($scope.TrackerActList);
-    	
+    	if(result.data!="Trackers data not available for this status "+status){
+			   $scope.hideVehiclesTable=false;
+			   $scope.TrackerActList = result;
+			   console.log($scope.TrackerActList);
+		   }
+		   else{
+			   $scope.hideVehiclesTable=true;
+			   /*alert(result.data);*/
+		   }
     });
+    	$location.hash('dashTable'+status);
+        $anchorScroll();
     }
     
-    
+   /* $scope.getscrool =function(){
+    	alert("hi");
+    var someElement = angular.element(document.getElementById('dashTable0'));
+    $document.scrollToElement(someElement, 10, 1000);
+    };*/
+   
+    /*$(".trackerProgessCountAllo").click(function() {
+	$('html,body').animate({
+	    scrollTop: $("#dashTable0").offset().top},
+	    'slow');
+	});*/
     
 });
 /**
@@ -249,6 +259,42 @@ batsAdminHome.controller('dashboardVehicleController', function($scope,$localSto
 		        }
 		);
 	};
+	
+	/*$('.dashbHover')
+    .hover("mouseenter", function() {
+        $(this).append('<p id="passopt">Click Me!</p>');
+    })
+    .hover("mouseleave", function() {
+        $(this).children('#passopt').remove();
+    });*/
+	$(function() {
+		  $('.dashbHover,#ActiveThird-ring1,#NotActiveThird-ring1,#BatteryThird-ring1,#TamperedThird-ring1,.TripOuterCircle').hover(function() {
+			  $(this).append('<p id="passopt">Click Me!</p>');
+			  $(this).css("text-decoration","none");
+		  },function(){
+			$(this).children('#passopt').remove();
+		  });
+		  
+		});
+	
+	$(function() {
+		  $('.vehicleHoverClass').hover(function() {
+			  $(this).append('<p id="vehicleHover">Click Me!</p>');
+			  $(this).css("text-decoration","none");
+		  },function(){
+			$(this).children('#vehicleHover').remove();
+		  });
+		  
+		});
+	var d = new Date();
+    var month = d.getMonth()+1;
+    var day = d.getDate();
+    var output = d.getFullYear() + '/' +
+        (month<10 ? '0' : '') + month + '/' +
+        (day<10 ? '0' : '') + day;
+    $scope.currdate = output; 
+
+	
 });
 /**
  * *
