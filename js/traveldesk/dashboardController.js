@@ -66,11 +66,20 @@ batstravelDeskHome.controller('dashboardController', function($scope, $http,
 		} else if (status == 5) {
 			$scope.stateCheck = "5";
 		}
-		commonAppService.trackerList(status, function(result) {
-			console.log(result);
-			$scope.TrackerActList = result;
-			console.log($scope.TrackerActList);
-		});
+		commonAppService.trackerList(status,function(result){
+	    	console.log(result);
+	    	if(result.data!="Trackers data not available for this status "+status){
+				   $scope.hideVehiclesTable=false;
+				   $scope.TrackerActList = result;
+				   console.log($scope.TrackerActList);
+			   }
+			   else{
+				   $scope.hideVehiclesTable=true;
+				   /*alert(result.data);*/
+			   }
+	    });
+	    	$location.hash('TdashTable'+status);
+	        $anchorScroll();
 	}
 
 });
@@ -237,6 +246,35 @@ batstravelDeskHome.controller('dashboardVehicleController', function($scope,$loc
 		        }
 		);
 	};
+	
+	$(function() {
+		  $('.dashbHover,#ActiveThird-ring1,#NotActiveThird-ring1,#BatteryThird-ring1,#TamperedThird-ring1,.TripOuterCircle').hover(function() {
+			  $(this).append('<p id="passopt">Click Me!</p>');
+			  $(this).css("text-decoration","none");
+		  },function(){
+			$(this).children('#passopt').remove();
+		  });
+		  
+		});
+	
+	$(function() {
+		  $('.vehicleHoverClass').hover(function() {
+			  $(this).append('<p id="vehicleHover">Click Me!</p>');
+			  $(this).css("text-decoration","none");
+		  },function(){
+			$(this).children('#vehicleHover').remove();
+		  });
+		  
+		});
+	var d = new Date();
+  var month = d.getMonth()+1;
+  var day = d.getDate();
+  var output = d.getFullYear() + '/' +
+      (month<10 ? '0' : '') + month + '/' +
+      (day<10 ? '0' : '') + day;
+  $scope.currdate = output; 
+
+	
 });
 /**
  * *

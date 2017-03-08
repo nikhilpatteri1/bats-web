@@ -40,6 +40,12 @@
 margin-right: -50px;
 } */
 
+.Tabtext{
+	display: inline-block;
+    position: relative;
+    top: -5px;
+}
+
 .trackerBTxt{
 	/* margin-right: -50px; */
 	color:#dddddd;

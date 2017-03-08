@@ -30,8 +30,8 @@ batsAdminHome.controller('dashboardController', function($scope, $http, $rootSco
     	console.log($scope.TrackerCount);
     	console.log($scope.TrackerCount.unallocated);
     	var data=[
-  	            {name: "allocated",y: $scope.TrackerCount.allocated, color: '#008cdc'},
-  	            {name: "unalloacted",y: $scope.TrackerCount.unallocated, color: '#b3b3b3'},
+  	            {name: "Allocated",y: $scope.TrackerCount.allocated, color: '#008cdc'},
+  	            {name: "Unalloacted",y: $scope.TrackerCount.unallocated, color: '#b3b3b3'},
   	            {name: "Notworking",y: $scope.TrackerCount.nonworking, color: '#e54a4e' },          
   	           ];
     	commonAppService.donutChart('container',data);

@@ -14,7 +14,7 @@ commonApp.service('commonAppService',function(commonFactory,$localStorage){
 	                renderTo: chartID,
 	                type: 'pie',
 	                height: 222,
-	                width:250,
+	                width:300,
 	                
 	            },
 	            title: {
@@ -187,6 +187,17 @@ commonApp.service('commonAppService',function(commonFactory,$localStorage){
 			bounds.extend(myLatLng);
 		}
 		map.setCenter(bounds.getCenter());
+		
+		var myPlace = {lat: 12.850167, lng: 77.660329};
+		var endArray=vehicleData.values.slice(-1)[0];
+		var start = new google.maps.LatLng(myPlace.lat,myPlace.lng);
+		var end=new google.maps.LatLng(endArray[0],endArray[1]);
+		var bounds = new google.maps.LatLngBounds();
+		bounds.extend(start);
+		bounds.extend(end);
+		TripMap.fitBounds(bounds);
+		
+		
 		//map.fitBounds(bounds);
 	}
 	this.getTripsByStatus=function(statusParam,cb){

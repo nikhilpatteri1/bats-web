@@ -6,15 +6,27 @@
 					<label class="custom_label">Dashboard</label>
 				</div>
 			</div>
-			<ul class="nav nav-tabs managedivH">
+			<ul class="nav nav-tabs managedivH dashboardTab">
 				<li ng-class="{ active: isSet(1) }"><a href
-					ng-click="setTab(1)">Tracker</a></li>
+					ng-click="setTab(1)">
+					<img alt="" ng-src="{{isSet(1) == true?'../images/tracker-copy.png':'../images/tracker.png'}}" class="activeImg">
+					<div class="Tabtext">Tracker</div>
+					</a></li>
 				<li ng-class="{ active: isSet(2) }"><a href
-					ng-click="setTab(2)">Trip</a></li>
+					ng-click="setTab(2)">
+					<img alt="" ng-src="{{isSet(2) == true?'../images/trip-copy.png':'../images/trip.png'}}" class="activeImg">
+					<div class="Tabtext">Trip</div>
+					</a></li>
 				<li ng-class="{ active: isSet(3) }"><a href 
-				ng-click="setTab(3)">Driver</a></li>
+				ng-click="setTab(3)">
+				<img alt="" ng-src="{{isSet(3) == true?'../images/driverD-copy.png':'../images/driverD.png'}}" class="activeImg">
+				<div class="Tabtext">Driver</div>
+				</a></li>
 				<li ng-class="{ active: isSet(4) }"><a href 
-				ng-click="setTab(4)">Vehicle</a></li>
+				ng-click="setTab(4)">
+				<img alt="" ng-src="{{isSet(4) == true?'../images/vehicle-copy.png':'../images/vehicle.png'}}" class="activeImg">
+				<div class="Tabtext">Vehicle</div>
+				</a></li>
 			</ul>
 			
 			
@@ -189,7 +201,7 @@
 					<div class="row" ng-hide="hideVehiclesTable">
 						<div class="col-sm-12">
 							<div class="table-container" ng-style="histcontentheight">
-								<table class="activeTableStyle">
+								<table class="activeTableStyle" id="TdashTable0">
 									<thead class="theadStyle tablethead">
 										<tr>
 											<th>
@@ -229,7 +241,7 @@
 					<div class="row" ng-hide="hideVehiclesTable">
 						<div class="col-sm-12">
 							<div class="table-container" ng-style="histcontentheight">
-								<table class="activeTableStyle">
+								<table class="activeTableStyle" id="TdashTable1">
 									<thead class="theadStyle tablethead">
 										<tr>
 											<th>
@@ -268,7 +280,7 @@
 					<div class="row" ng-hide="hideVehiclesTable">
 						<div class="col-sm-12">
 							<div class="table-container" ng-style="histcontentheight">
-								<table class="activeTableStyle">
+								<table class="activeTableStyle" id="TdashTable2">
 									<thead class="theadStyle tablethead">
 										<tr>
 											<th>
@@ -280,7 +292,7 @@
 											<th></th>
 											<!-- <th><div>Activated</div></th> -->
 										</tr>
-										<tr ng-hide="noUsers">
+										<tr>
 										<th><div></div></th>
 											<th><div>DEVICE ID</div></th>
 											<th><div>VEHICLE NO </div></th>
@@ -308,7 +320,7 @@
 					<div class="row" ng-hide="hideVehiclesTable">
 						<div class="col-sm-12">
 							<div class="table-container" ng-style="histcontentheight">
-								<table class="activeTableStyle">
+								<table class="activeTableStyle" id="TdashTable3">
 									<thead class="theadStyle tablethead">
 										<tr>
 											<th>
@@ -348,7 +360,7 @@
 					<div class="row" ng-hide="hideVehiclesTable">
 						<div class="col-sm-12">
 							<div class="table-container" ng-style="histcontentheight">
-								<table class="activeTableStyle">
+								<table class="activeTableStyle" id="TdashTable4">
 									<thead class="theadStyle tablethead">
 										<tr>
 											<th>
@@ -387,7 +399,7 @@
 					<div class="row" ng-hide="hideVehiclesTable">
 						<div class="col-sm-12">
 							<div class="table-container" ng-style="histcontentheight">
-								<table class="activeTableStyle">
+								<table class="activeTableStyle" id="TdashTable5">
 									<thead class="theadStyle tablethead">
 										<tr>
 											<th>
@@ -427,7 +439,7 @@
 					<div class="row" ng-hide="hideVehiclesTable">
 						<div class="col-sm-12">
 							<div class="table-container" ng-style="histcontentheight">
-								<table class="activeTableStyle">
+								<table class="activeTableStyle" id="TdashTable6">
 									<thead class="theadStyle tablethead">
 										<tr>
 											<th>
@@ -626,7 +638,7 @@
 													</div>
 												</div>
 												<div class="col-sm-4">
-													<a><div class="driverProgessCountAvail">{{availableDrivers}}</div></a>
+													<a class="dashbHover"><div class="driverProgessCountAvail">{{availableDrivers}}</div></a>
 												</div>
 											</div>
 											<div class="row" ng-click="tripStatus='trip'">
@@ -642,7 +654,7 @@
 													</div>
 												</div>
 												<div class="col-sm-4">
-													<a><div class="driverProgessCountOntrip">{{onTrip}}</div></a>
+													<a class="dashbHover"><div class="driverProgessCountOntrip">{{onTrip}}</div></a>
 												</div>
 											</div>
 
@@ -721,7 +733,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="trackerBTxt">Drivers</div>
+								<div class="trackerBTxt">vehicles</div>
 								<div class="trackerBTxt">Total vehicles</div>
 							</div>
 						</div>
@@ -742,7 +754,7 @@
 
 										<div class="col-sm-6" align="left">
 											<div class="row">
-												<div class="vehicleCoverLimitTxt">September 2017</div>
+												<div class="vehicleCoverLimitTxt">{{currdate}}</div>
 											</div>
 											<div class="row">
 												<div class="">Max Limit</div>
@@ -763,11 +775,11 @@
 					<div class="row mar0">
 						<div class="col-sm-4" ng-click="getVehiclesDataByStatus('overspeed');txtHead='OverSpeed';hideSpeed=false">
 							<div class="activeDiv">
-								<div class="row">
+								<div class="row vehicleHoverClass">
 									<div class="col-sm-6">
 										<!-- <i class="fa fa-user fa-2x iconPos"></i> -->
 										<div class="">Overspeed</div>
-										<img alt="" src="../images/overspeed.png" class="vehIconWidth">
+										<img alt="" src="../images/speedometer.png" class="vehIconWidth">
 									</div>
 									<div class="col-sm-6">
 										<div class="vehicleOverTxt">{{totaloverspeed}}</div>
@@ -779,11 +791,11 @@
 
 						<div class="col-sm-4" ng-click="getVehiclesDataByStatus('geofence');txtHead='Geofence';hideSpeed=true">
 							<div class="activeDiv">
-								<div class="row">
+								<div class="row vehicleHoverClass">
 									<div class="col-sm-6">
 										<!-- <i class="fa fa-user fa-2x iconPos"></i> -->
 										<div class="">Geofence</div>
-										<img alt="" src="../images/geofence.png" class="vehIconWidth">
+										<img alt="" src="../images/geofence1.png" class="vehIconWidth">
 									</div>
 									<div class="col-sm-6">
 										<div class="vehicleOverTxt">{{totalgeofence}}</div>
@@ -794,11 +806,11 @@
 						</div>
 						<div class="col-sm-4" ng-click="getVehiclesDataByStatus('panic');txtHead='Panic';hideSpeed=true">
 							<div class="activeDiv">
-								<div class="row">
+								<div class="row vehicleHoverClass">
 									<div class="col-sm-6">
 										<!-- <i class="fa fa-user fa-2x iconPos"></i> -->
 										<div class="">Panic</div>
-										<img alt="" src="../images/panic.png" class="vehIconWidth">
+										<img alt="" src="../images/sosYellow.png" class="vehIconWidth">
 									</div>
 									<div class="col-sm-6">
 										<div class="vehicleOverTxt">{{totalPanic}}</div>
@@ -808,7 +820,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="row" ng-hide="hideVehiclesTable">
+					<div class="row" ng-hide="hideVehiclesTable">  
 						<div class="col-sm-12">
 							<div class="table-container" ng-style="histcontentheight">
 								<table class="activeTableStyle">

@@ -9,20 +9,24 @@
 			<ul class="nav nav-tabs managedivH dashboardTab">
 				<li ng-class="{ active: isSet(1) }"><a href
 					ng-click="setTab(1)">
-					<img alt="" src="../images/tracker.png" class="activeImg">
-					Tracker</a></li>
+					<img alt="" ng-src="{{isSet(1) == true?'../images/tracker-copy.png':'../images/tracker.png'}}" class="activeImg">
+					<div class="Tabtext">Tracker</div>
+					</a></li>
 				<li ng-class="{ active: isSet(2) }"><a href
 					ng-click="setTab(2)">
-					<img alt="" src="../images/trip.png" class="activeImg">
-					Trip</a></li>
+					<img alt="" ng-src="{{isSet(2) == true?'../images/trip-copy.png':'../images/trip.png'}}" class="activeImg">
+					<div class="Tabtext">Trip</div>
+					</a></li>
 				<li ng-class="{ active: isSet(3) }"><a href 
 				ng-click="setTab(3)">
-				<img alt="" src="../images/driverD.png" class="activeImg">
-				Driver</a></li>
+				<img alt="" ng-src="{{isSet(3) == true?'../images/driverD-copy.png':'../images/driverD.png'}}" class="activeImg">
+				<div class="Tabtext">Driver</div>
+				</a></li>
 				<li ng-class="{ active: isSet(4) }"><a href 
 				ng-click="setTab(4)">
-				<img alt="" src="../images/vehicle.png" class="activeImg">
-				Vehicle</a></li>
+				<img alt="" ng-src="{{isSet(4) == true?'../images/vehicle-copy.png':'../images/vehicle.png'}}" class="activeImg">
+				<div class="Tabtext">Vehicle</div>
+				</a></li>
 			</ul>
 			
 			
@@ -806,7 +810,7 @@
 									<div class="col-sm-6">
 										<!-- <i class="fa fa-user fa-2x iconPos"></i> -->
 										<div class="">Panic</div>
-										<img alt="" src="../images/panic1.png" class="vehIconWidth">
+										<img alt="" src="../images/sosYellow.png" class="vehIconWidth">
 									</div>
 									<div class="col-sm-6">
 										<div class="vehicleOverTxt">{{totalPanic}}</div>
