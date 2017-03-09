@@ -1,8 +1,9 @@
 batstravelDeskHome.controller('dashboardController', function($scope, $http,
-	$rootScope, $localStorage, commonAppService) {
+	$rootScope, $localStorage,$location,commonAppService) {
 	$scope.token = $localStorage.data;
 	$rootScope.menuPos = 4;
 	$scope.tab = 1;
+	$scope.hideTripTable=true;
 	$scope.setTab = function(newTab) {
 		/* google.maps.event.trigger(map, 'resize'); */// $scope.tripDetails="";
 		/* console.log("in setTab"); */
@@ -53,35 +54,27 @@ batstravelDeskHome.controller('dashboardController', function($scope, $http,
 	$scope.getList = function(state) {
 		status = state;
 
-		if (status == 0) {
-			$scope.stateCheck = "0";
-		} else if (status == 1) {
-			$scope.stateCheck = "1";
-		} else if (status == 2) {
-			$scope.stateCheck = "2";
-		} else if (status == 3) {
-			$scope.stateCheck = "3";
-		} else if (status == 4) {
-			$scope.stateCheck = "4";
-		} else if (status == 5) {
-			$scope.stateCheck = "5";
-		}
-		commonAppService.trackerList(status,function(result){
+		  commonAppService.trackerList(status,function(result){
 	    	console.log(result);
 	    	if(result.data!="Trackers data not available for this status "+status){
-				   $scope.hideVehiclesTable=false;
+				   $scope.hideTripTable=false;
 				   $scope.TrackerActList = result;
 				   console.log($scope.TrackerActList);
 			   }
 			   else{
-				   $scope.hideVehiclesTable=true;
+				   $scope.hideTripTable=true;
 				   /*alert(result.data);*/
 			   }
 	    });
-	    	$location.hash('TdashTable'+status);
-	        $anchorScroll();
+		//$scope.gotoElement('TdashTable'+status);
+	    	/*$location.hash('TdashTable'+status);
+	        $anchorScroll();*/
 	}
-
+	
+	$scope.gotoElement=function(eID){
+		commonAppService.scrollTo(eID);
+	}
+	    
 });
 
 /**
@@ -92,7 +85,9 @@ batstravelDeskHome.controller('dashboardController', function($scope, $http,
 batstravelDeskHome.controller('dashboardTripController', function($scope, $http, $rootScope,$localStorage,commonAppService,commonFactory){
 	console.log("trip"); 
 	$scope.hideTripTable=true;
-	commonAppService.initMap();
+	$scope.initMap=function(){
+		commonAppService.initMap();	
+	};
 	commonAppService.getTripData(function(result){
 		console.log(JSON.stringify(result));
 		if(result.data!="trips not found"){
@@ -102,11 +97,11 @@ batstravelDeskHome.controller('dashboardTripController', function($scope, $http,
 			$scope.cancelled=result.res_data.cancelled;
 			$scope.dropped=result.res_data.dropped;
 			$scope.delay_count=result.res_data.delay_count;
-			var data1={"trip_id": "tripid1","values" : {"ts" : "1488564205000", "long" : 77.660444, "lat" : 12.848834, "Velocity" :100, "Vol" : 10}};
+			/*var data1={"trip_id": "tripid1","values" : {"ts" : "1488564205000", "long" : 77.660444, "lat" : 12.848834, "Velocity" :100, "Vol" : 10}};
 			var data2={"trip_id": "tripid2","values" : {"ts" : "1488564205000", "long" : 74.784771, "lat" : 20.697141, "Velocity" :100, "Vol" : 10}}
 			var dummyData=[];
 			dummyData.push(data1);
-			dummyData.push(data2);
+			dummyData.push(data2);*/
 			//commonAppService.plotVehicleMarker(dummyData);
 			commonAppService.plotVehicleMarker(result.trip_running);
 		}
@@ -118,7 +113,7 @@ batstravelDeskHome.controller('dashboardTripController', function($scope, $http,
 			$scope.dropped=0;
 			$scope.delay_count=0;		
 		}		
-	});
+	});  
 	$scope.getTripDataByStatus=function(status){
 		if(status!='Ds'){
 			commonAppService.getTripsByStatus(status,function(result){
@@ -159,6 +154,9 @@ batstravelDeskHome.controller('dashboardTripController', function($scope, $http,
 		        }
 		);
 	}
+	$scope.gotoElement=function(eID){
+		commonAppService.scrollTo(eID);
+	}
         
 });
 /**
@@ -192,6 +190,9 @@ batstravelDeskHome.controller('dashboardDriverController', function($scope,
 	$scope.getPercentage = function(a, b) {
 		return commonAppService.getPercentage(a, b)
 	}
+	$scope.gotoElement=function(eID){
+		commonAppService.scrollTo(eID);
+	}
 });
 /**
  * *
@@ -222,7 +223,7 @@ batstravelDeskHome.controller('dashboardVehicleController', function($scope,$loc
 				   }
 				   else{
 					   $scope.hideVehiclesTable=true;
-					   alert(result.data);
+					   //alert(result.data);
 				   }				   
 			});		
 	};
@@ -246,6 +247,9 @@ batstravelDeskHome.controller('dashboardVehicleController', function($scope,$loc
 		        }
 		);
 	};
+	$scope.gotoElement=function(eID){
+		commonAppService.scrollTo(eID);
+	}
 	
 	$(function() {
 		  $('.dashbHover,#ActiveThird-ring1,#NotActiveThird-ring1,#BatteryThird-ring1,#TamperedThird-ring1,.TripOuterCircle').hover(function() {

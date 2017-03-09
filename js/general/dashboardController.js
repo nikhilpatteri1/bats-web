@@ -2,12 +2,13 @@ batsGeneralHome.controller('dashboardController', function($scope, $http, $rootS
 	console.log("dashboard"); 
 	$scope.token = $localStorage.data;
 	$rootScope.menuPos=9;
-	
+	$scope.hideTripTable=true;
 	$scope.tab = 1;
 	$scope.setTab = function(newTab) {
-		/* google.maps.event.trigger(map, 'resize'); */// $scope.tripDetails="";
-		/* console.log("in setTab"); */
-		// clearField();
+		if(newTab=='2'){
+			commonAppService.initMap();
+			$rootScope.getTripData();
+		}
 		$scope.tab = newTab;
 	};
 
@@ -47,30 +48,22 @@ batsGeneralHome.controller('dashboardController', function($scope, $http, $rootS
 	var status
 	$scope.getList = function(state) {
 		status = state;
-
-		if (status == 0) {
-			$scope.stateCheck = "0";
-		} else if (status == 1) {
-			$scope.stateCheck = "1";
-		} else if (status == 2) {
-			$scope.stateCheck = "2";
-		} else if (status == 3) {
-			$scope.stateCheck = "3";
-		} else if (status == 4) {
-			$scope.stateCheck = "4";
-		} else if (status == 5) {
-			$scope.stateCheck = "5";
-		}
-		else if(status == 6){
-			$scope.stateCheck = "6";
-		}
-		commonAppService.trackerList(status, function(result) {
-			console.log(result);
-			$scope.TrackerActList = result;
-			console.log($scope.TrackerActList);
-		});
+		commonAppService.trackerList(status,function(result){
+	    	console.log(result);
+	    	if(result.data!="Trackers data not available for this status "+status){
+				   $scope.hideTripTable=false;
+				   $scope.TrackerActList = result;
+				   console.log($scope.TrackerActList);
+			   }
+			   else{
+				   $scope.hideTripTable=true;
+				   /*alert(result.data);*/
+			   }
+	    });
 	}
-
+	$scope.gotoElement=function(eID){
+    	commonAppService.scrollTo(eID);
+    }
     
 });
 /**
@@ -80,34 +73,36 @@ batsGeneralHome.controller('dashboardController', function($scope, $http, $rootS
  * */
 batsGeneralHome.controller('dashboardTripController', function($scope, $http, $rootScope,$localStorage,commonAppService,commonFactory){
 	console.log("trip"); 
-	$scope.hideTripTable=true;
-	commonAppService.initMap();
-	commonAppService.getTripData(function(result){
-		console.log(JSON.stringify(result));
-		if(result.data!="trips not found"){
-			$scope.scheduled=result.res_data.scheduled;
-			$scope.running=result.res_data.running;
-			$scope.completed=result.res_data.completed;
-			$scope.cancelled=result.res_data.cancelled;
-			$scope.dropped=result.res_data.dropped;
-			$scope.delay_count=result.res_data.delay_count;
-			var data1={"trip_id": "tripid1","values" : {"ts" : "1488564205000", "long" : 77.660444, "lat" : 12.848834, "Velocity" :100, "Vol" : 10}};
-			var data2={"trip_id": "tripid2","values" : {"ts" : "1488564205000", "long" : 74.784771, "lat" : 20.697141, "Velocity" :100, "Vol" : 10}}
-			var dummyData=[];
-			dummyData.push(data1);
-			dummyData.push(data2);
-			//commonAppService.plotVehicleMarker(dummyData);
-			commonAppService.plotVehicleMarker(result.trip_running);
-		}
-		else{
-			$scope.scheduled=0;
-			$scope.running=0;
-			$scope.completed=0;
-			$scope.cancelled=0;
-			$scope.dropped=0;
-			$scope.delay_count=0;		
-		}		
-	});
+	$scope.hideTripTable=true;	
+	$rootScope.getTripData=function(){
+		commonAppService.getTripData(function(result){
+			console.log(JSON.stringify(result));
+			if(result.data!="trips not found"){
+				$scope.scheduled=result.res_data.scheduled;
+				$scope.running=result.res_data.running;
+				$scope.completed=result.res_data.completed;
+				$scope.cancelled=result.res_data.cancelled;
+				$scope.dropped=result.res_data.dropped;
+				$scope.delay_count=result.res_data.delay_count;
+				var data1={"trip_id": "tripid1","values" : {"ts" : "1488564205000", "long" : 77.660444, "lat" : 12.848834, "Velocity" :100, "Vol" : 10}};
+				var data2={"trip_id": "tripid2","values" : {"ts" : "1488564205000", "long" : 74.784771, "lat" : 20.697141, "Velocity" :100, "Vol" : 10}}
+				var dummyData=[];
+				dummyData.push(data1);
+				dummyData.push(data2);
+				//commonAppService.plotVehicleMarker(dummyData);
+				commonAppService.plotVehicleMarker(result.trip_running);
+			}
+			else{
+				$scope.scheduled=0;
+				$scope.running=0;
+				$scope.completed=0;
+				$scope.cancelled=0;
+				$scope.dropped=0;
+				$scope.delay_count=0;		
+			}		
+		});
+	};
+	
 	$scope.getTripDataByStatus=function(status){
 		if(status!='Ds'){
 			commonAppService.getTripsByStatus(status,function(result){
@@ -128,6 +123,30 @@ batsGeneralHome.controller('dashboardTripController', function($scope, $http, $r
 		}
 		
 	};
+	
+	$scope.givelt=function(lt,lg){
+		// alert("success");
+		var geocoder = new google.maps.Geocoder();
+		var latLng = new google.maps.LatLng(lt,lg);
+		geocoder.geocode({       
+		        latLng: latLng     
+		        }, 
+		        function(responses) 
+		        {     
+		           if (responses && responses.length > 0) 
+		           {        
+		               swal(responses[0].formatted_address);     
+		           } 
+		           else 
+		           {       
+		             swal('Not getting Any address for given latitude and longitude.');     
+		           }   
+		        }
+		);
+	}
+	$scope.gotoElement=function(eID){
+    	commonAppService.scrollTo(eID);
+    }
 });
 /**
  * *
@@ -155,6 +174,10 @@ batsGeneralHome.controller('dashboardDriverController', function($scope,$localSt
 	$scope.getPercentage=function(a,b){
 		return commonAppService.getPercentage(a,b)
 	}
+	$scope.gotoElement=function(eID){
+    	commonAppService.scrollTo(eID);
+    }
+	
 });
 /**
  * *
@@ -184,7 +207,7 @@ batsGeneralHome.controller('dashboardVehicleController', function($scope,$localS
 				   }
 				   else{
 					   $scope.hideVehiclesTable=true;
-					   alert(result.data);
+					   //alert(result.data);
 				   }				   
 			});		
 	};
@@ -208,6 +231,37 @@ batsGeneralHome.controller('dashboardVehicleController', function($scope,$localS
 		        }
 		);
 	};
+	
+	$(function() {
+		  $('.dashbHover,#ActiveThird-ring1,#NotActiveThird-ring1,#BatteryThird-ring1,#TamperedThird-ring1,.TripOuterCircle').hover(function() {
+			  $(this).append('<p id="passopt">Click Me!</p>');
+			  $(this).css("text-decoration","none");
+		  },function(){
+			$(this).children('#passopt').remove();
+		  });
+		  
+		});
+	
+	$(function() {
+		  $('.vehicleHoverClass').hover(function() {
+			  $(this).append('<p id="vehicleHover">Click Me!</p>');
+			  $(this).css("text-decoration","none");
+		  },function(){
+			$(this).children('#vehicleHover').remove();
+		  });
+		  
+		});
+	var d = new Date();
+	var month = d.getMonth()+1;
+	var day = d.getDate();
+	var output = d.getFullYear() + '/' +
+	    (month<10 ? '0' : '') + month + '/' +
+	    (day<10 ? '0' : '') + day;
+	$scope.currdate = output; 
+	$scope.gotoElement=function(eID){
+    	commonAppService.scrollTo(eID);
+    }
+	
 });
 /**
  * *

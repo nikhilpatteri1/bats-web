@@ -33,7 +33,7 @@
 			
 		</div>
 		<div class="col-sm-2 borderLeft">
-			<div ng-include src="'/admin/subMenu'"></div>
+			<div ng-include src="'/traveldesk/subMenu'"></div>
 		</div>
 	</div>
 	<div class="row">  
@@ -45,6 +45,9 @@
 					</div>
 				</div> -->
 	<div ng-show="isSet(1)">
+		<!-- <div id="scrollArea">
+    		<button id='x'>click</button>
+		</div> -->
 					<div class="row">
 					<div class="col-sm-4">
 							<!-- <div id="TestDonut" style="width: 175px; height: 175px;></div>
@@ -86,7 +89,7 @@
 									</div>
 									<div class="col-sm-4">
 									
-										<a class="dashbHover"><div class="trackerProgessCountAllo" ng-click="getList(0)">{{TrackerCount.allocated}}</div></a>
+										<a class="dashbHover"><div class="trackerProgessCountAllo" ng-click="getList(0);gotoElement('trackerDataTableT');headTxt='Allocated'">{{TrackerCount.allocated}}</div></a>
 									</div>
 								</div>
 								<div class="row">
@@ -99,7 +102,7 @@
 										</div>
 									</div>
 									<div class="col-sm-4">
-										<a class="dashbHover"><div class="trackerProgessCountUna" ng-click="getList(1)">{{TrackerCount.unallocated}}</div></a>
+										<a class="dashbHover"><div class="trackerProgessCountUna" ng-click="getList(1);gotoElement('trackerDataTableT');headTxt='Un Allocated'">{{TrackerCount.unallocated}}</div></a>
 									</div>
 								</div>
 								<div class="row">
@@ -112,7 +115,7 @@
 										</div>
 									</div>  
 									<div class="col-sm-4">
-										<a class="dashbHover"><div class="trackerProgessCountNotW" ng-click="getList(6)">{{TrackerCount.nonworking}}</div></a>  
+										<a class="dashbHover"><div class="trackerProgessCountNotW" ng-click="getList(6);gotoElement('trackerDataTableT');headTxt='Not Working'">{{TrackerCount.nonworking}}</div></a>  
 									</div>
 								</div>
 									
@@ -139,7 +142,7 @@
 				        <div id="ActiveRings1">
 						    <div id="ActiveFirst-ring1">
 						        <div id="ActiveSecond-ring1">
-						            <div id="ActiveThird-ring1" ng-click="getList(2)">
+						            <div id="ActiveThird-ring1" ng-click="getList(2);gotoElement('trackerDataTableT');headTxt='Activated'">
 						            <div class="ActiveRingsTxt">{{TrackerCount.active}}</div>
 						            </div>
 						        </div>
@@ -154,7 +157,7 @@
 				        <div id="NotActiveRings1">
 						    <div id="NotActiveFirst-ring1">
 						        <div id="NotActiveSecond-ring1">
-						            <div id="NotActiveThird-ring1" ng-click="getList(3)">
+						            <div id="NotActiveThird-ring1" ng-click="getList(3);gotoElement('trackerDataTableT');headTxt='Not activated'">
 						            <div class="ActiveRingsTxt">{{TrackerCount.inactive}}</div>
 						            </div>
 						        </div>
@@ -170,7 +173,7 @@
 				        <div id="BatteryRings1">
 						    <div id="BatteryFirst-ring1">
 						        <div id="BatterySecond-ring1">
-						            <div id="BatteryThird-ring1" ng-click="getList(4)">
+						            <div id="BatteryThird-ring1" ng-click="getList(4);gotoElement('trackerDataTableT');headTxt='Battery Low'">
 						            	<div class="ActiveRingsTxt">{{TrackerCount.batterylow}}</div>
 						            </div>
 						        </div>
@@ -186,7 +189,7 @@
 				        <div id="TamperedRings1">
 						    <div id="TamperedFirst-ring1">
 						        <div id="TamperedSecond-ring1">
-						            <div id="TamperedThird-ring1" ng-click="getList(5)">
+						            <div id="TamperedThird-ring1" ng-click="getList(5);gotoElement('trackerDataTableT');headTxt='Tampered'">
 						            <div class="ActiveRingsTxt">{{TrackerCount.tampered}}</div>
 						            </div>
 						        </div>
@@ -197,293 +200,56 @@
 					</div>
 				
 				</div>
-				<div class="row" ng-show="stateCheck =='0'">
-					<div class="row" ng-hide="hideVehiclesTable">
-						<div class="col-sm-12">
-							<div class="table-container" ng-style="histcontentheight">
-								<table class="activeTableStyle" id="TdashTable0">
-									<thead class="theadStyle tablethead">
-										<tr>
-											<th>
-												<div class="tableThickline" ng-style="stateCheck =='0' && {'background-color':'#008cdc'}"></div>
+				
+				<div id="trackerDataTableT"></div>
+				<div class="row" ng-hide="hideTripTable">
+							<div class="col-sm-12">
+								<div class="table-container" ng-style="histcontentheight">
+									<table class="activeTableStyle">
+										<thead class="theadStyle tablethead">
+											<tr>
 												
-											</th>
-											<th colspan="2"><p class="tableThickTxt">Allocated</p></th>
-											<th></th>
-											<th></th>
-											<!-- <th><div>Activated</div></th> -->
-										</tr>
-										<tr>
-											<th><div></div></th>
-											<th><div>DEVICE ID</div></th>
-											<th><div>VEHICLE NO </div></th>
-											<th><div>GROUP NAME</div></th>
-											<th><div>VEHICLE MODEL</div></th>
-											<!-- <th></th> -->
-										</tr>
-									</thead>
-									<tbody class="tbodyStyle">
-										<tr class="tbodytr tabletbodytr" ng-repeat="activelist in TrackerActList">
-											<td>{{$index+1}}</td>
-											<td><p>{{activelist.devid}}</p></td>
-											<td><p>{{activelist.vehicle_num}}</p></td>
-											<td><p>{{activelist.values.associated_group.gname}}</p></td>
-											<td><p>{{activelist.vehicle_model}}</p></td>
-										</tr>
-				
-									</tbody>
-								</table>
+												<th> 
+													<div class="tableThickline" ng-style="headTxt == 'Allocated' && {'background-color':'#008cdc'}  || headTxt == 'Un Allocated' && {'background-color':'#b3b3b3'} || headTxt == 'Activated' && {'background-color':'#01ae81'} || headTxt == 'Not activated' && {'background-color':'#5d686c'} || headTxt == 'Battery Low' && {'background-color':'#ee4423'} || headTxt == 'Tampered' && {'background-color':'#ffcc33'}"></div>
+												</th> 
+												<th><p class="tableThickTxt">{{headTxt}}</p></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<!-- <th><div>Activated</div></th> -->
+											</tr>
+											<tr>
+												<!-- <th><div>Slno</div></th> -->
+												<th><div></div></th>
+												<th><div>DEVICE ID</div></th>
+												<th><div>VEHICLE NO </div></th>
+												<th><div>GROUP NAME</div></th>
+												<th><div>VEHICLE MODEL</div></th> 
+											</tr>
+										</thead>
+										<tbody class="tbodyStyle">
+											<tr class="tbodytr tabletbodytr" ng-repeat="tracker in TrackerActList">
+												<td><p class="culomPad">{{$index+1}}</p></td>
+												<td><p>{{tracker.devid}}</p></td>
+												<td><p>{{tracker.vehicle_num}}</p></td>
+												<td><p>{{tracker.values.associated_group.gname}}</p></td>
+												<td><p>{{tracker.vehicle_model}}</p></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
 							</div>
 						</div>
-				 </div> 
-				</div>
-				<div class="row" ng-show="stateCheck =='1'">
-					<div class="row" ng-hide="hideVehiclesTable">
-						<div class="col-sm-12">
-							<div class="table-container" ng-style="histcontentheight">
-								<table class="activeTableStyle" id="TdashTable1">
-									<thead class="theadStyle tablethead">
-										<tr>
-											<th>
-												<div class="tableThickline" ng-style="stateCheck =='1' && {'background-color':'#b3b3b3'}"></div>
-											</th>
-											<th colspan="2"><p class="tableThickTxt">Un Allocated</p></th>
-											<th></th>
-											<th></th>
-											<!-- <th><div>Activated</div></th> -->
-										</tr>
-										<tr>
-										<th><div></div></th>
-											<th><div>DEVICE ID</div></th>
-											<th><div>VEHICLE NO </div></th>
-											<th><div>GROUP NAME</div></th>
-											<th><div>VEHICLE MODEL</div></th>
-											<!-- <th></th> -->
-										</tr>
-									</thead>
-									<tbody class="tbodyStyle">
-										<tr class="tbodytr tabletbodytr" ng-repeat="activelist in TrackerActList">
-										<td><p class="culomPad">{{$index+1}}</p></td>
-											<td><p>{{activelist.devid}}</p></td>
-											<td><p>{{activelist.vehicle_num}}</p></td>
-											<td><p>{{activelist.values.associated_group.gname}}</p></td>
-											<td><p>{{activelist.vehicle_model}}</p></td>
-										</tr>
 				
-									</tbody>
-								</table>
-							</div>
-						</div>
-				 </div> 
-				</div>
-				<div class="row" ng-show="stateCheck =='2'">
-					<div class="row" ng-hide="hideVehiclesTable">
-						<div class="col-sm-12">
-							<div class="table-container" ng-style="histcontentheight">
-								<table class="activeTableStyle" id="TdashTable2">
-									<thead class="theadStyle tablethead">
-										<tr>
-											<th>
-												<div class="tableThickline" ng-style="stateCheck =='2' && {'background-color':'#01ae81'}"></div>
-												
-											</th>
-											<th colspan="2"><p class="tableThickTxt">Activated</p></th>
-											<th></th>
-											<th></th>
-											<!-- <th><div>Activated</div></th> -->
-										</tr>
-										<tr>
-										<th><div></div></th>
-											<th><div>DEVICE ID</div></th>
-											<th><div>VEHICLE NO </div></th>
-											<th><div>GROUP NAME</div></th>
-											<th><div>VEHICLE MODEL</div></th>
-											<!-- <th></th> -->
-										</tr>
-									</thead>
-									<tbody class="tbodyStyle">
-										<tr class="tbodytr tabletbodytr" ng-repeat="activelist in TrackerActList">
-										<td><p class="culomPad">{{$index+1}}</p></td>
-											<td><p>{{activelist.devid}}</p></td>
-											<td><p>{{activelist.vehicle_num}}</p></td>
-											<td><p>{{activelist.values.associated_group.gname}}</p></td>
-											<td><p>{{activelist.vehicle_model}}</p></td>
-										</tr>
-				
-									</tbody>
-								</table>
-							</div>
-						</div>
-				 </div> 
-				</div>
-				<div class="row" ng-show="stateCheck =='3'">
-					<div class="row" ng-hide="hideVehiclesTable">
-						<div class="col-sm-12">
-							<div class="table-container" ng-style="histcontentheight">
-								<table class="activeTableStyle" id="TdashTable3">
-									<thead class="theadStyle tablethead">
-										<tr>
-											<th>
-												<div class="tableThickline" ng-style="stateCheck =='3' && {'background-color':'#5d686c'}"></div>
-												
-											</th>
-											<th colspan="2"><p class="tableThickTxt">Not Activated</p></th>
-											<th></th>
-											<th></th>
-											<!-- <th><div>Activated</div></th> -->
-										</tr>
-										<tr>
-										<th><div></div></th>
-											<th><div>DEVICE ID</div></th>
-											<th><div>VEHICLE NO </div></th>
-											<th><div>GROUP NAME</div></th>
-											<th><div>VEHICLE MODEL</div></th>
-											<!-- <th></th> -->
-										</tr>
-									</thead>
-									<tbody class="tbodyStyle">
-										<tr class="tbodytr tabletbodytr" ng-repeat="activelist in TrackerActList">
-										<td><p class="culomPad">{{$index+1}}</p></td>
-											<td><p>{{activelist.devid}}</p></td>
-											<td><p>{{activelist.vehicle_num}}</p></td>
-											<td><p>{{activelist.values.associated_group.gname}}</p></td>
-											<td><p>{{activelist.vehicle_model}}</p></td>
-										</tr>
-				
-									</tbody>
-								</table>
-							</div>
-						</div>
-				 </div> 
-				</div>
-				<div class="row" ng-show="stateCheck =='4'">
-					<div class="row" ng-hide="hideVehiclesTable">
-						<div class="col-sm-12">
-							<div class="table-container" ng-style="histcontentheight">
-								<table class="activeTableStyle" id="TdashTable4">
-									<thead class="theadStyle tablethead">
-										<tr>
-											<th>
-												<div class="tableThickline" ng-style="stateCheck =='4' && {'background-color':'#e64a4e'}"></div>
-											</th>
-											<th colspan="2"><p class="tableThickTxt">Battery Low</p></th>
-											<th></th>
-											<th></th>
-											<!-- <th><div>Activated</div></th> -->
-										</tr>
-										<tr>
-										<th><div></div></th>
-											<th><div>DEVICE ID</div></th>
-											<th><div>VEHICLE NO </div></th>
-											<th><div>GROUP NAME</div></th>
-											<th><div>VEHICLE MODEL</div></th>
-											<!-- <th></th> -->
-										</tr>
-									</thead>
-									<tbody class="tbodyStyle">
-										<tr class="tbodytr tabletbodytr" ng-repeat="activelist in TrackerActList">
-										<td><p class="culomPad">{{$index+1}}</p></td>
-											<td><p>{{activelist.devid}}</p></td>
-											<td><p>{{activelist.vehicle_num}}</p></td>
-											<td><p>{{activelist.values.associated_group.gname}}</p></td>
-											<td><p>{{activelist.vehicle_model}}</p></td>
-										</tr>
-				
-									</tbody>
-								</table>
-							</div>
-						</div>
-				 </div> 
-				</div>
-				<div class="row" ng-show="stateCheck =='5'">
-					<div class="row" ng-hide="hideVehiclesTable">
-						<div class="col-sm-12">
-							<div class="table-container" ng-style="histcontentheight">
-								<table class="activeTableStyle" id="TdashTable5">
-									<thead class="theadStyle tablethead">
-										<tr>
-											<th>
-												<div class="tableThickline" ng-style="stateCheck =='5' && {'background-color':'#ffd875'}"></div>
-												
-											</th>
-											<th colspan="2"><p class="tableThickTxt">Tampered</p></th>
-											<th></th>
-											<th></th>
-											<!-- <th><div>Activated</div></th> -->
-										</tr>
-										<tr>
-										<th><div></div></th>
-											<th><div>DEVICE ID</div></th>
-											<th><div>VEHICLE NO </div></th>
-											<th><div>GROUP NAME</div></th>
-											<th><div>VEHICLE MODEL</div></th>
-											<!-- <th></th> -->
-										</tr>
-									</thead>
-									<tbody class="tbodyStyle">
-										<tr class="tbodytr tabletbodytr" ng-repeat="activelist in TrackerActList">
-										<td><p class="culomPad">{{$index+1}}</p></td>
-											<td><p>{{activelist.devid}}</p></td>
-											<td><p>{{activelist.vehicle_num}}</p></td>
-											<td><p>{{activelist.values.associated_group.gname}}</p></td>
-											<td><p>{{activelist.vehicle_model}}</p></td>
-										</tr>
-				
-									</tbody>
-								</table>
-							</div>
-						</div>
-				 </div> 
-				</div>
-				<div class="row" ng-show="stateCheck =='6'">
-					<div class="row" ng-hide="hideVehiclesTable">
-						<div class="col-sm-12">
-							<div class="table-container" ng-style="histcontentheight">
-								<table class="activeTableStyle" id="TdashTable6">
-									<thead class="theadStyle tablethead">
-										<tr>
-											<th>
-												<div class="tableThickline" ng-style="stateCheck =='5' && {'background-color':'#ffd875'}"></div>
-												
-											</th>
-											<th colspan="2"><p class="tableThickTxt">Not working</p></th>
-											<th></th>
-											<th></th>
-											<!-- <th><div>Activated</div></th> -->
-										</tr>
-										<tr>
-										<th><div></div></th>
-											<th><div>DEVICE ID</div></th>
-											<th><div>VEHICLE NO </div></th>
-											<th><div>GROUP NAME</div></th>
-											<th><div>VEHICLE MODEL</div></th>
-											<!-- <th></th> -->
-										</tr>
-									</thead>
-									<tbody class="tbodyStyle">
-										<tr class="tbodytr tabletbodytr" ng-repeat="activelist in TrackerActList">
-										<td><p class="culomPad">{{$index+1}}</p></td>
-											<td><p>{{activelist.devid}}</p></td>
-											<td><p>{{activelist.vehicle_num}}</p></td>
-											<td><p>{{activelist.values.associated_group.gname}}</p></td>
-											<td><p>{{activelist.vehicle_model}}</p></td>
-										</tr>
-				
-									</tbody>
-								</table>
-							</div>
-						</div>
-				 </div> 
-				</div>
 	</div>
 				
 	<div ng-show="isSet(2)" ng-controller="dashboardTripController"
-					ng-init="initMap();getTripData()">
+					>
 					<div class="row mar0">
 						<div id="TripMap" class="TripMap"></div>
 						<div class="row mar0">
 							<div class="col-sm-2"
-								ng-click="getTripDataByStatus('S');headText='Scheduled';">
+								ng-click="getTripDataByStatus('S');gotoElement('tripDataTableT');headText='Scheduled';">
 								<div class="TripCircleDiv">
 									<div>Scheduled</div>
 									<div class="TripOuterCircle SOutCircle circle">
@@ -499,7 +265,7 @@
 								</div>
 							</div>
 							<div class="col-sm-2"
-								ng-click="getTripDataByStatus('R');headText='Running';">
+								ng-click="getTripDataByStatus('R');gotoElement('tripDataTableT');headText='Running';">
 								<div class="TripCircleDiv">
 									<div>Running</div>
 									<div class="TripOuterCircle ROutCircle circle">
@@ -511,7 +277,7 @@
 								</div>
 							</div>
 							<div class="col-sm-2"
-								ng-click="getTripDataByStatus('Ds');headText='Delayed';">
+								ng-click="getTripDataByStatus('Ds');gotoElement('tripDataTableT');headText='Delayed';">
 								<div class="TripCircleDiv">
 									<div>Delayed</div>
 									<div class="TripOuterCircle DOutCircle circle">
@@ -523,7 +289,7 @@
 								</div>
 							</div>
 							<div class="col-sm-2"
-								ng-click="getTripDataByStatus('C');headText='Cancelled';">
+								ng-click="getTripDataByStatus('C');gotoElement('tripDataTableT');headText='Cancelled';">
 								<div class="TripCircleDiv">
 									<div>Cancelled</div>
 									<div class="TripOuterCircle COutCircle circle">
@@ -535,7 +301,7 @@
 								</div>
 							</div>
 							<div class="col-sm-2"
-								ng-click="getTripDataByStatus('D');headText='Dropped';">
+								ng-click="getTripDataByStatus('D');gotoElement('tripDataTableT');headText='Dropped';">
 								<div class="TripCircleDiv">
 									<div>Dropped</div>
 									<div class="TripOuterCircle DrpOutCircle  circle">
@@ -547,7 +313,7 @@
 								</div>
 							</div>
 							<div class="col-sm-2"
-								ng-click="getTripDataByStatus('F');headText='Completed';">
+								ng-click="getTripDataByStatus('F');gotoElement('tripDataTableT');headText='Completed';">
 								<div class="TripCircleDiv CompleteDiv">
 									<div class="CompDivTxt">Completed</div>
 									<div class="TripOuterCircle CompOutCircle circle">
@@ -559,6 +325,7 @@
 								</div>
 							</div>
 						</div>
+						<div id="tripDataTableT"></div>
 						<div class="row" ng-hide="hideTripTable">
 							<div class="col-sm-12">
 								<div class="table-container" ng-style="histcontentheight">
@@ -625,7 +392,7 @@
 										</div>
 
 										<div class="col-sm-7 trackerProgessRow">
-											<div class="row" ng-click="tripStatus='false'">
+											<div class="row" ng-click="tripStatus='false';gotoElement('driverDataTableT')">
 												<div class="col-sm-8">
 													<p class="trackerProgessText">Available</p>
 													<div class="progress trackerProgess">
@@ -641,7 +408,7 @@
 													<a class="dashbHover"><div class="driverProgessCountAvail">{{availableDrivers}}</div></a>
 												</div>
 											</div>
-											<div class="row" ng-click="tripStatus='trip'">
+											<div class="row" ng-click="tripStatus='trip';gotoElement('driverDataTableT')">
 												<div class="col-sm-8">
 													<p class="trackerProgessText">On Trip</p>
 													<div class="progress trackerProgess">
@@ -665,6 +432,7 @@
 							</div>
 						</div>
 					</div>
+					<div id="driverDataTableT"></div>
 					<div class="row">
 						<div class="col-sm-12" ng-hide="(driverData  | filter :{ontrip:tripStatus}).length==0">
 							<div class="table-container" ng-style="histcontentheight">
@@ -773,7 +541,7 @@
 						</div>
 					</div>
 					<div class="row mar0">
-						<div class="col-sm-4" ng-click="getVehiclesDataByStatus('overspeed');txtHead='OverSpeed';hideSpeed=false">
+						<div class="col-sm-4" ng-click="getVehiclesDataByStatus('overspeed');gotoElement('vehicleDataTableT');txtHead='OverSpeed';hideSpeed=false">
 							<div class="activeDiv">
 								<div class="row vehicleHoverClass">
 									<div class="col-sm-6">
@@ -789,7 +557,7 @@
 							</div>
 						</div>
 
-						<div class="col-sm-4" ng-click="getVehiclesDataByStatus('geofence');txtHead='Geofence';hideSpeed=true">
+						<div class="col-sm-4" ng-click="getVehiclesDataByStatus('geofence');gotoElement('vehicleDataTableT');txtHead='Geofence';hideSpeed=true">
 							<div class="activeDiv">
 								<div class="row vehicleHoverClass">
 									<div class="col-sm-6">
@@ -804,7 +572,7 @@
 								<div class="GeofenceLine"></div>
 							</div>
 						</div>
-						<div class="col-sm-4" ng-click="getVehiclesDataByStatus('panic');txtHead='Panic';hideSpeed=true">
+						<div class="col-sm-4" ng-click="getVehiclesDataByStatus('panic');gotoElement('vehicleDataTableT');txtHead='Panic';hideSpeed=true">
 							<div class="activeDiv">
 								<div class="row vehicleHoverClass">
 									<div class="col-sm-6">
@@ -820,6 +588,7 @@
 							</div>
 						</div>
 					</div>
+					<div id="vehicleDataTableT"></div>
 					<div class="row" ng-hide="hideVehiclesTable">  
 						<div class="col-sm-12">
 							<div class="table-container" ng-style="histcontentheight">

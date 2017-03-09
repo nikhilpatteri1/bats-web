@@ -25,7 +25,7 @@ batsLogin.controller('loginController', function($rootScope,$scope, $http, $loca
 	  	 else if($scope.token.charAt(9)==="3"){
 		  		$('#loginModal').modal('hide');
 		  		$localStorage.data = $scope.token;
-		  		window.location = "/traveldesk/binding";
+		  		window.location = "/traveldesk/dashboard";
 		  }
 	}
 	$scope.user = {};

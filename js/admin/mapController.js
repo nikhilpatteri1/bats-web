@@ -217,12 +217,16 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 			contentString  = '<b><label>Device ID:</label> '+deviceID+'</b><br><br><b><label>Vehicle No:</label> '+vehNo+'</b><br><br><b><label>Vehicle Model:</label> '+vehModel+'</b><br><br>'+html+'<br><br><button class="btn btn-primary btn-sm" id="infoClick" data-deviceID="'+deviceID+'">show detail</button>';
 		}
 		
-		    
+		var $markerImage = document.querySelector('.markerImage'),
+		  markerImageSvg = $markerImage.innerHTML || '';
 		    var marker = new google.maps.Marker({
 		        position: latlng,
 		        map: map,
 		        title: deviceID, 
-		        icon:icon,       
+		        icon: {
+		            anchor: new google.maps.Point(16, 16),
+		            url: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(markerImageSvg.replace('{{background}}', Colors[0]))
+		          },       
 		        zIndex: Math.round(latlng.lat()*-100000)<<5
 		        });
 		        marker.myname = deviceID;

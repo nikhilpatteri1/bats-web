@@ -183,7 +183,7 @@ batsAdminHome.run(function($rootScope, $route, $location,$localStorage){
 	   $rootScope.$on('$locationChangeSuccess', function() {		   
 	        $rootScope.actualLocation = $location.path();	        
 	        var tokenCheck=$localStorage.data;
-	        console.log(tokenCheck);
+	        //console.log(tokenCheck);
 	        if(tokenCheck.charAt(9)!='1'){
 	        	
 	        	window.location = apiURL;
