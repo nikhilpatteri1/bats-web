@@ -5,9 +5,10 @@ batstravelDeskHome.controller('dashboardController', function($scope, $http,
 	$scope.tab = 1;
 	$scope.hideTripTable=true;
 	$scope.setTab = function(newTab) {
-		/* google.maps.event.trigger(map, 'resize'); */// $scope.tripDetails="";
-		/* console.log("in setTab"); */
-		// clearField();
+		if(newTab=='2'){
+			commonAppService.initMap();
+			$rootScope.getTripData();
+		}
 		$scope.tab = newTab;
 	};
 
@@ -88,32 +89,34 @@ batstravelDeskHome.controller('dashboardTripController', function($scope, $http,
 	$scope.initMap=function(){
 		commonAppService.initMap();	
 	};
-	commonAppService.getTripData(function(result){
-		console.log(JSON.stringify(result));
-		if(result.data!="trips not found"){
-			$scope.scheduled=result.res_data.scheduled;
-			$scope.running=result.res_data.running;
-			$scope.completed=result.res_data.completed;
-			$scope.cancelled=result.res_data.cancelled;
-			$scope.dropped=result.res_data.dropped;
-			$scope.delay_count=result.res_data.delay_count;
-			/*var data1={"trip_id": "tripid1","values" : {"ts" : "1488564205000", "long" : 77.660444, "lat" : 12.848834, "Velocity" :100, "Vol" : 10}};
-			var data2={"trip_id": "tripid2","values" : {"ts" : "1488564205000", "long" : 74.784771, "lat" : 20.697141, "Velocity" :100, "Vol" : 10}}
-			var dummyData=[];
-			dummyData.push(data1);
-			dummyData.push(data2);*/
-			//commonAppService.plotVehicleMarker(dummyData);
-			commonAppService.plotVehicleMarker(result.trip_running);
-		}
-		else{
-			$scope.scheduled=0;
-			$scope.running=0;
-			$scope.completed=0;
-			$scope.cancelled=0;
-			$scope.dropped=0;
-			$scope.delay_count=0;		
-		}		
-	});  
+	$rootScope.getTripData=function(){
+		commonAppService.getTripData(function(result){
+			console.log(JSON.stringify(result));
+			if(result.data!="trips not found"){
+				$scope.scheduled=result.res_data.scheduled;
+				$scope.running=result.res_data.running;
+				$scope.completed=result.res_data.completed;
+				$scope.cancelled=result.res_data.cancelled;
+				$scope.dropped=result.res_data.dropped;
+				$scope.delay_count=result.res_data.delay_count;
+				/*var data1={"trip_id": "tripid1","values" : {"ts" : "1488564205000", "long" : 77.660444, "lat" : 12.848834, "Velocity" :100, "Vol" : 10}};
+				var data2={"trip_id": "tripid2","values" : {"ts" : "1488564205000", "long" : 74.784771, "lat" : 20.697141, "Velocity" :100, "Vol" : 10}}
+				var dummyData=[];
+				dummyData.push(data1);
+				dummyData.push(data2);*/
+				//commonAppService.plotVehicleMarker(dummyData);
+				commonAppService.plotVehicleMarker(result.trip_running);
+			}
+			else{
+				$scope.scheduled=0;
+				$scope.running=0;
+				$scope.completed=0;
+				$scope.cancelled=0;
+				$scope.dropped=0;
+				$scope.delay_count=0;		
+			}		
+		});
+	};
 	$scope.getTripDataByStatus=function(status){
 		if(status!='Ds'){
 			commonAppService.getTripsByStatus(status,function(result){

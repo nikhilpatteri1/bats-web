@@ -9,22 +9,22 @@
 			<ul class="nav nav-tabs managedivH dashboardTab">
 				<li ng-class="{ active: isSet(1) }"><a href
 					ng-click="setTab(1)">
-					<img alt="" ng-src="{{isSet(1) == true?'../images/tracker-copy.png':'../images/tracker.png'}}" class="activeImg">
+					<img alt="" ng-src="{{isSet(1) == true?'../images/tracker-copy.png':'../images/tracker.png'}}" class="activeImg activeTabImg">
 					<div class="Tabtext">Tracker</div>
 					</a></li>
 				<li ng-class="{ active: isSet(2) }"><a href
 					ng-click="setTab(2)">
-					<img alt="" ng-src="{{isSet(2) == true?'../images/trip-copy.png':'../images/trip.png'}}" class="activeImg">
+					<img alt="" ng-src="{{isSet(2) == true?'../images/trip-copy.png':'../images/trip.png'}}" class="activeImg activeTabImg">
 					<div class="Tabtext">Trip</div>
 					</a></li>
 				<li ng-class="{ active: isSet(3) }"><a href 
 				ng-click="setTab(3)">
-				<img alt="" ng-src="{{isSet(3) == true?'../images/driverD-copy.png':'../images/driverD.png'}}" class="activeImg">
+				<img alt="" ng-src="{{isSet(3) == true?'../images/driverD-copy.png':'../images/driverD.png'}}" class="activeImg activeTabImg">
 				<div class="Tabtext">Driver</div>
 				</a></li>
 				<li ng-class="{ active: isSet(4) }"><a href 
 				ng-click="setTab(4)">
-				<img alt="" ng-src="{{isSet(4) == true?'../images/vehicle-copy.png':'../images/vehicle.png'}}" class="activeImg">
+				<img alt="" ng-src="{{isSet(4) == true?'../images/vehicle-copy.png':'../images/vehicle.png'}}" class="activeImg activeTabImg">  
 				<div class="Tabtext">Vehicle</div>
 				</a></li>
 			</ul>
@@ -44,7 +44,7 @@
 						<h1 class="titleClass">loading!...</h1>
 					</div>
 				</div> -->
-	<div ng-show="isSet(1)">
+	<div ng-show="isSet(1)" class="setBackgroundColor">
 		<!-- <div id="scrollArea">
     		<button id='x'>click</button>
 		</div> -->
@@ -89,7 +89,7 @@
 									</div>
 									<div class="col-sm-4">
 									
-										<a class="dashbHover"><div class="trackerProgessCountAllo" ng-click="getList(0);gotoElement('trackerDataTableT');headTxt='Allocated'">{{TrackerCount.allocated}}</div></a>
+										<a class="dashbHover"><div class="trackerProgessCountAllo" ng-click="getList(0);gotoElement('trackerDataTableT');headTxt='Allocated';hideStatus=false">{{TrackerCount.allocated}}</div></a>
 									</div>
 								</div>
 								<div class="row">
@@ -102,7 +102,7 @@
 										</div>
 									</div>
 									<div class="col-sm-4">
-										<a class="dashbHover"><div class="trackerProgessCountUna" ng-click="getList(1);gotoElement('trackerDataTableT');headTxt='Un Allocated'">{{TrackerCount.unallocated}}</div></a>
+										<a class="dashbHover"><div class="trackerProgessCountUna" ng-click="getList(1);gotoElement('trackerDataTableT');headTxt='Un Allocated';hideStatus=false">{{TrackerCount.unallocated}}</div></a>
 									</div>
 								</div>
 								<div class="row">
@@ -115,7 +115,7 @@
 										</div>
 									</div>  
 									<div class="col-sm-4">
-										<a class="dashbHover"><div class="trackerProgessCountNotW" ng-click="getList(6);gotoElement('trackerDataTableT');headTxt='Not Working'">{{TrackerCount.nonworking}}</div></a>  
+										<a class="dashbHover"><div class="trackerProgessCountNotW" ng-click="getList(6);gotoElement('trackerDataTableT');headTxt='Not Working';hideStatus=true">{{TrackerCount.nonworking}}</div></a>  
 									</div>
 								</div>
 									
@@ -142,7 +142,7 @@
 				        <div id="ActiveRings1">
 						    <div id="ActiveFirst-ring1">
 						        <div id="ActiveSecond-ring1">
-						            <div id="ActiveThird-ring1" ng-click="getList(2);gotoElement('trackerDataTableT');headTxt='Activated'">
+						            <div id="ActiveThird-ring1" ng-click="getList(2);gotoElement('trackerDataTableT');headTxt='Activated';hideStatus=true">
 						            <div class="ActiveRingsTxt">{{TrackerCount.active}}</div>
 						            </div>
 						        </div>
@@ -157,7 +157,7 @@
 				        <div id="NotActiveRings1">
 						    <div id="NotActiveFirst-ring1">
 						        <div id="NotActiveSecond-ring1">
-						            <div id="NotActiveThird-ring1" ng-click="getList(3);gotoElement('trackerDataTableT');headTxt='Not activated'">
+						            <div id="NotActiveThird-ring1" ng-click="getList(3);gotoElement('trackerDataTableT');headTxt='Not activated';hideStatus=true">
 						            <div class="ActiveRingsTxt">{{TrackerCount.inactive}}</div>
 						            </div>
 						        </div>
@@ -173,7 +173,7 @@
 				        <div id="BatteryRings1">
 						    <div id="BatteryFirst-ring1">
 						        <div id="BatterySecond-ring1">
-						            <div id="BatteryThird-ring1" ng-click="getList(4);gotoElement('trackerDataTableT');headTxt='Battery Low'">
+						            <div id="BatteryThird-ring1" ng-click="getList(4);gotoElement('trackerDataTableT');headTxt='Battery Low';hideStatus=true">
 						            	<div class="ActiveRingsTxt">{{TrackerCount.batterylow}}</div>
 						            </div>
 						        </div>
@@ -189,7 +189,7 @@
 				        <div id="TamperedRings1">
 						    <div id="TamperedFirst-ring1">
 						        <div id="TamperedSecond-ring1">
-						            <div id="TamperedThird-ring1" ng-click="getList(5);gotoElement('trackerDataTableT');headTxt='Tampered'">
+						            <div id="TamperedThird-ring1" ng-click="getList(5);gotoElement('trackerDataTableT');headTxt='Tampered';hideStatus=true">
 						            <div class="ActiveRingsTxt">{{TrackerCount.tampered}}</div>
 						            </div>
 						        </div>
@@ -204,7 +204,7 @@
 				<div id="trackerDataTableT"></div>
 				<div class="row" ng-hide="hideTripTable">
 							<div class="col-sm-12">
-								<div class="table-container" ng-style="histcontentheight">
+								<div class="table-container" ng-style="histcontentheight"> 
 									<table class="activeTableStyle">
 										<thead class="theadStyle tablethead">
 											<tr>
@@ -215,6 +215,7 @@
 												<th><p class="tableThickTxt">{{headTxt}}</p></th>
 												<th></th>
 												<th></th>
+												<th ng-hide="hideStatus"><div></div></th>
 												<th></th>
 												<!-- <th><div>Activated</div></th> -->
 											</tr>
@@ -223,6 +224,7 @@
 												<th><div></div></th>
 												<th><div>DEVICE ID</div></th>
 												<th><div>VEHICLE NO </div></th>
+												<th ng-hide="hideStatus"><div>Status</div></th>
 												<th><div>GROUP NAME</div></th>
 												<th><div>VEHICLE MODEL</div></th> 
 											</tr>
@@ -232,6 +234,7 @@
 												<td><p class="culomPad">{{$index+1}}</p></td>
 												<td><p>{{tracker.devid}}</p></td>
 												<td><p>{{tracker.vehicle_num}}</p></td>
+												<td ng-hide="hideStatus"><p>{{tracker.active_status=="I"?"Inactive":"Active"}}</p></td>
 												<td><p>{{tracker.values.associated_group.gname}}</p></td>
 												<td><p>{{tracker.vehicle_model}}</p></td>
 											</tr>
@@ -243,7 +246,7 @@
 				
 	</div>
 				
-	<div ng-show="isSet(2)" ng-controller="dashboardTripController"
+	<div ng-show="isSet(2)" class="setBackgroundColor" ng-controller="dashboardTripController"
 					>
 					<div class="row mar0">
 						<div id="TripMap" class="TripMap"></div>
@@ -363,7 +366,7 @@
 						</div>
 					</div>
 				</div>
-	<div ng-show="isSet(3)" ng-controller="dashboardDriverController"
+	<div ng-show="isSet(3)" class="setBackgroundColor" ng-controller="dashboardDriverController"
 					ng-init="tripStatus='false'">
 					<div class="row">
 						<div class="col-sm-4">
@@ -483,7 +486,7 @@
 						</div>
 					</div>
 				</div>
-				<div ng-show="isSet(4)" ng-controller="dashboardVehicleController">
+				<div ng-show="isSet(4)" class="setBackgroundColor" ng-controller="dashboardVehicleController">
 					<div class="row">
 						<div class="col-sm-4">
 							<!-- <div id="TestDonut" style="width: 175px; height: 175px;></div>
@@ -572,7 +575,7 @@
 								<div class="GeofenceLine"></div>
 							</div>
 						</div>
-						<div class="col-sm-4" ng-click="getVehiclesDataByStatus('panic');gotoElement('vehicleDataTableT');txtHead='Panic';hideSpeed=true">
+						<div class="col-sm-4" ng-click="getVehiclesDataByStatus('panic');gotoElement('vehicleDataTableT');txtHead='Panic';hideSpeed=true"> 
 							<div class="activeDiv">
 								<div class="row vehicleHoverClass">
 									<div class="col-sm-6">
@@ -593,18 +596,20 @@
 						<div class="col-sm-12">
 							<div class="table-container" ng-style="histcontentheight">
 								<table class="activeTableStyle">
-									<thead class="theadStyle tablethead">
+									<thead class="theadStyle tablethead"> 
 										<tr>
 											<th>
-												<div class="tableThickline"></div>
+												<div class="tableThickline" ng-style=" txtHead=='OverSpeed' && {'background-color':'#ec3f53'} || txtHead=='Geofence' && {'background-color':'#6668a5'}  || txtHead=='Panic' && {'background-color':'#ffcc33'} "></div>
 												
 											</th>
-											<th><p class="">{{txtHead}}</p></th>
+											<th><p class="tableThickTxt">{{txtHead}}</p></th>
+											<th></th>
+											<th></th>
 											<th></th>
 											<!-- <th><div>Activated</div></th> -->
 										</tr>
 										<tr>
-											<th><div>Slno</div></th>
+											<th><div></div></th>
 											<th><div>Device ID</div></th>
 											<th><div>Vehicle Number</div></th>											
 											<th ng-hide="hideSpeed"><div>Speed</div></th>

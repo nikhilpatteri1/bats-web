@@ -26,17 +26,7 @@ batsGeneralHome.controller('dashboardController', function($scope, $http, $rootS
 
 	commonAppService.tracker(function(result) {
 		console.log(result);
-		$scope.TrackerCount = result;
-		
-		console.log($scope.TrackerCount);
-		console.log($scope.TrackerCount.nonworking);
-		var data = [ {
-			name : "Notworking",
-			y : $scope.TrackerCount.nonworking,
-			color : '#e54a4e'
-		}, ];
-		commonAppService.donutChart('container', data);
-
+		$scope.TrackerCount = result;		
 		$scope.getPercentage = function(a, b) {
 			return ((b * 100) / a).toFixed(2);
 		}
@@ -98,7 +88,8 @@ batsGeneralHome.controller('dashboardTripController', function($scope, $http, $r
 				$scope.completed=0;
 				$scope.cancelled=0;
 				$scope.dropped=0;
-				$scope.delay_count=0;		
+				$scope.delay_count=0;
+				commonAppService.initMap();
 			}		
 		});
 	};

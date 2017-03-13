@@ -9,22 +9,22 @@
 			<ul class="nav nav-tabs managedivH dashboardTab">
 				<li ng-class="{ active: isSet(1) }"><a href
 					ng-click="setTab(1)">
-					<img alt="" ng-src="{{isSet(1) == true?'../images/tracker-copy.png':'../images/tracker.png'}}" class="activeImg">
+					<img alt="" ng-src="{{isSet(1) == true?'../images/tracker-copy.png':'../images/tracker.png'}}" class="activeImg activeTabImg">
 					<div class="Tabtext">Tracker</div>
 					</a></li>
 				<li ng-class="{ active: isSet(2) }"><a href
 					ng-click="setTab(2)">
-					<img alt="" ng-src="{{isSet(2) == true?'../images/trip-copy.png':'../images/trip.png'}}" class="activeImg">
+					<img alt="" ng-src="{{isSet(2) == true?'../images/trip-copy.png':'../images/trip.png'}}" class="activeImg activeTabImg">
 					<div class="Tabtext">Trip</div>
 					</a></li>
 				<li ng-class="{ active: isSet(3) }"><a href 
 				ng-click="setTab(3)">
-				<img alt="" ng-src="{{isSet(3) == true?'../images/driverD-copy.png':'../images/driverD.png'}}" class="activeImg">
+				<img alt="" ng-src="{{isSet(3) == true?'../images/driverD-copy.png':'../images/driverD.png'}}" class="activeImg activeTabImg">
 				<div class="Tabtext">Driver</div>
 				</a></li>
 				<li ng-class="{ active: isSet(4) }"><a href 
 				ng-click="setTab(4)">
-				<img alt="" ng-src="{{isSet(4) == true?'../images/vehicle-copy.png':'../images/vehicle.png'}}" class="activeImg">
+				<img alt="" ng-src="{{isSet(4) == true?'../images/vehicle-copy.png':'../images/vehicle.png'}}" class="activeImg activeTabImg">
 				<div class="Tabtext">Vehicle</div>
 				</a></li>
 			</ul>
@@ -44,7 +44,7 @@
 						<h1 class="titleClass">loading!...</h1>
 					</div>
 				</div> -->
-				<div ng-show="isSet(1)">
+				<div ng-show="isSet(1)" class="setBackgroundColor">
 				<div class="row">
 					<div class="col-sm-3">
 							<!-- <div id="TestDonut" style="width: 175px; height: 175px;></div>
@@ -208,7 +208,7 @@
 						</div>
 					
 </div>
-				<div ng-show="isSet(2)" ng-controller="dashboardTripController"
+				<div ng-show="isSet(2)" class="setBackgroundColor" ng-controller="dashboardTripController"
 					>
 					<div class="row mar0">
 						<div id="TripMap" class="TripMap"></div>
@@ -328,7 +328,7 @@
 						</div>
 					</div>
 				</div>
-				<div ng-show="isSet(3)" ng-controller="dashboardDriverController"
+				<div ng-show="isSet(3)" class="setBackgroundColor" ng-controller="dashboardDriverController"
 					ng-init="tripStatus='false'">
 					<div class="row">
 						<div class="col-sm-4">
@@ -448,7 +448,7 @@
 						</div>
 					</div>
 				</div>
-				<div ng-show="isSet(4)" ng-controller="dashboardVehicleController">
+				<div ng-show="isSet(4)" class="setBackgroundColor" ng-controller="dashboardVehicleController">
 					<div class="row">
 						<div class="col-sm-4">
 							<!-- <div id="TestDonut" style="width: 175px; height: 175px;></div>
@@ -558,18 +558,18 @@
 						<div class="col-sm-12">
 							<div class="table-container" ng-style="histcontentheight">
 								<table class="activeTableStyle">
-									<thead class="theadStyle tablethead">
+									<thead class="theadStyle tablethead"> 
 										<tr>
 											<th>
-												<div class="tableThickline"></div>
+												<div class="tableThickline" ng-style=" txtHead=='OverSpeed' && {'background-color':'#ec3f53'} || txtHead=='Geofence' && {'background-color':'#6668a5'}  || txtHead=='Panic' && {'background-color':'#ffcc33'} "></div>
 												
 											</th>
-											<th><p class="">{{txtHead}}</p></th>
+											<th><p class="tableThickTxt">{{txtHead}}</p></th>
 											<th></th>
 											<!-- <th><div>Activated</div></th> -->
 										</tr>
 										<tr>
-											<th><div></div></th>
+											<th><div></div></th>  
 											<th><div>Device ID</div></th>
 											<th><div>Vehicle Number</div></th>											
 											<th ng-hide="hideSpeed"><div>Speed</div></th>

@@ -84,9 +84,6 @@ batsAdminHome.controller('dashboardController', function($scope, $http, $rootSco
 batsAdminHome.controller('dashboardTripController', function($scope, $http, $rootScope,$localStorage,commonAppService,commonFactory){
 //	console.log("trip"); 
 	$scope.hideTripTable=true;
-	$scope.initMap=function(){
-		commonAppService.initMap();	
-	};
 	$rootScope.getTripData=function(){
 		commonAppService.getTripData(function(result){
 			//console.log(JSON.stringify(result));

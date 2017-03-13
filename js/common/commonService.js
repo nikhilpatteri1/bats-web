@@ -179,7 +179,6 @@ commonApp.service('commonAppService',function(commonFactory,$localStorage){
   				lng : 77.658968
   			}
           });
-         
 	}	
 	this.getTripData=function(cb){
 		var getTripDataJson={};

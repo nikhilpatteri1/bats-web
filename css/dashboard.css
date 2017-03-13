@@ -43,7 +43,7 @@ margin-right: -50px;
 .Tabtext{
 	display: inline-block;
     position: relative;
-    top: -5px;
+    top: -1px;
 }
 
 .trackerBTxt{
@@ -127,6 +127,11 @@ margin-right: -50px;
     padding-top: 10px;
     /* padding-bottom: 10px; */
 }
+
+.activeDiv:hover{
+	 background: #fafcff;
+}
+
 .activeDivText{
     width: 88%;
     padding: 1px 1px;
@@ -199,6 +204,13 @@ margin-right: -50px;
     margin-right: 6%;
 }
 
+.activeTabImg{
+	width:16px !important;
+}
+
+
+
+
 .activeTableStyle thead{
 	background-color:#f5f3f3;
 }
@@ -216,7 +228,7 @@ table.activeTableStyle thead th:first-child {
     text-align: center;
     color:#fff;
     background-color:#000;
-    width: 44px;
+    width: 50px;
 }
 
 table.activeTableStyle tbody td:first-child { 
@@ -483,6 +495,10 @@ table.activeTableStyle tbody td:first-child {
     padding-top: 14px;
     /* padding-bottom: 1px; */
 }
+.TripCircleDiv:hover{
+	background: #fafcff;
+}
+
 .CompleteDiv{
     background: #22446f;
 }
@@ -719,8 +735,15 @@ table td.shrink {
 } */
 .dashboardTab>li>a
 {
-	padding: 5px 40px;
+	padding: 9px 40px;
 	margin-right: 0px;
 	border-right: 1px solid #ddd;
 	border-radius: 0px;
+	color:#000;
 }
+
+.setBackgroundColor{
+	background-color:#f6fffc;
+}
+
+
