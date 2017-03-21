@@ -262,13 +262,13 @@
 																</div>
 															</div>
 														</div>
-													</div>
+													</div> 
 													<div class="col-sm-4">
-														<div class="form-group multiple_contact"
+														<!-- <div class="form-group multiple_contact"
 															ng-class="{'has-error':createGroupForm.contact_email{{$index+1}}.$invalid && !createGroupForm.contact_email{{$index+1}}.$pristine}">
 															<label> E mail</label>
-															<!-- ng-show="group.contact_email"
-															class="floatlabeltxt show-hide" -->
+															ng-show="group.contact_email"
+															class="floatlabeltxt show-hide"
 															<div class="row">
 																<div class="col-sm-12">
 																	<input type="text" ng-model="group.contact_email"
@@ -276,13 +276,30 @@
 																		name="contact_email{{$index+1}}"
 																		ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" />
 																		<p ng-show="createGroupForm.contact_email{{$index+1}}.$invalid && createGroupForm.contact_email{{$index+1}}.$touched"
-																class="help-block error-help">Email is
+																class="help-block error-help">Name is
 																required.</p>
 																	<p ng-show="createGroupForm.contact_email{{$index+1}}.$error.pattern"
 																		class="help-block dynamicBlockHelp">Enter a valid
 																		email.</p>
 																</div>
 															</div>
+														</div> -->
+														<div class="form-group multiple_contact"
+															ng-class="{'has-error':createGroupForm.contact_email{{$index+1}}.$invalid && !createGroupForm.contact_email{{$index+1}}.$pristine}">
+															<!-- <label ng-show="travelDesk.Email"
+																		class="floatlabeltxt show-hide">Enter Email Id</label> -->
+															<label class="labelClass">Email</label> 
+															<input type="email"
+																ng-model="group.contact_email"
+																ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
+																name="contact_email{{$index+1}}" class="dynamicBlockInput form-control"
+																 required />
+															<p
+																ng-show="createGroupForm.contact_email{{$index+1}}.$touched  && createGroupForm.contact_email{{$index+1}}.$invalid"
+																class="help-block error-help">Email is required</p>
+															<p
+																ng-show="createGroupForm.contact_email{{$index+1}}.$error.pattern && !createGroupForm.contact_email{{$index+1}}.$pristine"
+																class="help-block error-help">Enter a valid email.</p>
 														</div>
 													</div>
 													<div class="col-sm-4">
@@ -480,8 +497,10 @@
 											<div class="col-sm-6 col-sm-offset-3" align="right">
 												<div class="form-group">
 													<a class="btn btn-primary creategroup" id="showMap"
-														ng-hide="!selection.length || gname"
+														ng-hide="!selection.length || gname || createGroupForm.$invalid"
+														
 														ng-click="changeStyle()">Continue</a>
+														<!-- <p>{{createGroupForm.$invalid}}</p> -->
 												</div>
 											</div>
 										</div>

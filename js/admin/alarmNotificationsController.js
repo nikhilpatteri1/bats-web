@@ -4,6 +4,7 @@ batsAdminHome.controller('AlarmNotificationsControllerAdmin', function($scope, $
 		$scope.token = $localStorage.data;
 		var token = $scope.token;
 		if (typeof $scope.token === "undefined") {
+			alert("from notificetion");
 			swal({
 				title : "Un Authorized Acces",
 				text : "Kindly Login!",
@@ -109,7 +110,7 @@ batsAdminHome.controller('AlarmNotificationsControllerAdmin', function($scope, $
 							expiredSession();
 							$localStorage.$reset();
 						} else if (data.err == "Invalid User") {
-							invalidUser();
+							invalidUser(1);
 							$localStorage.$reset();
 						}
 			    	  

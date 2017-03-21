@@ -723,7 +723,7 @@ function showGeofenceMap(){
     	                    "featureType": "poi.business",
     	                    "stylers": [
     	                      {
-    	                        "visibility": "off"
+    	                        "visibility": "on"
     	                      }
     	                    ]
     	                  },
@@ -732,7 +732,7 @@ function showGeofenceMap(){
     	                    "elementType": "labels.text",
     	                    "stylers": [
     	                      {
-    	                        "visibility": "off"
+    	                        "visibility": "on"
     	                      }
     	                    ]
     	                  },
@@ -757,7 +757,7 @@ function showGeofenceMap(){
     	                    "featureType": "road.local",
     	                    "stylers": [
     	                      {
-    	                        "visibility": "off"
+    	                        "visibility": "on"
     	                      }
     	                    ]
     	                  },

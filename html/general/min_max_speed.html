@@ -34,6 +34,7 @@
 									
 					<select id="selectDevice" class="form-control" name="devList"
 						ng-model="deviceId" ng-change="deviceSelectedMinMax()">
+						<option></option>
 						<option ng-if="devList.length" value="" selected disabled
 							class="disable_select">Select Vehicle No/Device </option>
 						<option ng-if="!devList.length" selected disabled>No
@@ -85,6 +86,12 @@
 			<div ng-include src="'/general/subMenu'"></div>
 		</div>
 	</div>
+
+<div class="bgloading" ng-show="httpLoading">
+				<div class="bigbar">
+					<h1 class="titleClass">loading!...</h1>
+				</div>
+</div>
 
 	<div class="row " id="highcharts_minmax" >
 		<div class="col-sm-6 borderBox" align="center"

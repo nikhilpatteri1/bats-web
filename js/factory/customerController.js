@@ -66,6 +66,28 @@ batsfactoryhome.controller('customerControllerInner', function($scope, $http, $l
 		  if($scope.home.length == 0){
 			  $scope.noCustomer = true;
 			  }
+		  /*$scope.clearGroup = function() {
+			  data.clist.uname == 0;
+				$scope.home = data.clist.uname; 
+			};*/
+		  
+		  $scope.fetchStatelist = function(country){
+			  if(country == "India"){
+				  console.log(country); 
+				  $scope.stateList = data.clist;
+				  console.log($scope.stateList);
+			  }
+			  else{
+				  //nothing
+			  }
+		  };
+		  $scope.fetchGrouplist = function(state){
+			  console.log(state);
+			  $scope.groupList = data.clist;
+		  }
+		  
+		  
+		  
 		  })
 		  .error(function(data, status, headers, config) {
 			  console.log(data.err);
@@ -82,6 +104,12 @@ batsfactoryhome.controller('customerControllerInner', function($scope, $http, $l
 			  console.log(headers);
 			  console.log(config);
 		  });
+		
+		
+		
+		
+		
+		
 		//});
 	//}
 	
@@ -568,6 +596,22 @@ batsfactoryhome.controller('factoryCreate', function($scope, $http, $localStorag
     $scope.hideErrorOrgName=function(){
     	$scope.error = {orgname:false};
     }
+    
+    
+    $(document).ready(function() {
+		$.getScript('../assets/select_filter/select2.min.js', function() {
+			$("#selCountry").select2({}); 
+			$('#clearTxtCountry span.select2-chosen').text("Select Country");
+			$("#selState").select2({}); 
+			$('#clearTxtState span.select2-chosen').text("Select State");
+			$("#selGroup").select2({}); 
+			$('#clearTxtGroup span.select2-chosen').text("Select Group");
+			
+			
+			
+		});// script
+	});
+    
     
 });
 

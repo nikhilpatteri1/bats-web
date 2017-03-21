@@ -5,13 +5,24 @@
 
 			<h4 class="search_heading">Search customer</h4>
 			<div class="row Dropdownpadding">
-				<div class="col-sm-6">
+				<div class="col-sm-6" id="clearTextCustomer">
 					<select id="mySelect" class="form-control" name="customerList"
 						ng-model="custname" ng-change="chk(custname)">
 						<option value="" selected class="disable_select"
-							ng-disabled="selectCustomer">Select Customer</option>
+							ng-disabled="selectCustomer">- -Select Customer - -</option>
+						<option ng-if="!customerName.length" selected disabled>No Customer Avialable</option>	
 						<option ng-repeat="x in customerName" value="{{ x }}">{{x}}</option>
 					</select>
+					
+					
+					<!-- <select id="selectGroup" class="form-control" name="groupList"
+								ng-model="groupname" ng-change="fetchDevicelist(groupname)">
+								<option ng-if="groupList.length" value="" selected disabled
+									class="disable_select">-- Select Group - -</option>
+								<option ng-if="!groupList.length" selected disabled>No
+									Group Available</option>
+								<option ng-repeat="option in groupList" value="{{ option.gid }}">{{option.gname}}</option>
+					</select> -->
 				</div>
 
 			</div>

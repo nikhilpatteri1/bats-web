@@ -30,6 +30,7 @@
 							<select id="selectDevice" class="form-control" name="deviceList"
 								ng-model="hist.searchDeviceModel"
 								ng-change="deviceSelected(hist.searchDeviceModel)">
+								<option></option>
 								<option ng-if="groupDevice.length" value="" selected disabled
 									class="disable_select">-- Select Vehicle No/Device --</option>
 								<option ng-if="!groupDevice.length" selected disabled>No

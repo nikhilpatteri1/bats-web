@@ -345,9 +345,10 @@ select {
 .count_label {
 	position:absolute;
 	z-index:1000;
-	margin-top: 45px;
+	margin-top: 1%;
 	text-align: center;
-	width:100%;	
+	width:100%;
+	margin-left: 22%;	
 }
 
 .count_label label {
@@ -571,7 +572,9 @@ background: #e7e7e7;
 	background: rgba(255,255,255,0.8);
 }
 /* #highcharts_minmax .minmax_devid{background: rgba(255,255,255,0.8);padding: 10px;margin: 0 0 10px 0;} */
-.showMinMaxErr{color: red;margin-bottom: 20px;}
+.showMinMaxErr{color: red;margin-bottom: 20px;margin-top: 10px;
+    font-size: 11px;
+    margin-left: 13px;}
 .paddingTB05{
 	padding-top:5px;
 	padding-bottom:5px;

@@ -1,6 +1,7 @@
 var startTimeStampKm;
 var endTimeStampKm;
-
+var startDateMinMaxError = document.getElementById('startDateMinMaxErrorAlarm');
+var endDateMinMaxError = document.getElementById('endDateMinMaxErrorAlarm'); 
 
 batsAdminHome.controller('vehicleAlarm',function($scope,$rootScope, $http, $localStorage){
 	$rootScope.menuPos=2;
@@ -120,6 +121,8 @@ batsAdminHome.controller('vehicleAlarm',function($scope,$rootScope, $http, $loca
 	$scope.deviceSelectAlarm=true;
 	$scope.showResultTable = false;
 	$scope.noResultTable = false;
+	startDateMinMaxErrorAlarm.style.display = 'none';
+	endDateMinMaxErrorAlarm.style.display = 'none';
 	$('.md-datepicker-input').prop('readonly', true);
 	};	
 	
@@ -193,12 +196,32 @@ batsAdminHome.controller('vehicleAlarm',function($scope,$rootScope, $http, $loca
 		var startDateMaxKm = document.getElementById('VAStartTime').value;
 		console.log(startDateMaxKm);
 		var endDateMaxKm = document.getElementById('VAEndTime').value;
-		$scope.httpLoading=true;
-		startDate(startDateMaxKm);
-		endDate(endDateMaxKm);
+		//$scope.httpLoading=false;
+		
+		
+		if(startDateMaxKm == "" && endDateMaxKm == ""){
+			startDateMinMaxErrorAlarm.style.display = 'block';
+			endDateMinMaxErrorAlarm.style.display = 'block';
+			// alert("1");
+		}
+		else if(startDateMaxKm == ""){
+			startDateMinMaxErrorAlarm.style.display = 'block';
+			// alert("2");
+		}
+		else if(endDateMaxKm == ""){
+			endDateMinMaxErrorAlarm.style.display = 'block';
+			// alert("3");
+		}
+		else{
+			$scope.httpLoading=true;
+			startDateMinMaxErrorAlarm.style.display = 'none';
+			endDateMinMaxErrorAlarm.style.display = 'none';
+
 		/*console.log($scope.myDate.start);
 		getSTS($scope.myDate.start);
 		getETS($scope.myDate.end);*/
+			startDate(startDateMaxKm);
+			endDate(endDateMaxKm);
 		                    $scope.devIdJson = {};
 							$scope.devIdJson.token = $scope.token;
 							$scope.devIdJson.devid = $scope.deviceId;
@@ -254,6 +277,8 @@ batsAdminHome.controller('vehicleAlarm',function($scope,$rootScope, $http, $loca
 							 }).finally(function(){		
 									$scope.httpLoading=false;
 								});
+		}
+	
 	};	
 
 	

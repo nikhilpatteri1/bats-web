@@ -1,6 +1,6 @@
 batstravelDeskHome.service('travelDeskService', function() {
 	this.showTime = function(ts) {
-		//console.log(ts);
+		console.log(ts);
 		var d = new Date(Number(ts));
 		var day = d.getDate();
 		var month = d.getMonth()+1;
@@ -12,7 +12,7 @@ batstravelDeskHome.service('travelDeskService', function() {
 		hours = hours ? hours : 12; // the hour '0' should be '12'
 		minutes = minutes < 10 ? '0' + minutes : minutes;
 		var strTime = day+"/"+month+"/"+year+" "+ hours + ':' + minutes + ' ' + ampm;
-		//console.log(strTime);
+		console.log(strTime);
 		return strTime;
 	};
 	this.getDateTime = function(ts) {

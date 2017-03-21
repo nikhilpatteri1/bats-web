@@ -61,9 +61,10 @@ batsAdminHome.controller("MinMaxSpeedCtrl",function($http,$scope,$filter,$localS
 		  console.log(headers);
 		  console.log(config);
 	  });
-	
+	   
 	$scope.fetchDevList = function(groupID) {
-		$scope.httpLoading=true;
+	$scope.httpLoading=true;
+	console.log($scope.httpLoading);
 	$('#clearTextDevice span.select2-chosen').empty();  
 	$('#clearTextDevice span.select2-chosen').text(" Select Vehicle No/Device "); 
 	$scope.sel_group_device = false;
@@ -84,7 +85,7 @@ batsAdminHome.controller("MinMaxSpeedCtrl",function($http,$scope,$filter,$localS
 	}).success(function(data) {
 	$scope.devList = data.devlist;
 	// console.log(JSON.stringify($scope.devList));
-	$scope.httpLoading=false;
+	//$scope.httpLoading=false;
 	})
 	.error(function(data, status, headers, config) {
 		console.log(data.err);

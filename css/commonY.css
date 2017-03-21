@@ -160,7 +160,7 @@ body {
     background: linear-gradient(linear, 0 50%, 0 100%, from(#000000),to(#342C41)); /* Standard syntax (must be last) */
 }
 
-.settingsDetail{display: none;margin-left:40px;}
+.settingsDetail{display: none;margin-left:27px;}
 .settingsDetail>li{
 	    list-style-type: none;
     margin-bottom: 15px;

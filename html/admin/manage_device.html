@@ -68,6 +68,7 @@
 						<div class="col-sm-3" id="clearTextDevice" align="center">
 							<select id="selectDevice" class="form-control" name="deviceList"
 								ng-model="deviceId" ng-change="sortDeviceId()">
+								<option></option>
 								<option ng-if="deviceList.length" value="" selected disabled
 									class="disable_select">-- Select Vehicle No/Device --</option>
 								<option ng-if="!deviceList.length" selected disabled>No

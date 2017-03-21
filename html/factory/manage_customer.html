@@ -6,27 +6,29 @@
 
 				<h4 class="search_heading">Search Group</h4>
 				<div class="row ">
-					<div class="col-sm-3">
+					<div class="col-sm-3" id="clearTxtCountry">
 						<div class="country">
-							<select ng-model="selectedcountry" class="form-control"
-								ng-options="customer.country as customer.country for customer in home | unique:'country'">
+							<select id="selCountry" ng-model="selectedcountry" class="form-control" ng-change="fetchStatelist(selectedcountry)"
+							ng-options="customer.country as customer.country for customer in home | unique:'country'">
 								<option value="">Select Country</option>
 							</select>
 						</div>
 					</div>
-					<div class="col-sm-3">
+					<div class="col-sm-3" id="clearTxtState">
 						<div class="country">
-							<select ng-model="selectedstate" class="form-control"
-								ng-options="customer.state as customer.state for customer in home | unique:'state' | filter:{country:selectedcountry}">
+							<select id="selState" ng-model="selectedstate" class="form-control" ng-change="fetchGrouplist(selectedstate)">
+								<!-- ng-options="customer.state as customer.state for customer in stateList | unique:'state' | filter:{country:selectedcountry}" -->
 								<option value="">Select State</option>
+								<option ng-repeat="option in stateList">{{option.state}}</option>
 							</select>
 						</div>
 					</div>
-					<div class="col-sm-3">
+					<div class="col-sm-3" id="clearTxtGroup">
 						<div class="country">
-							<select ng-model="selectedunames" class="form-control"
-								ng-options="customer.uname as customer.uname for customer in home | filter:{country:selectedcountry,state:selectedstate}">
+							<select id="selGroup" ng-model="selectedunames" class="form-control">
+								<!-- ng-options="customer.uname as customer.uname for customer in home | filter:{country:selectedcountry,state:selectedstate}" -->
 								<option value="">Select Group</option>
+								<option ng-repeat="option in groupList | filter:{country:selectedcountry,state:selectedstate}">{{option.uname}}</option>
 							</select>
 						</div>
 					</div>

@@ -25,6 +25,7 @@
 				<div class="col-sm-3" id="clearTextDevice">
 					<select id="selectDevice" class="form-control" name="devList"
 						ng-model="deviceId" ng-change="deviceSelectedAlarm()">
+						<option></option>
 						<option ng-if="devList.length" value="" selected disabled
 							class="disable_select">-- Select Vehicle No/Device --</option>
 						<option ng-if="!devList.length" selected disabled>No
@@ -47,6 +48,9 @@
 								class="glyphicon glyphicon-calendar"> </span>
 							</span>
 						</div>
+						<div class="showMinMaxErr" id="startDateMinMaxErrorAlarm">
+						<i class="ion-information-circled"></i> This field is required!
+					</div>
 					</div>
 					<div class="col-sm-3 customcol3 ">
 						<!-- <div class="datepickerDivStyle">
@@ -62,6 +66,9 @@
 								class="glyphicon glyphicon-calendar"> </span>
 							</span>
 						</div>
+						<div class="showMinMaxErr" id="endDateMinMaxErrorAlarm">
+						<i class="ion-information-circled"></i> This field is required!
+					</div>
 					</div>
 					<div class="col-sm-1 pad0">
 						<button class="btn btn-primary btn-sm" ng-click="submitAlarm()">Submit</button>

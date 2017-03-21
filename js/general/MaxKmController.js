@@ -62,7 +62,9 @@ batsGeneralHome.controller("GeneralMaxKmCtrl",function($rootScope,$http,$scope,$
 	  });
 	
 	$scope.fetchDevList = function(groupID) {
-		$scope.httpLoading=true
+		$scope.httpLoading=true;
+		$('#clearTextDevice span.select2-chosen').empty();  
+		$('#clearTextDevice span.select2-chosen').text(" Select Vehicle No/Device ");
 	/*
 	 * $('#clearTextDevice span.select2-chosen').empty(); $('#clearTextDevice
 	 * span.select2-chosen').text("- - Select Vehicle No/Device - -");

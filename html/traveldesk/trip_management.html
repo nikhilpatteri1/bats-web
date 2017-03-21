@@ -111,8 +111,8 @@
 											</div>  
 											<!-- Vehicle No -->
 											<!-- Trip ID -->
-											<div class="col-sm-2">
-												<p>{{tripdetail.trip_id}}</p>
+											<div class="col-sm-3">
+												<p class="pd24">{{tripdetail.trip_id}}</p>
 												<!-- <p>{{driverdetail.name}}</p> -->
 											</div>
 											<!-- Trip ID -->
@@ -128,10 +128,10 @@
 											<!-- ./image of driver/avatar -->
 
 											<!-- Driver Edit -->
-											<div class="col-sm-4" align="left">
+											<div class="col-sm-2" >
 												<div class="row userIcons">
-													<div class="col-sm-10">
-													<div class="col-sm-4">
+													<div class="col-sm-12">
+													<div class="col-sm-6">
 														<a href="#" class="edit_icon" data-toggle="modal"
 															ng-click="fetchTripInfo(tripdetail.trip_id);initUpdateMap()"
 															data-target="#updateTripModal"><i
@@ -145,7 +145,7 @@
 															ng-click="cancelTrip(tripdetail.trip_id)"><i
 															class="fa fa-times"></i></a>
 													</div> -->
-													<div class="col-sm-4">
+													<div class="col-sm-6">
 														
 														<button type="button" class="btn btn-info btn-xs SHBtn"
 																		data-toggle="collapse"
@@ -241,7 +241,7 @@
 																<label>Destination point</label>
 															</div>
 															<div class="col-sm-6">
-																<p>Crowne Plaza Bengaluru</p>
+																<p>{{tripdetail.td_destination.name}}</p>
 															</div>
 														</div>
 														<div class="row">
@@ -249,7 +249,7 @@
 																<label>Start time</label>
 															</div>
 															<div class="col-sm-6">
-																<p>{{getTimeFormat(tripdetail.apprx_start_time)}}</p>
+																<p>{{getTimeFormat(tripdetail.td_start_point.ts)}}</p>
 															</div>
 														</div>
 														<div class="row">
@@ -257,7 +257,7 @@
 																<label class="marB">End time</label>
 															</div>
 															<div class="col-sm-6">
-																<p>{{getTimeFormat(tripdetail.apprx_end_time)}}</p>
+																<p>{{getTimeFormat(tripdetail.td_end_point.ts)}}</p>
 															</div>
 														</div>
 														

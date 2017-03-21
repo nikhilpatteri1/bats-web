@@ -104,7 +104,7 @@ batsAdminHome.controller('TDcontroller',function($rootScope,$scope,$http,$localS
 				closeOnConfirm:true} ,
 				function(){
 					$('#createTDModal').hide();
-					//$('#updateTDModal').show();
+					$('#updateTDModal').show();
 				/*$('#createTDModal').modal('hide');*/
 			});
 			})

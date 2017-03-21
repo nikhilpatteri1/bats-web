@@ -66,6 +66,8 @@ batsAdminHome.controller("MaxKmCtrl",function($http,$scope,$rootScope,$filter,$l
 	$scope.fetchDevList = function(groupID) {
 		$scope.httpLoading=true
 		$scope.blankTable=false;
+		$('#clearTextDevice span.select2-chosen').empty();  
+		$('#clearTextDevice span.select2-chosen').text(" Select Vehicle No/Device ");
 	/*$('#clearTextDevice ').empty();  
 	$('#clearTextDevice ').text("- - Select Vehicle No/Device - -"); */
 	$scope.sel_group_device = false;

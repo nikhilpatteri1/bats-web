@@ -2,7 +2,7 @@
 	<div class="map_content" ng-controller='smartcontroller'
 		ng-init="initialize();activeFull='0'">
 		<!-- Header For MAP -->
-		<div class="row header_bats">
+		<div class="row header_bats">  
 			<div class="col-sm-10">
 				<div class="row">
 					<div class="col-sm-12">
@@ -25,15 +25,29 @@
 							</div>
 							<div class="col-sm-3" id="clearTextDevice">
 								<!-- <div ng-show="deviceloading"><img src="../../images/loading.gif" width="10px" height="10px"/></div> -->
-								<select id="selectDevice" class="form-control" name="deviceList"
+								<!-- <select id="selectDevice" class="form-control" name="deviceList"
 									ng-model="deviceId" ng-change="fetchDeviceDetail(gid,deviceId)">
-									<option ng-if="devlistObject.length" value="" selected disabled
+									 <option ng-if="devlistObject.length" value="" selected disabled
 										class="disable_select">-- Select Vehicle No/Device --</option>
 									<option ng-if="!devlistObject.length" selected disabled>
-										No Device Available</option>
+										No Device Available</option> 
 									<option ng-repeat="option in devlistObject"
+										value="{{ option.devid }}">{{option.vehicle_num.length>0?option.vehicle_num:option.devid}}</option> 
+								</select> -->
+								<select id="selectDevice" ng-model="deviceId" class="form-control" 
+								ng-change="fetchDeviceDetail(gid,deviceId)" name="deviceList">
+								    <option></option>
+								    <option ng-if="devlistObject.length" value="" selected disabled
+										class="disable_select">-- Select Vehicle No/Device --</option>
+								    <option ng-if="!devlistObject.length" selected disabled>
+										No Device Available</option>
+								    <option ng-repeat="option in devlistObject"
 										value="{{ option.devid }}">{{option.vehicle_num.length>0?option.vehicle_num:option.devid}}</option>
+								    <!-- <option value="1">Germany</option>
+								    <option value="2">France</option>
+								    <option value="3">Spain</option> -->
 								</select>
+								
 							</div>
 							<div class="col-sm-2">
 								<img alt="" src="../../images/fullscreen.png"
@@ -43,6 +57,7 @@
 									ng-click="shrinkMap();activeFull='0'" ng-show="activeFull!='0'"
 									class="closeFullScreen">
 							</div>
+							<div>Zoom {{zoomlevel}}</div>
 						</div>
 					</div>
 				</div>

@@ -380,9 +380,10 @@ input {
 .count_label {
 	position:absolute;
 	z-index:1000;
-	margin-top: 45px;
+	margin-top: 1%;
 	text-align: center;
 	width:100%;	
+	margin-left: 22%;
 }
 
 .count_label label {
@@ -657,6 +658,9 @@ md-content.md-default-theme, md-content {
 .showMinMaxErr {
 	color: red;
 	margin-bottom: 20px;
+	margin-top: 10px;
+    font-size: 11px;
+    margin-left: 13px;
 }
 
 .margin40 {
@@ -775,7 +779,7 @@ md-content.md-default-theme, md-content {
 }
 
 .bgloading {
-	z-index: 1000;
+	z-index: 1005;
 	border: none;
 	margin: 0px;
 	padding: 0px;
@@ -1160,7 +1164,7 @@ md-content.md-default-theme, md-content {
 	content: " *";
 	color: #f00;
 	top: -6px;
-	z-index: 10000;
+	z-index: 10;
 	position: absolute;
 }
 

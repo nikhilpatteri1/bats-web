@@ -46,7 +46,7 @@
 								<option value="unbind">Un-Binded Vehicle</option>
 							</select>
 							
-						</div>
+						</div>  
 					</div>
 				
 					
@@ -82,7 +82,7 @@
 								</thead>
 								<tbody class="tbodyStyle">    
 									<tr class="tbodytr tabletbodytr"
-										ng-repeat="device in devlistObject |  filter:{'bind':bindStatus}">
+										ng-repeat="device in devlistObject | filter:deviceId | filter:{'bind':bindStatus}">
 										<!-- <td><p class="culomPad">{{$index+1}}</p></td> -->
 										<td><p>{{device.vehicle_num.length>0?device.vehicle_num:device.devid}}</p></td>
 										<td><p>{{device.vehicle_model}}</p></td>
@@ -420,11 +420,11 @@
 															<div class="row pd120" >
 																<!-- image of driver/avatar -->
 																<div class="col-sm-1">
-																<p>{{driverdetail.image_src.length}}</p>
+																<!-- <p>{{driverdetail.image_src.length}}</p> -->
 																	<img
 																		src="{{driverdetail.image_src.length>0?driverdetail.image_src:'../images/driver.png'}}"
 																		class="img-responsive img-circle img-thumbnail iconImageSm" />
-																		<p>{{driverdetail.image_src.length>0?driverdetail.image_src:'../images/driver.png'}}</p>
+												  						<!-- <p>{{driverdetail.image_src.length>0?driverdetail.image_src:'../images/driver.png'}}</p> -->
 																</div>
 																<!-- ./image of driver/avatar -->
 																<!-- Driver Name -->

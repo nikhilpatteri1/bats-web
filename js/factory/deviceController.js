@@ -351,6 +351,15 @@ batsfactoryhome.controller('deviceController', function($rootScope,$scope,$http,
 	 // *********************** number of checkbox selected ***********************
 	  $scope.selectedItems = 0;
 	  
+	  
+	  $(document).ready(function() {
+			$.getScript('../assets/select_filter/select2.min.js', function() {
+				$("#mySelect").select2({}); 
+				$('#clearTextCustomer span.select2-chosen').text("- - Select Customer - -");
+			});// script
+		});
+	  
+	  
 });
 
 

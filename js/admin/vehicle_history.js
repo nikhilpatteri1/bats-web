@@ -186,20 +186,24 @@ batsAdminHome.controller('vehicleHistory', function($scope,$rootScope, $http, $l
 		$scope.yoData=false; 
 		$scope.myDate = "";
 		$scope.initialize();
+		$('#trvelRouteHstTime').val("");   
 	};
 	
-	$(document).on('click', '#trvelRouteHstTimePic', function(){
+	/*$(document).on('click', '#trvelRouteHstTimePic', function(){
 		$('#trvelRouteHstTimePic').datetimepicker({
-			/* inline: true,
-             sideBySide: true,*/
+			 inline: true,
+             sideBySide: true,
 			format: 'DD/MM/YYYY',
 	        maxDate: 'now',        		
 			ignoreReadonly:true,
-	            }).on("dp.change",function (e) {
+	      });
+		
+		$('#trvelRouteHstTimePic').on("dp.change",function (e) {
 	            	//$("#startDateMaxKm").blur(); 
 	            	//closeResult();
-	            	console.log(e);
-	            	console.log(e.date);
+	            	//console.log(e);
+	            	//console.log(e.date);
+	            	alert("hi");
 	            	console.log(e.date._d);
 	            	$scope.MyDate = e.date._d;
 	            	$scope.myDateChange();
@@ -208,7 +212,37 @@ batsAdminHome.controller('vehicleHistory', function($scope,$rootScope, $http, $l
 		//startDateMaxKmError.style.display = 'none';
 		var dt=new Date().getTime();
 		$('#trvelRouteHstTime').val(showTime(dt));
+		
+	});*/
+	
+	
+	$(document).ready(function () {
+		$('#trvelRouteHstTimePic').datetimepicker({
+			 inline: true,
+            sideBySide: true,
+			format: 'DD/MM/YYYY',
+	        maxDate: 'now',        		
+			ignoreReadonly:true,
+	      });
+		
+		$('#trvelRouteHstTimePic').on("dp.change",function (e) {
+	            	//$("#startDateMaxKm").blur(); 
+	            	//closeResult();
+	            	//console.log(e);
+	            	//console.log(e.date);
+	            	//alert("hi");
+	            	console.log(e.date._d);
+	            	$scope.MyDate = e.date._d;
+	            	$scope.myDateChange();
+	            	$scope.activeMenu = '5';
+	            });
+		//startDateMaxKmError.style.display = 'none';
+		var dt=new Date().getTime();
+		$('#trvelRouteHstTime').val(showTime(dt));
+	
 	});
+	
+	
 	
 	function showTime (ts) {
 		//console.log(ts);
@@ -237,8 +271,8 @@ batsAdminHome.controller('vehicleHistory', function($scope,$rootScope, $http, $l
 		return sts.getTime();
 	}
 	
-	$scope.myDateChange=function(){
-		console.log("datechange");
+	$scope.myDateChange = function(){
+		//alert("datechange");
 		$scope.yoData=false;
 		$scope.httpLoading=true;
 		$scope.initialize();

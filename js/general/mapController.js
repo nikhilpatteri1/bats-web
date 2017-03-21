@@ -111,7 +111,7 @@
 				function wheelEvent( event ) {
 					// console.log($scope.zoomlevel);
 					if(typeof $scope.deviceId !='undefined' && $scope.deviceId !=""){
-					if ($scope.zoomlevel < 16 || $scope.zoomlevel > 21) {					
+					if ($scope.zoomlevel < 16 || $scope.zoomlevel > 17) {					
 						$scope.singleDeviceZoomed = false;
 						if (angular.isDefined(singleDeviceInterval)) {
 							$interval.cancel(singleDeviceInterval);
@@ -132,7 +132,7 @@
 			        css('left', 0).
 			        css("width", '100%').
 			        css("height", '100%');
-			    	$(".count_label").css("position", 'fixed').css('top', 0).css('left', '5px');
+			    	$(".count_label").css("position", 'fixed').css('top', '8px').css('left', '5px').css('margin-top', '45px');
 			    	$(".traffic_layer_btn").css("position", 'fixed').css('top', '10px').css('left', '130px');
 			    	console.log("resize");
 			    	google.maps.event.trigger(map, 'resize');
@@ -146,7 +146,7 @@
 			        css('left', 0).
 			        css("width", '100%').
 			        css("height", '100%');
-			    	$(".count_label").css("position", 'absolute').css('top', 0).css('left', '15px');
+			    	$(".count_label").css("position", 'absolute').css('top', 0).css('left', '15px').css('margin-top', '1%');
 			    	$(".traffic_layer_btn").css("position", 'absolute').css('top', '10px').css('left', '130px');
 			    	google.maps.event.trigger(map, 'resize');
 			    	/*map.setZoom(map.getZoom());*/

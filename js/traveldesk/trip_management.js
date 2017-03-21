@@ -23,6 +23,9 @@ batstravelDeskHome.controller('tripManagement', function($rootScope,$scope, $loc
 	var UTrip_duration;
 	var CEndStamp;
 	var UEndStamp;
+	$scope.update={};
+	
+	
 	$scope.noTripList = false;
 	
 	$scope.redColor={
@@ -230,8 +233,9 @@ batstravelDeskHome.controller('tripManagement', function($rootScope,$scope, $loc
 		else { 
 			marker.setPosition(location);
 		}
-		marker.addListener('dragend', function(event){		  
+		marker.addListener('dragend', function(event){	
 			  end=event.latLng;
+			  console.log(end);
 			  calcRoute();
 		  });
 		
@@ -324,6 +328,7 @@ batstravelDeskHome.controller('tripManagement', function($rootScope,$scope, $loc
 	
 	
 	$scope.getTimeFormat = function(ts){
+		console.log(ts);
 		return travelDeskService.showTime(ts);
 	}
 	
@@ -380,6 +385,7 @@ batstravelDeskHome.controller('tripManagement', function($rootScope,$scope, $loc
 				$scope.yesTriplist = true;
 				$scope.noTripList = false;
 		      $scope.triplistObject= result.list;
+		      console.log($scope.triplistObject);
 		      $scope.httpLoading=false;
 			}
 		});
@@ -441,14 +447,18 @@ batstravelDeskHome.controller('tripManagement', function($rootScope,$scope, $loc
 				$scope.createTripData.start_point.name= "Crowne Plaza Bengaluru";
 				$scope.createTripData.start_point.lat= 12.850167;
 				$scope.createTripData.start_point.long= 77.660329;
+				$scope.createTripData.start_point.ts=travelDeskService.getTsOverTime($("#startTimeid").val());
 				$scope.createTripData.end_point ={};
 				$scope.createTripData.end_point.name="Crowne Plaza Bengaluru" ;
 				$scope.createTripData.end_point.lat= 12.850167;
 				$scope.createTripData.end_point.long= 77.660329;
-				$scope.createTripData.destination= destinations;
+				$scope.createTripData.end_point.ts=CEndStamp;
+				$scope.createTripData.destination={};
+				$scope.createTripData.destination.name= destinations.join();
+                $scope.createTripData.destination.lat=$scope.pathwaysArray.slice(-1)[0][0];
+                $scope.createTripData.destination.long=$scope.pathwaysArray.slice(-1)[0][1];
+                
 				$scope.createTripData.path_way = $scope.pathwaysArray;
-				$scope.createTripData.apprx_start_time=travelDeskService.getTsOverTime($("#startTimeid").val());
-				$scope.createTripData.apprx_end_time=CEndStamp;	
 				
 				
 				$scope.createTripData.customers=$scope.trip_create.customers;
@@ -603,6 +613,9 @@ batstravelDeskHome.controller('tripManagement', function($rootScope,$scope, $loc
 		
 	   directionsDisplay.setMap(updateMap);
 	   google.maps.event.addListener(updateMap, 'click', function(event) {
+		   $scope.update.startlat = this.getPosition().lat();
+			$scope.update.startlong= this.getPosition().lng();
+			console.log($scope.update);
 		   end=event.latLng;
 		   updateMarker(event.latLng);
 		   updateRoute(end);
@@ -629,8 +642,13 @@ batstravelDeskHome.controller('tripManagement', function($rootScope,$scope, $loc
 		else { 
 			marker.setPosition(location);
 		}
-		marker.addListener('dragend', function(event){		  
+		marker.addListener('dragend', function(event){
+			  console.log(event);
 			  end=event.latLng;
+			  console.log(event.latLng);
+			  $scope.update.startlat =  this.getPosition().lat();
+			  $scope.update.startlong=  this.getPosition().lng();
+			  console.log($scope.update);
 			  updateRoute(end);
 		  });
 		
@@ -727,13 +745,16 @@ batstravelDeskHome.controller('tripManagement', function($rootScope,$scope, $loc
 	
 	function updateTripForm(result){
 		$scope.updateTrip.trip_id=result.data.trip_id;
-		$scope.updateTrip.stime=travelDeskService.getDateTime(result.data.apprx_start_time);
-		$scope.updateTrip.etime=travelDeskService.getDateTime(result.data.apprx_end_time);
+		$scope.updateTrip.stime=travelDeskService.getDateTime(result.data.td_start_point.ts);
+		$scope.updateTrip.etime=travelDeskService.getDateTime(result.data.td_end_point.ts);
 		//$scope.updateTrip.gname=result.data.gname;
 		$scope.updateTrip.vno=result.data.devid;
-		$scope.updateTrip.spoint=result.data.start_point.name
-		$scope.updateTrip.epoint=result.data.end_point.name
-		$scope.updateTrip.dest=result.data.destination;
+		$scope.updateTrip.spoint=result.data.td_start_point.name;
+		$scope.updateTrip.epoint=result.data.td_end_point.name;
+		$scope.updateTrip.dest=result.data.td_destination.name;
+		$scope.update.startlat = result.data.td_destination.lat;
+		$scope.update.startlong= result.data.td_destination.long;
+		console.log(result.data.td_destination.lat,result.data.td_destination.long);
 		$scope.updateTrip.Customers=result.data.customers;
 		var endArray=result.data.path_way.slice(-1)[0];
 		var start = new google.maps.LatLng(myPlace.lat,myPlace.lng);
@@ -770,18 +791,27 @@ batstravelDeskHome.controller('tripManagement', function($rootScope,$scope, $loc
 			$scope.updateTripJson.start_point.name= "Crowne Plaza Bengaluru";
 			$scope.updateTripJson.start_point.lat= 12.850167;
 			$scope.updateTripJson.start_point.long= 77.660329;
+			$scope.updateTripJson.start_point.ts = travelDeskService.getTsOverTime($("#updateStartTime").val());
 			$scope.updateTripJson.end_point={};
 			$scope.updateTripJson.end_point.name= "Crowne Plaza Bengaluru";
 			$scope.updateTripJson.end_point.lat= 12.850167;
 			$scope.updateTripJson.end_point.long= 77.660329;
+			$scope.updateTripJson.end_point.ts = travelDeskService.getTsOverTime($("#updateEndTime").val());
+			
 			$scope.updateTripJson.path_way=$scope.pathwaysArray;
 			
-			$scope.updateTripJson.apprx_start_time=travelDeskService.getTsOverTime($("#updateStartTime").val());		
-			$scope.updateTripJson.apprx_end_time=UEndStamp;
+			//$scope.updateTripJson.apprx_start_time=travelDeskService.getTsOverTime($("#updateStartTime").val());		
+			//$scope.updateTripJson.apprx_end_time=UEndStamp;
 			$scope.updateTripJson.customers=$scope.updateTrip.Customers;
-			$scope.updateTripJson.destination=$scope.updateTrip.dest;
+			$scope.updateTripJson.destination={};
+			$scope.updateTripJson.destination.name= $scope.updateTrip.dest;
+			$scope.updateTripJson.destination.lat=  $scope.update.startlat;
+			$scope.updateTripJson.destination.long= $scope.update.startlong;
+			console.log($scope.updateTripJson.destination);
 			$scope.updateTripJson.trip_id=$scope.updateTrip.trip_id;
-			//console.log(JSON.stringify($scope.updateTripJson));
+			console.log(JSON.stringify($scope.updateTripJson.destination.lat));
+			console.log(JSON.stringify($scope.updateTripJson.destination.long));
+			console.log(JSON.stringify($scope.updateTripJson));
 			travelDeskFactory.callApi("POST",apiURL+"trip/update",$scope.updateTripJson,function(result){
 			      console.log(result);	
 			      if(result.status == "success"){

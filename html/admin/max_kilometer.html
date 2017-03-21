@@ -27,6 +27,7 @@
 			<div class="col-sm-3" id="clearTextDevice">
 				<select id="selectDevice" class="form-control" name="devList"
 					ng-model="deviceId" ng-change="deviceSelectedMaxKm()">
+					<option></option>
 					<option ng-if="devList.length" value="" selected disabled
 						class="disable_select">Select Vehicle</option>
 					<option ng-if="!devList.length" selected disabled>No
