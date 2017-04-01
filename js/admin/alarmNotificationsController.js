@@ -96,7 +96,8 @@ batsAdminHome.controller('AlarmNotificationsControllerAdmin', function($scope, $
 					  }
 			      })
 			      .error(function(data, status, headers, config) {
-			    	  alert("notification +data "+data);
+			    	//
+			    	  //alert("notification +data "+JSON.stringify(data));
 			    	  console.trace();
 			    	  console.log(data);
 			    	  console.log(status);

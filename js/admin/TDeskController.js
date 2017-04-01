@@ -47,6 +47,7 @@ batsAdminHome.controller('TDcontroller',function($rootScope,$scope,$http,$localS
 			console.log(data);
 			if(data.err == "Travel desk user not found")
 			{
+				alert("hide");
 				$('#createTDModal').show();
 				$('#updateTDModal').hide();
 				/*$('#createTDModal').modal('show');*/		
@@ -62,6 +63,22 @@ batsAdminHome.controller('TDcontroller',function($rootScope,$scope,$http,$localS
 			}		
 		})
 		.error(function(data,status,headers,config){
+			if(data.err == "Travel desk user not found")
+			{
+				//alert("hide");
+				$('#createTDModal').show();
+				$('#updateTDModal').hide();
+				/*$('#createTDModal').modal('show');*/		
+			}
+		
+			else{
+				/*$scope.updateEditModal(data,function(){
+					
+					$('#updateTDModal').show();
+					$('#createTDModal').hide();
+					$('#updateTDModal').modal('show');
+				});	*/
+			}
 			if(data.err == "Expired Session")
 				  {	  expiredSession();
 				      $localStorage.$reset();

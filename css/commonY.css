@@ -353,7 +353,12 @@ table th {
 	    padding: 12px;
 	
 }
-
+.barStyleSingle{
+    padding:0px 10px 6px 6px;
+    line-height: 0;
+    margin-left: 0px;
+    float:left;
+    }
 .nodata_list li {
     list-style-type: none;
 }
@@ -365,10 +370,11 @@ table th {
     color: #333;
     font-weight: 800;
 }
-
+.barTxt{    padding-top: 7px;padding-left: 30px;}
 .managedivH {
     border: none;
 }
 .managedivH>li.active>a {
     border-radius: 12px 12px 0px 0px;
 }
+.statusImg{width:25px;    height: 25px; padding-top: 4px;}

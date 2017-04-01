@@ -493,30 +493,30 @@ background: #e7e7e7;
 .geo {
 	width: 20%;
 	height: 30px;
-	background-color: #f44336;
+	background-color: #710e9f;
 }
 
 .speed {
 	width: 20%;
 	height: 30px;
-	background-color: #ffde01;
+	background-color: #ffd500;
 }
 
 .geospeed {
 	width: 20%;
 	height: 30px;
-	background-color: #e59305;
+	background-color: #ff0000;
 }
 
 .normalVehicle {
 	width: 20%;
 	height: 30px;
-	background-color: #000000;
+	background-color: #7fbb01;
 }
 .aliveVehicle{
 	width: 20%;
 	height: 30px;
-	background-color: #0540E5;
+	background-color: #2d2d2d;
 }
 .make20{
 	width:20%;
@@ -655,8 +655,8 @@ font-family:Roboto, Arial, sans-serif;font-size: 11px;border-radius:2px;box-shad
 .speedometerSection {
 	position: fixed;
 	top: 15%;
-	left: 80%; /* This moves it to the bottom (initial state) */
-	width: 240px;
+	left: 76%; /* This moves it to the bottom (initial state) */
+	width: 270px;
 	transition: left 1s;
 	z-index: 10009;
 	background: #fbfbfb;
@@ -746,7 +746,7 @@ font-family:Roboto, Arial, sans-serif;font-size: 11px;border-radius:2px;box-shad
 .nodata_list li>label{font-size:18px;}
 .nodata_list li>p{font-size:18px;}
 .nodata_list li>span{font-size:12px;color:#333;font-weight:800;}
-.iconBg{background-color:#363636;}
+.iconBg{background-color:#e6e6e6;}
 .verhorcentericon {display: flex;align-items: center; justify-content: center; height: 32px;}
 .slotLabel{color:#647678;}
 #hist_map_section {
@@ -777,3 +777,4 @@ font-family:Roboto, Arial, sans-serif;font-size: 11px;border-radius:2px;box-shad
 .txtSpan {font-size: 8px;color: #000;margin-left: -5px;}
 .speedCtrlSection{ position: fixed; width: 250px;height: 90px;background: #fff;bottom: 20px;left:50%;z-index: 10}
 .speedCtrlSection label{text-align: left;margin-left:-100px;margin-bottom:15px; }
+ .bordertop{border-top: 1px solid #e6e6e6;}

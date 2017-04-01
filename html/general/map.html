@@ -73,6 +73,7 @@
 										<li>{{$index+1}}</li>
 										<li><span class="helpText">Vehicle No</span><p class="actualText">{{device.devid}}</p></li>
 										<li><span class="helpText">Speed</span><p class="actualText">{{device.speed}}Kmph</p></li>
+										<li><img src="{{img_url}}" class="statusImg"></li>
 									</ul>
 								</li>
 							</ul>	
@@ -132,6 +133,22 @@
 									</div>
 								</div>
 							</div>
+							<div class="row bordertop">
+								<div class="col-sm-12 pad0">
+									<div class="">
+										<div><span class="barStyleSingle" ng-style="{{getColorBack(divcolor)}}"><img src="{{singleImg_url}}" class="statusImg"></span></div>
+										<p class="barTxt">{{barTxt}}</p>
+										<!-- ng-style="{{getColor(divcolor)}} == 'geoColor' && {'background-color':'#008cdc'}  || {{getColor(divcolor)}} == 'aliveVehicleColor' && {'background-color':'#b3b3b3'}" -->
+										<!-- <span class="helpText">Vehicle number</span> -->
+									</div>
+								</div>
+								<!-- <div class="col-sm-6" align="center">
+									<div class="pad10">
+										<p class="mainText">{{speedlimitSpeedOmeter}}</p>
+										<span class="helpText">Speed limit</span>
+									</div>
+								</div> -->
+							</div>
 						</div>
 					</div>
 				</section>
@@ -164,7 +181,7 @@
 						<div class="row countSection">
 							<div class="col-sm-4 verhorcentericon pad0 iconBg">
 								<div class="countImage">
-									<img src="../images/mapIcon/car.png">
+									<img src="../images/mapIcon/carN.png">
 								</div>
 							</div>
 							<div class="col-sm-8 verhorcentericon pad0">
@@ -182,7 +199,7 @@
 					<div class="col-sm-1 mleft">
 						<div class="row countSection">
 							<div class="col-sm-4 verhorcentericon pad0 iconBg">
-								<img src="../images/mapIcon/bus.png">
+								<img src="../images/mapIcon/busN.png">
 							</div>
 							<div class="col-sm-8 verhorcentericon pad0">
 								<div class="countText">
@@ -199,7 +216,7 @@
 					<div class="col-sm-1 mleft">
 						<div class="row countSection">
 							<div class="col-sm-4 verhorcentericon pad0 iconBg">
-								<img src="../images/mapIcon/truck.png">
+								<img src="../images/mapIcon/truckN.png">
 							</div>
 							<div class="col-sm-8 verhorcentericon pad0">
 								<div class="countText">
@@ -216,7 +233,7 @@
 					<div class="col-sm-1 mleft">
 						<div class="row countSection">
 							<div class="col-sm-4 verhorcentericon pad0 iconBg">
-								<img src="../images/mapIcon/bike.png">
+								<img src="../images/mapIcon/bikeN.png">
 							</div>
 							<div class="col-sm-8 verhorcentericon pad0">
 								<div class="countText">

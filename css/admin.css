@@ -1430,13 +1430,8 @@ border-radius: 5px !important;
 .deviceRowList {-webkit-padding-start:0px;margin-left: -20px;}
 .deviceRowList li{border:none;padding:2px 4px;margin:0px;width: inherit;height: inherit;}
 .barStyle{padding:12px 2px 4px 2px;line-height: 0;}
-.barStyleSingle{
-    padding:0px 10px 6px 6px;
-    line-height: 0;
-    margin-left: 0px;
-    float:left;
-    }
-.barTxt{    padding-top: 7px;padding-left: 30px;}
+
+
 
 .helpText{font-size:10px;color:#ddd;}
 .actualText{font-size:12px;}
@@ -1463,5 +1458,5 @@ border-radius: 5px !important;
 .txtSpan {font-size: 8px;color: #000;margin-left: -5px;}
 .speedCtrlSection{ position: fixed; width: 250px;height: 90px;background: #fff;bottom: 20px;left:50%;z-index: 10}
 .speedCtrlSection label{text-align: left;margin-left:-100px;margin-bottom:15px; }
-.statusImg{width:25px;    height: 25px; padding-top: 4px;}
+
 
