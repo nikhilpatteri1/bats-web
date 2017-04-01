@@ -493,30 +493,30 @@ background: #e7e7e7;
 .geo {
 	width: 20%;
 	height: 30px;
-	background-color: #710e9f;
+	background-color: #f44336;
 }
 
 .speed {
 	width: 20%;
 	height: 30px;
-	background-color: #ffd500;
+	background-color: #ffde01;
 }
 
 .geospeed {
 	width: 20%;
 	height: 30px;
-	background-color: #ff0000;
+	background-color: #e59305;
 }
 
 .normalVehicle {
 	width: 20%;
 	height: 30px;
-	background-color: #7fbb01;
+	background-color: #000000;
 }
 .aliveVehicle{
 	width: 20%;
 	height: 30px;
-	background-color: #2d2d2d;
+	background-color: #0540E5;
 }
 .make20{
 	width:20%;
@@ -711,12 +711,12 @@ font-family:Roboto, Arial, sans-serif;font-size: 11px;border-radius:2px;box-shad
 }
 .legendlist li {font-family: 'Roboto';font-size: 14px!important;list-style: none;padding: 4px 0px 4px 0px;color: #7f7a7a;	float: left;}
 .wrap_type {width: 15px;height: 15px;border-radius: 50%;float: left;margin: 0 12px 0 12px;}
-.geo {background-color:#f44336;}
-.speed {background-color:#ffde01;}
-.geospeed {background-color:#e59305;}
-.normalVehicle {background-color:#000;}
+.geo {background-color:#710e9f;}
+.speed {background-color:#ffd500;}
+.geospeed {background-color:#ff0000;}
+.normalVehicle {background-color:#7fbb01;}
 .availableStol {background-color:#2e9c53;}
-.aliveVehicle {background-color:#0540E5;}
+.aliveVehicle {background-color:#2d2d2d;}
 .loadingImage{width:20px;height:20px}
 #latestLocationId {
 	/* position: fixed;
