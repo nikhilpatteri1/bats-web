@@ -96,15 +96,15 @@ batsAdminHome.controller('AlarmNotificationsControllerAdmin', function($scope, $
 					  }
 			      })
 			      .error(function(data, status, headers, config) {
-			    	  alert("notification");
+			    	  alert("notification +data "+data);
 			    	  console.trace();
 			    	  console.log(data);
 			    	  console.log(status);
 			    	  console.log(headers);
 			    	  console.log(config);
 			    	  if(data==null){
-			    		  expiredSession();
-						  $localStorage.$reset();
+			    		//  expiredSession();
+						//  $localStorage.$reset();
 			    	  }
 			    	  if (data.err == "Expired Session") {
 							expiredSession();

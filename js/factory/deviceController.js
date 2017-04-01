@@ -270,7 +270,7 @@ batsfactoryhome.controller('deviceController', function($rootScope,$scope,$http,
 	      $scope.selection.splice(idx, 1);
 	     /* console.log($scope.selection);
 	      $scope.rows.push(deviceID);*/
-	      $scope.FactoryStockCount=$scope.FactoryStockCount+1;
+	      //$scope.FactoryStockCount=$scope.FactoryStockCount+1;
 	    }
 	   
 	    // is newly selected
@@ -290,7 +290,7 @@ batsfactoryhome.controller('deviceController', function($rootScope,$scope,$http,
 				alert( "Something gone wrong" );
 			}
 			/*$scope.rows.splice( index, 1 );*/	
-			$scope.FactoryStockCount=$scope.FactoryStockCount-1;
+			//$scope.FactoryStockCount=$scope.FactoryStockCount-1;
 	    }
 	   
 	  };

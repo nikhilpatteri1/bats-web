@@ -38,6 +38,7 @@
 						<select id="selectDriver" class="form-control"
 							ng-model="trip.driver_id"
 							ng-options="driver.name for driver in driverList track by driver.driver_id">
+							<option></option>
 							<!-- <option>Select Driver</option> -->
 						</select>
 					</div>
@@ -71,6 +72,7 @@
 							ng-model="trip.groupName"
 							ng-options="group.gname for group in groupList track by group.gid"
 							ng-change="fetchDevicelist(trip.groupName)">
+							<option></option>
 
 							<!-- <option>Select Driver</option> -->
 						</select>
@@ -79,6 +81,7 @@
 						<select id="selectVehicle" class="form-control"
 							ng-model="trip.vehicle_num"
 							ng-options="device.vehicle_num for device in devlistObject track by device.devid">
+							<option></option>	
 
 							<!--<option>Select Driver</option> -->
 						</select>

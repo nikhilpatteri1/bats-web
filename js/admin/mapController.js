@@ -17,7 +17,7 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 			text : "Kindly Login!",
 			type : "warning",
 			confirmButtonColor : "#ff0000",
-			closeOnConfirm : false
+			closeOnConfirm : false 
 		}, function() {
 			$localStorage.$reset();
 			window.location = apiURL;
@@ -43,18 +43,34 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
     var trafficLayer = new google.maps.TrafficLayer();
 	var Colors = ["#FF0000", "#00FF00", "#0000FF"];
 	//var statusElm = document.getElementById("mysvg")
-	var carIcon = "M33.4,20.1c0.1,6.7-0.1,13.4-0.1,20.1c0,0.1,0,0.2,0,0.3c0,0.3,0,0.6,0,0.8c0,2.7-2.3,5-5,5c-2.8,0-5.6,0-8.4,0c-2.7,0-5-2.3-5-5c-0.1-7.1-0.2-14.3,0-21.4h-2.4v-0.4c0-0.8,0.7-1.5,1.5-1.5l0,0h0.9c0.1-3.9,0.4-7.7,0.8-11.6c0.1-0.7,0.3-1.3,0.6-2c0.8-1.8,2.4-3,4.2-3c2.4,0,5,0,7.5,0c2.4,0,4.5,2.2,4.8,4.8c0.4,3.9,0.6,7.9,0.7,11.8H34c0.8,0,1.5,0.7,1.5,1.5v0.4L33.4,20.1L33.4,20.1z M29.7,44.8l2.2-0.7c0.4-0.1,0.7-0.8,0.6-1.2L32.1,42c0,0-0.1,0-0.2,0.1l-0.9,0.6c-0.1,0.1-0.2,0.1-0.2,0.2L30,44.2C29.8,44.4,29.6,44.8,29.7,44.8z M32.6,18.1c0,0-4,10.4-0.3,20.4L32.6,18.1z M20.7,41c2.2,0.2,4.5,0.2,6.7,0c0.8-0.1,1.7-0.3,2.5-0.7c0.7-0.3,1.2-0.7,1.2-1.3c0-0.9-0.4-1.9-1.1-2.8c-0.1-0.1-0.3-0.2-0.4-0.3L30,21.9l-0.1,0c0.2-0.1,0.4-0.2,0.5-0.5c0.8-1.7,1.2-3.5,1.2-5c0-1.9-2-3.3-4-3.7c-2.4-0.3-4.8-0.3-7.2,0c-1,0.1-1.9,0.6-2.6,1.2c-0.7,0.6-1.3,1.3-1.3,2.3c0,1.6,0.4,3.4,1.2,5c0.1,0.2,0.3,0.4,0.5,0.4l0,0l0.6,14.1l0.1,0l-0.6-14.1c0,0,0.1,0,0.1,0c3.3,0,7.9,0,11.4,0.1c0,0,0.1,0,0.1,0L29.3,36c0,0,0,0,0,0c-3.1,0-7.3,0-10.6-0.1c-0.2,0-0.5,0.1-0.6,0.3c-0.8,0.9-1.1,1.9-1.1,2.8C17,40.1,18.9,40.9,20.7,41z M21.4,23v2h5.4v-2H21.4z M16.2,44.1l2.2,0.7c0.1,0-0.1-0.3-0.3-0.6l-0.9-1.2c-0.1-0.1-0.1-0.2-0.2-0.2L16.2,42C16.1,42,16,41.9,16,42l-0.3,0.9C15.6,43.3,15.8,43.9,16.2,44.1zM16,38.5c3.6-10-0.3-20.4-0.3-20.4L16,38.5z M15.6,7.5c-0.5,4.3,0.1,0.4,0.1,0.4l3.8-5C19.5,2.9,16.1,3.2,15.6,7.5L15.6,7.5zM24,2.4c-2.2,0-4,0.3-4,0.5c0,0.3,1.8,0.3,4,0.2c2.2,0,4,0.1,4-0.2C28,2.7,26.2,2.5,24,2.4z M32.7,7.5c-0.5-4.3-3.9-4.6-3.9-4.6l3.8,5C32.6,7.9,33.2,11.8,32.7,7.5z";  
+	var carIcon ="M25.762,8.510 L20.921,2.204 C20.921,2.204 25.252,2.647 25.885,8.065 C26.517,13.483 25.762,8.510 25.762,8.510 ZM15.160,2.706 C12.355,2.772 10.092,2.853 10.085,2.450 C10.076,2.165 12.353,1.834 15.164,1.816 C17.968,1.902 20.240,2.220 20.248,2.466 C20.253,2.846 17.967,2.761 15.160,2.706 ZM4.815,8.074 C5.443,2.668 9.749,2.226 9.749,2.226 L4.937,8.518 C4.937,8.518 4.187,13.481 4.815,8.074 ZM5.000,47.349 L4.562,21.574 C4.562,21.574 9.613,34.691 5.000,47.349 ZM18.688,30.281 L11.875,30.281 L11.875,27.781 L18.688,27.781 L18.688,30.281 ZM7.721,44.433 C7.885,44.231 8.225,44.075 8.463,44.081 C12.577,44.174 17.922,44.176 21.827,44.145 C21.842,44.145 21.860,44.151 21.875,44.152 L22.632,26.355 C22.585,26.368 22.537,26.385 22.495,26.383 C18.058,26.218 12.293,26.214 8.082,26.268 C8.038,26.269 7.987,26.251 7.938,26.235 L8.688,44.076 L8.565,44.081 L7.813,26.219 L7.873,26.217 C7.663,26.123 7.433,25.909 7.299,25.650 C6.246,23.582 5.784,21.256 5.737,19.294 C5.700,18.027 6.392,17.124 7.323,16.364 C8.266,15.625 9.448,15.028 10.664,14.841 C13.663,14.447 16.725,14.440 19.798,14.794 C22.228,15.233 24.825,17.000 24.814,19.411 C24.761,21.376 24.325,23.625 23.296,25.754 C23.156,26.038 22.901,26.265 22.673,26.346 L22.757,26.350 L22.000,44.169 C22.199,44.218 22.424,44.341 22.553,44.491 C23.529,45.647 23.957,46.947 24.001,48.043 C24.035,48.752 23.394,49.256 22.531,49.681 C21.656,50.094 20.560,50.428 19.432,50.532 C16.652,50.752 13.813,50.756 10.964,50.558 C8.711,50.313 6.303,49.325 6.313,47.978 C6.362,46.880 6.766,45.623 7.721,44.433 ZM25.937,21.591 L25.500,47.392 C20.891,34.722 25.937,21.591 25.937,21.591 Z";  
 	var busIcon = "M36.1,42l-1.5,0.7c-0.4,0.2-0.9,0-1.1-0.4l0,0v2.8c0,0.3-0.2,0.6-0.5,0.8V46c-5.3,1.4-10.9,1.4-16.2,0v-0.1c-0.3-0.2-0.5-0.5-0.5-0.8v-2.8l0,0c-0.2,0.4-0.7,0.6-1.1,0.4L13.8,42c-0.2-0.1-0.3-0.4-0.1-0.6l0.3-0.3l2.4,0.7v-40c0-0.5,0.4-0.9,0.9-0.9h0h15.3c0.5,0,0.9,0.4,0.9,0.9v40l2.4-0.7l0.3,0.3C36.4,41.6,36.4,41.9,36.1,42zM16.9,44.3c0,0.4,0.3,0.8,0.7,0.9v0c2,0.4,4.6,0.7,7.5,0.7s5.4-0.2,7.5-0.7v-0.1c0.3-0.1,0.6-0.5,0.6-0.8V41l-0.6,0.2v1.6c0,0.6-0.5,1.1-1.1,1.1c0,0,0,0,0,0H18.7c-0.6,0-1.1-0.5-1.1-1.1c0,0,0,0,0,0v-1.6L16.9,41L16.9,44.3L16.9,44.3z M20.4,5.4h9.3V4.1h-9.3V5.4z M20.3,37.9v4.5h9.3v-4.5H20.3z M20.4,5.9v1.2h9.3V5.9H20.4z M20.4,7.7v4.5h9.3V7.7C29.7,7.7,20.4,7.7,20.4,7.7zM16.9,39.6l0.7,0.5v-5.7L16.9,34V39.6L16.9,39.6z M16.9,33l0.7,0.4V27l-0.7-0.1V33L16.9,33z M16.9,26.2l0.7,0.3v-7.8l-0.7,0.2V26.2L16.9,26.2z M16.9,18.2l0.7-0.1v-6.4L16.9,12V18.2z M16.9,11.2l0.7-0.3V4.2l-0.7-0.7V11.2L16.9,11.2z M32.6,1.7H17.5c-0.3,0-0.5,0.2-0.3,0.5L17.6,3c0.2,0.3,0.5,0.4,0.8,0.4h13.3c0.3,0,0.6-0.2,0.8-0.4l0.4-0.7C33,2,32.9,1.7,32.6,1.7z M33.1,3.4l-0.7,0.7V11l0.7,0.3V3.4z M33.1,12l-0.7-0.4v6.4l0.7,0.1V12L33.1,12z M33.1,18.9l-0.7-0.2v7.8l0.7-0.3V18.9L33.1,18.9z M33.1,26.9L32.4,27v6.4l0.7-0.4V26.9z M33.1,34l-0.7,0.5v5.7l0.7-0.5V34L33.1,34z M18.1,0.1h2.1c0.3,0,0.5,0.2,0.5,0.5v0.2h-3.1V0.6C17.6,0.3,17.8,0.1,18.1,0.1z M29.8,0.1h2.1c0.3,0,0.5,0.2,0.5,0.5v0.2h-3.1V0.6C29.3,0.3,29.6,0.1,29.8,0.1z M21.3,47.3l-0.2,0.7l-2.9-0.4c-0.2,0-0.4-0.4-0.4-0.8v-0.1C18.9,46.9,20.1,47.1,21.3,47.3z M32.5,46.5L32.5,46.5c0,0.5-0.2,0.8-0.4,0.9l-2.9,0.4l-0.2-0.7C30.1,47,31.3,46.8,32.5,46.5z"; 
 	var truckIcon = "M33.2,38.5v4.8c0,0.4-0.3,0.7-0.7,0.7l0,0v2.8c0,0.3-0.2,0.5-0.5,0.5h-1.1v0c0,0.2-0.2,0.5-0.5,0.5H28c-0.2,0-0.5-0.2-0.5-0.5v0h-7.1v0c0,0.2-0.2,0.5-0.5,0.5h-2.4c-0.2,0-0.5-0.2-0.5-0.5v0H16c-0.3,0-0.5-0.2-0.5-0.5v-2.8c-0.4,0-0.7-0.3-0.7-0.7l0,0v-4.8c0-0.4,0.3-0.7,0.7-0.7V24.6c-0.4,0-0.7-0.3-0.7-0.7l0,0v-4.8c0-0.4,0.3-0.7,0.7-0.7l0,0V16c0-0.3,0.2-0.5,0.5-0.5h16c0.3,0,0.5,0.2,0.5,0.5v2.4c0.4,0,0.7,0.3,0.7,0.7l0,0v4.8c0,0.4-0.3,0.7-0.7,0.7l0,0v13.2C32.9,37.9,33.2,38.2,33.2,38.5z M16.5,16.7c0-0.1-0.1-0.2-0.2-0.2c-0.1,0-0.2,0.1-0.2,0.2v28.7c0,0.1,0.1,0.2,0.2,0.2c0.1,0,0.2-0.1,0.2-0.2V16.7z M17.5,16.7c0-0.1-0.1-0.2-0.2-0.2c-0.1,0-0.2,0.1-0.2,0.2v28.7c0,0.1,0.1,0.2,0.2,0.2c0.1,0,0.2-0.1,0.2-0.2V16.7z M18.5,16.7c0-0.1-0.1-0.2-0.2-0.2s-0.2,0.1-0.2,0.2v28.7c0,0.1,0.1,0.2,0.2,0.2s0.2-0.1,0.2-0.2V16.7z M19.4,16.6c0-0.1-0.1-0.2-0.2-0.2S19,16.5,19,16.6v28.7c0,0.1,0.1,0.2,0.2,0.2s0.2-0.1,0.2-0.2V16.6z M20.4,16.6c0-0.1-0.1-0.2-0.2-0.2S20,16.5,20,16.6v28.7c0,0.1,0.1,0.2,0.2,0.2s0.2-0.1,0.2-0.2V16.6zM21.3,16.6c0-0.1-0.1-0.2-0.2-0.2s-0.2,0.1-0.2,0.2v28.7c0,0.1,0.1,0.2,0.2,0.2s0.2-0.1,0.2-0.2V16.6z M22.3,16.7c0-0.1-0.1-0.2-0.2-0.2s-0.2,0.1-0.2,0.2v28.7c0,0.1,0.1,0.2,0.2,0.2s0.2-0.1,0.2-0.2V16.7z M23.2,16.7c0-0.1-0.1-0.2-0.2-0.2s-0.2,0.1-0.2,0.2v28.7c0,0.1,0.1,0.2,0.2,0.2s0.2-0.1,0.2-0.2V16.7z M24.2,16.7c0-0.1-0.1-0.2-0.2-0.2s-0.2,0.1-0.2,0.2v28.7c0,0.1,0.1,0.2,0.2,0.2s0.2-0.1,0.2-0.2V16.7z M25.1,16.6c0-0.1-0.1-0.2-0.2-0.2s-0.2,0.1-0.2,0.2v28.7c0,0.1,0.1,0.2,0.2,0.2s0.2-0.1,0.2-0.2V16.6z M26.1,16.6c0-0.1-0.1-0.2-0.2-0.2s-0.2,0.1-0.2,0.2v28.7c0,0.1,0.1,0.2,0.2,0.2s0.2-0.1,0.2-0.2V16.6zM27.1,16.6c0-0.1-0.1-0.2-0.2-0.2s-0.2,0.1-0.2,0.2v28.7c0,0.1,0.1,0.2,0.2,0.2s0.2-0.1,0.2-0.2V16.6z M28,16.7c0-0.1-0.1-0.2-0.2-0.2s-0.2,0.1-0.2,0.2v28.7c0,0.1,0.1,0.2,0.2,0.2s0.2-0.1,0.2-0.2V16.7z M29,16.7c0-0.1-0.1-0.2-0.2-0.2s-0.2,0.1-0.2,0.2v28.7c0,0.1,0.1,0.2,0.2,0.2s0.2-0.1,0.2-0.2V16.7z M29.9,16.6c0-0.1-0.1-0.2-0.2-0.2s-0.2,0.1-0.2,0.2v28.7c0,0.1,0.1,0.2,0.2,0.2s0.2-0.1,0.2-0.2V16.6z M30.9,16.6c0-0.1-0.1-0.2-0.2-0.2c-0.1,0-0.2,0.1-0.2,0.2v28.7c0,0.1,0.1,0.2,0.2,0.2c0.1,0,0.2-0.1,0.2-0.2V16.6z M31.8,16.6c0-0.1-0.1-0.2-0.2-0.2c-0.1,0-0.2,0.1-0.2,0.2v28.7c0,0.1,0.1,0.2,0.2,0.2c0.1,0,0.2-0.1,0.2-0.2V16.6z M31.1,14.4c0,0.3-0.2,0.5-0.5,0.5H17.8c-0.3,0-0.5-0.2-0.5-0.5V6.5h-1.4V6.2c0-0.2,0.1-0.3,0.1-0.3l1.3-0.4V5.4h0c0.2-1.3,0.4-2.6,0.6-3.7c0.1-0.4,0.8-0.9,1.6-1C22.7,0,25.8,0,29,0.6c0.8,0.2,1.5,0.7,1.5,1c0.2,1.2,0.4,2.4,0.6,3.7v0.1l1.3,0.4c0.1,0,0.1,0.2,0.1,0.3v0.3h-1.4V14.4z M30.1,2.6c-0.1-0.3-0.7-0.8-1.4-0.9c-2.9-0.6-5.8-0.6-8.8,0c-0.7,0.2-1.4,0.6-1.4,0.9l-0.3,1.8c0.3-0.2,0.7-0.3,1-0.3c3.5-0.6,6.9-0.6,10.3,0c0.3,0.1,0.6,0.2,0.9,0.3C30.3,3.8,30.2,3.2,30.1,2.6z";
 	var bikeIcon = "M34.7,16.4l-0.4-0.1l0.1-0.4c0,0,0,0,0,0l-4.4-1.2c-0.3,0.8-0.7,1.6-1.3,2.3c0.5,1.1,0.7,2.4,0.4,3.6h0L29,21c0,0,0,0.1,0,0.1l-0.8,2.7h-0.1c-0.1,0.2-0.1,0.4-0.2,0.6c-0.9,2.1-2.6,2.9-3.9,2.9s-3-0.8-3.9-2.9c-0.2-0.5-0.4-1-0.5-1.5l-0.7-2.3h0c-0.3-1.2-0.1-2.5,0.5-3.6c-0.5-0.7-1-1.5-1.3-2.3l-4.4,1.2c0,0,0,0,0,0l0.1,0.4l-0.4,0.1L12.9,15l0.4-0.1l0.1,0.2c0,0,0,0,0,0l4.4-1.2c0-0.1,0-0.1,0-0.2c0.1-0.5,0.3-1,0.5-1.5h-0.6v-0.1c0,0.2-0.2,0.4-0.4,0.4c0,0,0,0,0,0h-0.7c-0.2,0-0.4-0.2-0.4-0.4v0V12c0-0.2,0.2-0.4,0.4-0.4h0h0.7c0.2,0,0.4,0.2,0.4,0.4c0,0,0,0,0,0h0.7v0c0.9-1.9,2.5-3.5,4.5-4.3c0.4-0.2,0.7-0.3,1.1-0.4c0.3,0.1,0.7,0.2,1,0.3c2,0.8,3.6,2.5,4.5,4.3h0.6c0-0.2,0.2-0.4,0.4-0.4h0.7c0.2,0,0.4,0.2,0.4,0.4v0.1c0,0.2-0.2,0.4-0.4,0.4h-0.7c-0.2,0-0.4-0.2-0.4-0.4v0.1h-0.5c0.2,0.5,0.4,1,0.5,1.5c0,0.1,0,0.1,0,0.2l4.4,1.2c0,0,0,0,0,0l0.1-0.2l0.4,0.1L34.7,16.4z M22.8,17.2c0,0.5,0.4,0.8,0.8,0.8h0.2c0.5,0,0.8-0.4,0.8-0.8v-0.2c0-0.5-0.4-0.8-0.8-0.8h-0.2c-0.5,0-0.8,0.4-0.8,0.8V17.2z M26.8,12.6c0-0.2-0.2-0.4-0.4-0.4H24c-0.3-0.7-1.1-1.1-1.8-0.9c-0.7,0.3-1.1,1.1-0.9,1.8c0.2,0.5,0.7,0.9,1.2,1v0h3.7c0.3,0,0.6-0.3,0.6-0.6c0,0,0,0,0,0V12.6z M22.1,7.2V2.7c0-1,0.8-1.8,1.8-1.8s1.8,0.8,1.8,1.8v4.6C24.7,6.5,23.2,6.5,22.1,7.2z M17.4,33.2H20c0.2-0.9,0.3-1.9,0.4-2.8c0.1-1.1,0.1-2.2,0-3.3v0.3h-2.7v0.1h-0.4v-1h0.4v0.1h2.7v0.1c1,1.1,2.3,1.6,3.3,1.6c1,0,2.3-0.5,3.3-1.6v-0.1h0.1c0.1-0.1,0.1-0.1,0.2-0.2c0,0.1,0,0.1,0,0.2h2.5v-0.1h0.4v1h-0.4v-0.1h-2.6c-0.1,1-0.1,2,0,3c0.1,0.9,0.2,1.9,0.4,2.8h2.4v-0.1h0.4v1h-0.4v-0.1h-2.3c0.1,0.5,0.3,1.1,0.4,1.6h0.1l0,0.2l0,0.1h0l-1.6,7.7h0.4c0-0.2,0.2-0.4,0.4-0.4c0,0,0,0,0,0h0.7c0.2,0,0.4,0.2,0.4,0.4v0.1c0,0.2-0.2,0.4-0.4,0.4h-0.7c-0.2,0-0.4-0.2-0.4-0.4v0.1h-0.5l-0.4,2h0c-0.1,0.7-1.1,1.3-2.3,1.3c-1.2,0-2.2-0.6-2.3-1.3h-0.1l-0.4-2h-0.5v-0.1c0,0.2-0.2,0.4-0.4,0.4l0,0h-0.7c-0.2,0-0.4-0.2-0.4-0.4v-0.1c0-0.2,0.2-0.4,0.4-0.4h0.7c0.2,0,0.4,0.2,0.4,0.4H21l-1.6-7.7h-0.1l0-0.2l0,0h0l0-0.1c0.2-0.5,0.3-1,0.4-1.5h-2.5v0.1H17v-1h0.4L17.4,33.2L17.4,33.2z";
 	var markerIcon = "M31.809992,17.113449c-0.001888,-8.347025 -6.76548,-15.113449 -15.110806,-15.113449c-8.348912,0 -15.116186,6.766424 -15.116186,15.113449c0,7.204499 11.258558,26.452334 14.343395,31.58728c0.162355,0.272039 0.455538,0.438075 0.771941,0.438075c0.316309,0 0.61053,-0.166036 0.770997,-0.437131c3.08295,-5.134946 14.340658,-24.383725 14.340658,-31.588224zm-15.111655,11.693896c-6.447283,0 -11.696633,-5.245668 -11.696633,-11.694745c0,-6.448227 5.247462,-11.694745 11.696633,-11.694745s11.692952,5.246518 11.692952,11.694745s-5.244724,11.694745 -11.692952,11.694745z";	 
 	var car = "M17.402,0H5.643C2.526,0,0,3.467,0,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759c3.116,0,5.644-2.527,5.644-5.644 V6.584C23.044,3.467,20.518,0,17.402,0z M22.057,14.188v11.665l-2.729,0.351v-4.806L22.057,14.188z M20.625,10.773 c-1.016,3.9-2.219,8.51-2.219,8.51H4.638l-2.222-8.51C2.417,10.773,11.3,7.755,20.625,10.773z M3.748,21.713v4.492l-2.73-0.349 V14.502L3.748,21.713z M1.018,37.938V27.579l2.73,0.343v8.196L1.018,37.938z M2.575,40.882l2.218-3.336h13.771l2.219,3.336H2.575z M19.328,35.805v-7.872l2.729-0.355v10.048L19.328,35.805z";
+	
 	var vehicleType;
 	var multiBounds;
 	var myPlace = {lat: 12.850167, lng: 77.660329};
+	var $markerImage = document.querySelector('.markerImage'),
+		  markerImageSvg = $markerImage.innerHTML || '';
+	console.log(markerImageSvg);
+	var $truckImage =document.querySelector('.truckImage');
+		truckImgSvg = $truckImage.innerHTML || '';
+	var $bikeImage =document.querySelector('.bikeImage');
+		bikeImgSvg = $bikeImage.innerHTML || '';
+	var $busImage =document.querySelector('.busImage');
+		busImgSvg = $busImage.innerHTML || '';
+		
+		
+		
+		/*path:  {
+            anchor: new google.maps.Point(16, 16),
+            url: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(markerImageSvg.replace('{{background}}', Colors[0]))
+          }, */
 	var icon = {
-	    path: markerIcon,
-	    scale: .7,
+	    scale: .9,
 	    strokeColor: 'white',
 	    strokeWeight: 0,
 	    fillOpacity: 1,
@@ -184,7 +200,7 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
         css('left', 0).
         css("width", '100%'). 
     	css("height",'100%');
-    	$(".count_label").css("position", 'fixed').css('top', '8px').css('left', '5px').css('margin-top', '45px');
+    	$(".count_label").css("position", 'fixed').css('top', '20px').css('left', '5px').css('margin-top', '45px');
     	$(".traffic_layer_btn").css("position", 'fixed').css('top', '10px').css('left', '130px');
     	//console.log("resize");
     	google.maps.event.trigger(map, 'resize');
@@ -197,11 +213,43 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
         css('left', 0).
         css("width", '100%').
     	css("height",'100%');
-    	$(".count_label").css("position", 'absolute').css('top', 0).css('left', '15px').css('margin-top','8%');
+    	$(".count_label").css("position", 'absolute').css('top', 0).css('left', '15px').css('margin-top','10%');
     	$(".traffic_layer_btn").css("position", 'absolute').css('top', '10px').css('left', '130px');
     	google.maps.event.trigger(map, 'resize');
     }
-	function createMarker(latlng, deviceID,vehNo,vehModel, html,type) {
+	
+    var iconImg;
+    function createMarker(latlng, deviceID,vehNo,vehModel, html,type,devtype) {
+		
+		console.log(devtype);
+		if(devtype == "car"){
+			iconImg = {
+                anchor: new google.maps.Point(16, 16),
+                url: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(markerImageSvg.replace('{{background}}', Colors[0]))
+              };
+		}
+		else if(devtype == "truck")
+		{
+			iconImg = {
+                anchor: new google.maps.Point(16, 16),
+                url: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(truckImgSvg.replace('{{background}}', Colors[0]))
+              };	
+		}
+		else if(devtype == "bike"){
+			iconImg = {
+	                anchor: new google.maps.Point(16, 16),
+	                url: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(bikeImgSvg.replace('{{background}}', Colors[0]))
+	              };
+		}
+		else if(devtype == "bus"){
+			iconImg = {
+	                anchor: new google.maps.Point(16, 16),
+	                url: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(busImgSvg.replace('{{background}}', Colors[0]))
+	              };
+		}
+		
+		
+		
 		// console.log(deviceID+"=="+type);
 		var contentString; 
 		if(type==0){icon.fillColor='#ea0909';}
@@ -234,13 +282,14 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 			contentString  = '<b><label>Device ID:</label> '+deviceID+'</b><br><br><b><label>Vehicle No:</label> '+vehNo+'</b><br><br><b><label>Vehicle Model:</label> '+vehModel+'</b><br><br>'+html+'<br><br><button class="btn btn-primary btn-sm" id="infoClick" data-deviceID="'+deviceID+'">show detail</button>';
 		}
 		
-		//var $markerImage = document.querySelector('.markerImage'),
-		  //markerImageSvg = $markerImage.innerHTML || '';
-		    var marker = new google.maps.Marker({
+		/*var $markerImage = document.querySelector('.markerImage'),
+		  markerImageSvg = $markerImage.innerHTML || '';*/
+		    
+		var marker = new google.maps.Marker({
 		        position: latlng,
 		        map: map,
 		        title: deviceID, 
-		        icon: icon,       
+		        icon: iconImg, 
 		        zIndex: Math.round(latlng.lat()*-100000)<<5
 		        });
 		        marker.myname = deviceID;
@@ -393,7 +442,7 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
                         // console.log(JSON.stringify(legs[i].start_location));
                         startLocation.latlng = legs[i].start_location;
                         startLocation.address = legs[i].start_address;												   
-                          marker = createMarker(legs[i].start_location,dataVal[i].devid,dataVal[i].vehicle_num,dataVal[i].vehicle_model,legs[i].start_address,dataVal[i].values[0].type);
+                          marker = createMarker(legs[i].start_location,dataVal[i].devid,dataVal[i].vehicle_num,dataVal[i].vehicle_model,legs[i].start_address,dataVal[i].values[0].type,dataVal[i].devtype);
                       }
                       endLocation.latlng = legs[i].end_location;
                       endLocation.address = legs[i].end_address;
@@ -898,23 +947,35 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 			multiBounds = new google.maps.LatLngBounds();
 			for(var i=0;i<data.length;i++){	
 					if(data[i].devtype == "car"){
-					icon.path = carIcon;
+					icon.path =  {
+                    anchor: new google.maps.Point(16, 16),
+                    url: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(markerImageSvg.replace('{{background}}', Colors[0]))
+                  };
 					//icon.path = statusElm;
 				   }
 				   else if(data[i].devtype == "bus"){
-					   icon.path = busIcon;
+					   icon.path = { 
+						anchor: new google.maps.Point(16, 16),
+	                    url: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(busImgSvg.replace('{{background}}', Colors[0]))
+					   };
 				   }
 				   else if(data[i].devtype == "truck"){
-					   icon.path = truckIcon;
+					   icon.path = {
+				                anchor: new google.maps.Point(16, 16),
+				                url: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(truckImgSvg.replace('{{background}}', Colors[0]))
+				              };
 				   }
 				   else if(data[i].devtype == "bike"){
-					   icon.path = bikeIcon;
+					   icon.path = {
+				                anchor: new google.maps.Point(16, 16),
+				                url: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(bikeImgSvg.replace('{{background}}', Colors[0]))
+				              };
 				   }
 				   else{
 					   icon.path = markerIcon;
 				   }
 			if(data[i].values.length>0){				
-				createMarker(new google.maps.LatLng(data[i].values[0].lat, data[i].values[0].long),data[i].devid,data[i].vehicle_num,data[i].vehicle_model,"",data[i].values[0].type);			 
+				createMarker(new google.maps.LatLng(data[i].values[0].lat, data[i].values[0].long),data[i].devid,data[i].vehicle_num,data[i].vehicle_model,"",data[i].values[0].type,data[i].devtype);			 
 				multiBounds.extend(new google.maps.LatLng(data[i].values[0].lat, data[i].values[0].long));						    
 			}
 			else{
@@ -966,7 +1027,9 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 			 console.log(JSON.stringify(data));
 				$scope.multiDevice = false;
 				if(data[0].values.length>0){				
-					$scope.singleDevice = true;		
+					$scope.singleDevice = true;
+					$scope.divcolor = data[0].values[0].type;
+					console.log($scope.divcolor);
 					speedValue=data[0].values[0].Velocity;					
 					speedlimit=data[0].speed_limit;				
 					// request for geofence plotting
@@ -977,17 +1040,29 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 					$scope.truckCount = 0;
 					if(data[0].devtype=="car"){				
 						$scope.carCount = 1;
-						icon.path = carIcon;		
+						icon.path = {
+			                    anchor: new google.maps.Point(16, 16),
+			                    url: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(markerImageSvg.replace('{{background}}', Colors[0]))
+			                  };		
 					}
 					else if(data[0].devtype=="bus"){
 						$scope.busCount = 1;
-						icon.path = busIcon;
+						icon.path = {
+			                    anchor: new google.maps.Point(16, 16),
+			                    url: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(busImgSvg.replace('{{background}}', Colors[0]))
+			                  };
 					}else if(data[0].devtype=="truck"){
 						$scope.truckCount = 1;
-						icon.path = truckIcon;
+						icon.path = {
+			                    anchor: new google.maps.Point(16, 16),
+			                    url: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(truckImgSvg.replace('{{background}}', Colors[0]))
+			                  };
 					}else if(data[0].devtype=="bike"){
 						$scope.bikeCount = 1;
-						icon.path = bikeIcon;
+						icon.path = {
+			                    anchor: new google.maps.Point(16, 16),
+			                    url: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(bikeImagSvg.replace('{{background}}', Colors[0]))
+			                  };
 					}
 					else{$scope.carCount = 0;
 					$scope.bikeCount = 0;
@@ -1101,29 +1176,68 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 		 
 	}
 	$scope.getColor=function(type){
+		//console.log(type);
 		switch (type) {
-		case 0:
+		
+		case 0: $scope.img_url="../images/mapIcon/geofenceStatus.png";
 			return "geoColor";
 			break;
-		case 1:
+		case 1:$scope.img_url="../images/mapIcon/speed-limit.png";
 			return "speedColor";
 			break;
 		case 2:
+			$scope.img_url="../images/mapIcon/warning.png";
 			return "geospeedColor";
 			break;
 		case 3:
+			$scope.img_url="../images/mapIcon/normal.png";
 			return "normalVehicleColor";
 			break;
 		case 4:
+			$scope.img_url="../images/mapIcon/no-response.png";
 			return "aliveVehicleColor";
 			break;	
 		}
 	}
-	$scope.geoColor={"background-color":"#f44336"};
-	$scope.speedColor={"background-color":"#ffde01"};
-	$scope.geospeedColor={"background-color":"#e59305"};
-	$scope.normalVehicleColor={"background-color":"#000000"};
-	$scope.aliveVehicleColor={"background-color":"#0540E5"};
+	
+	
+	
+	$scope.geoColor={"background-color":"#710e9f"};
+	$scope.speedColor={"background-color":"#ffd500"};
+	$scope.geospeedColor={"background-color":"#ff0000"};
+	$scope.normalVehicleColor={"background-color":"#7fbb01"};
+	$scope.aliveVehicleColor={"background-color":"#2d2d2d"};
+	
+	$scope.getColorBack =function(div){
+		console.log(div)
+		if(div=="0"){
+			$scope.singleImg_url="../images/mapIcon/geofenceStatus.png";
+			//$(".barStyleSingle").css("background-color", "#f44336");
+			$scope.barTxt= "Crossed Geofence";
+		}
+		else if(div=="1"){
+			$scope.singleImg_url="../images/mapIcon/speed-limit.png";
+			$scope.barTxt= "Crossed Speed";
+			//$(".barStyleSingle").css("background-color", "#ffde01");
+		}
+		else if(div=="2"){
+			$scope.singleImg_url="../images/mapIcon/warning.png";
+			$scope.barTxt= "Crossed Geofence and Speed";
+			//$(".barStyleSingle").css("background-color", "#e59305");
+		}
+		else if(div== "3"){
+			$scope.singleImg_url="../images/mapIcon/normal.png";
+			$scope.barTxt= "Normal State";
+			//$(".barStyleSingle").css("background-color", "#000000");
+		}
+		else if(div== "4"){
+			$scope.singleImg_url="../images/mapIcon/no-response.png";
+			$scope.barTxt= "No-Response State";
+			//$(".barStyleSingle").css("background-color", "#0540E5");
+		}
+	}
+	
+	
 	/* clear markers*/
 	function clearMarkers(){
 		google.maps.Map.prototype.markers = new Array();

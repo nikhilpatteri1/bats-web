@@ -170,6 +170,23 @@ batsAdminHome.controller('dashboardTripController', function($scope, $http, $roo
  * */
 batsAdminHome.controller('dashboardDriverController', function($scope,$localStorage,commonAppService){
 	commonAppService.getDriversData(function(result){
+		
+		if(result.data == "drivers not found"){
+			$scope.totalDrivers= 0;
+			$scope.availableDrivers= 0;
+			console.log($scope.availableDrivers);
+			$scope.onTrip=0;
+			console.log($scope.onTrip);
+			$scope.driverData='' ;
+			$scope.nodriver = 100 ;	
+			var data=[
+		              {name: "Available", y: 0, color: '#00af81' },
+		              {name: "On Trip", y: 0, color: '#43aae5'},
+		              {name: "No drivers", y:100, color: '#e0e0e0'},
+		              ]
+			commonAppService.donutChart('DriverContainer',data); 
+		}
+		else{
 		$scope.totalDrivers=result.total_drivers;
 		$scope.availableDrivers=result.idle_drivers;
 		$scope.onTrip=result.drivers_on_trip;
@@ -179,6 +196,7 @@ batsAdminHome.controller('dashboardDriverController', function($scope,$localStor
 	              {name: "On Trip",y: result.drivers_on_trip, color: '#43aae5'},
 	              ]
 		commonAppService.donutChart('DriverContainer',data);
+		}
 	});
 	$scope.getPercentage=function(a,b){
 		return commonAppService.getPercentage(a,b)

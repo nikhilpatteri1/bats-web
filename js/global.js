@@ -1,12 +1,12 @@
 //var apiURL="http://10.1.71.194:8030/";
 //var apiURL="http://220.227.124.134:8050/";//dev server
 //var apiURL="http://220.227.124.134:8040/";//testing server
-
+ 
 //var apiURL="http://220.227.124.134:8052/";//dev server from 08/08/2016  
 
-var apiURL="http://220.227.124.134:8058/";//dev server(modified traveldesk user) from 21/03/2017  
+var apiURL="http://220.227.124.134:8058/";//dev server(modified traveldesk user and driver app) from 21/03/2017  
 
-///var apiURL="http://220.227.124.134:8042/"; //crown plaza
+//var apiURL="http://220.227.124.134:8042/"; //crown plaza
 //var apiURL="http://10.1.71.40:8052/"
 var reqTime=5;  
 var maxSpeed=10;
@@ -96,6 +96,4 @@ $(window).on('popstate', function() {
 	}
 	$(".select2-drop").css("display","none");
 }); 
-
-
 

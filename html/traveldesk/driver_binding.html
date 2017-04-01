@@ -27,6 +27,7 @@
 							<!-- <div ng-show="deviceloading"><img src="../../images/loading.gif" width="10px" height="10px"/></div> -->
 							<select id="selectDevice" class="form-control" name="deviceList"
 								ng-model="deviceId" ng-change="fetchDeviceDetail(gid,deviceId)">
+								<option></option>
 								<option ng-if="devlistObject.length" value="" selected disabled
 									class="disable_select">-- Select Vehicle No/Device --</option>
 								<option ng-if="!devlistObject.length" selected disabled>

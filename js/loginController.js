@@ -145,8 +145,12 @@ batsLogin.controller('forgetpwdController', function($scope, $http, $localStorag
 					  headers : { 'Content-Type': 'application/json' }
 				     })
 					  .success(function(data) {
-						  console.log(data.msg);		  
-						  swal({title:"Status",text:data.msg},function(){$('#fgtModal').modal('hide');});						  
+						  console.log(data.msg);
+						  swal({title:"Status",text:data.msg},function(){
+							  $('#fgtModal').modal('hide');
+							  $('.navbar').addClass('header');
+						  });
+						  
 						  
 				      })
 				      .error(function(data, status, headers, config) {
@@ -155,6 +159,7 @@ batsLogin.controller('forgetpwdController', function($scope, $http, $localStorag
 				    	  console.log(status);
 				    	  console.log(headers);
 				    	  console.log(config);
+				    	  $('.navbar').addClass('header');
 					  });
 				   
 				}, 2000); 

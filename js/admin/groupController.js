@@ -281,13 +281,14 @@ batsAdminHome.controller('groupController', function($rootScope,$scope, $http, $
 	$scope.reset=function(){
 		$scope.group={};
 		$scope.createGroupForm.$setPristine();
+		$scope.createGroupForm.$setUntouched();
 		$scope.selection=[];
 		/*
 		 * function defintion is written in admin.html page 
 		 * becoz it operates via jquery show hide\
 		 * --- showPrev() is used to show the home form of udpate group ----
 		 * */ 
-		showPrev();
+		//showPrev();
 	};
 	$scope.group = {};
 	
@@ -661,7 +662,7 @@ batsAdminHome.controller('groupController', function($rootScope,$scope, $http, $
                       	   			   });
                 	          })
                 	          .error(function(data, status, headers, config) {
-                	        	  //console.log(data.err);
+                	        	  console.log(data);
                 	        	  if(data.err == "Expired Session")
             	    			  {
             	    			      expiredSession();
@@ -963,6 +964,12 @@ $scope.applyClass=false;
 $scope.changeStyle=function(){
 	$scope.applyClass=true;
 }
+
+$scope.clearForm = function(){
+	$scope.truefalse = false;
+	//$('#driverCreateModal').find('form')[0].reset();
+};
+
 });
 
 

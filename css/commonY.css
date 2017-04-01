@@ -160,7 +160,7 @@ body {
     background: linear-gradient(linear, 0 50%, 0 100%, from(#000000),to(#342C41)); /* Standard syntax (must be last) */
 }
 
-.settingsDetail{display: none;margin-left:27px;}
+.settingsDetail{display: none;margin-left:27px; margin-top: 12px;}
 .settingsDetail>li{
 	    list-style-type: none;
     margin-bottom: 15px;
@@ -262,7 +262,7 @@ input.ng-dirty.ng-valid {
 .header_bats{background:#f8f8f8; padding:5px;height:75px;border-bottom:2px solid #ddd;}
 .custom_label{font-size:20px;padding:0px;margin-bottom:7px;}
 .openFullScreen{width:25px; height:25px}
-.closeFullScreen{width:20px; height:20px;position: fixed;z-index: 1000;}
+.closeFullScreen{width:20px; height:20px;position: fixed;z-index: 1000;background: white;}
 .lastUpdate{font-family:Roboto;font-size:12px;color:#67747a;padding:10px 0px;font-weight:500;}
 .mainText{font-family:Roboto;font-size:14px;font-weight:600;color:#67747a;margin-bottom:-5px;}
 .helpText{font-family:Roboto;font-size:12px;font-weight:600;color:#dddddd;}
@@ -273,7 +273,7 @@ input.ng-dirty.ng-valid {
 .pad10{padding:10px 0px;}
 .countSection{;background-color: #fff;box-shadow: inset 0px 0px 5px 0px #ddd;border: 1px solid #ddd;}
 .countSection span{font-size:10px;color:#363636;}
-.countSection img{width:25px;height:25px;margin:5px auto;}
+.countSection img{width:30px;height:30px;margin:5px auto;}
 .verhorcenter{display: flex;align-items: center;justify-content: center;}
 .pad20{padding:20px;}
 .mleft{margin-left: 10px;}

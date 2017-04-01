@@ -22,7 +22,7 @@ batstravelDeskHome.controller('tripManagement', function($rootScope,$scope, $loc
 	var Trip_duration;
 	var UTrip_duration;
 	var CEndStamp;
-	var UEndStamp;
+	var UEndStamp; 
 	$scope.update={};
 	
 	
@@ -74,6 +74,7 @@ batstravelDeskHome.controller('tripManagement', function($rootScope,$scope, $loc
 	   google.maps.event.addListener(map, 'click', function(event) {
 		   end=event.latLng;
 		   addMarker(event.latLng);
+		   //addMarker(myPlace);
 		   calcRoute();
 		    
 		   
@@ -190,6 +191,29 @@ batstravelDeskHome.controller('tripManagement', function($rootScope,$scope, $loc
 			destination : end,
 			travelMode : google.maps.TravelMode.DRIVING
 		};
+		
+		var requestRev = {
+				  origin:end, 
+				  destination:{
+						lat : 12.849857,
+						lng : 77.658968
+					},
+				  travelMode: google.maps.DirectionsTravelMode.DRIVING
+				};
+		
+		function endTime(callback){
+			
+			directionsService.route(requestRev, function(response, status) {
+				console.log(response.routes[0].legs[0].duration.value);
+				$scope.endTrip_duration = response.routes[0].legs[0].duration.value + "000";
+				console.log($scope.endTrip_duration);
+				callback($scope.endTrip_duration);
+			});
+		};
+		
+			
+		var dataE;
+		
 		directionsService.route(request, function(response, status) {
 			if (status == google.maps.DirectionsStatus.OK) {
 				directionsDisplay.setDirections(response);
@@ -198,15 +222,22 @@ batstravelDeskHome.controller('tripManagement', function($rootScope,$scope, $loc
 				console.log(Number(Trip_duration));
 				//var d =travelDeskService.getTsOverTime($("#startTimeid").val());
 				//console.log(d);
-				CEndStamp = travelDeskService.getTsOverTime($("#startTimeid").val()) + Number(Trip_duration);
-				console.log(CEndStamp);
-				var b = travelDeskService.showTime(CEndStamp);
-				console.log(b);
-				$("#endTimeid").val(b);
-				//console.log(travelDeskService.getDateTime(a));
 				
+				dataE = endTime(function(resp){
+					var endPointTime = Number(resp);
+					console.log(resp);
+					CEndStamp = travelDeskService.getTsOverTime($("#startTimeid").val()) + Number(Trip_duration)+endPointTime;
+					console.log(CEndStamp);
+					var b = travelDeskService.showTime(CEndStamp);
+					console.log(b);
+					$("#endTimeid").val(b);
+					//console.log(travelDeskService.getDateTime(a));
+					  
+					
+				});
 				directionsDisplay.setMap(map);
 				directionsDisplay.setOptions({suppressMarkers:true});
+				
 			} else {
 				alert("Directions not available for the selected location");
 				$scope.undoMap();

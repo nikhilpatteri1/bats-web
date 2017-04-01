@@ -1,6 +1,6 @@
 /*================== Map Script ===================*/
-	batsGeneralHome.controller('GeneralController', function($rootScope,$scope, $interval, $http,$rootScope,$uibModal,
-		$localStorage,$window,$timeout) {
+batsGeneralHome.controller('GeneralController', function($rootScope,$scope, $interval, $http,$uibModal,
+		$localStorage,$window,$timeout,$route) {
 		$rootScope.menuPos=0;
 		
 		var dynamicMapHeight=window.screen.availHeight-100;
@@ -49,8 +49,21 @@
 		var markerIcon = "M31.809992,17.113449c-0.001888,-8.347025 -6.76548,-15.113449 -15.110806,-15.113449c-8.348912,0 -15.116186,6.766424 -15.116186,15.113449c0,7.204499 11.258558,26.452334 14.343395,31.58728c0.162355,0.272039 0.455538,0.438075 0.771941,0.438075c0.316309,0 0.61053,-0.166036 0.770997,-0.437131c3.08295,-5.134946 14.340658,-24.383725 14.340658,-31.588224zm-15.111655,11.693896c-6.447283,0 -11.696633,-5.245668 -11.696633,-11.694745c0,-6.448227 5.247462,-11.694745 11.696633,-11.694745s11.692952,5.246518 11.692952,11.694745s-5.244724,11.694745 -11.692952,11.694745z";
 		var car = "M17.402,0H5.643C2.526,0,0,3.467,0,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759c3.116,0,5.644-2.527,5.644-5.644 V6.584C23.044,3.467,20.518,0,17.402,0z M22.057,14.188v11.665l-2.729,0.351v-4.806L22.057,14.188z M20.625,10.773 c-1.016,3.9-2.219,8.51-2.219,8.51H4.638l-2.222-8.51C2.417,10.773,11.3,7.755,20.625,10.773z M3.748,21.713v4.492l-2.73-0.349 V14.502L3.748,21.713z M1.018,37.938V27.579l2.73,0.343v8.196L1.018,37.938z M2.575,40.882l2.218-3.336h13.771l2.219,3.336H2.575z M19.328,35.805v-7.872l2.729-0.355v10.048L19.328,35.805z";
 		var vehicleType;
+		
+		var markerImage = document.querySelector('.markerImg'),
+		  markerImageSvg = markerImage.innerHTML || '';	
+		var $truckImage =document.querySelector('.truckImg');
+			truckImgSvg = $truckImage.innerHTML || '';
+		var $bikeImage =document.querySelector('.bikeImg');
+			bikeImgSvg = $bikeImage.innerHTML || '';
+		var $busImage =document.querySelector('.busImg');
+			busImgSvg = $busImage.innerHTML || '';
+		
+		/*var markerImage = document.querySelector('.markerImg'),
+		  markerImageSvg = markerImage.innerHTML || '';
+		console.log(markerImageSvg);*/
 		var icon = {
-		    path: markerIcon,
+			path:markerIcon,
 		    scale: .7,
 		    strokeColor: 'white',
 		    strokeWeight: 0,
@@ -151,8 +164,42 @@
 			    	google.maps.event.trigger(map, 'resize');
 			    	/*map.setZoom(map.getZoom());*/
 			    }
-		function createMarker(latlng, deviceID,vehNo,vehModel,html,type) {
-			// console.log(deviceID+"=="+type);
+		
+			    
+			    
+			    var iconImg;
+			    function createMarker(latlng, deviceID,vehNo,vehModel,html,type,devtype) {
+			
+			    	console.log(devtype);
+					if(devtype == "car"){
+						iconImg = {
+			                anchor: new google.maps.Point(16, 16),
+			                url: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(markerImageSvg.replace('{{background}}', Colors[0]))
+			              };
+					}
+					else if(devtype == "truck")
+					{
+						iconImg = {
+			                anchor: new google.maps.Point(16, 16),
+			                url: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(truckImgSvg.replace('{{background}}', Colors[0]))
+			              };	
+					}
+					else if(devtype == "bike"){
+						iconImg = {
+				                anchor: new google.maps.Point(16, 16),
+				                url: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(bikeImgSvg.replace('{{background}}', Colors[0]))
+				              };
+					}
+					else if(devtype == "bus"){
+						iconImg = {
+				                anchor: new google.maps.Point(16, 16),
+				                url: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(busImgSvg.replace('{{background}}', Colors[0]))
+				              };
+					}
+			    	
+			    	// console.log(deviceID+"=="+type);
+			
+			
 			var contentString; 
 			/*if(type==0){icon.fillColor='#000000';}
 			else if(type==1){icon.fillColor='#ffde01';}
@@ -191,12 +238,11 @@
 				contentString  = '<b><label>Device ID:</label> '+deviceID+'</b><br><br><b><label>Vehicle No:</label> '+vehNo+'</b><br><br><b><label>Vehicle Model:</label> '+vehModel+'</b><br><br>'+html+'<br><br><button class="btn btn-primary btn-sm" id="infoClick" data-deviceID="'+deviceID+'">show detail</button>';
 			}
 			
-			    
 			    var marker = new google.maps.Marker({
 			        position: latlng,
 			        map: map,
 			        title: deviceID, 
-			        icon:icon,       
+			        icon:iconImg,       
 			        zIndex: Math.round(latlng.lat()*-100000)<<5
 			        });
 			        marker.myname = deviceID;
@@ -348,7 +394,7 @@
 	                        // console.log(JSON.stringify(legs[i].start_location));
 	                        startLocation.latlng = legs[i].start_location;
 	                        startLocation.address = legs[i].start_address;
-	                          marker = createMarker(legs[i].start_location, dataVal[i].devid,dataVal[i].vehicle_num,dataVal[i].vehicle_model, legs[i].start_address,dataVal[i].values[0].type);
+	                          marker = createMarker(legs[i].start_location, dataVal[i].devid,dataVal[i].vehicle_num,dataVal[i].vehicle_model, legs[i].start_address,dataVal[i].values[0].type,dataVal[i].devtype);
 	                      }
 	                      endLocation.latlng = legs[i].end_location;
 	                      endLocation.address = legs[i].end_address;
@@ -845,23 +891,36 @@
 				displayData(data);
 				var bounds = new google.maps.LatLngBounds();
 				for(var i=0;i<data.length;i++){	
-						if(data[i].devtype == "car"){
-						icon.path = carIcon;		   
+					if(data[i].devtype == "car"){
+						icon.path =  {
+	                    anchor: new google.maps.Point(16, 16),
+	                    url: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(markerImageSvg.replace('{{background}}', Colors[0]))
+	                  };
+						//icon.path = statusElm;
 					   }
 					   else if(data[i].devtype == "bus"){
-						   icon.path = busIcon;
+						   icon.path = { 
+							anchor: new google.maps.Point(16, 16),
+		                    url: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(busImgSvg.replace('{{background}}', Colors[0]))
+						   };
 					   }
 					   else if(data[i].devtype == "truck"){
-						   icon.path = truckIcon;
+						   icon.path = {
+					                anchor: new google.maps.Point(16, 16),
+					                url: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(truckImgSvg.replace('{{background}}', Colors[0]))
+					              };
 					   }
 					   else if(data[i].devtype == "bike"){
-						   icon.path = bikeIcon;
+						   icon.path = {
+					                anchor: new google.maps.Point(16, 16),
+					                url: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(bikeImgSvg.replace('{{background}}', Colors[0]))
+					              };
 					   }
 					   else{
 						   icon.path = markerIcon;
 					   }
 						if(data[i].values.length>0){
-							createMarker(new google.maps.LatLng(data[i].values[0].lat, data[i].values[0].long),data[i].devid,data[i].vehicle_num,data[i].vehicle_model,"",data[i].values[0].type);			 
+							createMarker(new google.maps.LatLng(data[i].values[0].lat, data[i].values[0].long),data[i].devid,data[i].vehicle_num,data[i].vehicle_model,"",data[i].values[0].type,data[i].devtype);			 
 							bounds.extend(new google.maps.LatLng(data[i].values[0].lat, data[i].values[0].long));						    
 						}
 						else{

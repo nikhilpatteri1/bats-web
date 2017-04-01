@@ -260,7 +260,7 @@
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close closeIconReload"
+				<button type="button" class="close "
 					data-dismiss="modal" ng-click="reset()">&times;</button>
 				<h4 class="modal-title">Update Device</h4>
 
@@ -394,13 +394,13 @@
 									<!-- ./Vehicle Model field added 08/08/2016 for cp release -->
 								</div>
 							</div>
-							<div class="row">
+						<!-- 	<div class="row">
 								<div class="col-sm-6">
 									<div class="form-group"
 										ng-class="{ 'has-error' : updateDeviceForm.driver_name.$invalid && !updateDeviceForm.driver_name.$pristine }">
 										<label>Driver Name</label>
-										<!-- ng-show="device.driver_name"
-											class="floatlabeltxt show-hide" -->
+										ng-show="device.driver_name"
+											class="floatlabeltxt show-hide"
 										<input type="text" ng-model="device.driver_name"
 											name="driver_name" class="form-control"
 											placeholder="Driver Name" required />
@@ -412,8 +412,8 @@
 									<div class="form-group"
 										ng-class="{ 'has-error' : updateDeviceForm.driver_licence.$invalid && !updateDeviceForm.driver_licence.$pristine }">
 										<label>Driver License</label>
-										<!--ng-show="device.driver_licence"
-											class="floatlabeltxt show-hide"  -->
+										ng-show="device.driver_licence"
+											class="floatlabeltxt show-hide" 
 										<input type="text" ng-model="device.driver_licence"
 											name="driver_licence" class="form-control"
 											ng-blur="verifyDL(device.driver_licence)"
@@ -425,7 +425,7 @@
 											License is already associated</span>
 									</div>
 								</div>
-							</div>
+							</div> -->
 							<div class="row">
 								<div class="col-sm-12">
 									<div class="form-group floatlabel"

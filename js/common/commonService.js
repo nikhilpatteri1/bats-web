@@ -63,11 +63,11 @@ commonApp.service('commonAppService',function(commonFactory,$localStorage){
 		$(function() {
 	        var chart = new Highcharts.Chart({
 	            chart: {
-	                renderTo: chartID,
+	            	defaultSeriesType: 'line',
+	            	renderTo: chartID,
 	                type: 'pie',
 	                height: 222,
 	                width:300,
-	                
 	            },
 	            title: {
 	                text: ''
@@ -75,10 +75,10 @@ commonApp.service('commonAppService',function(commonFactory,$localStorage){
 
 	            plotOptions: {
 	                pie: {
-	                    borderColor: '#fff',
+	                    //borderColor: '#fff',
 	                    innerSize: '70%',
-	                    /*borderColor: '#000000'*/
 	                }
+	            
 	            },
 	            series: [{
 	                data:arrayOfData 
@@ -93,8 +93,8 @@ commonApp.service('commonAppService',function(commonFactory,$localStorage){
 	                 innerSize: 10,
 	                 pointPadding: 0,
 	                 groupPadding: 0 
-	                 
-	                 
+	                 /*borderWidth: 1,
+		             borderColor: '#000000',*/
 	                 
 	                   
 	        },
@@ -258,6 +258,7 @@ commonApp.service('commonAppService',function(commonFactory,$localStorage){
 		driversDataJson.token=$localStorage.data;
 		commonFactory.callApi("POST",apiURL+"dashboard/drivers",driversDataJson,function(result){			
 			cb(result);
+			console.log(result);
 		});
 	}
 	/**

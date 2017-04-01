@@ -33,7 +33,7 @@
 				</div>
 				<div class="col-sm-3">
 					<button type="button" class="btn btn-primary btn-sm"
-						ng-click="showCreateBtn()" data-toggle="modal"
+						ng-click="showCreateBtn();clearForm()" data-toggle="modal"
 						data-target="#createGroupModal">Create Group</button>
 				</div>
 			</div>
@@ -103,7 +103,7 @@
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close closeIconReload"
+				<button type="button" class="close" ng-click="reset()"
 					data-dismiss="modal">&times;</button>
 				<h4 class="modal-title" ng-show="title.create">Create New Group</h4>
 				<h4 class="modal-title" ng-show="title.update">Update Group</h4>
@@ -111,7 +111,7 @@
 			<div class="xyz">
 				<div class="modal-body my_modalBody"
 					ng-class="{'bodyStyle':applyClass}">
-					<form name="createGroupForm" class="form formInput"
+					<form  name="createGroupForm" class="form formInput"
 						ng-init="loadDevices()" novalidate>
 						<!-- <div class="col-sm-2 col-sm-offset-10" align="right">
 						<span class="closeIcon closeIconReload" data-direction="left"

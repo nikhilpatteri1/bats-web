@@ -864,6 +864,12 @@ batsAdminHome.controller('driverController', function($rootScope,$scope, $localS
 			});
 		
 	});
+	
+	$scope.clearForm = function(){
+		//alert("hi");
+		$('#driverCreateModal').find('form')[0].reset();
+	};
+	
  /*$(document).ready(function(){
 	       $('#perid').trigger('click');
 	
