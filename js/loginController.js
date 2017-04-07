@@ -181,6 +181,55 @@ batsfactoryhome.controller('changePwdform', function($rootScope,$scope,$http,$lo
 		$scope.repwd="";
 		$scope.isMismatch="";
 	};
+	
+	
+	
+	$scope.verifyUser=function(usercurpwd){
+		$scope.verifyUserCurrPassJson={};
+		$scope.verifyUserCurrPassJson.token=$localStorage.data;
+		$scope.verifyUserCurrPassJson.password=usercurpwd;
+		$http({
+		      method  : 'POST',		  
+		      url     : apiURL+'user/confirmpassword',
+			  data    : JSON.stringify($scope.verifyUserCurrPassJson), 
+			  headers : { 'Content-Type': 'application/json' }
+		     })
+			  .success(function(data) {
+				  if(data.status == true){
+					  //alert("true");
+					  $scope.currPassWord = usercurpwd;
+					$scope.upass=true;
+					  $scope.error = {upass:false};
+				  }
+		      })
+		      .error(function(data, status, headers, config) {
+		    	  //$scope.isSaving=true;
+		    	  //console.log(data);
+		    	  $scope.statusPass=data.msg;
+		    	  if(data.status == false){
+		    		 // alert("false");
+		    		  $scope.upass=false;
+					  $scope.error = {upass:true};
+		    	  }
+		    	  if(data.err == "Expired Session")
+    			  {
+            		 $('#createUserModal').modal('hide');
+    			      expiredSession();
+    			      $localStorage.$reset();
+    			  }
+	        	  else if(data.err == "Invalid User"){
+	        		 $('#createUserModal').modal('hide');
+	        		  invalidUser();
+	    			  $localStorage.$reset();  
+	        	  }
+		    	  console.log(status);
+		    	  console.log(headers);
+		    	  console.log(config);
+			  });
+	};
+	
+	
+	
 	$scope.pwdChange=function(typedPwd){
 		console.log($scope.newpwd+"=="+typedPwd);
 		if($scope.newpwd==typedPwd){
@@ -229,10 +278,20 @@ batsfactoryhome.controller('changePwdform', function($rootScope,$scope,$http,$lo
 			$scope.isMismatch=true;			
 		}
 	};
-	
-$scope.hidePasswordMismatch = function(){
-	$scope.isMismatch = false;
-}
+	$scope.npass =false;
+	$scope.hidePasswordMismatch = function(){
+	console.log($scope.currPassWord);
+	console.log($scope.newpwd);
+		if($scope.currPassWord == $scope.newpwd){
+			$scope.npass =true;
+			$scope.showRePass =false;
+		}
+		else{
+			$scope.npass =false;
+			$scope.showRePass =true;
+		}
+		$scope.isMismatch = false;
+	}
 });
 
 
@@ -249,6 +308,53 @@ batsAdminHome.controller('changePwdformAdmin', function($rootScope,$scope,$http,
 		$scope.repwd="";
 		$scope.isMismatch="";
 	};
+	
+	$scope.verifyUser=function(usercurpwd){
+		$scope.verifyUserCurrPassJson={};
+		$scope.verifyUserCurrPassJson.token=$localStorage.data;
+		$scope.verifyUserCurrPassJson.password=usercurpwd;
+		$http({
+		      method  : 'POST',		  
+		      url     : apiURL+'user/confirmpassword',
+			  data    : JSON.stringify($scope.verifyUserCurrPassJson), 
+			  headers : { 'Content-Type': 'application/json' }
+		     })
+			  .success(function(data) {
+				  if(data.status == true){
+					  //alert("true");
+					  $scope.currPassWord = usercurpwd;
+					$scope.upass=true;
+					  $scope.error = {upass:false};
+				  }
+		      })
+		      .error(function(data, status, headers, config) {
+		    	  //$scope.isSaving=true;
+		    	  //console.log(data);
+		    	  $scope.statusPass=data.msg;
+		    	  if(data.status == false){
+		    		 // alert("false");
+		    		  $scope.upass=false;
+					  $scope.error = {upass:true};
+		    	  }
+		    	  if(data.err == "Expired Session")
+    			  {
+            		 $('#createUserModal').modal('hide');
+    			      expiredSession();
+    			      $localStorage.$reset();
+    			  }
+	        	  else if(data.err == "Invalid User"){
+	        		 $('#createUserModal').modal('hide');
+	        		  invalidUser();
+	    			  $localStorage.$reset();  
+	        	  }
+		    	  console.log(status);
+		    	  console.log(headers);
+		    	  console.log(config);
+			  });
+	};
+	
+	
+	
 	$scope.pwdChangeAdmin=function(typedPwd){
 		if($scope.newpwd==typedPwd){
 			$scope.changepwdjson.token=$localStorage.data;
@@ -298,7 +404,18 @@ batsAdminHome.controller('changePwdformAdmin', function($rootScope,$scope,$http,
 		
 	};
 	
+	$scope.npass =false;
 	$scope.hidePasswordMismatch = function(){
+	console.log($scope.currPassWord);
+	console.log($scope.newpwd);
+		if($scope.currPassWord == $scope.newpwd){
+			$scope.npass =true;
+			$scope.showRePass =false;
+		}
+		else{
+			$scope.npass =false;
+			$scope.showRePass =true;
+		}
 		$scope.isMismatch = false;
 	}
 });
@@ -316,11 +433,63 @@ batsGeneralHome.controller('changePwdformGeneral', function($rootScope,$scope,$h
 		$scope.repwd="";
 		$scope.isMismatch="";
 	};
+	
+	
+	
+	$scope.verifyUser=function(usercurpwd){
+		$scope.verifyUserCurrPassJson={};
+		$scope.verifyUserCurrPassJson.token=$localStorage.data;
+		$scope.verifyUserCurrPassJson.password=usercurpwd;
+		$http({
+		      method  : 'POST',		  
+		      url     : apiURL+'user/confirmpassword',
+			  data    : JSON.stringify($scope.verifyUserCurrPassJson), 
+			  headers : { 'Content-Type': 'application/json' }
+		     })
+			  .success(function(data) {
+				  if(data.status == true){
+					  //alert("true");
+					  $scope.currPassWord = usercurpwd;
+					$scope.upass=true;
+					  $scope.error = {upass:false};
+				  }
+		      })
+		      .error(function(data, status, headers, config) {
+		    	  //$scope.isSaving=true;
+		    	  //console.log(data);
+		    	  $scope.statusPass=data.msg;
+		    	  if(data.status == false){
+		    		 // alert("false");
+		    		  $scope.upass=false;
+					  $scope.error = {upass:true};
+		    	  }
+		    	  if(data.err == "Expired Session")
+    			  {
+            		 $('#createUserModal').modal('hide');
+    			      expiredSession();
+    			      $localStorage.$reset();
+    			  }
+	        	  else if(data.err == "Invalid User"){
+	        		 $('#createUserModal').modal('hide');
+	        		  invalidUser();
+	    			  $localStorage.$reset();  
+	        	  }
+		    	  console.log(status);
+		    	  console.log(headers);
+		    	  console.log(config);
+			  });
+	};
+
+	
+	
+	
+	
 	$scope.pwdChangeGeneral=function(typedPwd){
 		if($scope.newpwd==typedPwd){
 			$scope.changepwdjson.token=$localStorage.data;
 			$scope.changepwdjson.newpassword=typedPwd;
 			console.log($scope.changepwdjson);
+			
 			if($scope.changePwd.$valid){
 				$http({
 				      method  : 'POST',		  
@@ -364,7 +533,18 @@ batsGeneralHome.controller('changePwdformGeneral', function($rootScope,$scope,$h
 		}
 	};
 	
+	$scope.npass =false;
 	$scope.hidePasswordMismatch = function(){
+	console.log($scope.currPassWord);
+	console.log($scope.newpwd);
+		if($scope.currPassWord == $scope.newpwd){
+			$scope.npass =true;
+			$scope.showRePass =false;
+		}
+		else{
+			$scope.npass =false;
+			$scope.showRePass =true;
+		}
 		$scope.isMismatch = false;
 	}
 });
@@ -384,6 +564,51 @@ batstravelDeskHome.controller('changePwdformTraveldesk', function($rootScope,$sc
 		$scope.repwd="";
 		$scope.isMismatch="";
 	};
+	
+	$scope.verifyUser=function(usercurpwd){
+		$scope.verifyUserCurrPassJson={};
+		$scope.verifyUserCurrPassJson.token=$localStorage.data;
+		$scope.verifyUserCurrPassJson.password=usercurpwd;
+		$http({
+		      method  : 'POST',		  
+		      url     : apiURL+'user/confirmpassword',
+			  data    : JSON.stringify($scope.verifyUserCurrPassJson), 
+			  headers : { 'Content-Type': 'application/json' }
+		     })
+			  .success(function(data) {
+				  if(data.status == true){
+					  //alert("true");
+					  $scope.currPassWord = usercurpwd;
+					$scope.upass=true;
+					  $scope.error = {upass:false};
+				  }
+		      })
+		      .error(function(data, status, headers, config) {
+		    	  //$scope.isSaving=true;
+		    	  //console.log(data);
+		    	  $scope.statusPass=data.msg;
+		    	  if(data.status == false){
+		    		 // alert("false");
+		    		  $scope.upass=false;
+					  $scope.error = {upass:true};
+		    	  }
+		    	  if(data.err == "Expired Session")
+    			  {
+            		 $('#createUserModal').modal('hide');
+    			      expiredSession();
+    			      $localStorage.$reset();
+    			  }
+	        	  else if(data.err == "Invalid User"){
+	        		 $('#createUserModal').modal('hide');
+	        		  invalidUser();
+	    			  $localStorage.$reset();  
+	        	  }
+		    	  console.log(status);
+		    	  console.log(headers);
+		    	  console.log(config);
+			  });
+	};
+	
 	$scope.pwdChangeTraveldesk=function(typedPwd){
 		if($scope.newpwd==typedPwd){
 			$scope.changepwdjson.token=$localStorage.data;
@@ -432,7 +657,18 @@ batstravelDeskHome.controller('changePwdformTraveldesk', function($rootScope,$sc
 		}
 	};
 	
+	$scope.npass =false;
 	$scope.hidePasswordMismatch = function(){
+	console.log($scope.currPassWord);
+	console.log($scope.newpwd);
+		if($scope.currPassWord == $scope.newpwd){
+			$scope.npass =true;
+			$scope.showRePass =false;
+		}
+		else{
+			$scope.npass =false;
+			$scope.showRePass =true;
+		}
 		$scope.isMismatch = false;
 	}
 });

@@ -11,7 +11,7 @@ batsAdminHome.filter('filterMultiple',['$filter',function ($filter) {
 							filteredData:[],
 							applyFilter : function(obj,key){
 								var fData = [];
-								if(this.filteredData.length == 0)
+								if(this.filteredData && this.filteredData.length == 0)
 									this.filteredData = this.data;
 								if(obj){
 									var fObj = {};
@@ -41,7 +41,6 @@ batsAdminHome.filter('filterMultiple',['$filter',function ($filter) {
 				filterObj.applyFilter(obj,key);
 			});			
 		}
-		console.log(filterObj);
 		return filterObj.filteredData;
 	}
 }]).filter('unique', function() {

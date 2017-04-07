@@ -943,9 +943,18 @@ $(document).on('click', '.clickable', function(){
 	    var effect = $(this).data('effect');
 	        $(this).closest('.panel')[effect]();
 	});
+
+$scope.back2Show1 = function(){
+	$('#show2').hide();
+	$('#show3').hide();
+	$("#show1").show();
+}
+
+
 $scope.back2Form=function(){
 	$('#show2').hide();
-	$('#show1').show();
+	$('#show3').show();
+	$("#show1").hide();
 	$scope.applyClass=false;
 }
 
@@ -960,15 +969,46 @@ $(document).ready(function() {
 	});// script
 });
 
-$scope.applyClass=false;
+//$scope.applyClass=false;
 $scope.changeStyle=function(){
-	$scope.applyClass=true;
+	//$scope.applyClass=true;
+	$("#show2").show();
+	$("#show1").hide();
+	$("#show3").hide();
 }
 
 $scope.clearForm = function(){
 	$scope.truefalse = false;
-	//$('#driverCreateModal').find('form')[0].reset();
+	$("#show1").show();
+	$("#show2").hide();
+	$("#show3").hide();
+	$('#createGroupModal').find('form')[0].reset();
 };
+$("#show3").hide();
+$("#show1").show();
+$scope.showAllocate = function(){
+	$("#show3").show();
+	$("#show1").hide();
+}
+
+
+$scope.factoryCheckAll = function(checkAll){
+	  if(checkAll){
+	      for(i in $scope.customerDevices){
+			  $scope.selection.push($scope.customerDevices[i]);
+			  var index = -1;		
+					  $scope.FactoryStockCount=$scope.FactoryStockCount-1;
+		  }
+	      $scope.customerDevices = [];
+	  }
+	  else{
+	      for(i in $scope.selection){
+			  $scope.customerDevices.push($scope.selection[i]);
+			      $scope.FactoryStockCount=$scope.FactoryStockCount+1;
+	      }
+	      $scope.selection = [];
+	  }
+	 }
 
 });
 

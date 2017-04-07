@@ -102,7 +102,10 @@
 						Factory Stock <span class="totalCount">
 							{{FactoryStockCount}} </span>
 					</h4>
-
+					<span class="factoryCheckAll">
+						<input ng-disabled="isSelected" ng-model="checkAll" ng-click="factoryCheckAll(checkAll)" type="checkbox">Select All
+					</span>
+						
 				</div>
 				<!-- <div class=" select_device"> -->
 				<div class="panel-body " style="height: 750px;">
@@ -112,8 +115,8 @@
 							<span ng-repeat="rowContent in rows" class="group_name_span"
 								ng-show="devicesTable"> <label
 								class="group_name_selected"> <input type="checkbox"
-									name="{{rowContent}}" ng-disabled="isSelected"
-									ng-click="toggleSelection(rowContent)" /> <!-- <input type="checkbox" ng-model="selection.ids[user.gid]" class="selectGroupUser pull-left" /> -->
+									name="{{rowContent}}" ng-disabled="isSelected" ng-model="checkRows[$index].checkBox"
+									ng-click="toggleSelection(rowContent, checkRows[$index])" /> <!-- <input type="checkbox" ng-model="selection.ids[user.gid]" class="selectGroupUser pull-left" /> -->
 									<span> {{rowContent}} </span></label>
 							</span>
 							<!-- <div class="row" ng-show="noDevicesFactory">

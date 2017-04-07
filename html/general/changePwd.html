@@ -15,6 +15,24 @@
 											<div class="col-sm-12 controls">
 												<!-- <label ng-show="newpwd" class="floatlabeltxt show-hide">Enter
 													New Password</label> --> 
+													<label class="labelClass">Current Password</label> 
+													<input type="password" ng-model="curpwd" ng-blur="verifyUser(curpwd)"
+													class="form-control  new_pwd" name="cur_pd"
+													placeholder="Enter Current Password" required>
+
+												<span class="help-block chk_frm_server"
+											ng-show="error.upass">{{statusPass}}</span>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="control-group">
+									<div class="form-group">
+										<div class="row">
+											<div class="col-sm-12 controls">
+												<!-- <label ng-show="newpwd" class="floatlabeltxt show-hide">Enter
+													New Password</label> --> 
 													<label class="labelClass">New Password</label> 
 													<input type="password" ng-model="newpwd"
 													class="form-control  new_pwd" name="new_pd"
@@ -23,6 +41,8 @@
 												<span class='help-inline' ng-show='changePwd.newpwd.$valid'>
 													<i class='icon-ok'></i>
 												</span>
+												<span class="help-block chk_frm_server"
+											ng-show="npass">You used this password recently. Please choose a different one.</span>
 											</div>
 										</div>
 									</div>
@@ -34,9 +54,9 @@
 												<!-- <label ng-show="repwd && newpwd"
 													class="floatlabeltxt show-hide">Re-Enter New
 													Password</label> --> 
-													<label ng-show="newpwd" class="labelClass">Confirm Password</label>
+													<label ng-show="showRePass" class="labelClass">Confirm Password</label>
 													<input type="password" ng-model="repwd"
-													ng-show="newpwd"
+													ng-show="showRePass"
 													class="form-control confirm_pwd"
 													name="confirm_pd" same-as='newpwd'
 													placeholder="Re-Enter New Password" repassword-validate

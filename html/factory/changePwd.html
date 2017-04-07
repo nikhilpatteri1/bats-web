@@ -11,43 +11,64 @@
 			<h6 class="titleHead">Change Password</h6>
 			<form name="changePwd" class="formInput" id="changePwdFrm">
 				<div class="control-group">
-					<div class="form-group">
-						<div class="row">
-							<div class="col-sm-12 controls">
-								<!-- <label ng-show="newpwd" class="floatlabeltxt show-hide">Enter
-									New Password</label> -->
-									<label class="labelClass">New Password</label> 
-									<input type="password" ng-model="newpwd"
-									class="form-control new_pwd" name="new_pd"
-									placeholder="Enter New Password"
-									ng-change="hidePasswordMismatch()" password-validate required>
+									<div class="form-group">
+										<div class="row">
+											<div class="col-sm-12 controls">
+												<!-- <label ng-show="newpwd" class="floatlabeltxt show-hide">Enter
+													New Password</label> --> 
+													<label class="labelClass">Current Password</label> 
+													<input type="password" ng-model="curpwd" ng-blur="verifyUser(curpwd)"
+													class="form-control  new_pwd" name="cur_pd"
+													placeholder="Enter Current Password" required>
 
-								<span class='help-inline' ng-show='changePwd.newpwd.$valid'>
-									<i class='icon-ok'></i>
-								</span>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="control-group">
-					<div class="form-group">
-						<div class="row">
-							<div class="col-sm-12 controls">
-								<!-- <label ng-show="repwd && newpwd" class="floatlabeltxt show-hide">Re-Enter
-									New Password</label> -->
-									<label ng-show="newpwd" class="labelClass">Confirm Password</label>
-									 <input type="password" ng-model="repwd"
-									ng-show="newpwd" class="form-control confirm_pwd"
-									name="confirm_pd" same-as='newpwd'
-									placeholder="Re-Enter New Password" repassword-validate
-									required> <span class='help-inline'
-									ng-show='changePwd.repwd.$valid'> <i class='icon-ok'></i>
-								</span> <span class="mismatch" ng-show="isMismatch">Password
-									Mismatch</span>
-							</div>
-						</div>
-					</div>
-				</div>
+												<span class="help-block chk_frm_server"
+											ng-show="error.upass">{{statusPass}}</span>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="control-group">
+									<div class="form-group">
+										<div class="row">
+											<div class="col-sm-12 controls">
+												<!-- <label ng-show="newpwd" class="floatlabeltxt show-hide">Enter
+													New Password</label> --> 
+													<label class="labelClass">New Password</label> 
+													<input type="password" ng-model="newpwd"
+													class="form-control  new_pwd" name="new_pd"
+													placeholder="Enter New Password" ng-change="hidePasswordMismatch()" password-validate required>
+
+												<span class='help-inline' ng-show='changePwd.newpwd.$valid'>
+													<i class='icon-ok'></i>
+												</span>
+												<span class="help-block chk_frm_server"
+											ng-show="npass">You used this password recently. Please choose a different one.</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="control-group">
+									<div class="form-group">
+										<div class="row">
+											<div class="col-sm-12 controls">
+												<!-- <label ng-show="repwd && newpwd"
+													class="floatlabeltxt show-hide">Re-Enter New
+													Password</label> --> 
+													<label ng-show="showRePass" class="labelClass">Confirm Password</label>
+													<input type="password" ng-model="repwd"
+													ng-show="showRePass"
+													class="form-control confirm_pwd"
+													name="confirm_pd" same-as='newpwd'
+													placeholder="Re-Enter New Password" repassword-validate
+													required> <span class='help-inline'
+													ng-show='changePwd.repwd.$valid'> <i class='icon-ok'></i>
+												</span> <span class="mismatch" ng-show="isMismatch">Password
+													Mistmatch</span>
+											</div>
+										</div>
+									</div>
+								</div>
 				<div ng-hide="newpwd && repwd">
 					<ul class="helplist">
 						<li><strong>'Miimum 8 Characters </strong></li>

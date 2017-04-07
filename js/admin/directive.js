@@ -248,6 +248,26 @@ batsAdminHome.directive('trackActive', function($location) {
 	return {link: link};
 });
 
+
+/*batsAdminHome.directive('gsChangeBackground', function() {
+	  return {
+	    link: function(scope, element, attrs) {
+
+	      //var oldColor =  element.find('img').attr('src', '../images/menu/dashboard.png');
+
+	      element.on('mouseenter', function(event) {
+	    	  alert("enter");
+	    	return element.find('img').attr('src', '../images/menu/hover_replay.png');
+	      });
+
+	      element.on('mouseleave', function(event) {
+	    	  alert("no");
+	    	  return  element.find('img').attr('src', '../images/menu/dashboard.png');
+	      })
+	    }
+	  };
+	});*/
+
 /*batsAdminHome.directive('scrollOnClick', function() {
 	  return {
 		    restrict: 'A',

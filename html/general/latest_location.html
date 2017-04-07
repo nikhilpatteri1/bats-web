@@ -32,8 +32,8 @@
 	<div class="row">
 		<div class="col-sm-12 pad0">
 			<div class="map_wrap" data-tap-disabled="true">
-				<ng-map id="latestLocationId" ng-repeat="mapos in position"
-					center="{{mapos.lat}},{{mapos.long}}" zoom="{{mapos.zoom}}">
+				<ng-map id="latestLocationId">
+					<!-- center="{{mapos.lat}},{{mapos.long}}" zoom="{{mapos.zoom}}" center="[20.5937, 78.9629]"-->
 				<!-- 	styles="[{'featureType':'administrative','elementType':'labels.text.fill','stylers':[{'color':'#444444'}]},
 											{'featureType':'landscape','elementType':'all','stylers':[{'color':'#f2f2f2'}]},
 											{'featureType':'landscape','elementType':'labels','stylers':[{'visibility':'on'}]},
@@ -52,12 +52,49 @@
 				<marker ng-repeat="pos in marker"
 					icon="../images/{{pos.devtype}}.png"
 					position="{{pos.lat}},{{pos.long}}"
-					on-click="showDeviceInfo(event, pos)"></marker> <shape
+					on-click="showDeviceInfo(event, pos)"></marker> 
+					<shape
 					name="polygon" ng-repeat="geofence in geofence"
 					paths="{{geofence}}" stroke-color="#FF0000" stroke-opacity="0.8"
 					stroke-weight="2" fill-color="#FF0000" fill-opacity="0.10">
-				</shape> </ng-map>
+				</shape> 
+				</ng-map>
 			</div>
+			<div class="row">
+			<div class="col-sm-12">
+			<section class="speedometerSection" ng-style="{'width':(singleDevice == true) ? '230px' :'280px'}"
+					ng-show="availableDeveice">
+				<!-- <div class="col-sm-12"><label>Available Devices</label></div> -->
+						<div class="col-sm-12 Availhist-container">
+							<ul class="multiplDeviceTable">
+								<li>
+									<ul class="deviceRowList">
+										<!-- <li><span class="barStyle" ng-style='{{getColor(device.type)}}'></span></li> -->
+										<li></li>
+										<li><span class="">Vehicle No</span></li>
+										<!-- <li><span class="helpText">Speed</span><p class="actualText">{{device.speed}}Kmph</p></li> -->
+										<!-- <li><img src="{{img_url}}" class="statusImg"></li> -->
+										<li><span class="addresslatest">Address</span></li>
+									</ul>
+								</li>
+								<li ng-repeat="pos in marker">
+									<ul class="deviceRowList">
+										<!-- <li><span class="barStyle" ng-style='{{getColor(device.type)}}'></span></li> -->
+										<li>{{$index+1}}</li>
+										<li><p class="actualText">{{pos.vehicle_num}}</p></li>
+										<!-- <li><span class="helpText">Speed</span><p class="actualText">{{device.speed}}Kmph</p></li> -->
+										<!-- <li><img src="{{img_url}}" class="statusImg"></li> -->
+										<li><a href="" ng-click="givelt(pos.lat,pos.long);popover.show($event);" class="link">
+																<span>{{pos.lat}}, {{pos.long}}</span>
+														</a></li>
+									</ul>
+								</li>
+							</ul>	
+						</div>
+			</section>
+			</div>
+			</div>
+			
 		</div>
 	</div>
 </div>

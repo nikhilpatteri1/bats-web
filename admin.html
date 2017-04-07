@@ -73,139 +73,6 @@
 
 	<div ng-controller="AlarmNotificationsControllerAdmin">
 
-		<!-- <nav class="navbar header">
-		<div class="container">
-			<div class="row">
-				<div class="col-xs-12">
-					<div class="col-xs-2">
-						<img src="../images/logo-new-bats-white.png" alt="bydesign_logo" class="logo"/>
-					</div>
-					<div class="col-xs-8" style="text-align:right">
-						<div class="nav notify-row">
-						<ul class="top-menu">
-							travel desk bar start
-			                  <li id="trvel_desk_bar">
-			                  <a href="#" ng-click="userinfo()">  
-			                  <i class="fa fa-user" style="color:#fcb322" aria-hidden="true"></i></a>
-			                  </li>
-		                    	trvel desk bar end
-							notification start
-		                   notification dropdown start
-		                   <li id="header_notification_bar" class="dropdown">
-		                       <a data-toggle="dropdown" class="dropdown-toggle" href="#" ng-click="hideNotifyCount()">
-		                          <i class="fa fa-bell" style="color:#fcb322" aria-hidden="true"></i>
-		                           <span class="badge bg-warning">{{notifyLength}}</span>
-		                       </a>
-		                       <ul class="dropdown-menu extended notification">
-		                           <div class="notify-arrow notify-arrow-yellow"></div>
-		                           <h5 ng-if="noNotification" class="no_notifications">No Notifications Available</h5> 
-		                           <span ng-if="showNotification">
-		                           <li>
-		                               <p class="yellow">You have {{notifyLength}} new notifications</p>
-		                           </li>
-		                           <li ng-repeat="showNotify in notifyStatus">
-		                               <a href="#" ng-click="showNotifyModal(showNotify)" data-toggle="modal" data-target="#showNotificationModal">
-		                                   <span class="label label-danger custom-label-danger">{{showNotify.alarm_type_One}}</span>
-		                                   There is an {{showNotify.alarm_type_Two}} for {{showNotify.vehicle_num}} on 
-		                                   <mydate>{{showNotify.ts | date:'dd/MM/yyyy hh:mm a'}}</mydate>.
-		                               </a>
-		                           </li>
-		                           <li ng-if="viewMoreNotify">
-		                               <a href="/admin/alarm" style="text-align:center">
-		                                   <span>View</span>
-		                               </a>
-		                           </li>
-		                           </span>
-		                       </ul>
-		                   </li>
-		                   notification dropdown end
-					</ul>
-					</div>
-					</div>
-					<div class="col-xs-2">
-						<a href="" class="logout lead" ng-controller="logoutAdminUser"
-												ng-click="logoutAdminSubmit()">Logout</a>
-						<a href="" class="login" data-toggle="modal" data-target="#loginModal">Login</a>
-			    	</div>
-			    </div>
-			 </div>
-		</div>
-	</nav>
- -->
-
-		<!--================= Nav Header Starts =================-->
-		<!-- <nav class="navbar navbar_home">
-		<div class="container">
-			<div class="row">
-			
-				<div class="col-sm-9">
-					<div class="object">
-						<img src="../images/car_logo_active.png" alt="car_logo" /> <span
-							class="logo_Title">Bydesign Automobile Tracking System</span>
-					</div>
-				</div>
-				<div class="col-sm-3">
-				<div class="col-sm-5">
-				<div class="nav notify-row"> 
-				
-                <ul class="top-menu">
-                
-                	travel desk bar start
-		                  <li id="trvel_desk_bar">
-		                  <a href="#" ng-click="userinfo()">  
-		                  <i class="fa fa-user" style="color:#fcb322" aria-hidden="true"></i></a>
-		                  </li>
-                     trvel desk bar end
-                    
-                    
-                    
-                    notification start
-                    notification dropdown start
-                    <li id="header_notification_bar" class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#" ng-click="hideNotifyCount()">
-                           <i class="fa fa-bell" style="color:#fcb322" aria-hidden="true"></i>
-                            <span class="badge bg-warning">{{notifyLength}}</span>
-                        </a>
-                        <ul class="dropdown-menu extended notification">
-                            <div class="notify-arrow notify-arrow-yellow"></div>
-                            <h5 ng-if="noNotification" class="no_notifications">No Notifications Available</h5> 
-                            <span ng-if="showNotification">
-                            <li>
-                                <p class="yellow">You have {{notifyLength}} new notifications</p>
-                            </li>
-                            <li ng-repeat="showNotify in notifyStatus">
-                                <a href="#" ng-click="showNotifyModal(showNotify)" data-toggle="modal" data-target="#showNotificationModal">
-                                    <span class="label label-danger custom-label-danger">{{showNotify.alarm_type_One}}</span>
-                                    There is an {{showNotify.alarm_type_Two}} for {{showNotify.vehicle_num}} on 
-                                    <mydate>{{showNotify.ts | date:'dd/MM/yyyy hh:mm a'}}</mydate>.
-                                </a>
-                            </li>
-                            <li ng-if="viewMoreNotify">
-                                <a href="/admin/alarm" style="text-align:center">
-                                    <span>View More</span>
-                                </a>
-                            </li>
-                            </span>
-                        </ul>
-                    </li>
-                    notification dropdown end
-                    
-                    
-                    
-                    
-                    
-                </ul>
-            </div>  notification end
-            </div>
-            <div class="col-sm-7">
-            <a href="" class="logout" ng-controller="logoutAdminUser"	ng-click="logoutAdminSubmit()"><i class="fa fa-sign-out"></i>
-            <span>Logout</span></a>
-            </div>
-				</div>
-			</div>
-		</div>
-	</nav> -->
-
 
 
 		<!--==================== Notification Modal ===================-->
@@ -321,6 +188,7 @@
 									</a></li>
 									<li ng-click="menuPos=14"><a
 												ng-class="{ active: activePath=='/admin/dashboard' }"
+												
 												href="/admin/dashboard">
 													<div class="row">
 														<div class="col-sm-2">
@@ -329,6 +197,7 @@
 														<div class="col-sm-3 listElePadding">
 															<img
 																ng-src="{{menuPos==14?'../images/menu/dashboard_active.png':'../images/menu/dashboard.png'}}"
+																
 																alt="bydesign_logo" class="sidebar_icons" />
 														</div>
 														<div class="col-sm-7 listElePadding">
@@ -346,6 +215,7 @@
 												<div class="col-sm-3 listElePadding">
 													<img
 														ng-src="{{menuPos==0?'../images/menu/A_map_active.png':'../images/menu/A_map.png'}}"
+														 
 														alt="bydesign_logo" class="sidebar_icons" />
 													<!-- <i class="fa fa-map"></i> -->
 												</div>

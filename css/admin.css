@@ -1458,5 +1458,6 @@ border-radius: 5px !important;
 .txtSpan {font-size: 8px;color: #000;margin-left: -5px;}
 .speedCtrlSection{ position: fixed; width: 250px;height: 90px;background: #fff;bottom: 20px;left:50%;z-index: 10}
 .speedCtrlSection label{text-align: left;margin-left:-100px;margin-bottom:15px; }
+.backBtn{    margin-bottom: -7%;}
 
 

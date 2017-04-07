@@ -1,6 +1,7 @@
 batsfactoryhome.controller('deviceController', function($rootScope,$scope,$http,$localStorage) {
 	$rootScope.menuPos=1;
 	$scope.isSelected=true;
+	$scope.checkAll = false;
 	$scope.token = $localStorage.data;
 	if(typeof $scope.token==="undefined"){
 		swal({ 
@@ -62,10 +63,13 @@ batsfactoryhome.controller('deviceController', function($rootScope,$scope,$http,
 		  .success(function(data) {
 		  console.log(JSON.stringify(data));
 		   $scope.rows=[];
+		   $scope.checkRows = [];
 		   var dev_len=data.stocklist.length;
 		   for(var inc=0;inc<dev_len;inc++){
 			  // console.log(data.stocklist[inc]);
 			   $scope.rows.push(data.stocklist[inc].devid);
+			   $scope.checkRows[inc] = {};
+			   $scope.checkRows[inc].deviceId = data.stocklist[inc].devid;
 		   }
 		   $scope.FActoryStock=$scope.rows;
 		   console.log($scope.FActoryStock.length);
@@ -249,9 +253,6 @@ batsfactoryhome.controller('deviceController', function($rootScope,$scope,$http,
 	        		  invalidUser();
 	    			  $localStorage.$reset();  
 	        	  }
-		    	  console.log(status);
-		    	  console.log(headers);
-		    	  console.log(config);
 			  });
 	};
 	
@@ -260,26 +261,20 @@ batsfactoryhome.controller('deviceController', function($rootScope,$scope,$http,
 	 * 1)selecting device from un allocated
 	 * 2)Remove device from assigned*/
 	$scope.selection=[];
-	$scope.toggleSelection = function toggleSelection(deviceID) {
+	$scope.toggleSelection = function toggleSelection(deviceID, checkRowsObject) {
 	    var idx = $scope.selection.indexOf(deviceID);
-	    
-	    
-	    console.log( $scope.FactoryStockCount);
 	    // is currently selected
 	    if (idx > -1) {
-	      $scope.selection.splice(idx, 1);
-	     /* console.log($scope.selection);
-	      $scope.rows.push(deviceID);*/
-	      //$scope.FactoryStockCount=$scope.FactoryStockCount+1;
+	    	 $scope.checkRows[$scope.checkRows.indexOf(checkRowsObject)].checkBox = false;
+	    	 $scope.selection.splice(idx, 1);
 	    }
 	   
 	    // is newly selected
 	    else {
+	    	$scope.checkRows[$scope.checkRows.indexOf(checkRowsObject)].checkBox = true;
 	      $scope.selection.push(deviceID);
-	      console.log($scope.selection);
 	      var index = -1;		
 			var comArr = eval( $scope.rows );
-			console.log($scope.rows+"\n"+comArr);
 			for( var i = 0; i < comArr.length; i++ ) {
 				if( comArr[i] === deviceID ) {
 					index = i;
@@ -291,6 +286,18 @@ batsfactoryhome.controller('deviceController', function($rootScope,$scope,$http,
 			}
 			/*$scope.rows.splice( index, 1 );*/	
 			//$scope.FactoryStockCount=$scope.FactoryStockCount-1;
+	    }
+	    var checkAllcount = 0; 
+	    for(i in $scope.rows){
+		if($scope.checkRows[i].checkBox==true){
+		  checkAllcount ++;
+		};
+	    }
+	    if(checkAllcount == $scope.rows.length){
+	    	$scope.checkAll = true;
+	    }
+	    else{
+	    	$scope.checkAll = false;
 	    }
 	   
 	  };
@@ -307,12 +314,12 @@ batsfactoryhome.controller('deviceController', function($rootScope,$scope,$http,
 	    */
 	      $scope.selectedItems = 0;
 	      $scope.$watch('rows', function(rows){
-	    	  console.log(rows);
 	        var selectedItems = 0;
 	        angular.forEach(rows, function(rowContent){
 	        	console.log(rowContent);
 	          selectedItems += rowContent.selected ? 1 : 0;
 	        })
+	        console.log(selectedItems);
 	        $scope.selectedItems = selectedItems;
 	      }, true);        
 
@@ -359,6 +366,30 @@ batsfactoryhome.controller('deviceController', function($rootScope,$scope,$http,
 			});// script
 		});
 	  
+	  $scope.factoryCheckAll = function(checkAll){
+	      for(i in $scope.rows){
+		  if(checkAll){
+			  
+			      $scope.checkRows[i].checkBox = true;
+			      $scope.selection.push($scope.rows[i]);
+			      var index = -1;		
+					var comArr = eval( $scope.rows );
+					for( var i = 0; i < comArr.length; i++ ) {
+						if( comArr[i] === $scope.rows[i] ) {
+							index = i;
+							break;
+						}
+					}
+					if( index === -1 ) {
+						alert( "Something gone wrong" );
+					}
+		  }
+		  else{
+			      $scope.checkRows[i].checkBox  = false;
+			      $scope.selection.splice(-1, 1);
+		  }
+	      }
+	  }
 	  
 });
 

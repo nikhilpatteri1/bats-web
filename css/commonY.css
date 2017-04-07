@@ -8,7 +8,7 @@
 }
 @font-face {
 	font-family: 'helvetica';
-	src: url('../assets/fonts/Helvetic/helvetica-normal.ttf');
+	src: url('assets/fonts/Helvetic/helvetica-normal.ttf');
 	font-weight: normal;
 	font-style: normal;
 } 
@@ -168,7 +168,7 @@ body {
 
 .right-arrow{padding-left: 60px;font-size:1.2em;cursor: pointer;}
 .changePwdBorder {
-	width: 30% !important;
+	width: 32% !important;
 	border: 1px solid #eee !important;
 	margin-top: 12% !important;
 	box-shadow: 1px 1px 1px 1px #B9B9B9 !important;
@@ -264,7 +264,7 @@ input.ng-dirty.ng-valid {
 .openFullScreen{width:25px; height:25px}
 .closeFullScreen{width:20px; height:20px;position: fixed;z-index: 1000;background: white;}
 .lastUpdate{font-family:Roboto;font-size:12px;color:#67747a;padding:10px 0px;font-weight:500;}
-.mainText{font-family:Roboto;font-size:14px;font-weight:600;color:#67747a;margin-bottom:-5px;}
+.mainText{font-family:Roboto;font-size:13px;font-weight:600;color:#67747a;margin-bottom:-5px;}
 .helpText{font-family:Roboto;font-size:12px;font-weight:600;color:#dddddd;}
 .margin0{margin:0px;}
 .gauge{margin:0px;}
@@ -354,7 +354,7 @@ table th {
 	
 }
 .barStyleSingle{
-    padding:0px 10px 6px 6px;
+    /* padding:0px 10px 6px 6px; */
     line-height: 0;
     margin-left: 0px;
     float:left;
@@ -370,7 +370,7 @@ table th {
     color: #333;
     font-weight: 800;
 }
-.barTxt{    padding-top: 7px;padding-left: 30px;}
+.barTxt{    padding-top: 7px;}
 .managedivH {
     border: none;
 }
@@ -378,3 +378,20 @@ table th {
     border-radius: 12px 12px 0px 0px;
 }
 .statusImg{width:25px;    height: 25px; padding-top: 4px;}
+
+.Availhist-container {
+    overflow-y: auto;
+    height: 380px;
+}
+
+.borderTB{
+	border-top: 1px solid #e7e7e7;
+    border-bottom: 1px solid #e7e7e7;
+}
+.kmBackColor{
+background: coral;
+}
+
+.addresslatest{
+    padding-left: 48px;
+}

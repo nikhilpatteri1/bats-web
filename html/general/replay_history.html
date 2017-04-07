@@ -70,7 +70,6 @@
 						</span>
 						</div>
 					</div>
-					<div class="col-sm-1"></div>
 					<div class="col-sm-4 customcol4 pad0">
 						<div class="row" ng-show="showTimeSlot">
 							<div class="col-sm-3 pad0" align="center"
@@ -133,6 +132,9 @@
 								<div class="col-sm-6 col-sm-offset-3" align="center">
 									<div class="speedCtrlSection">
 										<label>Replay Speed</label>
+										<i class="fa fa-play replayRoutePlay" ng-if="play" ng-click="updateSpeed(4);" aria-hidden="true"></i>
+										<i class="fa fa-pause replayRoutePlay" ng-if="!play" ng-click="updateSpeed(3);" aria-hidden="true"></i>
+										<i class="fa  fa-reply replayRoutePlay"  ng-click="slotHistory(replayPlayPause.slot_num, replayPlayPause.noDataVal);" aria-hidden="true"></i>
 										<ul>
 											<li class="spdCtrl activeCtrl" ng-click="updateSpeed(0)"><span class="txtSpan">Slow</span></li>
 											<li class="spdCtrl" ng-click="updateSpeed(1)"><span class="txtSpan">Medium</span></li>
@@ -209,6 +211,7 @@
 			</div>
 		</div>
 	</div>
+	
 </div>
 <script>
 	$(function() {

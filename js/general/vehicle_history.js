@@ -52,7 +52,8 @@ batsGeneralHome.controller('vehicleHistory',function($rootScope,$scope, $http, $
 	    //address = 'Trinidad and Tobago'
 	    geocoder = new google.maps.Geocoder();
 	    geocoder.geocode( { 'address': address}, function(results, status) {
-	     map.fitBounds(results[0].geometry.viewport);
+		if(results[0])
+		    map.fitBounds(results[0].geometry.viewport);
 
 	    });	
 	    map = new google.maps.Map(document.getElementById("history_map"),
@@ -251,10 +252,10 @@ batsGeneralHome.controller('vehicleHistory',function($rootScope,$scope, $http, $
 		$scope.slotCheckjson.devid=dev.devid;
 		$scope.slotCheckjson.slots=[];
 		
-		$scope.slotCheckjson.slots.push({"sts":getTimestamp(0,0,0),"ets":getTimestamp(5,59,0)},
-										{"sts":getTimestamp(6,0,0),"ets":getTimestamp(11,59,0)},
-										{"sts":getTimestamp(12,0,0),"ets":getTimestamp(17,59,0)},
-										{"sts":getTimestamp(18,0,0),"ets":getTimestamp(23,59,0)});
+		$scope.slotCheckjson.slots.push({"sts":getTimestamp(0,0,0),"ets":getTimestamp(5,59,59)},
+										{"sts":getTimestamp(6,0,0),"ets":getTimestamp(11,59,59)},
+										{"sts":getTimestamp(12,0,0),"ets":getTimestamp(17,59,59)},
+										{"sts":getTimestamp(18,0,0),"ets":getTimestamp(23,59,59)});
 		$http({
 			method:'POST',
 			url:apiURL+'device/history_data_exist',
@@ -300,17 +301,17 @@ batsGeneralHome.controller('vehicleHistory',function($rootScope,$scope, $http, $
 	$scope.slotHistory=function(slot_num,noDataVal){
 		if(noDataVal!=0){
 			if(slot_num==1){			
-			historyApiCall(getTimestamp(0,0,0),getTimestamp(5,59,0));
+			historyApiCall(getTimestamp(0,0,0),getTimestamp(5,59,59));
 		}
 		else if(slot_num==2){			
-			historyApiCall(getTimestamp(6,0,0),getTimestamp(11,59,0));
+			historyApiCall(getTimestamp(6,0,0),getTimestamp(11,59,59));
 		}
 		else if(slot_num==3){			
-			historyApiCall(getTimestamp(12,0,0),getTimestamp(17,59,0));
+			historyApiCall(getTimestamp(12,0,0),getTimestamp(17,59,59));
 		}
 		else if(slot_num==4){			
-			console.log(getTimestamp(18,0,0),getTimestamp(23,59,0));
-			historyApiCall(getTimestamp(18,0,0),getTimestamp(23,59,0));
+			console.log(getTimestamp(18,0,0),getTimestamp(23,59,59));
+			historyApiCall(getTimestamp(18,0,0),getTimestamp(23,59,59));
 		}
 			}
 		else{swal("Kindly check for available slot(s)");}

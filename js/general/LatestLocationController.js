@@ -22,9 +22,7 @@ batsGeneralHome.controller('GeneralLatestLocationCtrl', function($rootScope,$sco
 		 
 	}
 	
-	//$scope.marker = [{"lat":"21.0000","long":"78.0000","zoom":4}];
-	$scope.position = [{"lat":"21.0000","long":"78.0000","zoom":4}];
-	
+	$scope.availableDeveice = false;
 
 	$scope.customer={};
 	$scope.customer.token=token;
@@ -40,7 +38,6 @@ batsGeneralHome.controller('GeneralLatestLocationCtrl', function($rootScope,$sco
 		$scope.groupList = data.glist;
 	})
 	.error(function(data,status,headers,config){
-		console.log(data.err);
 		  if(data.err == "Expired Session")
 		  {
 		      expiredSession();
@@ -50,9 +47,9 @@ batsGeneralHome.controller('GeneralLatestLocationCtrl', function($rootScope,$sco
 	  		  invalidUser();
 				  $localStorage.$reset();  
 	  	  }
-		console.log(status);
-		console.log(headers);
-		console.log(config);
+//		console.log(status);
+//		console.log(headers);
+//		console.log(config);
 	})
 	
 
@@ -80,12 +77,12 @@ batsGeneralHome.controller('GeneralLatestLocationCtrl', function($rootScope,$sco
 								'Content-Type' : 'application/json'
 							}
 						}).success(function(data) {
-							var lat_tot = 0, lg_tot = 0, lat_avg = 0, lg_avg = 0;
 							var deviceList = data.devlist;
-							//console.log(JSON.stringify(deviceList));
+							$scope.availableDeveice = true;
+							//console.log(JSON.stringify(deviceList)); 
 							if(deviceList.length == 0){
 								alert("No active devices available");
-								$scope.position = [{"lat":"21.0000","long":"78.0000","zoom":4}];
+								$scope.position = [{"lat":"21.0000","long":"78.0000","zoom":22}];
 								$scope.marker = {};
 							}
 							else{
@@ -99,19 +96,18 @@ batsGeneralHome.controller('GeneralLatestLocationCtrl', function($rootScope,$sco
 									}
 									else{
 										var device_list = {"devid":devlist[i].devid,"vehicle_num":devlist[i].vehicle_num,"lat":devlist[i].lat,"long":devlist[i].long,"devtype":devlist[i].devtype};
+										resultDevices.push(device_list);
 									}
-									resultDevices.push(device_list);
+									
 								} 
 								$scope.marker = resultDevices;
 								//console.log(JSON.stringify(resultDevices));
-								for(inc=0;inc<deviceList.length;inc++){
-								  	lat_tot += Number(deviceList[inc].lat);
-									lg_tot +=  Number(deviceList[inc].long);
-								  }
-								  lat_avg = lat_tot / deviceList.length;
-								  lg_avg = lg_tot / deviceList.length;
-								  centerVal=lat_avg+","+lg_avg;
-								  $scope.position = [{"lat":lat_avg,"long":lg_avg,"zoom":12}];
+								var bounds = new google.maps.LatLngBounds();
+								for(let i in $scope.marker){
+								    var latLng = new google.maps.LatLng($scope.marker[i].lat,$scope.marker[i].long);
+								    bounds.extend(latLng);
+								}
+								 $scope.map.fitBounds(bounds);
 								  $scope.httpLoading=false;
 							}
 						}).error(function(data, status, headers, config) {
@@ -167,9 +163,6 @@ batsGeneralHome.controller('GeneralLatestLocationCtrl', function($rootScope,$sco
 						  		  invalidUser();
 									  $localStorage.$reset();  
 						  	  }
-							console.log(status);
-							console.log(headers);
-							console.log(config);
 						});
 
 					};	
@@ -181,6 +174,11 @@ batsGeneralHome.controller('GeneralLatestLocationCtrl', function($rootScope,$sco
 */
 $scope.$on('mapInitialized', function (event, map) {
 	$scope.map = map;
+	var bounds = new google.maps.LatLngBounds();
+	var latLng = new google.maps.LatLng("21.0000","78.0000");
+	bounds.extend(latLng);
+	$scope.map.fitBounds(bounds);
+	$scope.map.setZoom(4);
 });
 var lastOpenedInfoWindow;
 $scope.showDeviceInfo=function(event,device){
@@ -239,6 +237,26 @@ if (lastOpenedInfoWindow) {
 			$('#clearTextDevice span.select2-chosen').text("- - Select Device - -");
 		});// script
 	});
+	$scope.givelt=function(lt,lg){
+		// alert("success");
+		var geocoder = new google.maps.Geocoder();
+		var latLng = new google.maps.LatLng(lt,lg);
+		geocoder.geocode({       
+		        latLng: latLng     
+		        }, 
+		        function(responses) 
+		        {     
+		           if (responses && responses.length > 0) 
+		           {        
+		               swal(responses[0].formatted_address);     
+		           } 
+		           else 
+		           {       
+		             swal('Not getting Any address for given latitude and longitude.');     
+		           }   
+		        }
+		);
+	}
 	
 	
 });

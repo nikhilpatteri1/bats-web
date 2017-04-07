@@ -10,6 +10,7 @@ l/* -------------------------------Geeta's work---------------------------------
 	font-family: helvetica !important;
 	font-size: 15px !important;
 	/*  padding:0px !important; */
+	    display: flex;
 }
 
 .slot_label{
@@ -77,6 +78,7 @@ a {
     /* margin-bottom: 8px; */
     height: 43px;
     text-align: center !important;
+    /* margin-top: -30%; */
 
 }
 .btn-sm {
@@ -697,4 +699,35 @@ select.search_width {
 	border-radius: none;
 	-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
 	box-shadow: none;
+}
+
+.factoryCheckAll{
+	position: absolute;
+    right: 20px;
+}
+
+.factoryCheckAll input{
+    height: 14px;
+    margin: 0px;
+}
+
+.checkAfter {
+	background: rgb(156, 210, 71);
+	display: inline-block;
+	font-size: 15px;
+	/* border-radius: 5px; */
+	/* padding: 2px 0 0 0; */
+	border: 1px solid;
+	border-radius: 15px;
+	/* word-break: break-word; */
+	border-color: #000;
+}
+
+.widthSetAdmin{
+	width: 14px !important;
+}
+
+.replayRoutePlay{
+	float: right;
+	padding: 5px;
 }
