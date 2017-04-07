@@ -432,7 +432,7 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
         });
 	}
 
-	var step = 50; // 5; // metres
+	var step = 50; // 5; // metres  
 	var tick = 1000; // milliseconds
 	var eol;
 	var k = 0;

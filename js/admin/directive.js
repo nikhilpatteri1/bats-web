@@ -257,12 +257,12 @@ batsAdminHome.directive('trackActive', function($location) {
 
 	      element.on('mouseenter', function(event) {
 	    	  alert("enter");
-	    	return element.find('img').attr('src', '../images/menu/hover_replay.png');
+	    	angular.element.find('img').attr('src', '../images/menu/hover_replay.png');
 	      });
 
 	      element.on('mouseleave', function(event) {
 	    	  alert("no");
-	    	  return  element.find('img').attr('src', '../images/menu/dashboard.png');
+	    	  angular.element.find('img').attr('src', '../images/menu/dashboard.png');
 	      })
 	    }
 	  };
