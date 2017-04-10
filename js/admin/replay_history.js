@@ -6,16 +6,11 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
 	$scope.blankTable=true;
 	$scope.token = $localStorage.data;
 	$scope.todayDate=new Date();
-	$scope.greyColor={
-			color:"#637778"
-	};
-	$scope.whiteColor={
-			color:"#fff"
-	};
+	$scope.greyColor={color:"#637778"};
+	$scope.whiteColor={color:"#fff"};
 	var contentHeight=window.screen.availHeight-220;
-	$scope.histcontentheight={
-			"height":contentHeight
-	}
+	$scope.histcontentheight={"height":contentHeight}
+	$scope.end = false;
 	$rootScope.menuPos=15;
 	var dev={};
 	var maploadedInterval;
@@ -25,26 +20,14 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
 	var historypolyline = null;
   var timerHandle = null;
   var step = 5; // metres
-  var tick = 100; // milliseconds 
+  var tick = 100; // milliseconds
   var poly;
   var poly2;
   var lastVertex = 0;
   var eol;
   var marker = new Array();
   var k=0;
-/*  var markerIcon="M17.402,0H5.643C2.526,0,0,3.467,0,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759c3.116,0,5.644-2.527,5.644-5.644 V6.584C23.044,3.467,20.518,0,17.402,0z M22.057,14.188v11.665l-2.729,0.351v-4.806L22.057,14.188z M20.625,10.773 c-1.016,3.9-2.219,8.51-2.219,8.51H4.638l-2.222-8.51C2.417,10.773,11.3,7.755,20.625,10.773z M3.748,21.713v4.492l-2.73-0.349 V14.502L3.748,21.713z M1.018,37.938V27.579l2.73,0.343v8.196L1.018,37.938z M2.575,40.882l2.218-3.336h13.771l2.219,3.336H2.575z M19.328,35.805v-7.872l2.729-0.355v10.048L19.328,35.805z";
-  //var markerIcon="M26.068,7.719 C27.423,21.657 26.941,35.659 26.801,49.660 C26.765,52.945 23.953,55.681 20.511,55.727 C16.978,55.770 13.462,55.778 9.929,55.738 C6.486,55.697 3.672,52.944 3.640,49.660 C3.516,35.659 3.113,21.657 4.657,7.719 C5.083,4.446 7.639,1.760 10.572,1.739 C13.630,1.721 16.881,1.721 20.018,1.739 C23.034,1.760 25.695,4.446 26.068,7.719 L26.068,7.719 Z";
-  var icon = {
-    		    path: markerIcon,
-    		    scale: .7,
-    		    strokeColor: 'white',
-    		    strokeWeight: 0,
-    		    fillOpacity: 1,
-    		    fillColor: '#00000',
-    		    offset: '5%',
-    		    // rotation: parseInt(heading[i]),
-    		    anchor: new google.maps.Point(10, 25) // orig 10,50 back of car, 10,0 front of car, 10,25 center of car
-  }; */
+
   var svg = new Array();
   svg[0] = { path :"M26.068,7.719 C27.423,21.657 26.941,35.659 26.801,49.660 C26.765,52.945 23.953,55.681 20.511,55.727 C16.978,55.770 13.462,55.778 9.929,55.738 C6.486,55.697 3.672,52.944 3.640,49.660 C3.516,35.659 3.113,21.657 4.657,7.719 C5.083,4.446 7.639,1.760 10.572,1.739 C13.630,1.721 16.881,1.721 20.018,1.739 C23.034,1.760 25.695,4.446 26.068,7.719 L26.068,7.719 Z",fillColor : "rgb(237, 237, 237)"};
   svg[1] = { path : "M25.762,8.510 L20.921,2.204 C20.921,2.204 25.252,2.647 25.885,8.065 C26.517,13.483 25.762,8.510 25.762,8.510 ZM15.160,2.706 C12.355,2.772 10.092,2.853 10.085,2.450 C10.076,2.165 12.353,1.834 15.164,1.816 C17.968,1.902 20.240,2.220 20.248,2.466 C20.253,2.846 17.967,2.761 15.160,2.706 ZM4.815,8.074 C5.443,2.668 9.749,2.226 9.749,2.226 L4.937,8.518 C4.937,8.518 4.187,13.481 4.815,8.074 ZM5.000,47.349 L4.563,21.574 C4.563,21.574 9.613,34.691 5.000,47.349 ZM7.721,44.433 C7.865,44.256 8.144,44.114 8.372,44.086 L7.879,26.221 C7.668,26.129 7.434,25.911 7.299,25.650 C6.246,23.582 5.784,21.256 5.737,19.294 C5.700,18.027 6.392,17.124 7.323,16.364 C8.266,15.625 9.448,15.028 10.664,14.841 C13.663,14.447 16.725,14.440 19.798,14.794 C22.228,15.233 24.825,17.000 24.814,19.411 C24.761,21.376 24.325,23.625 23.296,25.754 C23.118,26.114 22.752,26.393 22.495,26.383 C18.058,26.218 12.293,26.214 8.082,26.268 C8.078,26.268 8.073,26.268 8.069,26.268 L8.559,44.083 C12.615,44.173 17.835,44.175 21.697,44.146 L22.187,26.376 L22.375,26.381 L21.885,44.149 C22.107,44.170 22.399,44.311 22.553,44.491 C23.529,45.647 23.957,46.947 24.001,48.043 C24.035,48.752 23.394,49.256 22.531,49.681 C21.656,50.094 20.560,50.428 19.432,50.532 C16.652,50.752 13.813,50.756 10.964,50.558 C8.711,50.313 6.303,49.325 6.313,47.978 C6.362,46.880 6.766,45.623 7.721,44.433 ZM25.938,21.591 L25.500,47.392 C20.891,34.722 25.938,21.591 25.938,21.591 Z", fillColor :"rgb(0, 0, 0)"};
@@ -54,24 +37,30 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
   var icons = new Array();;
   for(i in svg){
   	icons[i] = {path : svg[i].path, fillColor : svg[i].fillColor, scale: .7, strokeColor: 'white', strokeWeight: .10, fillOpacity: 1, offset: '5%',
-  		anchor: new google.maps.Point(10, 25) // orig 10,50 back of car, 10,0 front of car, 10,25 center of car
+  		anchor: new google.maps.Point(10, 25) // orig 10,50 back of
+							// car, 10,0 front of
+							// car, 10,25 center of
+							// car
   	};
   }
   var oldStep;
-  //To Change Replay Speed level
+  // To Change Replay Speed level
   $scope.updateSpeed=function(choice){
 	  switch (choice) {
 	  	case 0:
+	  	  console.log(oldStep)
 		    oldStep = {step: 1,tick:100};
 			step=5;
 			tick=100;
 			break;
 		case 1:
+		    console.log(oldStep)
 		    oldStep = {step: 10,tick:50};
 			step=10;
 			tick=50;
 			break;
 		case 2:
+		    console.log(oldStep)
 		    oldStep = {step: 50,tick:10};
 			step=50;
 			tick=10;
@@ -82,6 +71,7 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
 			$scope.play = true;
 			break;
 		case 4:
+		    console.log(oldStep)
 		   	step=oldStep.step;
 			tick=oldStep.tick;
 			$scope.play = false;
@@ -106,7 +96,8 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
 	$scope.initialize=function () {		
 		var styleMap = [{"featureType":"administrative","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"landscape","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"color":"#bee4f4"},{"visibility":"on"}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"geometry.fill","stylers":[{"visibility":"on"}]},{"featureType":"transit","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#46bcec"},{"visibility":"on"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"on"},{"color":"#000000"}]}];
 	    var myOptions = {
-	        zoom: 8,	   
+	        zoom: 8,
+	        maxZoom : 18,
 	        mapTypeId: google.maps.MapTypeId.ROADMAP
 	    };
 	    address = 'India';
@@ -126,8 +117,10 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
 	        // this part runs when the mapobject is created and rendered
 	    	// console.log("Map Loaded");
 	        google.maps.event.addListenerOnce(map, 'tilesloaded', function(){
-	            // this part runs when the mapobject shown for the first time
-	        	// console.log("Map with tiles and polylines loaded one time");
+	            // this part runs when the mapobject shown for the first
+		    // time
+	        	// console.log("Map with tiles and polylines loaded one
+			// time");
 	        	
 	        	// console.log("Hide Loading");
 	        });
@@ -358,10 +351,12 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
 	};
 	
 	/**
-	 * 1 for 00:00 - 05:59 2 for 06:00 - 11:59 3 for 12:00 - 17:59 4 for 18:00 -
-	 * 23:59
+	 * 1 for 00:00 - 05:59 2 for 06:00 - 11:59 3 for 12:00 - 17:59 4 for
+	 * 18:00 - 23:59
 	 */
 	$scope.slotHistory=function(slot_num,noDataVal){
+	    oldStep = {step: 1,tick:100};
+	    $scope.end = false;
 	    $scope.replayPlayPause ={"slot_num" : slot_num, "noDataVal": noDataVal};
 		if(noDataVal!=0){
 			// $scope.no_history=true;
@@ -375,7 +370,6 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
 			historyApiCall(getTimestamp(12,0,0),getTimestamp(17,59,59));
 		}
 		else if(slot_num==4){			
-			console.log(getTimestamp(18,0,0),getTimestamp(23,59,59));
 			historyApiCall(getTimestamp(18,0,0),getTimestamp(23,59,59));
 		}
 			}
@@ -411,54 +405,51 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
 		$scope.deviceHistoryjson.devid = dev.devid;
 		$scope.deviceHistoryjson.sts = sts;
 		$scope.deviceHistoryjson.ets = ets;
-		$http(
-				{
-					method : 'POST',
-					url : apiURL + 'device/history',
-					data : JSON
-							.stringify($scope.deviceHistoryjson),
-					headers : {
-						'Content-Type' : 'application/json'
-					}
-				}).success(function(data) {
-			$scope.histData = data;
-			if($scope.histData.values.length>=1){
-				$scope.httpLoading=false;
-				displayHistory();				
+		$http({
+			method : 'POST',
+			url : apiURL + 'device/history',
+			data : JSON
+			.stringify($scope.deviceHistoryjson),
+			headers : {
+			    'Content-Type' : 'application/json'
 			}
-			else{
-				$scope.httpLoading=false;
-				// $("#loading_icon").hide();
-				$scope.yoData=false;
-				// $scope.noData=true;
-				$scope.initialize();
-				swal("Kindly check for available slot(s)");
-				$scope.activeMenu=5;
-			}
+		}).success(function(data) {
+		    $scope.histData = data;
+		    if($scope.histData.values.length>=1){
+			$scope.httpLoading=false;
+			displayHistory();				
+		    }
+		    else{
+			$scope.httpLoading=false;
+			// $("#loading_icon").hide();
+			$scope.yoData=false;
+			// $scope.noData=true;
+			$scope.initialize();
+			swal("Kindly check for available slot(s)");
+			$scope.activeMenu=5;
+		    }
 		})
-				.error(
-						function(data, status, headers,
-								config) {
-							if (data.err == "Expired Session") {
-								$('#updateDeviceModal').modal('hide');
-								expiredSession();
-								$localStorage.$reset();
-							} else if (data.err == "Invalid User") {
-								$('#updateDeviceModal').modal('hide');
-								invalidUser();
-								$localStorage.$reset();
-							}
-							console.log(data);
-							console.log(status);
-							console.log(headers);
-							console.log(config);
-						}).finally(function(){		
-							$scope.httpLoading=false;
-						});
+		.error(function(data, status, headers,config) {
+		    if (data.err == "Expired Session") {
+			$('#updateDeviceModal').modal('hide');
+			expiredSession();
+			$localStorage.$reset();
+		    } else if (data.err == "Invalid User") {
+			$('#updateDeviceModal').modal('hide');
+			invalidUser();
+			$localStorage.$reset();
+		    }
+		    console.log(data);
+		    console.log(status);
+		    console.log(headers);
+		    console.log(config);
+		}).finally(function(){		
+		    $scope.httpLoading=false;
+		});
 	}
 	function checkMaploaded(){
 		if($scope.historyMap){
-			$interval.cancel(maploadedInterval);		
+		    $interval.cancel(maploadedInterval);		
 		}
 		else{			
 		}
@@ -494,8 +485,9 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
 				$scope.plottedData.push(plottedObj);
 				// console.log($scope.plottedData.length);
 				/*
-				 * if($scope.plottedData.length <= 1){ swal({title:"Vehicle in
-				 * stationary"}); } else{ //nothing }
+				 * if($scope.plottedData.length <= 1){
+				 * swal({title:"Vehicle in stationary"}); }
+				 * else{ //nothing }
 				 */
 				
 				lat_tot += Number(historyStatus.latitude);
@@ -524,7 +516,8 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
 		if(polyPathArray.length == 0){
 			// console.log("chk");
 			$scope.yoData=false;
-			// swal("No not available. Kindly check for another date");
+			// swal("No not available. Kindly check for another
+			// date");
 		}
 		else{
 			clearMap();
@@ -561,14 +554,17 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
          if (timerHandle) clearInterval(timerHandle);
          eol=poly.Distance();
          map.setCenter(poly.getPath().getAt(0));
-         // map.addOverlay(new google.maps.Marker(polyline.getAt(0),G_START_ICON));
-         // map.addOverlay(new GMarker(polyline.getVertex(polyline.getVertexCount()-1),G_END_ICON));
-//         if (marker) { 
-//            marker.setMap(null);
-//            delete marker;
-//            marker = null;
-//         }          
-//         if (!marker) marker = new google.maps.Marker({position:poly.getPath().getAt(0), map:map,icon:icon});
+         // map.addOverlay(new
+	    // google.maps.Marker(polyline.getAt(0),G_START_ICON));
+         // map.addOverlay(new
+	    // GMarker(polyline.getVertex(polyline.getVertexCount()-1),G_END_ICON));
+// if (marker) {
+// marker.setMap(null);
+// delete marker;
+// marker = null;
+// }
+// if (!marker) marker = new
+// google.maps.Marker({position:poly.getPath().getAt(0), map:map,icon:icon});
 //         
          if (marker[0]) {
          	for(i in svg){marker[i].setMap(null);}
@@ -584,17 +580,19 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
          // map.addOverlay(marker);
          poly2 = new google.maps.Polyline({path: [poly.getPath().getAt(0)], strokeColor:"#0000FF",strokeOpacity: 0.00001, strokeWeight:0});
          // map.addOverlay(poly2);
-         //setTimeout("animate(50)",2000);  // Allow time for the initial map display
+         // setTimeout("animate(50)",2000); // Allow time for the initial map
+	    // display
          setTimeout(function() {
  	        $scope.animate(50);
  	    }, 2000);
 	 }
 	 function updatePoly(d) {
-	        // Spawn a new polyline every 20 vertices, because updating a 100-vertex poly is too slow
+	        // Spawn a new polyline every 20 vertices, because updating a
+		// 100-vertex poly is too slow
 	        if (poly2.getPath().getLength() > 20) {
 	          poly2= new google.maps.Polyline([poly.getPath().getAt(lastVertex - 1)]);
 	          /* console.log(poly.getPath().getAt(lastVertex - 1).lat); */
-	          //map.addOverlay(poly2)
+	          // map.addOverlay(poly2)
 	          poly2.setMap(map);
 	        }
 
@@ -611,62 +609,71 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
 	      }
 	 $scope.animate = function(d) {
 	        if (d>eol) {	
-//	            console.log(poly.getPath().getAt(lastVertex++))
-//	            for(i in svg){marker[i].setPosition(poly.getPath().getAt(lastVertex++));}
+	            $scope.end = true;
+// console.log(poly.getPath().getAt(lastVertex++))
+// for(i in svg){marker[i].setPosition(poly.getPath().getAt(lastVertex++));}
+	            
 	          return;
 	        }
 	        var p = poly.GetPointAtDistance(d);
-	      //  if (k++>=180/step) {
+	      // if (k++>=180/step) {
 	          map.panTo(p);
-	        /*    k=0;
-	        } */ 
-	        /*var lastPosn = marker.getPosition();	        
-	    	marker.setPosition(p);
-	    	var heading = google.maps.geometry.spherical.computeHeading(lastPosn, p);
-	    	icon.rotation = heading;
-	    	marker.setIcon(icon);   */     
+	        /*
+		 * k=0; }
+		 */ 
+	        /*
+		 * var lastPosn = marker.getPosition(); marker.setPosition(p);
+		 * var heading =
+		 * google.maps.geometry.spherical.computeHeading(lastPosn, p);
+		 * icon.rotation = heading; marker.setIcon(icon);
+		 */     
 	          var lastPosn = marker[0].getPosition();
 	          for(i in svg){marker[i].setPosition(p);}
 	          var heading = google.maps.geometry.spherical.computeHeading(lastPosn, p);
 	          for(i in svg){icons[i].rotation = heading;}
 	          for(i in svg){marker[i].setIcon(icons[i]);}
 	        updatePoly(d);
-	        //timerHandle = setTimeout("animate("+(d+step)+")", tick);
+	        // timerHandle = setTimeout("animate("+(d+step)+")", tick);
 	        timerHandle = setTimeout(function() {
 		        $scope.animate(d + step);
 		    }, tick);
 	      }
-	 //----------------------------------------------------------------------------
+	 // ----------------------------------------------------------------------------
 		// =============== ~animation funcitons =====================
-		/***************************************************************************
+		/***************************************************************
 		 * *******************************************************************\ *
-		 * epolys.js by Mike Williams * updated to API v3 by Larry Ross * * A Google
-		 * Maps API Extension * * Adds various Methods to google.maps.Polygon and
-		 * google.maps.Polyline * * .Contains(latlng) returns true is the poly
-		 * contains the specified * GLatLng * * .Area() returns the approximate area
-		 * of a poly that is * not self-intersecting * * .Distance() returns the
-		 * length of the poly path * * .Bounds() returns a GLatLngBounds that bounds
-		 * the poly * * .GetPointAtDistance() returns a GLatLng at the specified
-		 * distance * along the path. * The distance is specified in metres * Reurns
-		 * null if the path is shorter than that * * .GetPointsAtDistance() returns
-		 * an array of GLatLngs at the * specified interval along the path. * The
-		 * distance is specified in metres * * .GetIndexAtDistance() returns the
-		 * vertex number at the specified * distance along the path. * The distance
-		 * is specified in metres * Returns null if the path is shorter than that * *
-		 * .Bearing(v1?,v2?) returns the bearing between two vertices * if v1 is
-		 * null, returns bearing from first to last * if v2 is null, returns bearing
-		 * from v1 to next * * *
+		 * epolys.js by Mike Williams * updated to API v3 by Larry Ross * *
+		 * A Google Maps API Extension * * Adds various Methods to
+		 * google.maps.Polygon and google.maps.Polyline * *
+		 * .Contains(latlng) returns true is the poly contains the
+		 * specified * GLatLng * * .Area() returns the approximate area
+		 * of a poly that is * not self-intersecting * * .Distance()
+		 * returns the length of the poly path * * .Bounds() returns a
+		 * GLatLngBounds that bounds the poly * * .GetPointAtDistance()
+		 * returns a GLatLng at the specified distance * along the path. *
+		 * The distance is specified in metres * Reurns null if the path
+		 * is shorter than that * * .GetPointsAtDistance() returns an
+		 * array of GLatLngs at the * specified interval along the path. *
+		 * The distance is specified in metres * * .GetIndexAtDistance()
+		 * returns the vertex number at the specified * distance along
+		 * the path. * The distance is specified in metres * Returns
+		 * null if the path is shorter than that * * .Bearing(v1?,v2?)
+		 * returns the bearing between two vertices * if v1 is null,
+		 * returns bearing from first to last * if v2 is null, returns
+		 * bearing from v1 to next * * *
 		 * ********************************************************************** *
-		 * This Javascript is provided by Mike Williams * Blackpool Community Church
-		 * Javascript Team * http://www.blackpoolchurch.org/ *
-		 * http://econym.org.uk/gmap/ * * This work is licenced under a Creative
-		 * Commons Licence * http://creativecommons.org/licenses/by/2.0/uk/ * *
+		 * This Javascript is provided by Mike Williams * Blackpool
+		 * Community Church Javascript Team *
+		 * http://www.blackpoolchurch.org/ * http://econym.org.uk/gmap/ * *
+		 * This work is licenced under a Creative Commons Licence *
+		 * http://creativecommons.org/licenses/by/2.0/uk/ * *
 		 * ********************************************************************** *
-		 * Version 1.1 6-Jun-2007 * Version 1.2 1-Jul-2007 - fix: Bounds was
-		 * omitting vertex zero * add: Bearing * Version 1.3 28-Nov-2008 add:
-		 * GetPointsAtDistance() * Version 1.4 12-Jan-2009 fix:
-		 * GetPointsAtDistance() * Version 3.0 11-Aug-2010 update to v3 * * \
-		 **************************************************************************/
+		 * Version 1.1 6-Jun-2007 * Version 1.2 1-Jul-2007 - fix: Bounds
+		 * was omitting vertex zero * add: Bearing * Version 1.3
+		 * 28-Nov-2008 add: GetPointsAtDistance() * Version 1.4
+		 * 12-Jan-2009 fix: GetPointsAtDistance() * Version 3.0
+		 * 11-Aug-2010 update to v3 * * \
+		 **************************************************************/
 
 		// === first support methods that don't (yet) exist in v3
 		google.maps.LatLng.prototype.distanceFrom = function (newLatLng) {
@@ -700,9 +707,11 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
 		    return dist;
 		}
 
-		// === A method which returns a GLatLng of a point a given distance along
+		// === A method which returns a GLatLng of a point a given
+		// distance along
 		// the path ===
-		// === Returns null if the path is shorter than the specified distance ===
+		// === Returns null if the path is shorter than the specified
+		// distance ===
 		google.maps.Polygon.prototype.GetPointAtDistance = function (metres) {
 		    // some awkward special cases
 		    if (metres == 0) return this.getPath().getAt(0);
@@ -724,7 +733,8 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
 		    return new google.maps.LatLng(p1.lat() + (p2.lat() - p1.lat()) * m, p1.lng() + (p2.lng() - p1.lng()) * m);
 		}
 
-		// === A method which returns an array of GLatLngs of points a given
+		// === A method which returns an array of GLatLngs of points a
+		// given
 		// interval along the path ===
 		google.maps.Polygon.prototype.GetPointsAtDistance = function (metres) {
 		    var next = metres;
@@ -748,9 +758,11 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
 		    return points;
 		}
 
-		// === A method which returns the Vertex number at a given distance along
+		// === A method which returns the Vertex number at a given
+		// distance along
 		// the path ===
-		// === Returns null if the path is shorter than the specified distance ===
+		// === Returns null if the path is shorter than the specified
+		// distance ===
 		google.maps.Polygon.prototype.GetIndexAtDistance = function (metres) {
 		    // some awkward special cases
 		    if (metres == 0) return this.getPath().getAt(0);
@@ -774,7 +786,8 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
 		google.maps.Polyline.prototype.GetIndexAtDistance = google.maps.Polygon.prototype.GetIndexAtDistance;
 		
 		/*
-		 * -----------------------------------------the end for vehicle icon
+		 * -----------------------------------------the end for vehicle
+		 * icon
 		 * movement---------------------------------------------------------------
 		 * 
 		 */
@@ -831,7 +844,7 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
 	}
 	$(".spdCtrl").click(function() {
 		$(".spdCtrl").removeClass("activeCtrl");
-		// $(".tab").addClass("active"); // instead of this do the below 
+		// $(".tab").addClass("active"); // instead of this do the below
 		$(this).addClass("activeCtrl");
 	});
 });

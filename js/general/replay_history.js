@@ -12,6 +12,7 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 	$scope.token = $localStorage.data;
 	$scope.todayDate=new Date();
 	$scope.play = false;
+	$scope.end = false;
 	$scope.greyColor={
 			color:"#637778"
 	};
@@ -37,20 +38,7 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 	  var eol;
 	  var marker = new Array();
 	  var k=0;
-	  /*var markerIcon="M17.402,0H5.643C2.526,0,0,3.467,0,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759c3.116,0,5.644-2.527,5.644-5.644 V6.584C23.044,3.467,20.518,0,17.402,0z M22.057,14.188v11.665l-2.729,0.351v-4.806L22.057,14.188z M20.625,10.773 c-1.016,3.9-2.219,8.51-2.219,8.51H4.638l-2.222-8.51C2.417,10.773,11.3,7.755,20.625,10.773z M3.748,21.713v4.492l-2.73-0.349 V14.502L3.748,21.713z M1.018,37.938V27.579l2.73,0.343v8.196L1.018,37.938z M2.575,40.882l2.218-3.336h13.771l2.219,3.336H2.575z M19.328,35.805v-7.872l2.729-0.355v10.048L19.328,35.805z";
-	  //var markerIcon="M26.068,7.719 C27.423,21.657 26.941,35.659 26.801,49.660 C26.765,52.945 23.953,55.681 20.511,55.727 C16.978,55.770 13.462,55.778 9.929,55.738 C6.486,55.697 3.672,52.944 3.640,49.660 C3.516,35.659 3.113,21.657 4.657,7.719 C5.083,4.446 7.639,1.760 10.572,1.739 C13.630,1.721 16.881,1.721 20.018,1.739 C23.034,1.760 25.695,4.446 26.068,7.719 L26.068,7.719 Z";
-	  var icon = {
-	    		    path: markerIcon,
-	    		    scale: .7,
-	    		    strokeColor: 'white',
-	    		    strokeWeight: 0,
-	    		    fillOpacity: 1,
-	    		    fillColor: '#00000',
-	    		    offset: '5%',
-	    		    // rotation: parseInt(heading[i]),
-	    		    anchor: new google.maps.Point(10, 25) // orig 10,50 back of car, 10,0 front of car, 10,25 center of car
-	  };     */
-	  
+
 	  var carSvg = new Array();
 	  carSvg[0] = { path :"M26.068,7.719 C27.423,21.657 26.941,35.659 26.801,49.660 C26.765,52.945 23.953,55.681 20.511,55.727 C16.978,55.770 13.462,55.778 9.929,55.738 C6.486,55.697 3.672,52.944 3.640,49.660 C3.516,35.659 3.113,21.657 4.657,7.719 C5.083,4.446 7.639,1.760 10.572,1.739 C13.630,1.721 16.881,1.721 20.018,1.739 C23.034,1.760 25.695,4.446 26.068,7.719 L26.068,7.719 Z",fillColor : "rgb(237, 237, 237)"};
 	  carSvg[1] = { path : "M25.762,8.510 L20.921,2.204 C20.921,2.204 25.252,2.647 25.885,8.065 C26.517,13.483 25.762,8.510 25.762,8.510 ZM15.160,2.706 C12.355,2.772 10.092,2.853 10.085,2.450 C10.076,2.165 12.353,1.834 15.164,1.816 C17.968,1.902 20.240,2.220 20.248,2.466 C20.253,2.846 17.967,2.761 15.160,2.706 ZM4.815,8.074 C5.443,2.668 9.749,2.226 9.749,2.226 L4.937,8.518 C4.937,8.518 4.187,13.481 4.815,8.074 ZM5.000,47.349 L4.563,21.574 C4.563,21.574 9.613,34.691 5.000,47.349 ZM7.721,44.433 C7.865,44.256 8.144,44.114 8.372,44.086 L7.879,26.221 C7.668,26.129 7.434,25.911 7.299,25.650 C6.246,23.582 5.784,21.256 5.737,19.294 C5.700,18.027 6.392,17.124 7.323,16.364 C8.266,15.625 9.448,15.028 10.664,14.841 C13.663,14.447 16.725,14.440 19.798,14.794 C22.228,15.233 24.825,17.000 24.814,19.411 C24.761,21.376 24.325,23.625 23.296,25.754 C23.118,26.114 22.752,26.393 22.495,26.383 C18.058,26.218 12.293,26.214 8.082,26.268 C8.078,26.268 8.073,26.268 8.069,26.268 L8.559,44.083 C12.615,44.173 17.835,44.175 21.697,44.146 L22.187,26.376 L22.375,26.381 L21.885,44.149 C22.107,44.170 22.399,44.311 22.553,44.491 C23.529,45.647 23.957,46.947 24.001,48.043 C24.035,48.752 23.394,49.256 22.531,49.681 C21.656,50.094 20.560,50.428 19.432,50.532 C16.652,50.752 13.813,50.756 10.964,50.558 C8.711,50.313 6.303,49.325 6.313,47.978 C6.362,46.880 6.766,45.623 7.721,44.433 ZM25.938,21.591 L25.500,47.392 C20.891,34.722 25.938,21.591 25.938,21.591 Z", fillColor :"rgb(0, 0, 0)"};
@@ -64,11 +52,15 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 	  var icons = new Array();
 	  for(i in carSvg){
 	  	icons[i] = {path : carSvg[i].path, fillColor : carSvg[i].fillColor, scale: .7, strokeColor: 'white', strokeWeight: .10, fillOpacity: 1, offset: '5%',
-	  		anchor: new google.maps.Point(10, 25) // orig 10,50 back of car, 10,0 front of car, 10,25 center of car
+	  		anchor: new google.maps.Point(10, 25) // orig 10,50
+								// back of car,
+								// 10,0 front of
+								// car, 10,25
+								// center of car
 	  	};
 	  }
 	  var oldStep;
-	  //To Change Replay Speed level
+	  // To Change Replay Speed level
 	  $scope.updateSpeed=function(choice){
 		  switch (choice) {
 			case 0:
@@ -98,7 +90,7 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 				break;
 			}
 	  }
-	//$("#loading_icon").hide();
+	// $("#loading_icon").hide();
 	if(typeof $scope.token==="undefined"){
 		swal({ 
 			   title: "Un Authorized Access",
@@ -112,15 +104,16 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 		  });
 		 
 	}
-	//function initialize() {
+	// function initialize() {
 	$scope.initialize=function () {		
 		var styleMap = [{"featureType":"administrative","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"landscape","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"color":"#bee4f4"},{"visibility":"on"}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"geometry.fill","stylers":[{"visibility":"on"}]},{"featureType":"transit","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#46bcec"},{"visibility":"on"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"on"},{"color":"#000000"}]}];
 		var myOptions = {
 	        zoom: 8,
+	        maxZoom : 18,
 	        mapTypeId: google.maps.MapTypeId.ROADMAP
 	    };
 	    address = 'India';
-	    //address = 'Trinidad and Tobago'
+	    // address = 'Trinidad and Tobago'
 	    geocoder = new google.maps.Geocoder();
 	    geocoder.geocode( { 'address': address}, function(results, status) {
 	     map.fitBounds(results[0].geometry.viewport);
@@ -130,23 +123,25 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 	            myOptions);
 	    google.maps.event.addListenerOnce(map, 'idle', function(){
 	        // do something only the first time the map is loaded
-	    	//console.log("map loaded");
+	    	// console.log("map loaded");
 	    });
 	    google.maps.event.addListenerOnce(map, 'tilesloaded', function(){
-	        //this part runs when the mapobject is created and rendered
-	    	//console.log("Map Loaded");
+	        // this part runs when the mapobject is created and rendered
+	    	// console.log("Map Loaded");
 	        google.maps.event.addListenerOnce(map, 'tilesloaded', function(){
-	            //this part runs when the mapobject shown for the first time
-	        	//console.log("Map with tiles and polylines loaded one time");        	
+	            // this part runs when the mapobject shown for the first
+		    // time
+	        	// console.log("Map with tiles and polylines loaded one
+			// time");
 	        	
-	        	//console.log("Hide Loading");
+	        	// console.log("Hide Loading");
 	        });
 	    });
 	    google.maps.event.addListener(map, 'tilesloaded', function() {
 	    	  // Visible tiles loaded!
-	    	//console.log("map loaded with tiles every time");
-	    	//$("#loading_icon").hide();
-	    	//$scope.httpLoading=false;
+	    	// console.log("map loaded with tiles every time");
+	    	// $("#loading_icon").hide();
+	    	// $scope.httpLoading=false;
 	    	});
 	    poly = new google.maps.Polyline({
 	        path: [],
@@ -164,7 +159,7 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 
 	/**
 	 * on load fetch and fill group drop down menu
-	 * */
+	 */
 	$scope.admingroup = {};
 	$scope.admingroup.token = $scope.token;
 	// console.log($scope.admingroup);
@@ -187,10 +182,10 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 			invalidUser();
 			$localStorage.$reset();
 		}
-//		console.log(data);
-//		console.log(status);
-//		console.log(headers);
-//		console.log(config);
+// console.log(data);
+// console.log(status);
+// console.log(headers);
+// console.log(config);
 	});
 	/**
 	 * function to list the group id and name
@@ -213,10 +208,13 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 		$scope.noData = false;
 		$scope.showTimeSlot=false;
 		$scope.blankTable=false;
-	/*	$('#clearTextDevice span.select2-chosen').empty();  
-	    $('#clearTextDevice span.select2-chosen').text("- - Select  Vehicle No/Device - -");*/
+	/*
+	 * $('#clearTextDevice span.select2-chosen').empty();
+	 * $('#clearTextDevice span.select2-chosen').text("- - Select Vehicle
+	 * No/Device - -");
+	 */
 		// document.getElementById("groupNamelist").blur();
-		//console.log(groupID);
+		// console.log(groupID);
 	    $scope.initialize();
 	    $scope.yoData=false;
 		$scope.groupdevicejson = {};
@@ -243,7 +241,7 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 			for ( var i = 0; i < dev_len; i++) {
 				$scope.deviceList.push(devlist[i].devid);
 			}
-			//console.log($scope.deviceList);
+			// console.log($scope.deviceList);
 		}).error(function(data, status, headers, config) {
 			if (data.err == "Expired Session") {
 				$('#updateDeviceModal').modal('hide');
@@ -254,15 +252,15 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 				invalidUser();
 				$localStorage.$reset();
 			}
-//			console.log(data);
-//			console.log(status);
-//			console.log(headers);
-//			console.log(config);
+// console.log(data);
+// console.log(status);
+// console.log(headers);
+// console.log(config);
 		});
 	};
 	/**
 	 * add selected device for fetching history
-	 * */
+	 */
 	$scope.fetchDeviceDetailHistory=function(devID){
 		$scope.showDatepicker=false;
 		$('.md-datepicker-input').prop('readonly', true);
@@ -277,28 +275,29 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 	
 	$(document).on('click', '#GtrvelRouteHstTimePic', function(){
 		$('#GtrvelRouteHstTimePic').datetimepicker({
-			/* inline: true,
-             sideBySide: true,*/
+			/*
+			 * inline: true, sideBySide: true,
+			 */
 			format: 'DD/MM/YYYY',
 	        maxDate: 'now',        		
 			ignoreReadonly:true,
 	            }).on("dp.change",function (e) {
-	            	//$("#startDateMaxKm").blur(); 
-	            	//closeResult();
-//	            	console.log(e);
-//	            	console.log(e.date);
-//	            	console.log(e.date._d);
+	            	// $("#startDateMaxKm").blur();
+	            	// closeResult();
+// console.log(e);
+// console.log(e.date);
+// console.log(e.date._d);
 	            	$scope.MyDate = e.date._d;
 	            	$scope.myDateChange($scope.MyDate);
 	            	$scope.activeMenu = '5';
 	            });
-		//startDateMaxKmError.style.display = 'none';
+		// startDateMaxKmError.style.display = 'none';
 		var dt=new Date().getTime();
 		$('#GtrvelRouteHstTime').val(showTime(dt));
 	});
 	
 	function showTime (ts) {
-		//console.log(ts);
+		// console.log(ts);
 		var d = new Date(Number(ts));
 		var day = d.getDate();
 		var month = d.getMonth()+1;
@@ -310,14 +309,14 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 		hours = hours ? hours : 12; // the hour '0' should be '12'
 		minutes = minutes < 10 ? '0' + minutes : minutes;
 		var strTime = day+"/"+month+"/"+year;
-		//console.log(strTime);
+		// console.log(strTime);
 		return strTime;
 	};
 	
 	function startDate(getStartDateMinMax){
 		var datetimeVal=getStartDateMinMax;
 		console.log(getStartDateMinMax);
-		/*strArra=datetimeVal.split(" ");*/
+		/* strArra=datetimeVal.split(" "); */
 		var dateArray=datetimeVal.split("/");
 		var newStDate = dateArray[1] + "/" + dateArray[0] + "/" + dateArray[2];
 		var sts=new Date(newStDate);
@@ -365,21 +364,21 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 						invalidUser();
 						$localStorage.$reset();
 					}
-//					console.log(data);
-//					console.log(status);
-//					console.log(headers);
-//					console.log(config);
+// console.log(data);
+// console.log(status);
+// console.log(headers);
+// console.log(config);
 		}).finally(function(){		
 			$scope.httpLoading=false;
 		});
 	};
 	/**
-	 * 1 for 00:00 - 05:59
-	 * 2 for 06:00 - 11:59
-	 * 3 for 12:00 - 17:59
-	 * 4 for 18:00 - 23:59
-	 * */
+	 * 1 for 00:00 - 05:59 2 for 06:00 - 11:59 3 for 12:00 - 17:59 4 for
+	 * 18:00 - 23:59
+	 */
 	$scope.slotHistory=function(slot_num,noDataVal){
+	    oldStep = {step: 1,tick:100};
+	    $scope.end = false;
 	    $scope.replayPlayPause ={"slot_num" : slot_num, "noDataVal": noDataVal};
 	    $scope.play = false;
 		if(noDataVal!=0){
@@ -393,7 +392,6 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 			historyApiCall(getTimestamp(12,0,0),getTimestamp(17,59,59));
 		}
 		else if(slot_num==4){			
-			console.log(getTimestamp(18,0,0),getTimestamp(23,59,59));
 			historyApiCall(getTimestamp(18,0,0),getTimestamp(23,59,59));
 		}
 			}
@@ -407,11 +405,10 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 		timeStamp.setMinutes(mins); 
 		timeStamp.setSeconds(sec);
 		return timeStamp.getTime();
-		/*var d=new Date($scope.myDate);
-		d.setHours(hr);
-		d.setMinutes(mins);
-		d.setSeconds(sec);
-		return d.getTime();*/
+		/*
+		 * var d=new Date($scope.myDate); d.setHours(hr);
+		 * d.setMinutes(mins); d.setSeconds(sec); return d.getTime();
+		 */
 	}
 	$scope.showHistory = function(mydate) {
 		var sts=new Date(mydate).getTime();
@@ -424,7 +421,7 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 	};
 	function historyApiCall(sts,ets){
 		$scope.httpLoading=true;
-		//$("#loading_icon").show();			
+		// $("#loading_icon").show();
 		$scope.deviceHistoryjson = {};
 		$scope.deviceHistoryjson.token = $scope.token;
 		$scope.deviceHistoryjson.devid = dev.devid;
@@ -441,16 +438,16 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 					}
 				}).success(function(data) {
 			$scope.histData = data;
-			//console.log(JSON.stringify(data.values));
+			// console.log(JSON.stringify(data.values));
 			if($scope.histData.values.length>=1){
 				$scope.httpLoading=false;
 				displayHistory();				
 			}
 			else{
 				$scope.httpLoading=false;
-				//$("#loading_icon").hide();	
+				// $("#loading_icon").hide();
 				$scope.yoData=false;
-				//$scope.noData=true;
+				// $scope.noData=true;
 				swal("Kindly check for available slot(s)");
 				$scope.activeMenu=5;
 			}
@@ -467,10 +464,10 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 								invalidUser();
 								$localStorage.$reset();
 							}
-//							console.log(data);
-//							console.log(status);
-//							console.log(headers);
-//							console.log(config);
+// console.log(data);
+// console.log(status);
+// console.log(headers);
+// console.log(config);
 						}).finally(function(){		
 							$scope.httpLoading=false;
 						});
@@ -484,11 +481,11 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 		}
 	}
 	/**
-	1) Plot on Map History Path
-	2) Display on Table
-	-----------------------------------------------------------------------*/
+	 * 1) Plot on Map History Path 2) Display on Table
+	 * -----------------------------------------------------------------------
+	 */
 	function displayHistory() {
-		//console.log(JSON.stringify($scope.histData.values));
+		// console.log(JSON.stringify($scope.histData.values));
 		
 		$scope.yoData=true;
 		$scope.noData=false;
@@ -503,7 +500,7 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 		for(var inc = 0; inc < hist_len; inc++){
 		  	executeHisory(histData[inc].lat,histData[inc].long,histData[inc].Velocity,histData[inc].ts,
 		  			function(historyStatus){
-                //console.log(JSON.stringify(historyStatus));
+                // console.log(JSON.stringify(historyStatus));
                 var arr = {};
     			var plottedObj={};
     			arr.lat = Number(historyStatus.latitude);
@@ -526,26 +523,27 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 			// nothing
 		}
 		function executeHisory(latitude,longitude,velocity,timestamp,mapHistory){
-			//if(velocity>5){
+			// if(velocity>5){
 				var historyStatus={"latitude":latitude,"longitude":longitude,"velocity":velocity,"timestamp":timestamp};
 				mapHistory(historyStatus);
-			//}
-			//else{
-				//console.log("less than 5");
-			//}
+			// }
+			// else{
+				// console.log("less than 5");
+			// }
 		}
-		//console.log(JSON.stringify(obj));
-		/*console.log(JSON.stringify($scope.plottedData));*/
-		//console.log(JSON.stringify(coordinates));
+		// console.log(JSON.stringify(obj));
+		/* console.log(JSON.stringify($scope.plottedData)); */
+		// console.log(JSON.stringify(coordinates));
 		
 		if(polyPathArray.length == 0){
-			//console.log("chk");
+			// console.log("chk");
 			$scope.yoData=false;
-			//swal("No not available. Kindly check for another date");
+			// swal("No not available. Kindly check for another
+			// date");
 		}
 		else{
 			clearMap();
-//			console.log(JSON.stringify(polyPathArray));
+// console.log(JSON.stringify(polyPathArray));
 			 bounds = new google.maps.LatLngBounds();
 			var pts=[];
     	    var length = 0;
@@ -578,14 +576,16 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
          if (timerHandle) clearInterval(timerHandle);
          eol=poly.Distance();
          map.setCenter(poly.getPath().getAt(0));
-         // map.addOverlay(new google.maps.Marker(polyline.getAt(0),G_START_ICON));
-         // map.addOverlay(new GMarker(polyline.getVertex(polyline.getVertexCount()-1),G_END_ICON));
-         /*if (marker) { 
-            marker.setMap(null);
-            delete marker;
-            marker = null;
-         }          
-         if (!marker) marker = new google.maps.Marker({position:poly.getPath().getAt(0), map:map,icon:icon});*/
+         // map.addOverlay(new
+	    // google.maps.Marker(polyline.getAt(0),G_START_ICON));
+         // map.addOverlay(new
+	    // GMarker(polyline.getVertex(polyline.getVertexCount()-1),G_END_ICON));
+         /*
+	     * if (marker) { marker.setMap(null); delete marker; marker = null; }
+	     * if (!marker) marker = new
+	     * google.maps.Marker({position:poly.getPath().getAt(0),
+	     * map:map,icon:icon});
+	     */
          if (marker[0]) {
       	for(i in carSvg){marker[i].setMap(null);}
             }
@@ -600,17 +600,19 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
          // map.addOverlay(marker);
          poly2 = new google.maps.Polyline({path: [poly.getPath().getAt(0)], strokeColor:"#0000FF",strokeOpacity: 0.00001, strokeWeight:0});
          // map.addOverlay(poly2);
-         //setTimeout("animate(50)",2000);  // Allow time for the initial map display
+         // setTimeout("animate(50)",2000); // Allow time for the initial map
+	    // display
          setTimeout(function() {
  	        $scope.animate(50);
  	    }, 2000);
 	 }
 	 function updatePoly(d) {
-	        // Spawn a new polyline every 20 vertices, because updating a 100-vertex poly is too slow
+	        // Spawn a new polyline every 20 vertices, because updating a
+		// 100-vertex poly is too slow
 	        if (poly2.getPath().getLength() > 20) {
 	          poly2= new google.maps.Polyline([poly.getPath().getAt(lastVertex - 1)]);
 	          /* console.log(poly.getPath().getAt(lastVertex - 1).lat); */
-	          //map.addOverlay(poly2)
+	          // map.addOverlay(poly2)
 	          poly2.setMap(map);
 	        }
 
@@ -625,22 +627,23 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 	          poly2.getPath().insertAt(poly2.getPath().getLength(), poly.getPath().getAt(lastVertex++));
 	        }
 	      }
-	 var lastPause;
 	 $scope.animate = function(d) {
-	     lastPause = d;
-	        if (d>eol) {	          
+	        if (d>eol) {	
+	            $scope.end = true;
 	          return;
 	        }
 	        var p = poly.GetPointAtDistance(d);
-	      //  if (k++>=180/step) {
+	      // if (k++>=180/step) {
 	          map.panTo(p);
-	        /*    k=0;
-	        } */ 
-	       /* var lastPosn = marker.getPosition();	        
-	    	marker.setPosition(p);
-	    	var heading = google.maps.geometry.spherical.computeHeading(lastPosn, p);
-	    	icon.rotation = heading;
-	    	marker.setIcon(icon);  */
+	        /*
+		 * k=0; }
+		 */ 
+	       /*
+		 * var lastPosn = marker.getPosition(); marker.setPosition(p);
+		 * var heading =
+		 * google.maps.geometry.spherical.computeHeading(lastPosn, p);
+		 * icon.rotation = heading; marker.setIcon(icon);
+		 */
 	          var lastPosn = marker[0].getPosition();
 	          for(i in carSvg){marker[i].setPosition(p);}
 	          var heading = google.maps.geometry.spherical.computeHeading(lastPosn, p);
@@ -648,42 +651,47 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 	          for(i in carSvg){marker[i].setIcon(icons[i]);}
 	        updatePoly(d);
 	        
-	        //timerHandle = setTimeout("animate("+(d+step)+")", tick);
+	        // timerHandle = setTimeout("animate("+(d+step)+")", tick);
 	        timerHandle = setTimeout(function() {
 		        $scope.animate(d + step);
 		    }, tick);
 	      }
-	 //----------------------------------------------------------------------------
+	 // ----------------------------------------------------------------------------
 		// =============== ~animation funcitons =====================
-		/***************************************************************************
+		/***************************************************************
 		 * *******************************************************************\ *
-		 * epolys.js by Mike Williams * updated to API v3 by Larry Ross * * A Google
-		 * Maps API Extension * * Adds various Methods to google.maps.Polygon and
-		 * google.maps.Polyline * * .Contains(latlng) returns true is the poly
-		 * contains the specified * GLatLng * * .Area() returns the approximate area
-		 * of a poly that is * not self-intersecting * * .Distance() returns the
-		 * length of the poly path * * .Bounds() returns a GLatLngBounds that bounds
-		 * the poly * * .GetPointAtDistance() returns a GLatLng at the specified
-		 * distance * along the path. * The distance is specified in metres * Reurns
-		 * null if the path is shorter than that * * .GetPointsAtDistance() returns
-		 * an array of GLatLngs at the * specified interval along the path. * The
-		 * distance is specified in metres * * .GetIndexAtDistance() returns the
-		 * vertex number at the specified * distance along the path. * The distance
-		 * is specified in metres * Returns null if the path is shorter than that * *
-		 * .Bearing(v1?,v2?) returns the bearing between two vertices * if v1 is
-		 * null, returns bearing from first to last * if v2 is null, returns bearing
-		 * from v1 to next * * *
+		 * epolys.js by Mike Williams * updated to API v3 by Larry Ross * *
+		 * A Google Maps API Extension * * Adds various Methods to
+		 * google.maps.Polygon and google.maps.Polyline * *
+		 * .Contains(latlng) returns true is the poly contains the
+		 * specified * GLatLng * * .Area() returns the approximate area
+		 * of a poly that is * not self-intersecting * * .Distance()
+		 * returns the length of the poly path * * .Bounds() returns a
+		 * GLatLngBounds that bounds the poly * * .GetPointAtDistance()
+		 * returns a GLatLng at the specified distance * along the path. *
+		 * The distance is specified in metres * Reurns null if the path
+		 * is shorter than that * * .GetPointsAtDistance() returns an
+		 * array of GLatLngs at the * specified interval along the path. *
+		 * The distance is specified in metres * * .GetIndexAtDistance()
+		 * returns the vertex number at the specified * distance along
+		 * the path. * The distance is specified in metres * Returns
+		 * null if the path is shorter than that * * .Bearing(v1?,v2?)
+		 * returns the bearing between two vertices * if v1 is null,
+		 * returns bearing from first to last * if v2 is null, returns
+		 * bearing from v1 to next * * *
 		 * ********************************************************************** *
-		 * This Javascript is provided by Mike Williams * Blackpool Community Church
-		 * Javascript Team * http://www.blackpoolchurch.org/ *
-		 * http://econym.org.uk/gmap/ * * This work is licenced under a Creative
-		 * Commons Licence * http://creativecommons.org/licenses/by/2.0/uk/ * *
+		 * This Javascript is provided by Mike Williams * Blackpool
+		 * Community Church Javascript Team *
+		 * http://www.blackpoolchurch.org/ * http://econym.org.uk/gmap/ * *
+		 * This work is licenced under a Creative Commons Licence *
+		 * http://creativecommons.org/licenses/by/2.0/uk/ * *
 		 * ********************************************************************** *
-		 * Version 1.1 6-Jun-2007 * Version 1.2 1-Jul-2007 - fix: Bounds was
-		 * omitting vertex zero * add: Bearing * Version 1.3 28-Nov-2008 add:
-		 * GetPointsAtDistance() * Version 1.4 12-Jan-2009 fix:
-		 * GetPointsAtDistance() * Version 3.0 11-Aug-2010 update to v3 * * \
-		 **************************************************************************/
+		 * Version 1.1 6-Jun-2007 * Version 1.2 1-Jul-2007 - fix: Bounds
+		 * was omitting vertex zero * add: Bearing * Version 1.3
+		 * 28-Nov-2008 add: GetPointsAtDistance() * Version 1.4
+		 * 12-Jan-2009 fix: GetPointsAtDistance() * Version 3.0
+		 * 11-Aug-2010 update to v3 * * \
+		 **************************************************************/
 
 		// === first support methods that don't (yet) exist in v3
 		google.maps.LatLng.prototype.distanceFrom = function (newLatLng) {
@@ -717,9 +725,11 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 		    return dist;
 		}
 
-		// === A method which returns a GLatLng of a point a given distance along
+		// === A method which returns a GLatLng of a point a given
+		// distance along
 		// the path ===
-		// === Returns null if the path is shorter than the specified distance ===
+		// === Returns null if the path is shorter than the specified
+		// distance ===
 		google.maps.Polygon.prototype.GetPointAtDistance = function (metres) {
 		    // some awkward special cases
 		    if (metres == 0) return this.getPath().getAt(0);
@@ -741,7 +751,8 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 		    return new google.maps.LatLng(p1.lat() + (p2.lat() - p1.lat()) * m, p1.lng() + (p2.lng() - p1.lng()) * m);
 		}
 
-		// === A method which returns an array of GLatLngs of points a given
+		// === A method which returns an array of GLatLngs of points a
+		// given
 		// interval along the path ===
 		google.maps.Polygon.prototype.GetPointsAtDistance = function (metres) {
 		    var next = metres;
@@ -765,9 +776,11 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 		    return points;
 		}
 
-		// === A method which returns the Vertex number at a given distance along
+		// === A method which returns the Vertex number at a given
+		// distance along
 		// the path ===
-		// === Returns null if the path is shorter than the specified distance ===
+		// === Returns null if the path is shorter than the specified
+		// distance ===
 		google.maps.Polygon.prototype.GetIndexAtDistance = function (metres) {
 		    // some awkward special cases
 		    if (metres == 0) return this.getPath().getAt(0);
@@ -791,13 +804,14 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 		google.maps.Polyline.prototype.GetIndexAtDistance = google.maps.Polygon.prototype.GetIndexAtDistance;
 		
 		/*
-		 * -----------------------------------------the end for vehicle icon
+		 * -----------------------------------------the end for vehicle
+		 * icon
 		 * movement---------------------------------------------------------------
 		 * 
 		 */
 	function SortByts(x,y) {
-		//console.log(x);
-		//console.log(y);
+		// console.log(x);
+		// console.log(y);
 		return ((x.ts == y.ts) ? 0 : ((x.ts > y.ts) ? 1 : -1 ));
 	}
 	$(document).ready(function() {
@@ -810,7 +824,8 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 	});
 	/**
 	 * get Date formatted date based on TIMESTAMP
-	 -----------------------------------------------------------------------*/
+	 * -----------------------------------------------------------------------
+	 */
 	$scope.showTime = function(ts) {
 		 var d = new Date(Number(ts));	 	
 	 	  var hours = d.getHours();
@@ -825,7 +840,7 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 	
 	
 	$scope.givelt=function(lt,lg){
-		//alert("success");
+		// alert("success");
 		var geocoder = new google.maps.Geocoder();
 		var latLng = new google.maps.LatLng(lt,lg);
 		geocoder.geocode({       
@@ -846,7 +861,7 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 	}
 	$(".spdCtrl").click(function() {
 		$(".spdCtrl").removeClass("activeCtrl");
-		// $(".tab").addClass("active"); // instead of this do the below 
+		// $(".tab").addClass("active"); // instead of this do the below
 		$(this).addClass("activeCtrl");
 	});
 	

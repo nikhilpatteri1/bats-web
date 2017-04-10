@@ -49,7 +49,7 @@
 											{'featureType':'water','elementType':'all','stylers':[{'color':'#46bcec'},{'visibility':'on'}]},
 											{'featureType':'water','elementType':'labels','stylers':[{'visibility':'on'},{'color':'#000000'}]}]" -->
 				<marker ng-repeat="pos in marker" 
-					icon="../images/{{pos.devtype}}.png"
+					icon="../images/{{pos.devtype}}.png" width="25"
 					position="{{pos.lat}},{{pos.long}}"
 					on-click="showDeviceInfo(event, pos)">
 				</marker> 
