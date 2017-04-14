@@ -43,10 +43,10 @@
 								ng-change="changeBindStatus()"> 
 								<option value="" selected disabled class="disable_select">-
 									- - Binding Staus - - -</option>
+								<option>All</option>
 								<option value="binded">Binded Vehicle</option>
 								<option value="unbind">Un-Binded Vehicle</option>
 							</select>
-							
 						</div>  
 					</div>
 				
@@ -68,6 +68,22 @@
                        <div ng-include src="'/traveldesk/subMenu'"></div>
 </div>
 </div>
+
+
+<div class="row">
+<div class="col-sm-12">
+				<!-- <div class="row" ng-show="nodriver">
+					<div class="col-sm-12 verhorcenter" align="center">
+						<div class="centerData">
+							<ul class="nodata_list">
+								<li><img alt="" src="../images/no-data.png" class="nodata_img"></li>
+								<li><label style="color: #000">Nothing here!</label></li>
+								<li><span>No Data Available</span></li>
+							</ul>
+						</div>
+					</div>
+				</div> -->
+
 <div class="row" ng-show="yesdata">
 <div class="col-sm-12 pad0">
 <div class="table-container" ng-style="histcontentheight">
@@ -148,6 +164,10 @@
 </div> 
 
 
+</div>
+</div>
+
+
 
 <!-- <div class="row" ng-show="nodevice">
 		<div class="col-sm-12 verhorcenter" align="center">
@@ -171,140 +191,11 @@
 				</ul>
 			</div>
 		</div>
-	</div> 
+</div> 
 
-<div class="row" ng-show="nodriver">
-												<div class="col-sm-12 verhorcenter" align="center">
-													<div class="centerData">
-														<ul class="nodata_list">
-															<li><img alt="" src="../images/no-data.png" class="nodata_img"></li>
-															<li><label style="color: #000">Nothing here!</label></li>
-															<li><span>No Data Available</span></li>
-														</ul>
-													</div>
-												</div>
-											</div>
 
-<!-- <div class="row">
-	<div class="col-sm-12">  
-					<div class="row bindHead">
-											Vehicle Number
-											<div class="col-sm-2">
-												<label>Vehicle No</label>
-												
-											</div>
-											./Vehicle Number
-											Vehicle Model
-											<div class="col-sm-2">
-												<label>Vehicle model</label>
-												<p>{{device}}</p>
-											</div>
-											./Vehicle Model
-											Driver Name
-											<div class="col-sm-2">
-												<label>Driver Name</label>
-												
-											</div>
-											<div class="col-sm-2">
-												<label>Binding Status</label>
-												
-											</div>
-											Driver Name
-											Driver Assign
-											<div class="col-sm-3">
-												<div
-													ng-show="{{device.driver_name.length>0 ? 'false':'true'}}">
-													<a href="#" class="edit_icon"
-														ng-click="showDriverModal(device)"> <i
-														class="fa fa-paperclip" aria-hidden="true"></i>
-													</a> <span class="help-block">Bind Driver</span>
-												</div>
-												<div
-													ng-show="{{device.driver_name.length>0 ? 'true':'false'}}">
-													<a href="#" class="edit_icon"
-														ng-click="unBindDriver(device)"> <i
-														class="fa fa-refresh" aria-hidden="true"></i>
-													</a> <span class="help-block">Un Bind Driver</span>
-												</div>
-											</div>
-											Driver Assign
-										</div> 
-									
-								
-							
-						 <ul class="vehiclelist vlist"
-							ng-repeat="device in devlistObject | filter:deviceId | filter:{'bind':bindStatus}">
-							<li>
-								<div class="panel panel-default panel1">
-									<div class="panel-heading panel-heading1">
-										<div class="row pd120">
-											Vehicle Number
-											<div class="col-sm-2">
-												<label>Vehicle No</label>
-												<p>{{device.vehicle_num.length>0?device.vehicle_num:device.devid}}</p>
-											</div>
-											./Vehicle Number
-											Vehicle Model
-											<div class="col-sm-2">
-												<label>Vehicle Model</label>
-												<p>{{device}}</p>      
-											</div>
-											./Vehicle Model
-											Driver Name
-											<div class="col-sm-2">   
-												<label>Driver Name</label>
-												<p>{{device.driver_name}}</p>
-											</div>
-											Driver Name
-											
-											<div class="col-sm-2">
-												<div
-													ng-show="{{device.driver_name.length>0 ? 'false':'true'}}">
-													<a href="#" class="edit_icon"
-														ng-click="showDriverModal(device)">
-													</a> <span class="bind">Binded</span> 
-												</div>
-												<div
-													ng-show="{{device.driver_name.length>0 ? 'true':'false'}}">
-													<a href="#" class="edit_icon"
-														ng-click="unBindDriver(device)">
-													</a><span class="unbind">UnBinded</span>
-												</div>
-											</div>
-											
-											
-											Driver Assign
-											<div class="col-sm-2">
-												<div
-													ng-show="{{device.driver_name.length>0 ? 'false':'true'}}">
-													<a href="#" class="edit_icon"
-														ng-click="showDriverModal(device)">
-														<img src="../images/bind.png"
-																		class="img-responsive img-circle img-thumbnail iconImageSm" />
-														 <i
-														class="fa fa-paperclip" aria-hidden="true"></i>
-													</a> <span class="help-block">Bind Driver</span>
-												</div>
-												<div
-													ng-show="{{device.driver_name.length>0 ? 'true':'false'}}">
-													<a href="#" class="edit_icon"
-														ng-click="unBindDriver(device)">
-														<img src="../images/unbind.png"
-																		class="img-responsive img-circle img-thumbnail iconImageSm" />
-														 <i
-														class="fa fa-refresh" aria-hidden="true"></i>
-													</a> <span class="help-block">Un Bind Driver</span>
-												</div>
-											</div>
-											Driver Assign  
-										</div>
-									</div>
-								</div>
-							</li>
-						</ul> 
 
-	</div>
-	</div>-->
+
 	<!-- <h2 class="heading_title">Vehicle Driver Binding</h2> -->
 	<div class="bgloading" ng-show="httpLoading">
 		<div class="bigbar">

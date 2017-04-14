@@ -29,6 +29,8 @@ batstravelDeskHome.controller('batsDriverBinding', function($rootScope,$scope, $
 		
 		 });
 	}
+	
+	
 	/*====================================================>>>>>> End of Basic function <<<<<=================================================*/
 	/*====================================================>>>>>> Start of list Devices function <<<<<=================================================*/
 	/*
@@ -36,6 +38,13 @@ batstravelDeskHome.controller('batsDriverBinding', function($rootScope,$scope, $
 	$scope.changeBindStatus=function(){
 		$('#clearTextDevice span.select2-chosen').empty();  
 	    $('#clearTextDevice span.select2-chosen').text("- - Select Vehicle No/Device - -");
+	    
+	    console.log($scope.bindStatus);
+	    if($scope.bindStatus == "All"){
+	    	$scope.bindStatus = undefined;
+	    	//$('#selectBindStatus').select2('val', "");
+	    }
+	    
 	    if(typeof $scope.groupname!='undefined'){
 	    	$scope.fetchDevicelist($scope.groupname);
 	    }
@@ -58,6 +67,7 @@ batstravelDeskHome.controller('batsDriverBinding', function($rootScope,$scope, $
 	/*
 	 * list devices*/
 	$scope.fetchDevicelist=function(groupname){
+		//alert("hi");
 		$scope.deviceId="";
 		$('#clearTextDevice span.select2-chosen').empty();  
 	    $('#clearTextDevice span.select2-chosen').text("- - Select Vehicle No/Device - -");
@@ -72,6 +82,7 @@ batstravelDeskHome.controller('batsDriverBinding', function($rootScope,$scope, $
 		      $scope.httpLoading=false; 
 		      $scope.yesdata = true;
 		      $scope.blankTable=false;
+		      //$scope.blankTable = true;
 		      console.log(result[0].bind);
 		      /*if(result.bind[0].length == 0){
 		    	  alert("no bind");
@@ -104,7 +115,7 @@ batstravelDeskHome.controller('batsDriverBinding', function($rootScope,$scope, $
 				//swal({title:"There is No Drivers"});
 				console.log("nores");
 				$scope.nodriver= true;
-				$scope.blankTable=false;
+				//$scope.blankTable=false;
 				$scope.httpLoading=false;
 				//
 			}
@@ -235,6 +246,9 @@ batstravelDeskHome.controller('batsDriverBinding', function($rootScope,$scope, $
          					
          					/*$scope.searchDriver="";*/
          					
+         				}
+         				else if(result.err == "Some Trips are active, Please cancel Scheduled and Running trips"){
+         					swal("Some Trips are active, Please cancel Scheduled and Running trips");
          				}
          				$scope.httpLoading=false;
          			});

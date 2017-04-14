@@ -244,7 +244,7 @@ batsGeneralHome.controller('dashboardVehicleController', function($scope,$localS
 		        }
 		);
 	};
-	
+	/*
 	$(function() {
 		  $('.dashbHover,#ActiveThird-ring1,#NotActiveThird-ring1,#BatteryThird-ring1,#TamperedThird-ring1,.TripOuterCircle').hover(function() {
 			  $(this).append('<p id="passopt">Click Me!</p>');
@@ -263,7 +263,7 @@ batsGeneralHome.controller('dashboardVehicleController', function($scope,$localS
 			$(this).children('#vehicleHover').remove();
 		  });
 		  
-		});
+		});*/
 	var d = new Date();
 	var month = d.getMonth()+1;
 	var day = d.getDate();

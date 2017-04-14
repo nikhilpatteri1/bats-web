@@ -139,7 +139,7 @@
 				        <div id="ActiveRings1">
 						    <div id="ActiveFirst-ring1">
 						        <div id="ActiveSecond-ring1">
-						            <div id="ActiveThird-ring1" ng-click="getList(2);gotoElement('trackerDataTable');headTxt='Activated';hideStatus=true">
+						            <div id="ActiveThird-ring1" ng-class="{'removeCursorPointer':TrackerCount.active<=0}" ng-click="getList(2);gotoElement('trackerDataTable');headTxt='Activated';hideStatus=true">
 						            <div class="ActiveRingsTxt">{{TrackerCount.active}}</div>
 						            </div>
 						        </div>
@@ -154,7 +154,7 @@
 				        <div id="NotActiveRings1">
 						    <div id="NotActiveFirst-ring1">
 						        <div id="NotActiveSecond-ring1">
-						            <div id="NotActiveThird-ring1" ng-click="getList(3);gotoElement('trackerDataTable');headTxt='Not activated';hideStatus=true">
+						            <div id="NotActiveThird-ring1" ng-class="{'removeCursorPointer':TrackerCount.inactive<=0}" ng-click="getList(3);gotoElement('trackerDataTable');headTxt='Not activated';hideStatus=true">
 						            <div class="ActiveRingsTxt">{{TrackerCount.inactive}}</div>
 						            </div>
 						        </div>
@@ -170,7 +170,7 @@
 				        <div id="BatteryRings1">
 						    <div id="BatteryFirst-ring1">
 						        <div id="BatterySecond-ring1">
-						            <div id="BatteryThird-ring1" ng-click="getList(4);gotoElement('trackerDataTable');headTxt='Battery Low';hideStatus=true">
+						            <div id="BatteryThird-ring1" ng-class="{'removeCursorPointer':TrackerCount.batterylow<=0}" ng-click="getList(4);gotoElement('trackerDataTable');headTxt='Battery Low';hideStatus=true">
 						            	<div class="ActiveRingsTxt">{{TrackerCount.batterylow}}</div>
 						            </div>
 						        </div>
@@ -186,7 +186,7 @@
 				        <div id="TamperedRings1">
 						    <div id="TamperedFirst-ring1">
 						        <div id="TamperedSecond-ring1">
-						            <div id="TamperedThird-ring1" ng-click="getList(5);gotoElement('trackerDataTable');headTxt='Tampered';hideStatus=true">
+						            <div id="TamperedThird-ring1" ng-class="{'removeCursorPointer':TrackerCount.tampered<=0}" ng-click="getList(5);gotoElement('trackerDataTable');headTxt='Tampered';hideStatus=true">
 						            <div class="ActiveRingsTxt">{{TrackerCount.tampered}}</div>
 						            </div>
 						        </div>
@@ -250,7 +250,7 @@
 					<div class="row mar0">
 						<div id="TripMap" class="TripMap"></div>
 						<div class="row mar0">
-							<div class="col-sm-2"
+							<div class="col-sm-2" ng-class="{'removeCursorPointer':scheduled<=0}"
 								ng-click="getTripDataByStatus('S');gotoElement('tripDataTable');headText='Scheduled';">
 								<div class="TripCircleDiv">
 									<div>Scheduled</div>
@@ -266,7 +266,7 @@
 						        </svg> -->
 								</div>
 							</div>
-							<div class="col-sm-2"
+							<div class="col-sm-2" ng-class="{'removeCursorPointer':running<=0}"
 								ng-click="getTripDataByStatus('R');gotoElement('tripDataTable');headText='Running';">
 								<div class="TripCircleDiv">
 									<div>Running</div>
@@ -278,7 +278,7 @@
 									<div class="runningLine"></div>
 								</div>
 							</div>
-							<div class="col-sm-2"
+							<div class="col-sm-2" ng-class="{'removeCursorPointer':delay_count<=0}"
 								ng-click="getTripDataByStatus('Ds');gotoElement('tripDataTable');headText='Delayed';">
 								<div class="TripCircleDiv">
 									<div>Delayed</div>
@@ -290,7 +290,7 @@
 									<div class="delayedLine"></div>
 								</div>
 							</div>
-							<div class="col-sm-2"
+							<div class="col-sm-2" ng-class="{'removeCursorPointer':cancelled<=0}"
 								ng-click="getTripDataByStatus('C');gotoElement('tripDataTable');headText='Cancelled';">
 								<div class="TripCircleDiv">
 									<div>Cancelled</div>
@@ -302,7 +302,7 @@
 									<div class="cancelledLine"></div>
 								</div>
 							</div>
-							<div class="col-sm-2"
+							<div class="col-sm-2" ng-class="{'removeCursorPointer':dropped<=0}"
 								ng-click="getTripDataByStatus('D');gotoElement('tripDataTable');headText='Dropped';">
 								<div class="TripCircleDiv">
 									<div>Dropped</div>
@@ -314,7 +314,7 @@
 									<div class="droppedLine"></div>
 								</div>
 							</div>
-							<div class="col-sm-2"
+							<div class="col-sm-2" ng-class="{'removeCursorPointer':completed<=0}"
 								ng-click="getTripDataByStatus('F');gotoElement('tripDataTable');headText='Completed';">
 								<div class="TripCircleDiv CompleteDiv">
 									<div class="CompDivTxt">Completed</div>
@@ -410,7 +410,7 @@
 													<a class="dashbHover"><div class="driverProgessCountAvail">{{availableDrivers}}</div></a>
 												</div>
 											</div>
-											<div class="row" ng-click="tripStatus='trip';gotoElement('driverDataTable')">
+											<div class="row" ng-click="tripStatus='true';gotoElement('driverDataTable')">
 												<div class="col-sm-8">
 													<p class="trackerProgessText">On Trip</p>
 													<div class="progress trackerProgess">
@@ -543,7 +543,8 @@
 						</div>
 					</div>
 					<div class="row mar0">
-						<div class="col-sm-4" ng-click="getVehiclesDataByStatus('overspeed');gotoElement('vehicleDataTable');txtHead='OverSpeed';hideSpeed=false">
+						<div class="col-sm-4" ng-class="{'removeCursorPointer':totaloverspeed<=0}"
+							ng-click="getVehiclesDataByStatus('overspeed');gotoElement('vehicleDataTable');txtHead='OverSpeed';hideSpeed=false">
 							<div class="activeDiv">
 								<div class="row vehicleHoverClass">
 									<div class="col-sm-6">
@@ -559,7 +560,8 @@
 							</div>
 						</div>
 
-						<div class="col-sm-4" ng-click="getVehiclesDataByStatus('geofence');gotoElement('vehicleDataTable');txtHead='Geofence';hideSpeed=true">
+						<div class="col-sm-4" ng-class="{'removeCursorPointer':totalgeofence<=0}"
+							ng-click="getVehiclesDataByStatus('geofence');gotoElement('vehicleDataTable');txtHead='Geofence';hideSpeed=true">
 							<div class="activeDiv">
 								<div class="row vehicleHoverClass">
 									<div class="col-sm-6">
@@ -574,7 +576,8 @@
 								<div class="GeofenceLine"></div>
 							</div>
 						</div>
-						<div class="col-sm-4" ng-click="getVehiclesDataByStatus('panic');gotoElement('vehicleDataTable');txtHead='Panic';hideSpeed=true">
+						<div class="col-sm-4" ng-class="{'removeCursorPointer':totalPanic<=0}"
+							ng-click="getVehiclesDataByStatus('panic');gotoElement('vehicleDataTable');txtHead='Panic';hideSpeed=true">
 							<div class="activeDiv">
 								<div class="row vehicleHoverClass">
 									<div class="col-sm-6">
@@ -599,7 +602,6 @@
 										<tr>
 											<th>
 												<div class="tableThickline" ng-style=" txtHead=='OverSpeed' && {'background-color':'#ec3f53'} || txtHead=='Geofence' && {'background-color':'#6668a5'}  || txtHead=='Panic' && {'background-color':'#ffcc33'} "></div>
-												
 											</th>
 											<th><p class="tableThickTxt">{{txtHead}}</p></th>
 											<th></th>

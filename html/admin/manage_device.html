@@ -44,19 +44,19 @@
 						<div class="col-sm-3" id="clearTextDeviceStatus" align="center">
 
 							<select id="selectStatus" class="form-control" name="statusList"
-								ng-model="statusId" ng-change="listDevice()">
+								ng-model="statusId" ng-change="listDevice();">
 								<option value="" selected disabled class="disable_select">-
 									- - Device Staus - -</option>
+								<option>All</option>	
 								<option value="Activated">Activated Devices</option>
 								<option value="Inactive">Inactive Devices</option>
 								<option value="Pending">Pending Devices</option>
 							</select>
 						</div>
-
 						<div class="col-sm-3" id="clearTextGroup" align="center">
 							<select id="selectGroup" class="form-control" name="groupList"
 								ng-model="groupname" ng-change="listDevice(groupname)">
-								<option ng-if="groupList.length" value="" selected disabled
+								<option ng-if="groupList.length" value="" selected="selected"
 									class="disable_select">-- Select Group - -</option>
 								<option ng-if="!groupList.length" selected disabled>No
 									Group Available</option>
@@ -464,9 +464,9 @@
 
 				<button class="btn btn-primary createuser"
 					ng-disabled="updateDeviceForm.$invalid"
-					ng-show="updateDeviceForm.$valid"
+					
 					ng-click="submitUpdateDeviceForm()">Update</button>
-
+<!-- ng-show="updateDeviceForm.$valid" -->
 			</div>
 
 

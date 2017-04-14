@@ -11,7 +11,7 @@
 			<h6 class="titleHead">Change Password</h6>
 			<form name="changePwd" class="formInput" id="changePwdFrm">
 				<div class="control-group">
-									<div class="form-group">
+								<div class="form-group">
 										<div class="row">
 											<div class="col-sm-12 controls">
 												<!-- <label ng-show="newpwd" class="floatlabeltxt show-hide">Enter
@@ -35,9 +35,9 @@
 												<!-- <label ng-show="newpwd" class="floatlabeltxt show-hide">Enter
 													New Password</label> --> 
 													<label class="labelClass">New Password</label> 
-													<input type="password" ng-model="newpwd"
-													class="form-control  new_pwd" name="new_pd"
-													placeholder="Enter New Password" ng-change="hidePasswordMismatch()" password-validate required>
+													<input type="password" ng-model="newpwd" ng-change="hidePasswordMismatch(changePwd)"
+													class="form-control new_pwd" name="new_pd"
+													placeholder="Enter New Password" password-validate required>
 
 												<span class='help-inline' ng-show='changePwd.newpwd.$valid'>
 													<i class='icon-ok'></i>

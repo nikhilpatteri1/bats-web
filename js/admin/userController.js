@@ -27,6 +27,8 @@ batsAdminHome.controller('userController', function($rootScope,$scope, $http, $l
 		 
 	}
 	
+	
+	
 /**
  	* On typing of username in textbox of Form
     * 1) Checks username is available or not*/
@@ -551,6 +553,7 @@ $scope.verifyUser=function(userName){
 	 * 2)Show Create Title & Hide Update Title
 	 * 3)Show password field*/      
 		$scope.showCreateBtn = function() {
+		$('#createUserModal').find('form')[0].reset();
 		general_emailChk = "";
 		  $scope.btn = {
 			create: true,

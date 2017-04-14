@@ -51,17 +51,17 @@ batsAdminHome.controller('deviceController', function($rootScope,$scope, $http, 
 	    	
 	      return $scope.tab === tabNum;
 	    };
-	
+	    
+	   
+	    
 	/**
 	 * Load User list 1) on load of page load the username is displayed in the
 	 * user list grid
 	 */
 	$scope.listDevices = function() {
-		// console.log("listDevices");
 		$scope.user = {
 			"token" : $scope.token
 		};
-		// console.log(JSON.stringify($scope.user));
 		$http({
 			method : 'POST',
 			url : apiURL + 'device/list',
@@ -71,16 +71,12 @@ batsAdminHome.controller('deviceController', function($rootScope,$scope, $http, 
 			}
 		}).success(function(data) {
 			$scope.dlist = data;
-			// console.log(JSON.stringify($scope.dlist));
 			possible2Activate(data.allocated);
-			// console.log($scope.pendingArray.length);
 			if ($scope.pendingArray.length == 0) {
-				// console.log($scope.pendingArray.length);
 				$interval.cancel(pageRefresh);
 			} else {
 				if (typeof pageRefresh == 'undefined') {
 					pageRefresh = $interval(function() {
-						// console.log("call listing devices");
 						$scope.listDevices();
 					}, 10 * 1000);
 				}
@@ -89,15 +85,12 @@ batsAdminHome.controller('deviceController', function($rootScope,$scope, $http, 
 			$scope.listGroup();
 			if ($scope.allocated.length == 0) {
 				$scope.noDevicesAllocated = true;
-
 			}
 			$scope.un_allocated = $scope.dlist.un_allocated;
-			// console.log(JSON.stringify($scope.un_allocated));
 			if ($scope.un_allocated == 0) {
 				$scope.noDevicesUnAllocated = true;
 			}
 		}).error(function(data, status, headers, config) {
-			// console.log(data.err);
 			if (data.err == "Expired Session") {
 				expiredSession();
 				$localStorage.$reset();
@@ -152,9 +145,11 @@ batsAdminHome.controller('deviceController', function($rootScope,$scope, $http, 
 	 * 
 	 * ****/
 	$scope.listDevice = function(gid) {
+		
 		$scope.deviceId='';
 		$('#clearTextDevice span.select2-chosen').empty();
 		$('#clearTextDevice span.select2-chosen').text(" Select Vehicle No/Device ");		
+		
 		$scope.deviceList = [];
 		/*
 		 * on change of group drop down with gid as param
@@ -201,19 +196,40 @@ batsAdminHome.controller('deviceController', function($rootScope,$scope, $http, 
 		/*
 		 * on change of device status drop down without param
 		 * */
-		else {
+		else {console.log($scope.groupname, $scope.statusId);
 			/*
 			 * filter the allocated devices based on status ID
 			 * */ 
 				//console.log($scope.statusId);
-			var deviceArray = _.filter($scope.allocated, {
-				'status' : $scope.statusId
-			});			
+		var deviceArray =[];
+			if($scope.statusId == "All"){
+				deviceArray = $scope.allocated;
+				$scope.statusId = undefined;
+				$scope.groupname = undefined;
+				//$scope.groupname="";
+			//	$scope.groupList = [];
+				
+//				$('#selectGroup span.select2-chosen').empty();
+//				$('#selectGroup span.select2-chosen').text(" Select group ");
+				$('#selectGroup').select2('val', "");
+			}
+			else{
+				deviceArray = _.filter($scope.allocated, {
+					'status' : $scope.statusId
+				});
+//				$scope.listGroup();
+				
+			}
+			
+			
+			 
+			
 			/*
 			 * if groupname value selected (or) available
 			 * */
 			if(deviceArray.length>0){
 				if($scope.groupname){
+					
 					deviceArray = _.filter($scope.allocated, {
 						'gid' : $scope.groupname
 					});
@@ -235,11 +251,17 @@ batsAdminHome.controller('deviceController', function($rootScope,$scope, $http, 
 					$scope.deviceList.push(deviceArray[inc].devid);
 				}
 			}
+			console.log($scope.allocated);
+			
 
 		}
 
 		// console.log(JSON.stringify($scope.allocated));
 	}
+	
+	
+	
+	
 	/*
 	 * get device status method gives back the sutiable text for the device
 	 * activation status 0- active,1-pending,2-inactive

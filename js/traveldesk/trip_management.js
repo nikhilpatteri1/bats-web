@@ -24,7 +24,7 @@ batstravelDeskHome.controller('tripManagement', function($rootScope,$scope, $loc
 	var CEndStamp;
 	var UEndStamp; 
 	$scope.update={};
-	
+	$scope.disabled ;
 	
 	$scope.noTripList = false;
 	
@@ -33,6 +33,10 @@ batstravelDeskHome.controller('tripManagement', function($rootScope,$scope, $loc
 			"color":"#ff0000" 
 	}
 	
+	$scope.getStatus= function(tripDataStatus)
+	{
+	return travelDeskService.showStatus(tripDataStatus);
+	}
 	/*$scope.whiteColor={
 			"background-color":"#ffffff"
 	}*/
@@ -106,6 +110,9 @@ batstravelDeskHome.controller('tripManagement', function($rootScope,$scope, $loc
 		   map.setCenter(center); 
 	};
 	
+	//$scope.createTripForm.tripDesc.$invalid = false;
+	//$scope.createTripForm.tripDesc.$touched = false;
+	
 	 $scope.undoMap  = function(){
 		 console.log("enter undo");
 			marker.setMap(null);
@@ -114,6 +121,7 @@ batstravelDeskHome.controller('tripManagement', function($rootScope,$scope, $loc
 			$scope.pathwaysArray = '';
 			
 			$timeout(function(){
+				//alert("hi");
 				$("#updateDestination").val("");
 				$("#updateDestination").focus();
 				$scope.updateTrip.dest="";
@@ -416,7 +424,25 @@ batstravelDeskHome.controller('tripManagement', function($rootScope,$scope, $loc
 				$scope.yesTriplist = true;
 				$scope.noTripList = false;
 		      $scope.triplistObject= result.list;
-		      console.log($scope.triplistObject);
+		      //var abc = $scope.triplistObject.length;
+		      /*for(var i=0; i<abc ; i++){
+		    	  console.log($scope.triplistObject[i].status);
+		    	  if($scope.triplistObject[i].status == "C"){
+			    	  $scope.disabled = true;
+			      }
+			      else{
+			    	  $scope.disabled = false;
+			      }
+		    	  
+		      };*/
+		      
+		      /*if($scope.triplistObject.status == "C"){
+		    	  $scope.disabled = true;
+		      }
+		      else{
+		    	  $scope.disabled = false;
+		      }*/
+		      //console.log($scope.triplistObject);
 		      $scope.httpLoading=false;
 			}
 		});
@@ -630,6 +656,9 @@ batstravelDeskHome.controller('tripManagement', function($rootScope,$scope, $loc
 			updateTripForm(result);
 		});
 	}
+	
+	
+	
 	$scope.initUpdateMap=function(){
 		marker=""
 		directionsService = new google.maps.DirectionsService();
@@ -644,8 +673,12 @@ batstravelDeskHome.controller('tripManagement', function($rootScope,$scope, $loc
 		
 	   directionsDisplay.setMap(updateMap);
 	   google.maps.event.addListener(updateMap, 'click', function(event) {
-		   $scope.update.startlat = this.getPosition().lat();
-			$scope.update.startlong= this.getPosition().lng();
+		   alert("hi");
+		   console.log(event.latLng);
+		   /*$scope.update.startlat = this.getPosition().lat();
+			$scope.update.startlong= this.getPosition().lng();*/
+		   $scope.update.startlat = event.latLng.lat();
+			$scope.update.startlong= event.latLng.lng();
 			console.log($scope.update);
 		   end=event.latLng;
 		   updateMarker(event.latLng);
@@ -655,6 +688,7 @@ batstravelDeskHome.controller('tripManagement', function($rootScope,$scope, $loc
 			computeTotalDistance(directionsDisplay.getDirections());
 		});	   
 	}
+	
 	function updateMarker(location) {
 	    // Add the marker at the clicked location, and add the next-available label
 	    // from the array of alphabetical characters.    

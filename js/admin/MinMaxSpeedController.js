@@ -7,16 +7,16 @@ batsAdminHome.controller("MinMaxSpeedCtrl",function($http,$scope,$filter,$localS
 	$rootScope.menuPos=4;
 	var token = $localStorage.data;
 	if(typeof $scope.token==="undefined"){
-		swal({ 
-			   title: "Un Authorized Access",
-		  	   text: "Kindly Login!",   
-		  	   type: "warning",   
-		  	   confirmButtonColor: "#ff0000",   
-		  	   closeOnConfirm: false }, 
-		  	   function(){  
-		  		 $localStorage.$reset();
-		  		 window.location = apiURL;
-		  });
+	    swal({ 
+		title: "Un Authorized Access",
+		text: "Kindly Login!",   
+		type: "warning",   
+		confirmButtonColor: "#ff0000",   
+		closeOnConfirm: false }, 
+		function(){  
+		    $localStorage.$reset();
+		    window.location = apiURL;
+		});
 		 
 	}
 	
@@ -110,13 +110,16 @@ batsAdminHome.controller("MinMaxSpeedCtrl",function($http,$scope,$filter,$localS
 	 * Show datepicker & Submit button after device select
 	 */
 	$scope.deviceSelectedMinMax=function(deviceId){
-	$scope.sel_group_device = true;
-	$scope.deviceSelectMinMax=false;
-	$scope.showResult = false;
-	startDateMinMaxError.style.display = 'none';
-	endDateMinMaxError.style.display = 'none';
-	document.getElementById('startDateMinMax').value = "";
-	document.getElementById('endDateMinMax').value = "";
+        	$scope.sel_group_device = true;
+        	$scope.deviceSelectMinMax=false;
+        	$scope.showResult = false;
+        	startDateMinMaxError.style.display = 'none';
+        	endDateMinMaxError.style.display = 'none';
+        	document.getElementById('startDateMinMax').value = "";
+        	document.getElementById('endDateMinMax').value = "";
+        	$scope.min = "";
+        	$scope.max = "";
+        	$scope.MinMaxResult = {};
 	};
 
 
@@ -124,32 +127,32 @@ batsAdminHome.controller("MinMaxSpeedCtrl",function($http,$scope,$filter,$localS
 /**
  * Onsubmit of Min/Max Speed from values
  */
-$scope.submitMinMaxSpeed = function() {
+	$scope.submitMinMaxSpeed = function() {
 	// alert("Yes");
-	var startDateMinMax = document.getElementById('startDateMinMax').value;
-	var endDateMinMax = document.getElementById('endDateMinMax').value;
+	    var startDateMinMax = document.getElementById('startDateMinMax').value;
+	    var endDateMinMax = document.getElementById('endDateMinMax').value;
 	// console.log(startDateMinMax);
 	// console.log(endDateMinMax);
-if(startDateMinMax == "" && endDateMinMax == ""){
-	startDateMinMaxError.style.display = 'block';
-	endDateMinMaxError.style.display = 'block';
+	    if(startDateMinMax == "" && endDateMinMax == ""){
+		startDateMinMaxError.style.display = 'block';
+		endDateMinMaxError.style.display = 'block';
 	// alert("1");
-}
-else if(startDateMinMax == ""){
-	startDateMinMaxError.style.display = 'block';
-	// alert("2");
-}
-else if(endDateMinMax == ""){
-	endDateMinMaxError.style.display = 'block';
-	// alert("3");
-}
-else{
-	$scope.httpLoading=true;
-	startDateMinMaxError.style.display = 'none';
-	endDateMinMaxError.style.display = 'none';
-	// alert("4");
-	startDate(startDateMinMax);
-	endDate(endDateMinMax);
+	    }	
+	    else if(startDateMinMax == ""){
+		startDateMinMaxError.style.display = 'block';
+	// 	alert("2");
+	    }
+	    else if(endDateMinMax == ""){
+		endDateMinMaxError.style.display = 'block';
+	// 	alert("3");
+	    }
+	    else{
+		$scope.httpLoading=true;
+		startDateMinMaxError.style.display = 'none';
+		endDateMinMaxError.style.display = 'none';
+	// 	alert("4");
+		startDate(startDateMinMax);
+		endDate(endDateMinMax);
 	                    $scope.devIdJson = {};
 						$scope.devIdJson.token = token;
 						$scope.devIdJson.devlist = [$scope.deviceId];

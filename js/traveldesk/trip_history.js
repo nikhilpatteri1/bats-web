@@ -66,6 +66,16 @@ batstravelDeskHome.controller('tripHistory', function($rootScope,$scope, $localS
 			Item:0	
 	};
 	
+	
+	$scope.setDate = function(){
+		$scope.trip.timeStamp = null;
+		$scope.showTripDropDown=false;
+		$scope.trip.timeStamp=null;
+		//$scope.tripName= null;
+		
+		
+	}
+	
 	/*
 	 * intialize map function 
 	 * */
@@ -268,6 +278,7 @@ batstravelDeskHome.controller('tripHistory', function($rootScope,$scope, $localS
 		$scope.fetchDevicelist=function(groupDetail){			
 			$scope.httpLoading=true;
 			$scope.showTripDropDown=false;
+			//$scope.trip.vehicle_num = "";
 			$scope.listDeviceJson={};
 			$scope.listDeviceJson.token=$scope.token;
 			$scope.listDeviceJson.gid=groupDetail.gid;
@@ -279,8 +290,8 @@ batstravelDeskHome.controller('tripHistory', function($rootScope,$scope, $localS
 		/*
 		 * fetch history*/
 		$scope.fetchHistory=function(searchtype){
-			console.log("hi geeta im indisidfsd")
 			$scope.httpLoading=true;
+			
 			$scope.getHistoryJson={};
 			$scope.getHistoryJson.token=$scope.token;
 			console.log($scope.basedOn.Item);

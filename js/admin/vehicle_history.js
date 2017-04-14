@@ -14,7 +14,7 @@ batsAdminHome.controller('vehicleHistory', function($scope,$rootScope, $http, $l
 	};
 	var contentHeight=window.screen.availHeight-220;
 	$scope.histcontentheight={
-			"height":contentHeight
+			"maxHeight":contentHeight
 	}
 	$rootScope.menuPos=1;
 	var dev={};
@@ -42,7 +42,8 @@ batsAdminHome.controller('vehicleHistory', function($scope,$rootScope, $http, $l
 		var styleMap = [{"featureType":"administrative","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"landscape","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"color":"#bee4f4"},{"visibility":"on"}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"geometry.fill","stylers":[{"visibility":"on"}]},{"featureType":"transit","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#46bcec"},{"visibility":"on"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"on"},{"color":"#000000"}]}];
 	    var myOptions = {
 	        zoom: 8,	   
-	        mapTypeId: google.maps.MapTypeId.ROADMAP
+	        mapTypeId: google.maps.MapTypeId.ROADMAP,
+	        travelMode: google.maps.TravelMode.DRIVING,
 	    };
 	    address = 'India';
 	    // address = 'Trinidad and Tobago'
@@ -217,10 +218,16 @@ batsAdminHome.controller('vehicleHistory', function($scope,$rootScope, $http, $l
 	});*/
 	
 	
-	$(document).ready(function () {
+	/*$(document).ready(function () {
+		
+	
+	});*/
+	
+	
+	$scope.openCal = function(){
 		$('#trvelRouteHstTimePic').datetimepicker({
 			 inline: true,
-            sideBySide: true,
+           sideBySide: true,
 			format: 'DD/MM/YYYY',
 	        maxDate: 'now',        		
 			ignoreReadonly:true,
@@ -240,9 +247,7 @@ batsAdminHome.controller('vehicleHistory', function($scope,$rootScope, $http, $l
 		//startDateMaxKmError.style.display = 'none';
 		var dt=new Date().getTime();
 		$('#trvelRouteHstTime').val(showTime(dt));
-	
-	});
-	
+	}
 	
 	
 	function showTime (ts) {
@@ -465,7 +470,7 @@ batsAdminHome.controller('vehicleHistory', function($scope,$rootScope, $http, $l
 				plottedObj.ts = historyStatus.timestamp;
 				polyPathArray.push(arr);
 				$scope.plottedData.push(plottedObj);
-				//console.log($scope.plottedData.length);
+				console.log($scope.plottedData.length);
 				/*if($scope.plottedData.length <= 1){
 					swal({title:"Vehicle in stationary"});
 				}
@@ -478,6 +483,7 @@ batsAdminHome.controller('vehicleHistory', function($scope,$rootScope, $http, $l
 		  	});
 		  	
 		  }
+		console.log($scope.plottedData.length);
 		if($scope.plottedData.length <= 1){
 			swal({title:"Stationary Vehicle"});
 		}
@@ -506,16 +512,19 @@ batsAdminHome.controller('vehicleHistory', function($scope,$rootScope, $http, $l
 			console.log(JSON.stringify(polyPathArray));
 			var poly_len = polyPathArray.length;
 			var iconsetngs = {
-		            path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
+		            path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+		            travelMode: google.maps.TravelMode.DRIVING,
 		        };
 		        var polylineoptns = {
 		            path: polyPathArray,
 		            strokeOpacity: 0.8,
 		            strokeWeight: 3,
 		            map: map,
+		            travelMode: google.maps.TravelMode.DRIVING,
 		            icons: [{
 		                icon: iconsetngs,
 		                repeat:'35px',
+		                travelMode: google.maps.TravelMode.DRIVING,
 		                offset: '100%'}]
 		        };
 		      if(historypolyline!=null){
@@ -526,8 +535,9 @@ batsAdminHome.controller('vehicleHistory', function($scope,$rootScope, $http, $l
 		      historypolyline = new google.maps.Polyline(polylineoptns);	      
 		      
 		    var bounds = new google.maps.LatLngBounds();		      		    		
-		    	
+		    	console.log(poly_len);
 		    for(var j=0;j<poly_len;j++){
+		    	
 		    	 var latlng = new google.maps.LatLng(polyPathArray[j].lat,polyPathArray[j].lng);
 		    	 bounds.extend(latlng);
 		    }

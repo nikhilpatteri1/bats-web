@@ -21,7 +21,7 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 	};
 	var contentHeight=window.screen.availHeight-220;
 	$scope.histcontentheight={
-			"height":contentHeight
+			"maxHeight":contentHeight
 	}
 	var dev={};
 	var maploadedInterval;
@@ -105,13 +105,14 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 		 
 	}
 	// function initialize() {
-	$scope.initialize=function () {		
-		var styleMap = [{"featureType":"administrative","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"landscape","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"color":"#bee4f4"},{"visibility":"on"}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"geometry.fill","stylers":[{"visibility":"on"}]},{"featureType":"transit","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#46bcec"},{"visibility":"on"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"on"},{"color":"#000000"}]}];
-		var myOptions = {
-	        zoom: 8,
-	        maxZoom : 18,
-	        mapTypeId: google.maps.MapTypeId.ROADMAP
+	$scope.initialize=function () {	
+	    var styleMap = [{"featureType":"administrative","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"landscape","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"color":"#bee4f4"},{"visibility":"on"}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"geometry.fill","stylers":[{"visibility":"on"}]},{"featureType":"transit","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#46bcec"},{"visibility":"on"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"on"},{"color":"#000000"}]}];
+	    var myOptions = {
+		    zoom: 8,
+		    maxZoom : 18,
+		    mapTypeId: google.maps.MapTypeId.ROADMAP
 	    };
+	    
 	    address = 'India';
 	    // address = 'Trinidad and Tobago'
 	    geocoder = new google.maps.Geocoder();
@@ -119,6 +120,7 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 	     map.fitBounds(results[0].geometry.viewport);
 
 	    });	
+	    
 	    map = new google.maps.Map(document.getElementById("replay_map"),
 	            myOptions);
 	    google.maps.event.addListenerOnce(map, 'idle', function(){
@@ -268,12 +270,16 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 		$scope.yoData=false;
 		$scope.showTimeSlot=false;
 		$scope.myDate = "";
+		$("#GtrvelRouteHstTime").val("");
 		$scope.initialize();
+		//var dt=new Date().getTime();
+		var dt=new Date();
+		$('#GtrvelRouteHstTime').val(showTime(dt));
+		dateChange(dt);
 	};
 	
 	
-	
-	$(document).on('click', '#GtrvelRouteHstTimePic', function(){
+	$scope.openCal = function(){
 		$('#GtrvelRouteHstTimePic').datetimepicker({
 			/*
 			 * inline: true, sideBySide: true,
@@ -284,17 +290,18 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 	            }).on("dp.change",function (e) {
 	            	// $("#startDateMaxKm").blur();
 	            	// closeResult();
-// console.log(e);
-// console.log(e.date);
-// console.log(e.date._d);
-	            	$scope.MyDate = e.date._d;
-	            	$scope.myDateChange($scope.MyDate);
-	            	$scope.activeMenu = '5';
+	            	dateChange(e.date._d);
+	            	/*$scope.myDateChange($scope.MyDate);
+	            	$scope.activeMenu = '5';*/
 	            });
 		// startDateMaxKmError.style.display = 'none';
-		var dt=new Date().getTime();
-		$('#GtrvelRouteHstTime').val(showTime(dt));
-	});
+		
+	}
+	
+	dateChange = function(date){
+	$scope.myDateChange($scope.MyDate);
+	$scope.activeMenu = '5';
+	};
 	
 	function showTime (ts) {
 		// console.log(ts);
@@ -323,7 +330,7 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 		return sts.getTime();
 	}
 	
-	$scope.myDateChange=function(myDate){
+	$scope.myDateChange=function(){
 		$scope.initialize();
 		$scope.yoData=false;
 		$scope.showTimeSlot=true;
@@ -350,6 +357,7 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 				if(data.values[0].data!=true && data.values[1].data!=true&&data.values[2].data!=true&&data.values[3].data!=true){						
 					$scope.showTimeSlot=false;
 					swal({title:"No history available for the selected date"});
+					//$("#GtrvelRouteHstTime").val("");
 				}
 				else{
 					$scope.showTimeSlot=true;
@@ -486,7 +494,7 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 	 */
 	function displayHistory() {
 		// console.log(JSON.stringify($scope.histData.values));
-		
+	    
 		$scope.yoData=true;
 		$scope.noData=false;
 		var lat_tot = 0, lg_tot = 0, lat_avg = 0, lg_avg = 0;
@@ -498,10 +506,10 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 		var coordinates = [];		
 		
 		for(var inc = 0; inc < hist_len; inc++){
-		  	executeHisory(histData[inc].lat,histData[inc].long,histData[inc].Velocity,histData[inc].ts,
-		  			function(historyStatus){
+		    executeHisory(histData[inc].lat,histData[inc].long,histData[inc].Velocity,histData[inc].ts, 
+			    function(historyStatus){
                 // console.log(JSON.stringify(historyStatus));
-                var arr = {};
+			var arr = {};
     			var plottedObj={};
     			arr.lat = Number(historyStatus.latitude);
 				arr.lng = Number(historyStatus.longitude);
@@ -517,7 +525,7 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 		  	
 		  }
 		if($scope.plottedData.length <= 1){
-			swal({title:"Stationary Vehicle"});
+		    swal({title:"Stationary Vehicle"});
 		}
 		else{
 			// nothing
@@ -613,7 +621,8 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 	          poly2= new google.maps.Polyline([poly.getPath().getAt(lastVertex - 1)]);
 	          /* console.log(poly.getPath().getAt(lastVertex - 1).lat); */
 	          // map.addOverlay(poly2)
-	          poly2.setMap(map);
+	          //poly2.setMap(map);
+	          poly2.setMap(null);
 	        }
 
 	        if (poly.GetIndexAtDistance(d) < lastVertex+2) {
@@ -653,8 +662,8 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 	        
 	        // timerHandle = setTimeout("animate("+(d+step)+")", tick);
 	        timerHandle = setTimeout(function() {
-		        $scope.animate(d + step);
-		    }, tick);
+	            $scope.animate(d + step);
+	        }, tick);
 	      }
 	 // ----------------------------------------------------------------------------
 		// =============== ~animation funcitons =====================

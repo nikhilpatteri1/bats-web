@@ -33,7 +33,7 @@
 						</div>
 					</div>
 					<div class="col-sm-3">
-						<button type="button" class="btn btn-primary btn-sm"
+						<button type="button" class="btn btn-primary btn-sm" 
 							data-toggle="modal" data-target="#createModal">Add
 							Customer</button>
 					</div>
@@ -370,16 +370,13 @@
 
 						<button class="btn btn-primary createuser"
 							ng-click="submitCreateForm()" ng-disabled="createForm.$invalid"
-							ng-show="cname && cmail && createForm.$valid">Submit</button>
+							>Submit</button><!-- ng-show="cname && cmail && createForm.$valid" -->
 
 					</div>
-
 				</div>
 			</div>
-		</div>
+		</div>	
 	</div>
-
-
 
 	<!--==================== Edit Modal ===================-->
 	<div class="modal fade" id="editModal" role="dialog"

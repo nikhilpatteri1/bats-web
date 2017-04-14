@@ -81,7 +81,7 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 	
 	
 	  // function initialize(){
-    $scope.initialize=function () {    
+    $scope.initialize=function () {
 	var $map = $('#map_canvas');
 	infowindow = new google.maps.InfoWindow({  
 	    size: new google.maps.Size(150,50)
@@ -221,6 +221,9 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 	else if(devtype == "bus"){
 	    svg = bus; 
 	}
+	else{
+		svg = car;
+	}
 	var contentString; 
 	for(let i in svg){
 //	    if(type==0){svg[i].fillColor='#ea0909';}
@@ -228,8 +231,14 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 //	    else if(type==2){svg[i].fillColor='#e59305';}
 //	    else if(type==3){svg[i].fillColor='#000000';}
 //	    else if(type==4){svg[i].fillColor='#0540E5';}
-	    icons[i] = {path : svg[i].path, fillColor : svg[i].fillColor, scale: .9, strokeColor: 'white', 
-		    strokeWeight: .10, fillOpacity: 1, offset: '5%',
+	    icons[i] = {path : svg[i].path, 
+	    		fillColor : svg[i].fillColor, 
+	    		scale: .9, 
+	    		strokeColor: 'white', 
+		    strokeWeight: .10, 
+		    fillOpacity: 1, 
+		    offset: '5%',
+		    rotation: Number(localStorage.getItem("heading")),
 		    anchor: new google.maps.Point(16, 16) // orig 10,50 back of car, 10,0 front of car, 10,25 center of car
 	    };
 	}
@@ -276,8 +285,6 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 		    // $scope.open("lg",deviceID);
 		});
 	}
-	
-	
 	return marker;
     }	
 	// Sets the map on all markers in the array.
@@ -470,6 +477,7 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 	    var lastPosn = marker[0].getPosition();
 	    for(let i in svg){marker[i].setPosition(p);}
 	    var heading = google.maps.geometry.spherical.computeHeading(lastPosn, p);
+	    localStorage.setItem("heading",heading);
 	    for(let i in svg){icons[i].rotation = heading;}
 	    for(let i in svg){marker[i].setIcon(icons[i]);}
 	    updatePoly(d);
@@ -652,8 +660,8 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 	var devIDval="";
 	var speedlimit="";
 	
-	$scope.chart;
-
+	//$scope.chart;
+	var chart;
 	/*
 	 * var MarkersOnload=[]; var mapPosOnload={}; var polygonOnload=[]; var
 	 * scope = angular.element(document.getElementById("smartMap")).scope();
@@ -971,7 +979,126 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 					$scope.vehnoSpeedOmeter=data[0].vehicle_num;
 					$scope.speedlimitSpeedOmeter=speedlimit;
 					$scope.dateTimeSpeedOmeter=getDateTime(data[0].values[0].ts);
-					updateSpeed(data[0].vehicle_num,data[0].values[0].Velocity,data[0].speed_limit,getDateTime(data[0].values[0].ts));				
+					//updateSpeed(data[0].vehicle_num,data[0].values[0].Velocity,data[0].speed_limit,getDateTime(data[0].values[0].ts));				
+					
+					 $('#container').highcharts({
+						 
+					        chart: {
+					            type: 'gauge',
+					            plotBackgroundColor: null,
+					            plotBackgroundImage: null,
+					            plotBorderWidth: 0,
+					            plotShadow: false,
+					            width:'200',
+					            height:'200'
+					        },
+
+					        title : {
+								text : ""
+							},
+
+					        pane: {
+					            startAngle: -150,
+					            endAngle: 150,
+					            background: [{
+					                backgroundColor: {
+					                    linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+					                    stops: [
+					                        [0, '#FFF'],
+					                        [1, '#333']
+					                    ]
+					                },
+					                borderWidth: 0,
+					                outerRadius: '109%'
+					            }, {
+					                backgroundColor: {
+					                    linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+					                    stops: [
+					                        [0, '#333'],
+					                        [1, '#FFF']
+					                    ]
+					                },
+					                borderWidth: 1,
+					                outerRadius: '107%'
+					            }, {
+					                // default background
+					            }, {
+					                backgroundColor: '#DDD',
+					                borderWidth: 0,
+					                outerRadius: '105%',
+					                innerRadius: '103%'
+					            }]
+					        },
+
+					        // the value axis
+					        yAxis: {
+					            min: 0,
+					            max: 200,
+
+					            minorTickInterval: 'auto',
+					            minorTickWidth: 1,
+					            minorTickLength: 10,
+					            minorTickPosition: 'inside',
+					            minorTickColor: '#666',
+
+					            tickPixelInterval: 30,
+					            tickWidth: 2,
+					            tickPosition: 'inside',
+					            tickLength: 10,
+					            tickColor: '#666',
+					            labels: {
+					                step: 2,
+					                rotation: 'auto'
+					            },
+					            title: {
+					                text: 'km/h'
+					            },
+					            plotBands: [{
+					                from: 0,
+					                to: 120,
+					                color: '#55BF3B' // green
+					            }, {
+					                from: 120,
+					                to: 160,
+					                color: '#DDDF0D' // yellow
+					            }, {
+					                from: 160,
+					                to: 200,
+					                color: '#DF5353' // red
+					            }]
+					        },
+
+					        series: [{
+					            name: 'Speed',
+					            data: [Number(data[0].values[0].Velocity)],
+					            tooltip: {
+					                valueSuffix: ' km/h'
+					            }
+					        }]
+
+					    },
+					    // Add some life
+					    function (chart) {	    	
+					        if (!chart.renderer.forExport && chart.length>0) {
+					            setInterval(function () {
+					            	// console.log(speedlimit);
+					            	chart.setTitle({text: "<label>Device ID:</label><p>" + devIDval
+					    				+ "</p><br/><br/><label>Speed Limit:</label><p><b>"
+					    				+ speedlimit + "<b>KmpH</p>"});
+					                var point = chart.series[0].points[0],
+					                    newVal,                    
+					                    inc = Math.round((Math.random() - 0.5) * 20);	               								
+					                newVal = point.y + inc;
+					                if (newVal < 0 || newVal > 200) {
+					                    newVal = point.y - inc;
+					                }
+
+					                point.update(Number(speedValue));
+
+					            }, reqTime*1000);
+					        }
+					    });
+					
 					// storedltlng.lat=data[0].values[0].lat;
 					/* vehichleRouting(data,data[0].values[0].lat,data[0].values[0].long,data[0].values[0].lat,data[0].values[0].long); */
 					$scope.calcRoute(data);
@@ -1172,126 +1299,19 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 			+ speed_limit + "<b>KmpH</p><br/><br/><label>DateTime:</label><b>"
 			+ts+"</b>"});*/
 		console.log(speed);
-		$('#container').highcharts().series[0].points[0].update(Number(speed));	
+		console.log(Number(speed));
+		
+		if(speed == "0")
+			{
+			//plotDevice();
+			$('#container').highcharts().series[0].points[0].update(Number(speed));
+			}
+		else{
+		$('#container').highcharts().series[0].points[0].update(Number(speed));
+		}
 		
 	}
-	 $('#container').highcharts({
-		 
-	        chart: {
-	            type: 'gauge',
-	            plotBackgroundColor: null,
-	            plotBackgroundImage: null,
-	            plotBorderWidth: 0,
-	            plotShadow: false,
-	            width:'200',
-	            height:'200'
-	        },
-
-	        title : {
-				text : ""
-			},
-
-	        pane: {
-	            startAngle: -150,
-	            endAngle: 150,
-	            background: [{
-	                backgroundColor: {
-	                    linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
-	                    stops: [
-	                        [0, '#FFF'],
-	                        [1, '#333']
-	                    ]
-	                },
-	                borderWidth: 0,
-	                outerRadius: '109%'
-	            }, {
-	                backgroundColor: {
-	                    linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
-	                    stops: [
-	                        [0, '#333'],
-	                        [1, '#FFF']
-	                    ]
-	                },
-	                borderWidth: 1,
-	                outerRadius: '107%'
-	            }, {
-	                // default background
-	            }, {
-	                backgroundColor: '#DDD',
-	                borderWidth: 0,
-	                outerRadius: '105%',
-	                innerRadius: '103%'
-	            }]
-	        },
-
-	        // the value axis
-	        yAxis: {
-	            min: 0,
-	            max: 200,
-
-	            minorTickInterval: 'auto',
-	            minorTickWidth: 1,
-	            minorTickLength: 10,
-	            minorTickPosition: 'inside',
-	            minorTickColor: '#666',
-
-	            tickPixelInterval: 30,
-	            tickWidth: 2,
-	            tickPosition: 'inside',
-	            tickLength: 10,
-	            tickColor: '#666',
-	            labels: {
-	                step: 2,
-	                rotation: 'auto'
-	            },
-	            title: {
-	                text: 'km/h'
-	            },
-	            plotBands: [{
-	                from: 0,
-	                to: 120,
-	                color: '#55BF3B' // green
-	            }, {
-	                from: 120,
-	                to: 160,
-	                color: '#DDDF0D' // yellow
-	            }, {
-	                from: 160,
-	                to: 200,
-	                color: '#DF5353' // red
-	            }]
-	        },
-
-	        series: [{
-	            name: 'Speed',
-	            data: [Number(speedValue)],
-	            tooltip: {
-	                valueSuffix: ' km/h'
-	            }
-	        }]
-
-	    },
-	    // Add some life
-	    function (chart) {	    	
-	        if (!chart.renderer.forExport && chart.length>0) {
-	            setInterval(function () {
-	            	// console.log(speedlimit);
-	            	chart.setTitle({text: "<label>Device ID:</label><p>" + devIDval
-	    				+ "</p><br/><br/><label>Speed Limit:</label><p><b>"
-	    				+ speedlimit + "<b>KmpH</p>"});
-	                var point = chart.series[0].points[0],
-	                    newVal,                    
-	                    inc = Math.round((Math.random() - 0.5) * 20);	               								
-	                newVal = point.y + inc;
-	                if (newVal < 0 || newVal > 200) {
-	                    newVal = point.y - inc;
-	                }
-
-	                point.update(Number(speedValue));
-
-	            }, reqTime*1000);
-	        }
-	    });
+	
 	
 	/*------------------------------------------------------------------------------------------------------------------------
 	 * 

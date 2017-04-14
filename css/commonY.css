@@ -8,7 +8,7 @@
 }
 @font-face {
 	font-family: 'helvetica';
-	src: url('assets/fonts/Helvetic/helvetica-normal.ttf');
+	src: url('../assets/fonts/Helvetic/helvetica-normal.ttf');
 	font-weight: normal;
 	font-style: normal;
 } 
@@ -381,7 +381,7 @@ table th {
 
 .Availhist-container {
     overflow-y: auto;
-    height: 380px;
+       max-height: 470px;
 }
 
 .borderTB{
@@ -394,4 +394,10 @@ background: coral;
 
 .addresslatest{
     padding-left: 48px;
+}
+
+.btnclass{
+    border-radius: 5px !important;
+    padding: 4px 18px !important;
+    font-size: 15px!important;
 }

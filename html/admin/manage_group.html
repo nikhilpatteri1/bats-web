@@ -9,11 +9,16 @@
 			<div class="row">
 				<div class="col-sm-3" id="clearTextCountry">
 					<div class="country">
-						<select id="selectCountry" ng-model="selectedcountry"
+						 <select id="selectCountry" ng-model="selectedcountry"
 							class="form-control"
 							ng-options="group.country as group.country for group in glist | unique:'country'">
 							<option value="">Select Country</option>
-						</select>
+						</select> 
+												<!-- <select ng-model="selectedcountry" class="search_width"
+												>
+												<option value="">Select Country </option>
+												<option value="India">India</option>
+											</select> -->
 					</div>
 				</div>
 				<div class="col-sm-3" id="clearTextState">
@@ -368,7 +373,7 @@
 								</div>
 								<div class="row">
 									<div class="col-sm-12" align="right">
-										<a class="btn btn-primary" ng-click="showAllocate()">Next</a>
+										<button class="btn btn-primary btnclass" ng-disabled="createGroupForm.$invalid" ng-click="showAllocate()">Next</button>
 									</div>
 								</div>
 
@@ -474,16 +479,16 @@
 										<label>No</label>
 									</div>
 									<div class="col-sm-3" align="right">
-										<a class="btn btn-primary btn_anchor " ng-click="back2Show1();">Back</a>
+										<button class="btn btn-primary btnclass" ng-click="back2Show1();">Back</button>
 									</div>
 									<div class="col-sm-3">
 										<div class="row" ng-if="IsgeoFence('1')">
 											<div class="col-sm-6 col-sm-offset-3" align="right">
 												<div class="form-group">
-													<a class="btn btn-primary creategroup" id="showMap"
-														ng-hide="!selection.length || gname || createGroupForm.$invalid"
-														ng-click="changeStyle()">Continue</a>
-													<!-- <p>{{createGroupForm.$invalid}}</p> -->
+													<button class="btn btn-primary btnclass" id="showMap" ng-disabled="!selection.length"
+														
+														ng-click="changeStyle()">Continue</button><!-- creategroup -->
+													<!-- <p>{{createGroupForm.$invalid}}</p> --> <!-- ng-hide="!selection.length || gname || createGroupForm.$invalid" -->
 												</div>
 											</div>
 										</div>
@@ -493,14 +498,14 @@
 												<div class="form-group">
 													<div class="row">
 														<div class="col-sm-6 col-sm-offset-3" align="center">
-															<a class="btn btn-primary create_button btn_anchor "
+															<button class="btn btn-primary create_button btnclass"
 																ng-click="submitCreateGroupForm()"
 																ng-disabled="btn.create"
-																ng-hide="createGroupForm.$invalid || !selection.length || gname">Create</a>
-															<a class="btn btn-primary update_button btn_anchor"
+																ng-hide="createGroupForm.$invalid || !selection.length || gname ||title.update">Create</button>
+															<button class="btn btn-primary update_button btn_anchor btnclass"
 																ng-click="submitEditGroupForm()"
-																ng-disabled="btn.update"
-																ng-hide="createGroupForm.$invalid || !selection.length || gname">Update</a>
+																ng-disabled="btn.update" 
+																ng-hide="createGroupForm.$invalid || !selection.length || gname ||title.create">Update</button>
 														</div>
 													</div>
 												</div>
@@ -524,17 +529,19 @@
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-6" align="center">
-											<a class="btn btn-primary btn_anchor" ng-click="back2Form();">Back</a>
+											<button class="btn btn-primary btn_anchor btnclass" ng-click="back2Form();">Back</button>
 										</div>
 										<div class="col-sm-6" align="center">
-											<a class="btn btn-primary create_button btn_anchor"
+											<button class="btn btn-primary create_button btn_anchor btnclass"
 												ng-click="submitCreateGroupForm()"
-												ng-disabled="createGroupForm.$invalid"
-												ng-hide="btn.create || gname">Create</a> <a
-												class="btn btn-primary update_button btn_anchor"
+												ng-disabled="createGroupForm.$invalid" 
+												ng-hide="btn.create || gname ||title.update">Create</button> 
+												
+											<button
+												class="btn btn-primary update_button btn_anchor btnclass"
 												ng-click="submitEditGroupForm()"
-												ng-disabled="createGroupForm.$invalid"
-												ng-hide="btn.update || gname">Update</a>
+												ng-disabled="createGroupForm.$invalid" 
+												ng-hide="btn.update || gname ||title.create">Update</button>
 										</div>
 									</div>
 								</div>

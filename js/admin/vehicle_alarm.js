@@ -131,7 +131,33 @@ batsAdminHome.controller('vehicleAlarm',function($scope,$rootScope, $http, $loca
 	  * Onsubmit of Min/Max Speed from values 
 	*/
 	
-	$(document).on('click', '#VAStartTimePic', function(){
+	/*$(document).on('click', '#VAStartTimePic', function(){
+		
+	});*/
+	
+	/*$(document).on('click', '#VAEndTimePic', function(){
+		$('#VAEndTimePic').datetimepicker({
+			 inline: true,
+             sideBySide: true,
+			format: 'DD/MM/YYYY hh:mm a',
+	        maxDate: 'now',        		
+			ignoreReadonly:true,
+	            }).on("dp.change",function (e) {
+	            	//$("#startDateMaxKm").blur(); 
+	            	//closeResult();
+	            	console.log(e);
+	            	console.log(e.date);
+	            	console.log(e.date._d);
+	            	$scope.MyDate = e.date._d;
+	            	endDateMinMaxErrorAlarm.style.display = 'none';
+	            	
+	            });
+		//startDateMaxKmError.style.display = 'none';
+		var dt=new Date().getTime();
+		$('#VAEndTime').val(showTime(dt));
+	});*/
+	
+	$scope.openCalS = function(){
 		$('#VAStartTimePic').datetimepicker({
 			/* inline: true,
              sideBySide: true,*/
@@ -145,13 +171,16 @@ batsAdminHome.controller('vehicleAlarm',function($scope,$rootScope, $http, $loca
 	            	console.log(e.date);
 	            	console.log(e.date._d);
 	            	$scope.MyDate = e.date._d;*/
+	            	startDateMinMaxErrorAlarm.style.display = 'none';
+	    			
 	            });
 		//startDateMaxKmError.style.display = 'none';
 		var dt=new Date().getTime();
 		$('#VAStartTime').val(showTime(dt));
-	});
+	}
 	
-	$(document).on('click', '#VAEndTimePic', function(){
+	
+	$scope.openCalE = function(){
 		$('#VAEndTimePic').datetimepicker({
 			/* inline: true,
              sideBySide: true,*/
@@ -165,12 +194,18 @@ batsAdminHome.controller('vehicleAlarm',function($scope,$rootScope, $http, $loca
 	            	console.log(e.date);
 	            	console.log(e.date._d);
 	            	$scope.MyDate = e.date._d;*/
-	            	
+	            	endDateMinMaxErrorAlarm.style.display = 'none';
+	    			
 	            });
 		//startDateMaxKmError.style.display = 'none';
 		var dt=new Date().getTime();
 		$('#VAEndTime').val(showTime(dt));
-	});
+	}
+	
+	/*$(document).on('click', '#VAEndTimePic', function(){
+		alert("hi");
+		
+	});*/
 	
 	
 	function showTime (ts) {
@@ -369,7 +404,7 @@ batsAdminHome.controller('vehicleAlarm',function($scope,$rootScope, $http, $loca
 	}
 
 
-function getSTS(){		
+/*function getSTS(){		
 	var d=new Date($scope.myDate.start);
 	d.setHours(0);
 	d.setMinutes(0);
@@ -382,7 +417,7 @@ function getETS(){
 	d.setMinutes(59);
 	d.setSeconds(59);
 	endTimeStamp = d.getTime();
-}	
+}*/	
 
 
 /**

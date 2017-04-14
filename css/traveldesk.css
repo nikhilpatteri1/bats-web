@@ -374,7 +374,7 @@ padding: 10px !important;
 	margin-top: -14px;  
 }
 .pd24{
-	padding: 12px 0px 0px 25px;
+	padding: 12px 0px 10px 25px;
 }
 
 .TripDetail{
@@ -413,4 +413,14 @@ padding: 10px !important;
 	list-style-type:none!important;
 }
 
+.pad50{
+        margin-left: 50px;
+}
 
+.pad145{
+	margin-left: 145px;
+}
+
+.disabled {
+  cursor: not-allowed;
+}

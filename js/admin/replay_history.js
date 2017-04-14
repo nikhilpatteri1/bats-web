@@ -9,7 +9,7 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
 	$scope.greyColor={color:"#637778"};
 	$scope.whiteColor={color:"#fff"};
 	var contentHeight=window.screen.availHeight-220;
-	$scope.histcontentheight={"height":contentHeight}
+	$scope.histcontentheight={"maxHeight":contentHeight}
 	$scope.end = false;
 	$rootScope.menuPos=15;
 	var dev={};
@@ -48,19 +48,19 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
   $scope.updateSpeed=function(choice){
 	  switch (choice) {
 	  	case 0:
-	  	  console.log(oldStep)
+	  	  //console.log(oldStep)
 		    oldStep = {step: 1,tick:100};
 			step=5;
 			tick=100;
 			break;
 		case 1:
-		    console.log(oldStep)
+		    //console.log(oldStep)
 		    oldStep = {step: 10,tick:50};
 			step=10;
 			tick=50;
 			break;
 		case 2:
-		    console.log(oldStep)
+		    //console.log(oldStep)
 		    oldStep = {step: 50,tick:10};
 			step=50;
 			tick=10;
@@ -71,7 +71,7 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
 			$scope.play = true;
 			break;
 		case 4:
-		    console.log(oldStep)
+		    //console.log(oldStep)
 		   	step=oldStep.step;
 			tick=oldStep.tick;
 			$scope.play = false;
@@ -93,18 +93,18 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
 		 
 	}
 	// function initialize() {
-	$scope.initialize=function () {		
+	$scope.initialize=function () {	
 		var styleMap = [{"featureType":"administrative","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"landscape","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"color":"#bee4f4"},{"visibility":"on"}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"geometry.fill","stylers":[{"visibility":"on"}]},{"featureType":"transit","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#46bcec"},{"visibility":"on"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"on"},{"color":"#000000"}]}];
 	    var myOptions = {
-	        zoom: 8,
-	        maxZoom : 18,
+	        zoom: 20,
+	        /*maxZoom : 20,*/
 	        mapTypeId: google.maps.MapTypeId.ROADMAP
 	    };
 	    address = 'India';
 	    // address = 'Trinidad and Tobago'
 	    geocoder = new google.maps.Geocoder();
 	    geocoder.geocode( { 'address': address}, function(results, status) {
-	     map.fitBounds(results[0].geometry.viewport);
+	    map.fitBounds(results[0].geometry.viewport);
 
 	    });	
 	    map = new google.maps.Map(document.getElementById("replay_map"),
@@ -134,12 +134,12 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
 	    poly = new google.maps.Polyline({
 	        path: [],
 	        strokeColor: '#97dcc9',
-	        strokeWeight: 5
+	        strokeWeight: 4
 	    });
 	    poly2 = new google.maps.Polyline({
 	        path: [],
 	        strokeColor: '#FF0000',
-	        strokeOpacity: 0.00001,
+	        strokeOpacity: 0.0,
 	        strokeWeight: 0
 	    });  
 	}
@@ -246,28 +246,40 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
 		dev.devid=devID;
 		$scope.yoData=false; 
 		$scope.myDate = "";
+		$('#trvelRouteHstTime').val("");
 		$scope.initialize();
+		 var dt=new Date()
+			$('#trvelRouteHstTime').val(showTime(dt));
+			dateChange(dt);
 	};
 	
-	$(document).on('click', '#trvelRouteHstTimePic', function(){
+	/*$(document).on('click', '#trvelRouteHstTimePic', function(){
+	    
+	});*/
+	
+	$scope.openCal = function(){
+		//console.log("1");
 		$('#trvelRouteHstTimePic').datetimepicker({
+		    
 			/*
 			 * inline: true, sideBySide: true,
 			 */
 			format: 'DD/MM/YYYY',
-	        maxDate: 'now',        		
+			maxDate: 'now',        		
 			ignoreReadonly:true,
 	            }).on("dp.change",function (e) {
 	            	// $("#startDateMaxKm").blur();
 	            	// closeResult();
-	            	$scope.MyDate = e.date._d;
-	            	$scope.myDateChange();
-	            	$scope.activeMenu = '5';
+	            	dateChange(e.date._d);
 	            });
 		// startDateMaxKmError.style.display = 'none';
-		var dt=new Date().getTime();
-		$('#trvelRouteHstTime').val(showTime(dt));
-	});
+	}
+	
+	function dateChange(date){
+		//$scope.MyDate = date;
+    	$scope.myDateChange();
+    	$scope.activeMenu = '5';
+	}
 	
 	function showTime (ts) {
 		// console.log(ts);
@@ -307,43 +319,43 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
 		$scope.slotCheckjson.slots=[];
 		
 		$scope.slotCheckjson.slots.push({"sts":getTimestamp(0,0,0),"ets":getTimestamp(5,59,59)},
-										{"sts":getTimestamp(6,0,0),"ets":getTimestamp(11,59,59)},
-										{"sts":getTimestamp(12,0,0),"ets":getTimestamp(17,59,59)},
-										{"sts":getTimestamp(18,0,0),"ets":getTimestamp(23,59,59)});
+			{"sts":getTimestamp(6,0,0),"ets":getTimestamp(11,59,59)},
+			{"sts":getTimestamp(12,0,0),"ets":getTimestamp(17,59,59)},
+			{"sts":getTimestamp(18,0,0),"ets":getTimestamp(23,59,59)});
 		$http({
 			method:'POST',
 			url:apiURL+'device/history_data_exist',
 			data:JSON.stringify($scope.slotCheckjson),	
 			headers:{'Content-Type' : 'application/json'}
 		}).success(function(data) {
-				console.log(data.values);
-				$scope.slotA=data.values[0].data ? '1' : '0';
-				$scope.slotB=data.values[1].data ? '1' : '0';
-				$scope.slotC=data.values[2].data ? '1' : '0';
-				$scope.slotD=data.values[3].data ? '1' : '0';
-					if(data.values[0].data!=true && data.values[1].data!=true&&data.values[2].data!=true&&data.values[3].data!=true){						
-						$scope.showTimeSlot=false;
-						swal({title:"No history available for the selected date"});
-						$scope.no_history=false;
-					}
-					else{
-						$scope.no_history=true;
-						$scope.showTimeSlot=true;
-					}
+		   // console.log(data.values);
+		    $scope.slotA=data.values[0].data ? '1' : '0';
+		    $scope.slotB=data.values[1].data ? '1' : '0';
+		    $scope.slotC=data.values[2].data ? '1' : '0';
+		    $scope.slotD=data.values[3].data ? '1' : '0';
+		    if(data.values[0].data!=true && data.values[1].data!=true&&data.values[2].data!=true&&data.values[3].data!=true){						
+			$scope.showTimeSlot=false;
+			swal({title:"No history available for the selected date"});
+			$scope.no_history=false;
+		    }
+		    else{
+			$scope.no_history=true;
+			$scope.showTimeSlot=true;
+		    }
 		}).error(function(data, status, headers,config) {
-					if (data.err == "Expired Session") {
-						$('#updateDeviceModal').modal('hide');
-						expiredSession();
-						$localStorage.$reset();
-					} else if (data.err == "Invalid User") {
-						$('#updateDeviceModal').modal('hide');
-						invalidUser();
-						$localStorage.$reset();
-					}
-					console.log(data);
-					console.log(status);
-					console.log(headers);
-					console.log(config);
+		    if (data.err == "Expired Session") {
+			$('#updateDeviceModal').modal('hide');
+			expiredSession();
+			$localStorage.$reset();
+		    } else if (data.err == "Invalid User") {
+			$('#updateDeviceModal').modal('hide');
+			invalidUser();
+			$localStorage.$reset();
+		    }
+		    //console.log(data);
+		   // console.log(status);
+		    //console.log(headers);
+		   // console.log(config);
 		}).finally(function(){		
 			$scope.httpLoading=false;
 		});
@@ -394,7 +406,7 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
 		d.setMinutes(59);
 		d.setSeconds(59);
 		var ets=d.getTime();
-		console.log(ets);
+		//console.log(ets);
 		historyApiCall(sts,ets);
 	};
 	function historyApiCall(sts,ets){
@@ -439,10 +451,10 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
 			invalidUser();
 			$localStorage.$reset();
 		    }
-		    console.log(data);
-		    console.log(status);
-		    console.log(headers);
-		    console.log(config);
+		    //console.log(data);
+		    //console.log(status);
+		   // console.log(headers);
+		    //console.log(config);
 		}).finally(function(){		
 		    $scope.httpLoading=false;
 		});
@@ -482,8 +494,32 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
 				plottedObj.Velocity = historyStatus.velocity;
 				plottedObj.ts = historyStatus.timestamp;
 				polyPathArray.push(arr);
+				
+/*for(var i=0 ; i<plottedObj.length ; i++){
+					
+					i = i+100;
+					console.log(plottedData[i].lat,plottedData[i].long);
+				var geocoder = new google.maps.Geocoder();
+				var latLng = new google.maps.LatLng(plottedObj[i].lat,plottedObj[i].long);
+				geocoder.geocode({       
+				        latLng: latLng     
+				        }, 
+				        function(responses) 
+				        {     
+				           if (responses && responses.length > 0) 
+				           {        
+				               console.log(responses[0].formatted_address);     
+				           } 
+				           else 
+				           {       
+				             //swal('Not getting Any address for given latitude and longitude.');     
+				           }   
+				        }
+				);
+				}*/
+				
 				$scope.plottedData.push(plottedObj);
-				// console.log($scope.plottedData.length);
+				//console.log($scope.plottedData.length);
 				/*
 				 * if($scope.plottedData.length <= 1){
 				 * swal({title:"Vehicle in stationary"}); }
@@ -492,6 +528,12 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
 				
 				lat_tot += Number(historyStatus.latitude);
 				lg_tot += Number(historyStatus.longitude);
+				
+				
+				
+				
+				
+				
 		  	});
 		  	
 		  }
@@ -521,7 +563,7 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
 		}
 		else{
 			clearMap();
-			console.log(JSON.stringify(polyPathArray));
+//			console.log(JSON.stringify(polyPathArray));
 			 bounds = new google.maps.LatLngBounds();
 			var pts=[];
     	    var length = 0;
@@ -578,10 +620,11 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
        	  });
          }
          // map.addOverlay(marker);
-         poly2 = new google.maps.Polyline({path: [poly.getPath().getAt(0)], strokeColor:"#0000FF",strokeOpacity: 0.00001, strokeWeight:0});
+         poly2 = new google.maps.Polyline({path: [poly.getPath().getAt(0)], strokeColor:"#0000FF",strokeOpacity: 0.0, strokeWeight:0});
          // map.addOverlay(poly2);
          // setTimeout("animate(50)",2000); // Allow time for the initial map
 	    // display
+         
          setTimeout(function() {
  	        $scope.animate(50);
  	    }, 2000);
@@ -593,7 +636,8 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
 	          poly2= new google.maps.Polyline([poly.getPath().getAt(lastVertex - 1)]);
 	          /* console.log(poly.getPath().getAt(lastVertex - 1).lat); */
 	          // map.addOverlay(poly2)
-	          poly2.setMap(map);
+	          //poly2.setMap(map);
+	          poly2.setMap(null);
 	        }
 
 	        if (poly.GetIndexAtDistance(d) < lastVertex+2) {

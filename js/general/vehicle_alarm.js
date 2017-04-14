@@ -1,3 +1,6 @@
+var startDateMinMaxError = document.getElementById('startDateMinMaxErrorAlarmG');
+var endDateMinMaxError = document.getElementById('endDateMinMaxErrorAlarmG');
+
 batsGeneralHome.controller('vehicleAlarm',function($rootScope,$scope, $http, $localStorage){
 	$rootScope.menuPos=2;
 	var contentHeight=window.screen.availHeight-200;
@@ -115,6 +118,10 @@ batsGeneralHome.controller('vehicleAlarm',function($rootScope,$scope, $http, $lo
 	$scope.showResultTable = false;
 	$scope.noResultTable = false;
 	$('.md-datepicker-input').prop('readonly', true);
+	$("#GVAStartTime").val("");
+	$("#GVAEndTime").val("");
+	startDateMinMaxErrorAlarmG.style.display = 'none';
+	endDateMinMaxErrorAlarmG.style.display = 'none';
 	};	
 	
 
@@ -136,6 +143,8 @@ batsGeneralHome.controller('vehicleAlarm',function($rootScope,$scope, $http, $lo
 	            	console.log(e.date);
 	            	console.log(e.date._d);
 	            	$scope.MyDate = e.date._d;*/
+	            	startDateMinMaxErrorAlarmG.style.display = 'none';
+	    			
 	            });
 		//startDateMaxKmError.style.display = 'none';
 		var dt=new Date().getTime();
@@ -156,6 +165,7 @@ batsGeneralHome.controller('vehicleAlarm',function($rootScope,$scope, $http, $lo
 	            	console.log(e.date);
 	            	console.log(e.date._d);
 	            	$scope.MyDate = e.date._d;*/
+	    			endDateMinMaxErrorAlarmG.style.display = 'none';
 	            	
 	            });
 		//startDateMaxKmError.style.display = 'none';
@@ -182,11 +192,33 @@ batsGeneralHome.controller('vehicleAlarm',function($rootScope,$scope, $http, $lo
 	};
 	
 	$scope.submitAlarm = function() {
-		$scope.httpLoading=true;
+		//$scope.httpLoading=true;
 		var startDateMaxKm = document.getElementById('GVAStartTime').value;
 		console.log(startDateMaxKm);
 		var endDateMaxKm = document.getElementById('GVAEndTime').value;
-		$scope.httpLoading=true;
+		//$scope.httpLoading=true;
+		
+		if(startDateMaxKm == "" && endDateMaxKm == ""){
+			startDateMinMaxErrorAlarmG.style.display = 'block';
+			endDateMinMaxErrorAlarmG.style.display = 'block';
+			// alert("1");
+		}
+		else if(startDateMaxKm == ""){
+			startDateMinMaxErrorAlarmG.style.display = 'block';
+			// alert("2");
+		}
+		else if(endDateMaxKm == ""){
+			endDateMinMaxErrorAlarmG.style.display = 'block';
+			// alert("3");
+		}
+		else{
+			$scope.httpLoading=true;
+			startDateMinMaxErrorAlarmG.style.display = 'none';
+			endDateMinMaxErrorAlarmG.style.display = 'none';
+		
+		
+		
+		
 		startDate(startDateMaxKm);
 		endDate(endDateMaxKm);
 		/*console.log($scope.myDate.start);
@@ -247,6 +279,7 @@ batsGeneralHome.controller('vehicleAlarm',function($rootScope,$scope, $http, $lo
 							 }).finally(function(){		
 									$scope.httpLoading=false;
 								});
+		}
 	};	
 
 	function startDate(getStartDateMinMax){

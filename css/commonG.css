@@ -731,3 +731,7 @@ select.search_width {
 	float: right;
 	padding: 5px;
 }
+
+.removeCursorPointer{
+    cursor: default;
+}

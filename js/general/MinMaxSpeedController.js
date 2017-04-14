@@ -113,13 +113,16 @@ batsGeneralHome.controller("GeneralMinMaxSpeedCtrl",function($rootScope,$http,$s
 	 * Show datepicker & Submit button after device select
 	 */
 	$scope.deviceSelectedMinMax=function(deviceId){
-	$scope.sel_group_device = true;
-	$scope.deviceSelectMinMax=false;
-	$scope.showResult = false;
-	startDateMinMaxError.style.display = 'none';
-	endDateMinMaxError.style.display = 'none';
-	document.getElementById('startDateMinMax').value = "";
-	document.getElementById('endDateMinMax').value = "";
+        	$scope.sel_group_device = true;
+        	$scope.deviceSelectMinMax=false;
+        	$scope.showResult = false;
+        	startDateMinMaxError.style.display = 'none';
+        	endDateMinMaxError.style.display = 'none';
+        	document.getElementById('startDateMinMax').value = "";
+        	document.getElementById('endDateMinMax').value = "";
+        	$scope.min = "";
+        	$scope.max = "";
+        	$scope.MinMaxResult = {};
 	};
 
 

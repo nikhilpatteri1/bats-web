@@ -279,9 +279,7 @@ batsfactoryhome.controller('changePwdform', function($rootScope,$scope,$http,$lo
 		}
 	};
 	$scope.npass =false;
-	$scope.hidePasswordMismatch = function(){
-	console.log($scope.currPassWord);
-	console.log($scope.newpwd);
+	$scope.hidePasswordMismatch = function(form){
 		if($scope.currPassWord == $scope.newpwd){
 			$scope.npass =true;
 			$scope.showRePass =false;
@@ -289,6 +287,9 @@ batsfactoryhome.controller('changePwdform', function($rootScope,$scope,$http,$lo
 		else{
 			$scope.npass =false;
 			$scope.showRePass =true;
+		}
+		if($scope.repwd === $scope.newpwd){
+		    form.confirm_pd.$setValidity('sameAs', true)
 		}
 		$scope.isMismatch = false;
 	}
@@ -405,9 +406,7 @@ batsAdminHome.controller('changePwdformAdmin', function($rootScope,$scope,$http,
 	};
 	
 	$scope.npass =false;
-	$scope.hidePasswordMismatch = function(){
-	console.log($scope.currPassWord);
-	console.log($scope.newpwd);
+	$scope.hidePasswordMismatch = function(form){
 		if($scope.currPassWord == $scope.newpwd){
 			$scope.npass =true;
 			$scope.showRePass =false;
@@ -415,6 +414,9 @@ batsAdminHome.controller('changePwdformAdmin', function($rootScope,$scope,$http,
 		else{
 			$scope.npass =false;
 			$scope.showRePass =true;
+		}
+		if($scope.repwd === $scope.newpwd){
+		    form.confirm_pd.$setValidity('sameAs', true)
 		}
 		$scope.isMismatch = false;
 	}
@@ -534,7 +536,7 @@ batsGeneralHome.controller('changePwdformGeneral', function($rootScope,$scope,$h
 	};
 	
 	$scope.npass =false;
-	$scope.hidePasswordMismatch = function(){
+	$scope.hidePasswordMismatch = function(form){
 	console.log($scope.currPassWord);
 	console.log($scope.newpwd);
 		if($scope.currPassWord == $scope.newpwd){
@@ -544,6 +546,9 @@ batsGeneralHome.controller('changePwdformGeneral', function($rootScope,$scope,$h
 		else{
 			$scope.npass =false;
 			$scope.showRePass =true;
+		}
+		if($scope.repwd === $scope.newpwd){
+		    form.confirm_pd.$setValidity('sameAs', true)
 		}
 		$scope.isMismatch = false;
 	}
@@ -658,9 +663,7 @@ batstravelDeskHome.controller('changePwdformTraveldesk', function($rootScope,$sc
 	};
 	
 	$scope.npass =false;
-	$scope.hidePasswordMismatch = function(){
-	console.log($scope.currPassWord);
-	console.log($scope.newpwd);
+	$scope.hidePasswordMismatch = function(form){
 		if($scope.currPassWord == $scope.newpwd){
 			$scope.npass =true;
 			$scope.showRePass =false;
@@ -668,6 +671,9 @@ batstravelDeskHome.controller('changePwdformTraveldesk', function($rootScope,$sc
 		else{
 			$scope.npass =false;
 			$scope.showRePass =true;
+		}
+		if($scope.repwd === $scope.newpwd){
+		    form.confirm_pd.$setValidity('sameAs', true)
 		}
 		$scope.isMismatch = false;
 	}

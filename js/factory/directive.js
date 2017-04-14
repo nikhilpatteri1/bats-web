@@ -47,7 +47,7 @@ batsfactoryhome.directive('repasswordValidate', function() {
         }
     };
 });
-reset.directive('passwordValidate', function() {
+/*reset.directive('passwordValidate', function() {
     return {
         require: 'ngModel',
         link: function(scope, elm, attrs, ctrl) {
@@ -68,7 +68,7 @@ reset.directive('passwordValidate', function() {
             });
         }
     };
-});
+});*/
 //validate email
 batsfactoryhome.directive('validateEmail', function() {
 	  var EMAIL_REGEXP = /^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
@@ -150,7 +150,7 @@ batsfactoryhome.directive('sameAs', function() {
 	        	console.log(viewValue+"==="+scope[attrs.sameAs]);
 	        	scope.isMismatch=true;
 	          ctrl.$setValidity('sameAs', false);
-	          return undefined;
+	          return viewValue;
 	        }
 	      });
 	    }
@@ -170,7 +170,7 @@ reset.directive('sameAs', function() {
 	        	console.log(viewValue+"==="+scope[attrs.sameAs]);
 	        	scope.isMismatch=true;
 	          ctrl.$setValidity('sameAs', false);
-	          return undefined;
+	          return viewValue;
 	        }
 	      });
 	    }

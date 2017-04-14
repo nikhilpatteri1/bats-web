@@ -23,7 +23,7 @@ batsAdminHome.controller('groupController', function($rootScope,$scope, $http, $
 		  		 window.location = apiURL;
 		  }); 
 		 
-	}
+	}console.log("contry "+$scope.selectedcountry);
 	/**------------------------------------
 	 * for enabling geo fence based on user choice
 	 * is performed here----------------------------------------------------------------------------*/
@@ -38,7 +38,6 @@ batsAdminHome.controller('groupController', function($rootScope,$scope, $http, $
 	 */
 	var aliveFrequency = [2,5,7,10];
 	$scope.alive_frequency = aliveFrequency;
-	
 	
 	/*
 	 Hardcoded Country & State Values
@@ -56,7 +55,24 @@ batsAdminHome.controller('groupController', function($rootScope,$scope, $http, $
 	        $scope.state = myNewOptions;
 		};
 		$scope.states = states;
-		
+		console.log("contry "+$scope.country);
+	/*
+	 Hardcoded Country & State Values
+	 
+		var countries = ['India'];
+		var states = ['Andaman and Nicobar Islands', 'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chandigarh', 
+		                'Chhattisgarh', 'Dadra and Nagar Haveli', 'Daman and Diu', 'Delhi', 'Goa', 'Gujarat', 'Haryana', 
+		                'Himachal Pradesh', 'Jammu and Kashmir', 'Jharkhand', 'Karnataka', 'Kerala', 'Lakshadweep', 'Madhya Pradesh', 
+		                'Maharashtra', 'Manipur', '	Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Puducherry', 'Punjab', 'Rajasthan', 
+		                'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal'];
+		$scope.country = countries;
+		$scope.state = [];
+		$scope.onSelectCountry = function () {
+	        var myNewOptions = states;
+	        $scope.state = myNewOptions;
+		};
+		$scope.states = states;
+		*/
 		
 		/**------------------------------------------------------------------------------------------------------------------------
 		* 												Add Multiple Contact Numbers Begins Here

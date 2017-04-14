@@ -302,8 +302,9 @@
 			<p>{{name.length}}</p>
 				<button class="btn btn-primary createuser"
 					ng-click="submitCreateUserForm()"
-					ng-disabled="createUserForm.$invalid"
-					ng-show="uname && umail && createUserForm.$valid && selectionLength">Create</button>
+					ng-disabled="createUserForm.$invalid || !selectionLength">Create</button>
+					
+					<!-- ng-show="uname && umail && createUserForm.$valid && selectionLength" -->
 			</div>
 
 		</div>
@@ -540,10 +541,10 @@
 			</div>
 			<div class="modal-footer">
 				<button class="btn btn-primary createuser"
-					ng-disabled="updateUserForm.$invalid"
-					ng-show="updateUserForm.$valid && selectionLength"
+					ng-disabled="updateUserForm.$invalid || !selectionLength"
+					
 					ng-click="submitEditUserForm()">Update</button>
-
+<!-- ng-show="updateUserForm.$valid && selectionLength" -->
 
 
 			</div>

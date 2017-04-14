@@ -19,7 +19,7 @@ batsGeneralHome.controller('vehicleHistory',function($rootScope,$scope, $http, $
 	};
 	var contentHeight=window.screen.availHeight-220;
 	$scope.histcontentheight={
-			"height":contentHeight
+			"maxHeight":contentHeight
 	}
 	var dev={};
 	var maploadedInterval;
@@ -189,12 +189,12 @@ batsGeneralHome.controller('vehicleHistory',function($rootScope,$scope, $http, $
 		$scope.yoData=false;
 		$scope.showTimeSlot=false;
 		$scope.myDate = "";
+		$("#trvelRouteHstTime").val("");
 		$scope.initialize();
 	};
 	
 	
-	
-	$(document).on('click', '#GtrvelRouteHstTimePic', function(){
+	$scope.openCal = function(){
 		$('#GtrvelRouteHstTimePic').datetimepicker({
 			/* inline: true,
              sideBySide: true,*/
@@ -208,13 +208,17 @@ batsGeneralHome.controller('vehicleHistory',function($rootScope,$scope, $http, $
 	            	console.log(e.date);
 	            	console.log(e.date._d);
 	            	$scope.MyDate = e.date._d;
+	            	$("#trvelRouteHstTime").val(e.date._d);
 	            	$scope.myDateChange($scope.MyDate);
 	            	$scope.activeMenu = '5';
 	            });
 		//startDateMaxKmError.style.display = 'none';
 		var dt=new Date().getTime();
 		$('#GtrvelRouteHstTime').val(showTime(dt));
-	});
+	}
+	/*$(document).on('click', '#GtrvelRouteHstTimePic', function(){
+		
+	});*/
 	
 	function showTime (ts) {
 		//console.log(ts);

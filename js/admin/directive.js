@@ -186,7 +186,7 @@ batsAdminHome.directive('sameAs', function() {
 	        	console.log(viewValue+"==="+scope[attrs.sameAs]);
 	        	scope.isMismatch=true;
 	          ctrl.$setValidity('sameAs', false);
-	          return undefined;
+	          return viewValue;
 	        }
 	      });
 	    }

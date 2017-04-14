@@ -34,9 +34,8 @@
 			<div ng-show="isSet(1)" id="driver">
 				<div class="row Dropdownpadding" style="margin-top: 15px;">
 					<div class="col-sm-3" id="selectDriverSection">
-
 						<select id="selectDriver" class="form-control"
-							ng-model="trip.driver_id"
+							ng-model="trip.driver_id" ng-change="setDate()"
 							ng-options="driver.name for driver in driverList track by driver.driver_id">
 							<option></option>
 							<!-- <option>Select Driver</option> -->
@@ -78,8 +77,8 @@
 						</select>
 					</div>
 					<div class="col-sm-2" id="selectVehicleSection">
-						<select id="selectVehicle" class="form-control"
-							ng-model="trip.vehicle_num"
+						<select id="selectVehicle" class="form-control" ng-change="setDate()"
+							ng-model="trip.vehicle_num" 
 							ng-options="device.vehicle_num for device in devlistObject track by device.devid">
 							<option></option>	
 
@@ -120,92 +119,7 @@
 					</div>
 				</div>
 			</div>
-			hi geeta
 
-			<!-- 	<div class="tab-content">
-
-				<div id="driver" class="tab-pane fade in active ">
-					<div class="row Dropdownpadding" style="margin-top: 15px;">
-						<div class="col-sm-3" id="selectDriverSection">
-
-							<select id="selectDriver" class="form-control"
-								ng-model="trip.driver_id"
-								ng-options="driver.name for driver in driverList track by driver.driver_id">
-								<option>Select Driver</option>
-							</select>
-						</div>
-
-						<div class="col-sm-3">
-							<md-content> <md-datepicker
-								ng-model="trip.timeStamp" md-placeholder="Enter date"
-								ng-disabled="(trip.driver_id )? false:true"
-								md-max-date="todayDate" ng-change="fetchHistory(0)"></md-datepicker>
-							</md-content>
-
-						</div>
-						<div class="col-sm-5" ng-show="showTripDropDown">
-							<div id="selectTripSection" class="col-sm-12">
-								<select class="form-control" id="selectTrip" ng-model="tripName"
-									ng-options="tripDet.trip_name for tripDet in tripDetails track by tripDet.trip_id"
-									ng-change=showHistoryData(tripName)>
-								</select>
-							</div>
-
-						</div>
-
-					</div>
-					<div class="row">
-						<div class="col-sm-12">
-							<div id="driver_map"></div>
-						</div>
-					</div>
-				</div>
-				<div id="vehical" class="tab-pane fade">
-					<div class="row Dropdownpadding" style="margin-top: 15px;">
-						<div class="col-sm-3" id="selectGroupSection">
-							<select id="selectGroup" class="form-control"
-								ng-model="trip.groupName"
-								ng-options="group.gname for group in groupList track by group.gid"
-								ng-change="fetchDevicelist(trip.groupName)">
-
-								<option>Select Driver</option>
-							</select>
-						</div>
-						<div class="col-sm-3" id="selectVehicleSection">
-							<select id="selectVehicle" class="form-control"
-								ng-model="trip.vehicle_num"
-								ng-options="device.vehicle_num for device in devlistObject track by device.devid">
-
-								<option>Select Driver</option>
-							</select>
-						</div>
-						<div class="col-sm-3">
-							<md-content> <md-datepicker
-								ng-model="trip.timeStamp" md-placeholder="Enter date"
-								ng-disabled="(trip.vehicle_num)? false:true"
-								md-max-date="todayDate" ng-change="fetchHistory(1)"></md-datepicker>
-							</md-content>
-						</div>
-
-						<div class="col-sm-3" ng-show="showTripDropDown1">
-							<div id="selectTripSection" class="col-sm-12">
-								<select class="form-control" id="selectTrip" ng-model="tripName"
-									ng-options="tripDet.trip_name for tripDet in tripDetails track by tripDet.trip_id"
-									ng-change=showHistoryData(tripName)>
-								</select>
-							</div>
-
-						</div>
-
-
-					</div>
-					<div class="row">
-						<div class="col-sm-12">
-							<div id="vehical_map"></div>
-						</div>
-					</div>
-				</div>
-			</div> -->
 		</div>
 
 
@@ -224,8 +138,8 @@
 				<a id="showHistoryData" style="z-index: 900;"
 					ng-class="{bounce:startBouncing}" ng-show="showUpBtn"
 					ng-click="stopBouncing()" class='modalButton '
-					data-direction='bottom' href='#'><label
-					style="font-style: italic;">i</label></a>
+					data-direction='bottom' href='#'><label class=""
+					style="font-style: italic;">Trip info</label></a>
 			</div>
 		</div>
 		<div id="historyModal" class="modal fade marginFormodal" role="dialog">
