@@ -20,12 +20,15 @@ batsGeneralHome.controller('batsNearbyDevices', function($rootScope,$scope, $htt
 		});
 
 	}
+	
 	NgMap.getMap({
 		id : 'nearbyId'
 	}).then(function(map) {
 		$scope.map = map
 		console.log($scope.map);
 	});
+	
+	
 	var infowindows = [];
 	$scope.hist = {
 		"searchGroupModel" : ""

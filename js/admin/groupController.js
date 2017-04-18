@@ -132,6 +132,25 @@ batsAdminHome.controller('groupController', function($rootScope,$scope, $http, $
 				  $scope.noGroupList = false;
 				  $scope.yesGrouplist=true;
 			  }
+			  
+			  $scope.fetchStatelist = function(country){
+				  if(country == "India"){
+					  console.log(country); 
+					  $scope.stateList = data.glist;
+					  console.log($scope.stateList);
+					  
+				  }
+				  else{
+					  //nothing
+				  }
+			  };
+			  $scope.fetchGrouplist = function(state){
+				  console.log(state);
+				  $('#selectGroup').select2('val', "");
+				  $scope.groupList = data.glist;
+				  
+			  };
+			  
 			  })
 			  .error(function(data, status, headers, config) {
 				  console.log(data.err);
@@ -202,29 +221,35 @@ batsAdminHome.controller('groupController', function($rootScope,$scope, $http, $
 		$scope.noDevices = false;
 		$scope.presentStock = true;
 		var selArr=eval($scope.selection);
+		console.log($scope.selection);
 		var idx =-1;
+		console.log(selArr.length);
 		for(var inc=0;inc<selArr.length;inc++){			
 			if(selArr[inc].devid===deviceID){
 				idx=inc;
+				console.log(idx);
 				break;
 			}
 		}
 	    //var idx = $scope.selection.indexOf(deviceID);
 	    // is currently selected
 	    if (idx > -1) {
+	    	console.log($scope.selection);
 	     $scope.customerDevices.push(_.findWhere($scope.selection,{"devid":deviceID}));
 	      $scope.selection.splice(idx, 1);
+	      console.log($scope.selection);
 	      $scope.FactoryStockCount=$scope.FactoryStockCount+1;
 	      //console.log($scope.selection);
 	    }
 
 	    // is newly selected
-	    else {	    	
+	    else {	  
+	      console.log($scope.selection);
 	      $scope.selection.push(_.findWhere($scope.customerDevices,{"devid":deviceID}));
 	      console.log(JSON.stringify($scope.selection));
 	      console.log(JSON.stringify($scope.customerDevices));
 	      var index = -1;		
-			var comArr = eval( $scope.customerDevices );
+		  var comArr = eval( $scope.customerDevices );
 			//console.log($scope.rows);
 			for( var i = 0; i < comArr.length; i++ ) {
 				if( comArr[i].devid === deviceID ) {
@@ -237,8 +262,9 @@ batsAdminHome.controller('groupController', function($rootScope,$scope, $http, $
 			}
 			  $scope.FactoryStockCount=$scope.FactoryStockCount-1;
 			$scope.customerDevices.splice( index, 1 );	
-			//console.log(JSON.stringify($scope.customerDevices));
+			console.log(JSON.stringify($scope.customerDevices));
 	    }
+	    
 	  };
 	  
 
@@ -298,7 +324,14 @@ batsAdminHome.controller('groupController', function($rootScope,$scope, $http, $
 		$scope.group={};
 		$scope.createGroupForm.$setPristine();
 		$scope.createGroupForm.$setUntouched();
-		$scope.selection=[];
+		for(i in $scope.selection){
+			  $scope.customerDevices.push($scope.selection[i]);
+			      $scope.FactoryStockCount=$scope.FactoryStockCount+1;
+	      }
+	      $scope.selection = [];
+		//$scope.selection=[];
+		//console.log(_.without($scope.customerDevices, $scope.selection));
+		//$scope.selection=[];
 		/*
 		 * function defintion is written in admin.html page 
 		 * becoz it operates via jquery show hide\
@@ -549,6 +582,7 @@ batsAdminHome.controller('groupController', function($rootScope,$scope, $http, $
             };
             $scope.createGroupState = true;
             $scope.editGroupState = false;
+           // $scope.selection = [];
         };
         
 /**

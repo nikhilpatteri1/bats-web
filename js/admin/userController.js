@@ -581,6 +581,24 @@ $scope.verifyUser=function(userName){
 				 $('.showUpdateUser').hide();
 			 }
 		}
+       
+       $scope.reset=function(){
+   		//$scope.group={};
+   		$scope.createUserForm.$setPristine();
+   		$scope.createUserForm.$setUntouched();
+   		//$scope.selection=[];
+   		/*
+   		 * function defintion is written in admin.html page 
+   		 * becoz it operates via jquery show hide\
+   		 * --- showPrev() is used to show the home form of udpate group ----
+   		 * */ 
+   		//showPrev();
+   	};
+       
+       $scope.clearForm = function(){
+    		$('#createUserModal').find('form')[0].reset();
+    	};     
+       
 
 });
 

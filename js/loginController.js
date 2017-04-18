@@ -51,6 +51,7 @@ batsLogin.controller('loginController', function($rootScope,$scope, $http, $loca
 			  	   closeOnConfirm: false }, 
 			  	   function(){   
 			  		  $scope.token = data.token;
+			  		 $('.navbar').addClass('header');
 			  		  /*$('#loginModal').modal('hide');
 			  		  $localStorage.data = $scope.token;
 			  		  window.location = "/factory/customer";

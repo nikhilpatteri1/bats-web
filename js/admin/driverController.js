@@ -174,6 +174,7 @@ batsAdminHome.controller('driverController', function($rootScope,$scope, $localS
 		 *  ================================== upload image to url based on FORM DATA=====================================
 		 * */
 		$scope.uploadFile = function(files) {
+			
 			var filecheck=files[0].type;
 			var filechkArray=filecheck.split("/");			
 			if(filechkArray[0]=='image'){
@@ -184,7 +185,13 @@ batsAdminHome.controller('driverController', function($rootScope,$scope, $localS
 					if(files[0].size>0){
 						var fd = new FormData();
 						//Take the first selected file
-						fd.append("drv", files[0]);
+						//fd.append("drv", files[0]);
+						console.log(files[0]); 
+						//fd.fileName = fd;
+						fd.drv = files[0];
+						fd.token = $scope.token ;
+						//fd.append("token", $scope.token);
+						console.log(fd); 
 
 						$http.post(apiURL+"upload/image", fd, {
 							withCredentials : false,

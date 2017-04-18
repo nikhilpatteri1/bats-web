@@ -117,6 +117,9 @@ batsGeneralHome.controller('vehicleAlarm',function($rootScope,$scope, $http, $lo
 	$scope.deviceSelectAlarm=true;
 	$scope.showResultTable = false;
 	$scope.noResultTable = false;
+	document.getElementById('GVAStartTime').value = "";
+	document.getElementById('GVAEndTime').value = "";
+	
 	$('.md-datepicker-input').prop('readonly', true);
 	$("#GVAStartTime").val("");
 	$("#GVAEndTime").val("");

@@ -109,7 +109,6 @@ batsfactoryhome.controller('customerControllerInner', function($scope, $http, $l
 		
 		
 		
-		
 		//});
 	//}
 	

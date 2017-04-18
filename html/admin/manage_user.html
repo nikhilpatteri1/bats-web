@@ -7,7 +7,7 @@
 				</div>
 				<div class="col-sm-5 paddingbutton">
 					<button type="button" class="btn btn-primary btn-sm"
-						ng-click="showCreateBtn()" data-toggle="modal"
+						ng-click="showCreateBtn();clearForm()" data-toggle="modal"
 						data-target="#createUserModal" ng-show="addUser">Create
 						User</button>
 				</div>
@@ -95,7 +95,7 @@
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<button type="button" class="close" data-dismiss="modal" ng-click="reset()">&times;</button>
 				<h4 class="modal-title">Create New User</h4>
 			</div>
 

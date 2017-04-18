@@ -1199,34 +1199,41 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 		}
 		 
 	}
-	$scope.getColor=function(type){
-//		console.log(type)
-		if(type=="0"){
-			$scope.img_url="../images/mapIcon/geofenceStatus.png";
-			$(".barStyle").css("background-color", "#710e9f");
-			//$scope.barTxt= "Crossed Geofence";
+	
+	
+		$scope.getColor=function(type){
+//			console.log(type)
+			if(type=="0"){
+				$scope.img_url="../images/mapIcon/geofenceStatus.png";
+				$(".barStyle").css("background-color", "#710e9f");
+				//$scope.barTxt= "Crossed Geofence";
+			}
+			else if(type=="1"){
+				$scope.img_url="../images/mapIcon/speed-limit.png";
+				//$scope.barTxt= "Crossed Speed";
+				$(".barStyle").css("background-color", "#ffd500");
+			}
+			else if(type=="2"){
+				$scope.img_url="../images/mapIcon/warning.png";
+				//$scope.barTxt= "Crossed Geofence and Speed";
+				$(".barStyle").css("background-color", "#ff0000");
+			}
+			else if(type== "3"){
+				$scope.img_url="../images/mapIcon/normal.png";
+				//$scope.barTxt= "Normal State";
+				$(".barStyle").css("background-color", "#7fbb01");
+			}
+			else if(type== "4"){
+				$scope.img_url="../images/mapIcon/no-response.png";
+				//$scope.barTxt= "No-Response State";
+				$(".barStyle").css("background-color", "#2d2d2d");  
+			}
 		}
-		else if(type=="1"){
-			$scope.img_url="../images/mapIcon/speed-limit.png";
-			//$scope.barTxt= "Crossed Speed";
-			$(".barStyle").css("background-color", "#ffd500");
-		}
-		else if(type=="2"){
-			$scope.img_url="../images/mapIcon/warning.png";
-			//$scope.barTxt= "Crossed Geofence and Speed";
-			$(".barStyle").css("background-color", "#ff0000");
-		}
-		else if(type== "3"){
-			$scope.img_url="../images/mapIcon/normal.png";
-			//$scope.barTxt= "Normal State";
-			$(".barStyle").css("background-color", "#7fbb01");
-		}
-		else if(type== "4"){
-			$scope.img_url="../images/mapIcon/no-response.png";
-			//$scope.barTxt= "No-Response State";
-			$(".barStyle").css("background-color", "#2d2d2d");  
-		}
-	}
+   
+	
+	
+	
+	
 	
 	
 	
@@ -1236,35 +1243,40 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 	$scope.normalVehicleColor={"background-color":"#000000"};
 	$scope.aliveVehicleColor={"background-color":"#0540E5"};
 	
-	$scope.getColorBack =function(div){
-//		console.log(div)
-		if(div=="0"){
-			$scope.singleImg_url="../images/mapIcon/geofenceStatus.png";
-			//$(".barStyleSingle").css("background-color", "#f44336");
-			$scope.barTxt= "Crossed Geofence";
-		}
-		else if(div=="1"){
-			$scope.singleImg_url="../images/mapIcon/speed-limit.png";
-			$scope.barTxt= "Crossed Speed";
-			//$(".barStyleSingle").css("background-color", "#ffde01");
-		}
-		else if(div=="2"){
-			$scope.singleImg_url="../images/mapIcon/warning.png";
-			$scope.barTxt= "Crossed Geofence and Speed";
-			//$(".barStyleSingle").css("background-color", "#e59305");
-		}
-		else if(div== "3"){
-			$scope.singleImg_url="../images/mapIcon/normal.png";
-			$scope.barTxt= "Normal State";
-			//$(".barStyleSingle").css("background-color", "#000000");
-		}
-		else if(div== "4"){
-			$scope.singleImg_url="../images/mapIcon/no-response.png";
-			$scope.barTxt= "No-Response State";
-			//$(".barStyleSingle").css("background-color", "#0540E5");
-		}
-	}
 	
+	
+		$scope.getColorBack =function(div){
+//			console.log(div)
+			
+			if(div=="0"){
+				setTimeout(function() {
+				$scope.singleImg_url="../images/mapIcon/geofenceStatus.png";
+				//$(".barStyleSingle").css("background-color", "#f44336");
+				$scope.barTxt= "Crossed Geofence";
+				},7000);
+			}
+			else if(div=="1"){
+				$scope.singleImg_url="../images/mapIcon/speed-limit.png";
+				$scope.barTxt= "Crossed Speed";
+				//$(".barStyleSingle").css("background-color", "#ffde01");
+			}
+			else if(div=="2"){
+				$scope.singleImg_url="../images/mapIcon/warning.png";
+				$scope.barTxt= "Crossed Geofence and Speed";
+				//$(".barStyleSingle").css("background-color", "#e59305");
+			}
+			else if(div== "3"){
+				$scope.singleImg_url="../images/mapIcon/normal.png";
+				$scope.barTxt= "Normal State";
+				//$(".barStyleSingle").css("background-color", "#000000");
+			}
+			else if(div== "4"){
+				$scope.singleImg_url="../images/mapIcon/no-response.png";
+				$scope.barTxt= "No-Response State";
+				//$(".barStyleSingle").css("background-color", "#0540E5");
+			}
+		}
+    
 	
 	/* clear markers*/
 	function clearMarkers(){

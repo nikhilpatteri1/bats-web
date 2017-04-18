@@ -121,6 +121,8 @@ batsAdminHome.controller('vehicleAlarm',function($scope,$rootScope, $http, $loca
 	$scope.deviceSelectAlarm=true;
 	$scope.showResultTable = false;
 	$scope.noResultTable = false;
+	document.getElementById('VAStartTime').value = "";
+	document.getElementById('VAEndTime').value = "";
 	startDateMinMaxErrorAlarm.style.display = 'none';
 	endDateMinMaxErrorAlarm.style.display = 'none';
 	$('.md-datepicker-input').prop('readonly', true);

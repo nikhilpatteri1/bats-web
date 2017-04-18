@@ -40,7 +40,7 @@ batsAdminHome.controller('batsNearbyDevices',function($scope,$http,NgMap,$rootSc
 	var centerVal = 21.0000 + "," + 78.0000;
 	$scope.nearByMap = {
 		center : centerVal,
-		zoom : 4
+		zoom : 3
 	};
 	$scope.customer = {};
 	$scope.customer.token = $scope.token;
@@ -244,7 +244,7 @@ batsAdminHome.controller('batsNearbyDevices',function($scope,$http,NgMap,$rootSc
 		}
 	};
 	$scope.showInfo = function(event, dev) {
-		var center = new google.maps.LatLng(dev.lat, dev.lg);
+		//var center = new google.maps.LatLng(dev.lat, dev.lg);
 		closeInfoWindows();
 		// console.log(JSON.stringify(dev));
 		infowindow = new google.maps.InfoWindow();

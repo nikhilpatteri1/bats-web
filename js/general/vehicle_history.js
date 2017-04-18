@@ -189,7 +189,7 @@ batsGeneralHome.controller('vehicleHistory',function($rootScope,$scope, $http, $
 		$scope.yoData=false;
 		$scope.showTimeSlot=false;
 		$scope.myDate = "";
-		$("#trvelRouteHstTime").val("");
+		$("#GtrvelRouteHstTime").val("");
 		$scope.initialize();
 	};
 	
