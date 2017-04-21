@@ -36,8 +36,7 @@ batsAdminHome.controller('driverController', function($rootScope,$scope, $localS
 	$scope.driver.ppincode="";
 	$scope.driver.pstreet="";
 	$scope.driver.pcountry="";
-	$scope.driver.etype = 'Permanent';
-	
+	$scope.driver.etype = 'Permanent'; 
 	
 	
 	/*====================================================>>>>>> Start of Basic function <<<<<=================================================*/
@@ -174,7 +173,6 @@ batsAdminHome.controller('driverController', function($rootScope,$scope, $localS
 		 *  ================================== upload image to url based on FORM DATA=====================================
 		 * */
 		$scope.uploadFile = function(files) {
-			
 			var filecheck=files[0].type;
 			var filechkArray=filecheck.split("/");			
 			if(filechkArray[0]=='image'){
@@ -185,19 +183,14 @@ batsAdminHome.controller('driverController', function($rootScope,$scope, $localS
 					if(files[0].size>0){
 						var fd = new FormData();
 						//Take the first selected file
-						//fd.append("drv", files[0]);
-						console.log(files[0]); 
-						//fd.fileName = fd;
-						fd.drv = files[0];
-						fd.token = $scope.token ;
 						//fd.append("token", $scope.token);
-						console.log(fd); 
-
-						$http.post(apiURL+"upload/image", fd, {
+						fd.append("drv", files[0]);
+						
+						$http.post(apiURL+"upload/image",fd, {
 							withCredentials : false,
-							headers : {
-								'Content-Type' : undefined
-							},
+							/*headers : {
+								'Content-Type' : false
+							},*/
 							transformRequest : angular.identity
 						}).success(function(data) {
 							$scope.imageUploading=false;
@@ -220,9 +213,6 @@ batsAdminHome.controller('driverController', function($rootScope,$scope, $localS
 								invalidUser();
 								$localStorage.$reset();
 							}
-							console.log(status);
-							console.log(headers);
-							console.log(config);
 						});
 					}		
 				}

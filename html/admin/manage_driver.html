@@ -128,6 +128,12 @@
 			</div>
 
 			<div class="modal-body my_modalBody">
+		<!-- <form method="post" enctype="multipart/form-data" action="http://220.227.124.134:8058/upload/image">
+								<input type="file" id="fileI" name="drv">
+								<input name="token" ng-model="token" />
+								<input type="submit" value="Submit">
+			
+			</form>  -->
 				<form id="driverCreateform" name="driverform"
 					class="form formInput">
 					<!-- <div class="col-sm-2 col-sm-offset-10" align="right">
@@ -246,7 +252,7 @@
 												</label> -->
 										<!-- <input id="file-input" type="file"/>  -->
 										<input accept="image/*" type="file" name="file"
-											id="imageInput"
+											id="imageInput" file="file"
 											onchange="angular.element(this).scope().uploadFile(this.files)" />
 										<p ng-show="onlyImage" class="help-block error-help">Only
 											image files allowed !...</p>

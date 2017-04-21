@@ -19,7 +19,7 @@
 							<select id="selState" ng-model="selectedstate" class="form-control" ng-change="fetchGrouplist(selectedstate)">
 								<!-- ng-options="customer.state as customer.state for customer in stateList | unique:'state' | filter:{country:selectedcountry}" -->
 								<option value="">Select State</option>
-								<option ng-repeat="option in stateList | unique:'state' | filter:{country:selectedcountry}">{{option.state}}</option>
+								<option ng-repeat="option in stateList | unique:'state' | filter:{country:selectedcountry}|orderBy:'state'">{{option.state}}</option>
 							</select>
 						</div>
 					</div>
@@ -29,7 +29,7 @@
 								<!-- ng-options="customer.uname as customer.uname for customer in home | filter:{country:selectedcountry,state:selectedstate}" -->
 								<option value="">Select Group</option>
 								<!-- <option value="">All</option> -->
-								<option ng-repeat="option in groupList | filter:{country:selectedcountry,state:selectedstate}">{{option.uname}}</option>
+								<option ng-repeat="option in groupList | filter:{country:selectedcountry,state:selectedstate} |orderBy:'gname'">{{option.uname}}</option>
 							</select>
 						</div>
 					</div>

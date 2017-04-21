@@ -19,7 +19,7 @@
 										class="disable_select">-- Select Group - -</option>
 									<option ng-if="!groupList.length" selected disabled>No
 										Group Available</option>
-									<option ng-repeat="option in groupList"
+									<option ng-repeat="option in groupList|orderBy:'gname'"
 										value="{{ option.gid }}">{{option.gname}}</option>
 								</select>
 							</div>
@@ -32,7 +32,7 @@
 										class="disable_select">-- Select Vehicle No/Device --</option>
 									<option ng-if="!devlistObject.length" selected disabled>
 										No Device Available</option>
-									<option ng-repeat="option in devlistObject"
+									<option ng-repeat="option in devlistObject |orderBy:'devid'"
 										value="{{ option.devid }}">{{option.vehicle_num.length>0?option.vehicle_num:option.devid}}</option>
 								</select>
 							</div>

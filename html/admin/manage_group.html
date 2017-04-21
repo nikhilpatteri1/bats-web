@@ -25,7 +25,7 @@
 					<div class="country">
 						<select id="selectState" ng-model="selectedstate" ng-change="fetchGrouplist(selectedstate)"
 							class="form-control"
-							ng-options="group.state as group.state for group in stateList | unique:'state' | filter:{country:selectedcountry}">
+							ng-options="group.state as group.state for group in stateList | unique:'state' | filter:{country:selectedcountry}|orderBy:'state'">
 							<option value="">Select State</option>
 						</select>
 					</div>
@@ -34,7 +34,7 @@
 					<div class="country">
 						<select id="selectGroup" ng-model="selectedgnames"
 							class="form-control"
-							ng-options="group.gname as group.gname for group in groupList | filter:{country:selectedcountry,state:selectedstate}">
+							ng-options="group.gname as group.gname for group in groupList | filter:{country:selectedcountry,state:selectedstate} ">
 							<option value="">Select Group</option>
 						</select>
 					</div>

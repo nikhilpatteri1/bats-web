@@ -22,7 +22,7 @@
 								ng-change="fetchDevicelist(searchGroupModel)">
 								<option ng-if="groupList.length" value="" selected disabled class="disable_select">-- Select Group - -</option>
 								<option ng-if="!groupList.length"  selected disabled>No Group Available</option>
-								<option ng-repeat="option in groupList" value="{{ option.gid }}">{{option.gname}}</option>
+								<option ng-repeat="option in groupList|orderBy:'gname'" value="{{ option.gid }}">{{option.gname}}</option>
 							</select>
 						</div>
 					</div>

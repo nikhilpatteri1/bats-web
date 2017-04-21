@@ -60,7 +60,7 @@
 									class="disable_select">-- Select Group - -</option>
 								<option ng-if="!groupList.length" selected disabled>No
 									Group Available</option>
-								<option ng-repeat="option in groupList | unique:'gid'"
+								<option ng-repeat="option in groupList | unique:'gid'|orderBy:'gname'"
 									value="{{ option.gid }}">{{option.gname}}</option>
 							</select>
 
@@ -73,7 +73,7 @@
 									class="disable_select">-- Select Vehicle No/Device --</option>
 								<option ng-if="!deviceList.length" selected disabled>No
 									Device Available</option>
-								<option ng-repeat="option in deviceList" value="{{ option }}">{{option}}</option>
+								<option ng-repeat="option in deviceList |orderBy" value="{{ option }}">{{option}}</option>
 							</select>
 
 						</div>
