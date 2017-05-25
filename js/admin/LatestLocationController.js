@@ -100,6 +100,7 @@ batsAdminHome.controller('LatestLocationCtrl', function($scope,$rootScope, $http
 		var bounds = new google.maps.LatLngBounds();
 		for(let i in $scope.marker){
 		    var latLng = new google.maps.LatLng($scope.marker[i].lat,$scope.marker[i].long);
+		    
 		    bounds.extend(latLng);
 		}
 		 $scope.map.fitBounds(bounds);
@@ -228,6 +229,8 @@ batsAdminHome.controller('LatestLocationCtrl', function($scope,$rootScope, $http
 /**
    * Select Group/Device dropdown based on jquery 
 * */	
+	
+	
 	$(document).ready(function() {
 	    $.getScript('../assets/select_filter/select2.min.js', function() {
 		$("#selectGroup").select2({});

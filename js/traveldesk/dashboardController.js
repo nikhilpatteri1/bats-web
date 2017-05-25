@@ -1,9 +1,10 @@
-batstravelDeskHome.controller('dashboardController', function($scope, $http,
+batstravelDeskHome.controller('dashboardController', function($scope, $http,$interval,
 	$rootScope, $localStorage,$location,commonAppService) {
 	$scope.token = $localStorage.data;
 	$rootScope.menuPos = 4;
 	$scope.tab = 1;
 	$scope.hideTripTable=true;
+	var requestTime = 12;
 	$scope.setTab = function(newTab) {
 		if(newTab=='2'){
 			commonAppService.initMap();
@@ -23,7 +24,8 @@ batstravelDeskHome.controller('dashboardController', function($scope, $http,
 	/* $scope.totalDevices=commonAppService.plotValues(); */
 	$scope.TrackerCount;
 	$scope.TrackerActList;
-
+	
+	$rootScope.getTripData=function(){
 	commonAppService.tracker(function(result) {
 		console.log(result);
 		$scope.TrackerCount = result;
@@ -51,6 +53,13 @@ batstravelDeskHome.controller('dashboardController', function($scope, $http,
 		 */
 
 	});
+	};
+	
+	
+	$rootScope.getTripData();
+	    var callAlarmApi = $interval($rootScope.getTripData ,requestTime * 1000);
+	
+	
 	var status
 	$scope.getList = function(state) {
 		status = state;
@@ -83,9 +92,10 @@ batstravelDeskHome.controller('dashboardController', function($scope, $http,
  * -------------------------------------------------------Dashboard TRIP controller--------------------------------------------------
  *  * 
  * */
-batstravelDeskHome.controller('dashboardTripController', function($scope, $http, $rootScope,$localStorage,commonAppService,commonFactory){
+batstravelDeskHome.controller('dashboardTripController', function($scope, $http, $rootScope,$localStorage,$interval,commonAppService,commonFactory){
 	console.log("trip"); 
 	$scope.hideTripTable=true;
+	var requestTime = 12;
 	$scope.initMap=function(){
 		commonAppService.initMap();	
 	};
@@ -117,8 +127,11 @@ batstravelDeskHome.controller('dashboardTripController', function($scope, $http,
 			}		
 		});
 	};
+	
+	var callAlarmApi = $interval($rootScope.getTripData ,requestTime * 1000);
+	
 	$scope.getTripDataByStatus=function(status){
-		if(status!='Ds'){
+		//if(status!='Ds'){
 			commonAppService.getTripsByStatus(status,function(result){
 				   console.log(result);
 				   if(result.data!="trips not found"){
@@ -130,11 +143,11 @@ batstravelDeskHome.controller('dashboardTripController', function($scope, $http,
 					   //alert(result.data);
 				   }				   
 			});
-		}
-		else{
-			$scope.hideTripTable=true;
-			alert("T B D");
-		}
+//		}
+//		else{
+//			$scope.hideTripTable=true;
+//			alert("T B D");
+//		}
 		
 	};
 	$scope.givelt=function(lt,lg){
@@ -174,6 +187,7 @@ batstravelDeskHome.controller('dashboardTripController', function($scope, $http,
  * */
 batstravelDeskHome.controller('dashboardDriverController', function($scope,
 		$localStorage, commonAppService) {
+    
 	commonAppService.getDriversData(function(result) {
 		$scope.totalDrivers = result.total_drivers;
 		$scope.availableDrivers = result.idle_drivers;
@@ -190,6 +204,7 @@ batstravelDeskHome.controller('dashboardDriverController', function($scope,
 		}, ]
 		commonAppService.donutChart('DriverContainer', data);
 	});
+	
 	$scope.getPercentage = function(a, b) {
 		return commonAppService.getPercentage(a, b)
 	}
@@ -208,8 +223,11 @@ batstravelDeskHome.controller('dashboardDriverController', function($scope,
  * -------------------------------------------------------Dashboard Vehicle controller--------------------------------------------------
  *  * 
  * */
-batstravelDeskHome.controller('dashboardVehicleController', function($scope,$localStorage,commonAppService){
+batstravelDeskHome.controller('dashboardVehicleController', function($scope,$localStorage,$rootScope,$interval,commonAppService){
 	$scope.hideVehiclesTable=true;
+	
+	var requestTime = 12;
+	$rootScope.getTripData=function(){
 	commonAppService.getVehicleData(function(result){
 		$scope.totalPanic=result.panic;
 		$scope.totaloverspeed=result.overspeed;
@@ -217,6 +235,11 @@ batstravelDeskHome.controller('dashboardVehicleController', function($scope,$loc
 		$scope.totalongoing_trip=result.ongoing_trip;
 		$scope.totalmax_lmt_cross=result.max_lmt_cross;
 	});
+	};
+	
+	
+	var callAlarmApi = $interval($rootScope.getTripData ,requestTime * 1000);
+	
 	$scope.getVehiclesDataByStatus=function(status){
 			commonAppService.getVehiclesByStatus(status,function(result){
 				   console.log(result);

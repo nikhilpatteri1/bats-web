@@ -1,9 +1,10 @@
-batsGeneralHome.controller('dashboardController', function($scope, $http, $rootScope,$localStorage,commonAppService){
+batsGeneralHome.controller('dashboardController', function($scope, $http, $rootScope,$localStorage,$interval,commonAppService){
 	console.log("dashboard"); 
 	$scope.token = $localStorage.data;
 	$rootScope.menuPos=9;
 	$scope.hideTripTable=true;
 	$scope.tab = 1;
+	var requestTime = 12;
 	$scope.setTab = function(newTab) {
 		if(newTab=='2'){
 			commonAppService.initMap();
@@ -24,6 +25,7 @@ batsGeneralHome.controller('dashboardController', function($scope, $http, $rootS
 	$scope.TrackerCount;
 	$scope.TrackerActList;
 
+	$rootScope.getTripData=function(){
 	commonAppService.tracker(function(result) {
 		console.log(result);
 		$scope.TrackerCount = result;		
@@ -35,6 +37,12 @@ batsGeneralHome.controller('dashboardController', function($scope, $http, $rootS
 		 */
 
 	});
+	};
+	
+	
+	$rootScope.getTripData();
+	    var callAlarmApi = $interval($rootScope.getTripData ,requestTime * 1000);
+	
 	var status
 	$scope.getList = function(state) {
 		status = state;
@@ -55,14 +63,21 @@ batsGeneralHome.controller('dashboardController', function($scope, $http, $rootS
     	commonAppService.scrollTo(eID);
     }
     
+	$scope.getTimeFormat = function(ts){
+		console.log(ts);
+		return commonAppService.showTime(ts); 
+	}
+	
+	
 });
 /**
  * *
  * -------------------------------------------------------Dashboard TRIP controller--------------------------------------------------
  *  * 
  * */
-batsGeneralHome.controller('dashboardTripController', function($scope, $http, $rootScope,$localStorage,commonAppService,commonFactory){
+batsGeneralHome.controller('dashboardTripController', function($scope, $http, $rootScope,$localStorage,$interval,commonAppService,commonFactory){
 	console.log("trip"); 
+	var requestTime = 12;
 	$scope.hideTripTable=true;	
 	$rootScope.getTripData=function(){
 		commonAppService.getTripData(function(result){
@@ -94,9 +109,12 @@ batsGeneralHome.controller('dashboardTripController', function($scope, $http, $r
 		});
 	};
 	
+	
+	var callAlarmApi = $interval($rootScope.getTripData ,requestTime * 1000);
+	
 	$scope.getTripDataByStatus=function(status){
-		if(status!='Ds'){
-			commonAppService.getTripsByStatus(status,function(result){
+		//if(status!='Ds'){
+			commonAppService.getTripsByStatus(status,function(result){  
 				   console.log(result);
 				   if(result.data!="trips not found"){
 					   $scope.hideTripTable=false;
@@ -107,11 +125,11 @@ batsGeneralHome.controller('dashboardTripController', function($scope, $http, $r
 					   //alert(result.data);
 				   }				   
 			});
-		}
-		else{
-			$scope.hideTripTable=true;
-			alert("T B D");
-		}
+//		}
+//		else{
+//			$scope.hideTripTable=true;
+//			alert("T B D");
+//		}
 		
 	};
 	
@@ -151,6 +169,8 @@ batsGeneralHome.controller('dashboardTripController', function($scope, $http, $r
  *  * 
  * */
 batsGeneralHome.controller('dashboardDriverController', function($scope,$localStorage,commonAppService){
+    
+    
 	commonAppService.getDriversData(function(result){
 		
 		if(result.data == "drivers not found"){
@@ -202,8 +222,10 @@ batsGeneralHome.controller('dashboardDriverController', function($scope,$localSt
  * -------------------------------------------------------Dashboard Vehicle controller--------------------------------------------------
  *  * 
  * */
-batsGeneralHome.controller('dashboardVehicleController', function($scope,$localStorage,commonAppService){
+batsGeneralHome.controller('dashboardVehicleController', function($scope,$localStorage,$rootScope,$interval,commonAppService){
 	$scope.hideVehiclesTable=true;
+	var requestTime = 12;
+	$rootScope.getTripData=function(){
 	commonAppService.getVehicleData(function(result){
 		$scope.totalPanic=result.panic;
 		$scope.totaloverspeed=result.overspeed;
@@ -211,6 +233,11 @@ batsGeneralHome.controller('dashboardVehicleController', function($scope,$localS
 		$scope.totalongoing_trip=result.ongoing_trip;
 		$scope.totalmax_lmt_cross=result.max_lmt_cross;
 	});
+	};
+	
+	
+	var callAlarmApi = $interval($rootScope.getTripData ,requestTime * 1000);
+	
 	$scope.getVehiclesDataByStatus=function(status){
 			commonAppService.getVehiclesByStatus(status,function(result){
 				   console.log(result);

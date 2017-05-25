@@ -643,7 +643,7 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 	        }
 	        var p = poly.GetPointAtDistance(d);
 	      // if (k++>=180/step) {
-	          map.panTo(p);
+	         // map.panTo(p);
 	        /*
 		 * k=0; }
 		 */ 

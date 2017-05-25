@@ -1,8 +1,9 @@
-batsAdminHome.controller('dashboardController', function($scope, $http, $rootScope,$localStorage,$location,$document, $anchorScroll,commonAppService){	 
+batsAdminHome.controller('dashboardController', function($scope, $http, $rootScope,$localStorage,$location,$document, $anchorScroll,$interval,commonAppService){	 
 	$scope.token = $localStorage.data;
 	$rootScope.menuPos=14;
 	//$anchorScroll.yOffset = 50;
 	$scope.tab = 1;
+	var requestTime = 12;
 	$scope.noUsers = false;
 	$scope.hideTripTable=true;
 	$scope.setTab = function(newTab){		
@@ -25,7 +26,9 @@ batsAdminHome.controller('dashboardController', function($scope, $http, $rootSco
 	$scope.TrackerCount;
 	$scope.TrackerActList;
 	
-    commonAppService.tracker(function(result){
+	
+	$rootScope.getTripData=function(){
+	commonAppService.tracker(function(result){
     	//console.log(result);
     	$scope.TrackerCount = result;
     	/*console.log($scope.TrackerCount);
@@ -43,7 +46,11 @@ batsAdminHome.controller('dashboardController', function($scope, $http, $rootSco
     	/*$scope.getTotal = function () {
     	    return $scope.allocatedTotal;
     	}*/
-    }); 
+	}); 
+	}
+	$rootScope.getTripData();
+    var callAlarmApi = $interval($rootScope.getTripData ,requestTime * 1000);
+    
     var status
     $scope.getList =function(state){
     	status = state;
@@ -73,20 +80,28 @@ batsAdminHome.controller('dashboardController', function($scope, $http, $rootSco
 	    'slow');
 	});*/
     $scope.gotoElement=function(eID){
+	
     	commonAppService.scrollTo(eID);
     }
+    
+    $scope.getTimeFormat = function(ts){
+	console.log(ts);
+	return commonAppService.showTime(ts); 
+}
+    
 });
 /**
  * *
  * -------------------------------------------------------Dashboard TRIP controller--------------------------------------------------
  *  * 
  * */
-batsAdminHome.controller('dashboardTripController', function($scope, $http, $rootScope,$localStorage,commonAppService,commonFactory){
+batsAdminHome.controller('dashboardTripController', function($scope, $http, $rootScope,$localStorage,commonAppService,$interval,commonFactory){
 //	console.log("trip"); 
+    var requestTime = 12;
 	$scope.hideTripTable=true;
 	$rootScope.getTripData=function(){
 		commonAppService.getTripData(function(result){
-			//console.log(JSON.stringify(result));
+			console.log(JSON.stringify(result));
 			if(result.data!="trips not found"){
 				$scope.scheduled=result.res_data.scheduled;
 				$scope.running=result.res_data.running;
@@ -113,8 +128,12 @@ batsAdminHome.controller('dashboardTripController', function($scope, $http, $roo
 		});
 	};
 	
+	
+	var callAlarmApi = $interval($rootScope.getTripData ,requestTime * 1000);
+	
+	
 	$scope.getTripDataByStatus=function(status){
-		if(status!='Ds'){
+//		if(status!='Ds'){
 			commonAppService.getTripsByStatus(status,function(result){
 				   console.log(result);
 				   if(result.data!="trips not found"){
@@ -123,14 +142,14 @@ batsAdminHome.controller('dashboardTripController', function($scope, $http, $roo
 				   }
 				   else{
 					   $scope.hideTripTable=true;
-					   //alert(result.data);
+					   alert(result.data);
 				   }				   
-			});
-		}
-		else{
-			$scope.hideTripTable=true;
-			alert("T B D");
-		}
+			});    
+//		}
+//		else{
+//			$scope.hideTripTable=true;
+//			alert("T B D");
+//		}
 		
 	};
 	$scope.givelt=function(lt,lg){
@@ -202,6 +221,7 @@ batsAdminHome.controller('dashboardDriverController', function($scope,$localStor
 		return commonAppService.getPercentage(a,b)
 	}
 	$scope.gotoElement=function(eID){
+	    console.log(eID);
 		commonAppService.scrollTo(eID);
 	}	
 });
@@ -216,8 +236,10 @@ batsAdminHome.controller('dashboardDriverController', function($scope,$localStor
  * -------------------------------------------------------Dashboard Vehicle controller--------------------------------------------------
  *  * 
  * */
-batsAdminHome.controller('dashboardVehicleController', function($scope,$localStorage,commonAppService){
+batsAdminHome.controller('dashboardVehicleController', function($scope,$rootScope,$localStorage,$interval,commonAppService){
 	$scope.hideVehiclesTable=true;
+	var requestTime = 12;
+	$rootScope.getTripData=function(){
 	commonAppService.getVehicleData(function(result){
 		//console.log(result);
 		$scope.totalPanic=result.panic;
@@ -226,6 +248,11 @@ batsAdminHome.controller('dashboardVehicleController', function($scope,$localSto
 		$scope.totalongoing_trip=result.ongoing_trip;
 		$scope.totalmax_lmt_cross=result.max_lmt_cross;
 	});
+	};
+	
+	var callAlarmApi = $interval($rootScope.getTripData ,requestTime * 1000);
+	
+	
 	$scope.getVehiclesDataByStatus=function(status){
 		console.log(status);
 			commonAppService.getVehiclesByStatus(status,function(result){
@@ -266,6 +293,7 @@ batsAdminHome.controller('dashboardVehicleController', function($scope,$localSto
 	};
 	
 	$scope.gotoElement=function(eID){
+	   
 		commonAppService.scrollTo(eID);
 	}
 	

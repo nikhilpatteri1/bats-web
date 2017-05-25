@@ -132,8 +132,9 @@ batsGeneralHome.controller('vehicleHistory',function($rootScope,$scope, $http, $
 		$scope.noData = false;
 		$scope.showTimeSlot=false;
 		$scope.blankTable=false;
-	/*	$('#clearTextDevice span.select2-chosen').empty();  
-	    $('#clearTextDevice span.select2-chosen').text("- - Select  Vehicle No/Device - -");*/
+		$('#clearTextDevice span.select2-chosen').empty();  
+		    $('#clearTextDevice span.select2-chosen').text("Select Vehicle No/Device");
+	
 		// document.getElementById("groupNamelist").blur();
 		//console.log(groupID);
 	    $scope.initialize();

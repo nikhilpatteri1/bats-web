@@ -27,7 +27,7 @@ batsAdminHome.controller('groupController', function($rootScope,$scope, $http, $
 	/**------------------------------------
 	 * for enabling geo fence based on user choice
 	 * is performed here----------------------------------------------------------------------------*/
-	$scope.geoChoiceRadio = '1';
+	$scope.geoChoiceRadio = '1'; 
 	$scope.IsgeoFence=function(inc){
 		return inc===$scope.geoChoiceRadio;
 	};
@@ -182,6 +182,7 @@ batsAdminHome.controller('groupController', function($rootScope,$scope, $http, $
 	     })
 		  .success(function(data) {
 		  $scope.customerDevices = data.un_allocated;
+		  $scope.unallocateData = data.un_allocated;
 		  $scope.FActoryStock=$scope.customerDevices;
 		   console.log($scope.FActoryStock.length);
 		   $scope.FactoryStockCount=$scope.FActoryStock.length;
@@ -321,13 +322,34 @@ batsAdminHome.controller('groupController', function($rootScope,$scope, $http, $
  	* On Submit of Create Group Form
 */
 	$scope.reset=function(){
+	    $scope.customerDevices = $scope.unallocateData;
+	    console.log($scope.unallocateData);
+	    
+	    $scope.loadDevices();  
 		$scope.group={};
 		$scope.createGroupForm.$setPristine();
 		$scope.createGroupForm.$setUntouched();
 		for(i in $scope.selection){
+		    console.log($scope.selection[i]);
 			  $scope.customerDevices.push($scope.selection[i]);
 			      $scope.FactoryStockCount=$scope.FactoryStockCount+1;
 	      }
+		
+//		for(i in $scope.selection){
+//		    console.log($scope.selection[i].devid);
+//		    for (j in $scope.customerDevices){ 
+//			console.log($scope.customerDevices[j].devid);
+//			if($scope.customerDevices[j].devid != $scope.selection[i].devid){
+////			    alert("true");
+//			    $scope.customerDevices.push($scope.selection[i]);
+//			      $scope.FactoryStockCount=$scope.FactoryStockCount+1;   
+//			} 
+//			
+//		    }
+//			  
+//	      }
+		
+		console.log($scope.customerDevices);
 	      $scope.selection = [];
 		//$scope.selection=[];
 		//console.log(_.without($scope.customerDevices, $scope.selection));
@@ -434,6 +456,10 @@ batsAdminHome.controller('groupController', function($rootScope,$scope, $http, $
     	/**------------------------------------------------------------------------------------------------------------------------
 		* 												Add Multiple Contact Numbers Begins Here
 	   ------------------------------------------------------------------------------------------------------------------------*/	
+	//myPolygon.setMap(null);
+	
+	$('#show1').show();
+	$('#show2').hide();
 		$scope.choices = [{}];
 		if($scope.choices.length == 1){
 			$scope.hide_remove = false;
@@ -752,6 +778,7 @@ function showGeofenceMap(){
      * Updated: 2014-03
      * TODO: draggable, editable
      */
+   
     var mapOverlays = [],
         mapDataId = 'map-data',
         mapOverlayStyle = {
@@ -764,6 +791,7 @@ function showGeofenceMap(){
             //editable: true,
             //paths: triangleCoords,
         };
+    console.log(mapOverlays);
     /**
      * Upon page load, setup map and bind listeners
      *
@@ -825,6 +853,8 @@ function showGeofenceMap(){
     	// Variables and definitions
     	//console.log(geofence.length);
     	//console.log(centerVal);
+    	
+    	
     	var map;
     	var mapCanvasId = 'map-canvas';
           var mapOptions = {
@@ -837,6 +867,7 @@ function showGeofenceMap(){
           map = new google.maps.Map(document.getElementById(mapCanvasId),
               mapOptions);
 
+    	
     	
     	
     	
@@ -983,6 +1014,7 @@ function showGeofenceMap(){
 		}
       return posArray;
     };
+    console.log(mapOverlays);
  }
 $(document).on('click', '#lat_long_geofence', function(){
       	//$('#geofence').val(posArray);
@@ -1033,6 +1065,10 @@ $scope.clearForm = function(){
 	$("#show2").hide();
 	$("#show3").hide();
 	$('#createGroupModal').find('form')[0].reset();
+	 geofence = [];
+//	resetMap();
+//        myPolygon.setMap(null);
+	
 };
 $("#show3").hide();
 $("#show1").show();

@@ -24,6 +24,7 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 	});
     }
 	
+    $scope.headings;
     var map;
     var directionDisplay;
     var directionsService;
@@ -238,7 +239,91 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 		    strokeWeight: .10, 
 		    fillOpacity: 1, 
 		    offset: '5%',
-		    rotation: Number(localStorage.getItem("heading")),
+		    rotation: Number($scope.headings),
+		    anchor: new google.maps.Point(16, 16) // orig 10,50 back of car, 10,0 front of car, 10,25 center of car
+	    };
+	}
+//	var geocoder = new google.maps.Geocoder();		
+//	geocoder.geocode({latLng: latlng}, function(responses){     
+//	    if (responses && responses.length > 0) 
+//	    {     	   
+//		if(html.length==0){
+//		    html=responses[0].formatted_address;
+//		    contentString  = '<b><label>Device ID:</label> '+deviceID+'</b><br><br><b><label>Vehicle No:</label> '+vehNo+'</b><br><br><b><label>Vehicle Model:</label> '+vehModel+'</b><br><br>'+html+'<br><br><button class="btn btn-primary btn-sm" id="infoClick" data-deviceID="'+deviceID+'">show detail</button>';	
+//		}		        	   		                    
+//	    } 
+//	    else 
+//	    {       
+//		// swal('Not getting Any address for given latitude and longitude.');
+//	    }   
+//	});
+//	if(html.length!=0){
+//	    contentString  = '<b><label>Device ID:</label> '+deviceID+'</b><br><br><b><label>Vehicle No:</label> '+vehNo+'</b><br><br><b><label>Vehicle Model:</label> '+vehModel+'</b><br><br>'+html+'<br><br><button class="btn btn-primary btn-sm" id="infoClick" data-deviceID="'+deviceID+'">show detail</button>';
+//	}
+	
+	for (let i in svg){
+	    marker[i] = new google.maps.Marker({
+		position: latlng,
+		map: map,
+		title: deviceID,
+		icon: icons[i],
+		zIndex: Math.round(latlng.lat() * -100000) << 5,
+		myname : deviceID
+	    });
+	    markers.push(marker[i]);
+//	    var damymarker = marker[i];
+//	    google.maps.event.addListener(damymarker, 'click', function() {
+//		    /*
+//		     * calling map modal controller function from here using
+//		     * $emit ref links
+//		     * http://stackoverflow.com/questions/29467339/how-to-call-function-in-another-controller-in-angularjs
+//		     * http://stackoverflow.com/questions/21346565/how-to-pass-an-object-using-rootscope
+//		     */	    	 
+//		    infowindow.setContent(contentString); 
+//		    //infowindow.setZIndex(1000000);
+//		    infowindow.open(map,damymarker);
+//		    // $rootScope.$emit("deviceDetailModal",lg,deviceID);
+//		    // $scope.open("lg",deviceID);
+//		});
+	}
+	return marker;
+    }
+    
+    
+    function createMarker1(latlng, deviceID,vehNo,vehModel, html,type,devtype) {
+	svg = new Array();
+	icons = new Array();
+	if(devtype == "car"){
+	    svg = car;
+	}
+	else if(devtype == "truck")
+	{
+	    svg = truck;
+	}
+	else if(devtype == "bike"){
+	    svg = bike;
+	}
+	else if(devtype == "bus"){
+	    svg = bus; 
+	}
+	else{
+		svg = car;
+	}
+	var contentString; 
+	for(let i in svg){
+//	    if(type==0){svg[i].fillColor='#ea0909';}
+//	    else if(type==1){svg[i].fillColor='#ffde01';}
+//	    else if(type==2){svg[i].fillColor='#e59305';}
+//	    else if(type==3){svg[i].fillColor='#000000';}
+//	    else if(type==4){svg[i].fillColor='#0540E5';}
+	    icons[i] = {path : svg[i].path, 
+	    		fillColor : svg[i].fillColor, 
+	    		scale: .9, 
+	    		strokeColor: 'white', 
+		    strokeWeight: .10, 
+		    fillOpacity: 1, 
+		    offset: '5%',
+		    rotation: Number($scope.headings),
 		    anchor: new google.maps.Point(16, 16) // orig 10,50 back of car, 10,0 front of car, 10,25 center of car
 	    };
 	}
@@ -286,7 +371,13 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 		});
 	}
 	return marker;
-    }	
+    }
+    
+    
+    
+    
+    
+    
 	// Sets the map on all markers in the array.
     function setMapOnAll(map) {
 	for (let i = 0; i < markers.length; i++) {
@@ -417,7 +508,7 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
                     if (i === 0) {
                         startLocation.latlng = legs[i].start_location;
                         startLocation.address = legs[i].start_address;												   
-                          createMarker(legs[i].start_location,dataVal[i].devid,dataVal[i].vehicle_num,dataVal[i].vehicle_model,legs[i].start_address,dataVal[i].values[0].type,dataVal[i].devtype);
+                          createMarker1(legs[i].start_location,dataVal[i].devid,dataVal[i].vehicle_num,dataVal[i].vehicle_model,legs[i].start_address,dataVal[i].values[0].type,dataVal[i].devtype);
                       }
                       endLocation.latlng = legs[i].end_location;
                       endLocation.address = legs[i].end_address;
@@ -477,7 +568,8 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 	    var lastPosn = marker[0].getPosition();
 	    for(let i in svg){marker[i].setPosition(p);}
 	    var heading = google.maps.geometry.spherical.computeHeading(lastPosn, p);
-	    localStorage.setItem("heading",heading);
+	    $scope.headings = heading;
+	    //localStorage.setItem("heading",heading);
 	    for(let i in svg){icons[i].rotation = heading;}
 	    for(let i in svg){marker[i].setIcon(icons[i]);}
 	    updatePoly(d);
@@ -713,13 +805,17 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 		}
 		$scope.groupList = glist;
 		$('#clearTextDevice span.select2-chosen').empty();
-		$('#clearTextDevice span.select2-chosen').text("- - Select Device - -");
+		$('#clearTextDevice span.select2-chosen').text("- - Select Device - -"); 
 		// console.log($scope.groupList);
 		/*$("#selectDevice").on("select2-opening", function(e) { 
 			//$('#selectDevice').select2('val', '').remove();
 			//$("#selectDevice option[value='']").remove();
 			$(".select2-results").css('display','none');
 		});*/
+		
+		
+		
+		
 	}
 	/**
 	 * fetch device list based on group id
@@ -977,6 +1073,7 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 					}
 					$scope.speedSpeedOmeter=speedValue;
 					$scope.vehnoSpeedOmeter=data[0].vehicle_num;
+					$scope.vehModel = data[0].vehicle_model;
 					$scope.speedlimitSpeedOmeter=speedlimit;
 					$scope.dateTimeSpeedOmeter=getDateTime(data[0].values[0].ts);
 					//updateSpeed(data[0].vehicle_num,data[0].values[0].Velocity,data[0].speed_limit,getDateTime(data[0].values[0].ts));				
@@ -1102,6 +1199,7 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 					// storedltlng.lat=data[0].values[0].lat;
 					/* vehichleRouting(data,data[0].values[0].lat,data[0].values[0].long,data[0].values[0].lat,data[0].values[0].long); */
 					$scope.calcRoute(data);
+					
 			}
 			else{
 				$scope.singleDevice = false;

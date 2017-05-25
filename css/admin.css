@@ -381,7 +381,7 @@ input {
 }
 
 .count_label {
-	position:absolute;
+	position:static;
 	z-index:1000;
 	margin-top: 1%;
 	text-align: center;

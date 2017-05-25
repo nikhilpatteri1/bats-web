@@ -52,6 +52,7 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
 		    oldStep = {step: 1,tick:100};
 			step=5;
 			tick=100;
+			
 			break;
 		case 1:
 		    //console.log(oldStep)
@@ -661,7 +662,7 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
 	        }
 	        var p = poly.GetPointAtDistance(d);
 	      // if (k++>=180/step) {
-	          map.panTo(p);
+	         // map.panTo(p);
 	        /*
 		 * k=0; }
 		 */ 

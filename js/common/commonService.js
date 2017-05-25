@@ -7,6 +7,24 @@ commonApp.service('commonAppService',function(commonFactory,$localStorage){
 	    return ((b * 100) / a).toFixed(2);
 	}
 	
+	
+	this.showTime = function(ts) {
+		console.log(ts);
+		var d = new Date(Number(ts));
+		var day = d.getDate();
+		var month = d.getMonth()+1;
+		var year = d.getFullYear();
+		var hours = d.getHours();
+		var minutes = d.getMinutes();
+		var ampm = hours >= 12 ? 'pm' : 'am';
+		hours = hours % 12;
+		hours = hours ? hours : 12; // the hour '0' should be '12'
+		minutes = minutes < 10 ? '0' + minutes : minutes;
+		var strTime = day+"/"+month+"/"+year+" "+ hours + ':' + minutes + ' ' + ampm;
+		console.log(strTime);
+		return strTime;
+	};
+	
 	this.scrollTo = function(eID) {
         // This scrolling function 
         // is from http://www.itnewb.com/tutorial/Creating-the-Smooth-Scroll-Effect-with-JavaScript
@@ -253,7 +271,7 @@ commonApp.service('commonAppService',function(commonFactory,$localStorage){
 	 * -----------------------------------------------End of Trip Service-------------------------------------------------------*/
 	/**
 	 * -----------------------------------------------Driver Service---------------------------------------------------------*/
-	this.getDriversData=function(cb){
+	this.getDriversData=function(cb){ 
 		var driversDataJson={};
 		driversDataJson.token=$localStorage.data;
 		commonFactory.callApi("POST",apiURL+"dashboard/drivers",driversDataJson,function(result){			
@@ -281,6 +299,10 @@ commonApp.service('commonAppService',function(commonFactory,$localStorage){
 			cb(result);
 		});
 	}
+	
+	
+	
+	
 	/**
 	 * -----------------------------------------------End of Vehicle Service-------------------------------------------------------*/
 });

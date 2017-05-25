@@ -206,6 +206,103 @@ batsGeneralHome.controller('GeneralController', function($rootScope,$scope, $int
 				    };
 				 //icons[i].rotation = localStorage.getItem("heading");
 				}
+//			var geocoder = new google.maps.Geocoder();		
+//			geocoder.geocode({       
+//			        latLng: latlng     
+//			        }, 
+//			        function(responses) 
+//			        {     
+//			           if (responses && responses.length > 0) 
+//			           {     	   
+//			        	   if(html.length==0){
+//			        		   // console.log(html.length);
+//			        		   html=responses[0].formatted_address;
+//			        		   contentString  = '<b><label>Device ID:</label> '+deviceID+'</b><br><br><b><label>Vehicle No:</label> '+vehNo+'</b><br><br><b><label>Vehicle Model:</label> '+vehModel+'</b><br><br>'+html+'<br><br><button class="btn btn-primary btn-sm" id="infoClick" data-deviceID="'+deviceID+'">show detail</button>';	
+//			        	   }		        	   		                    
+//			           } 
+//			           else 
+//			           {       
+//			             // swal('Not getting Any address for given latitude
+//							// and longitude.');
+//			           }   
+//			        }
+//			);
+//			if(html.length!=0){
+//				contentString  = '<b><label>Device ID:</label> '+deviceID+'</b><br><br><b><label>Vehicle No:</label> '+vehNo+'</b><br><br><b><label>Vehicle Model:</label> '+vehModel+'</b><br><br>'+html+'<br><br><button class="btn btn-primary btn-sm" id="infoClick" data-deviceID="'+deviceID+'">show detail</button>';
+//			}
+			
+			for (let i in svg){
+			    marker[i] = new google.maps.Marker({
+				position: latlng,
+				map: map,
+				title: deviceID,
+				icon: icons[i],
+				zIndex: Math.round(latlng.lat() * -100000) << 5,
+				myname : deviceID
+			    });
+			    
+			    
+			   // icons[i].rotation = heading;
+			    markers.push(marker[i]);
+//			    var damymarker = marker[i];
+//			    google.maps.event.addListener(damymarker, 'click', function() {
+//			    	 /*
+//						 * calling map modal controller function from here using
+//						 * $emit ref links
+//						 * http://stackoverflow.com/questions/29467339/how-to-call-function-in-another-controller-in-angularjs
+//						 * http://stackoverflow.com/questions/21346565/how-to-pass-an-object-using-rootscope
+//						 */	      
+//			        infowindow.setContent(contentString); 
+//			        infowindow.open(map,damymarker);
+//			       // $rootScope.$emit("deviceDetailModal",lg,deviceID);
+//			       // $scope.open("lg",deviceID);
+//			        });
+			}
+			console.log(marker);
+			   
+			    return marker;
+			}
+			    
+			    
+			    function createMarker1(latlng, deviceID,vehNo,vehModel,html,type,devtype) {
+				
+				svg = new Array();
+				icons = new Array();
+				if(devtype == "car"){
+				    svg = car;
+				}
+				else if(devtype == "truck")
+				{
+				    svg = truck;
+				}
+				else if(devtype == "bike"){
+				    svg = bike;
+				}
+				else if(devtype == "bus"){
+				    svg = bus; 
+				}
+				else{
+					svg = car;
+				}
+				var contentString; 
+				for(let i in svg){
+//				    if(type==0){svg[i].fillColor='#ea0909';}
+//				    else if(type==1){svg[i].fillColor='#ffde01';}
+//				    else if(type==2){svg[i].fillColor='#e59305';}
+//				    else if(type==3){svg[i].fillColor='#000000';}
+//				    else if(type==4){svg[i].fillColor='#0540E5';}
+				    icons[i] = {path : svg[i].path, 
+				    		fillColor : svg[i].fillColor, 
+				    		scale: .9, 
+				    		strokeColor: 'white', 
+				    		strokeWeight: .10, 
+				    		fillOpacity: 1, offset: '5%',
+				    		rotation: Number(localStorage.getItem("heading")),
+				    		anchor: new google.maps.Point(16, 16), // orig 10,50 back of car, 10,0 front of car, 10,25 center of car
+					    
+				    };
+				 //icons[i].rotation = localStorage.getItem("heading");
+				}
 			var geocoder = new google.maps.Geocoder();		
 			geocoder.geocode({       
 			        latLng: latlng     
@@ -262,6 +359,9 @@ batsGeneralHome.controller('GeneralController', function($rootScope,$scope, $int
 			   
 			    return marker;
 			}
+			    
+			    
+			    
 		// Sets the map on all markers in the array.
 	    function setMapOnAll(map) {
 		for (let i = 0; i < markers.length; i++) {
@@ -404,7 +504,7 @@ batsGeneralHome.controller('GeneralController', function($rootScope,$scope, $int
 	                        // console.log(JSON.stringify(legs[i].start_location));
 	                        startLocation.latlng = legs[i].start_location;
 	                        startLocation.address = legs[i].start_address;
-	                          createMarker(legs[i].start_location, dataVal[i].devid,dataVal[i].vehicle_num,dataVal[i].vehicle_model, legs[i].start_address,dataVal[i].values[0].type,dataVal[i].devtype);
+	                          createMarker1(legs[i].start_location, dataVal[i].devid,dataVal[i].vehicle_num,dataVal[i].vehicle_model, legs[i].start_address,dataVal[i].values[0].type,dataVal[i].devtype);
 	                      }
 	                      endLocation.latlng = legs[i].end_location;
 	                      endLocation.address = legs[i].end_address;

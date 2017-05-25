@@ -14,7 +14,7 @@
  *  f)language array preparation / language selection and removal based on tag input concept
  *  g)
  */
-batsAdminHome.controller('driverController', function($rootScope,$scope, $localStorage, $http,$timeout,$window,$location) {
+batsAdminHome.controller('driverController', function($rootScope,$scope, $localStorage, $http,$timeout,$window,$location,Upload) {
 	$rootScope.menuPos=10;
 	var contentHeight=window.screen.availHeight-200;
 	$scope.histcontentheight={
@@ -89,6 +89,11 @@ batsAdminHome.controller('driverController', function($rootScope,$scope, $localS
 		$('input').attr('autocomplete','off');
 	    
 	});
+	
+	
+	
+	
+	
 		$(document).on('click', '#dobPicker', function(){
 			var curDate = moment();
 			$('#dobPicker').datetimepicker({
@@ -182,38 +187,77 @@ batsAdminHome.controller('driverController', function($rootScope,$scope, $localS
 					$scope.imageUploading=true;
 					if(files[0].size>0){
 						var fd = new FormData();
-						//Take the first selected file
-						//fd.append("token", $scope.token);
+						//Take the first selected file 
+						//fd.append("token", $scope.token); 
 						fd.append("drv", files[0]);
 						
-						$http.post(apiURL+"upload/image",fd, {
-							withCredentials : false,
-							/*headers : {
-								'Content-Type' : false
-							},*/
-							transformRequest : angular.identity
-						}).success(function(data) {
-							$scope.imageUploading=false;
-							console.log(data.data)
-							$scope.imagepath=data.data;
-							$scope.driver.image_src=data.data;
-						}).error(function(data, status) {
-							$scope.imageUploading=false;
-							console.log(data);
-							console.log(status);
-							// console.log(data.err);
-							if (data.err == "Expired Session") {
-								$('#driverUpdateModal').modal('hide');
-								$('#driverCreateModal').modal('hide');
-								expiredSession();
-								$localStorage.$reset();
-							} else if (data.err == "Invalid User") {
-								$('#driverUpdateModal').modal('hide');
-								$('#driverCreateModal').modal('hide');
-								invalidUser();
-								$localStorage.$reset();
-							}
-						});
+						
+						 Upload.upload({
+						            url: apiURL+"upload/image",
+						            data: {drv: files[0], 'token': $scope.token}
+						        }).then(function (resp) {
+						            console.log(resp);
+						            $scope.imageUploading=false;
+								console.log(resp.data); 
+								$scope.imagepath=resp.data.data;
+								$scope.driver.image_src=resp.data.data;
+						            //console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+						        }, function (resp) {
+						            console.log(resp);
+						            console.log('Error status: ' + resp.status);
+						            $scope.imageUploading=false;
+								console.log(data);
+								console.log(status);
+								// console.log(data.err);
+								if (data.err == "Expired Session") {
+									$('#driverUpdateModal').modal('hide');
+									$('#driverCreateModal').modal('hide');
+									expiredSession();
+									$localStorage.$reset();
+								} else if (data.err == "Invalid User") {
+									$('#driverUpdateModal').modal('hide');
+									$('#driverCreateModal').modal('hide');
+									invalidUser();
+									$localStorage.$reset();
+								}
+						        }, function (evt) {
+						            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+						            //console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+						        });
+						
+						
+						
+						
+						
+						
+//						$http.post(apiURL+"upload/image",fd, {
+//							withCredentials : false,
+//							/*headers : {
+//								'Content-Type' : false
+//							},*/
+//							transformRequest : angular.identity
+//						}).success(function(data) {
+//							$scope.imageUploading=false;
+//							console.log(data.data)
+//							$scope.imagepath=data.data;
+//							$scope.driver.image_src=data.data;
+//						}).error(function(data, status) {
+//							$scope.imageUploading=false;
+//							console.log(data);
+//							console.log(status);
+//							// console.log(data.err);
+//							if (data.err == "Expired Session") {
+//								$('#driverUpdateModal').modal('hide');
+//								$('#driverCreateModal').modal('hide');
+//								expiredSession();
+//								$localStorage.$reset();
+//							} else if (data.err == "Invalid User") {
+//								$('#driverUpdateModal').modal('hide');
+//								$('#driverCreateModal').modal('hide');
+//								invalidUser();
+//								$localStorage.$reset();
+//							}
+//						});
 					}		
 				}
 				else{
@@ -564,6 +608,7 @@ batsAdminHome.controller('driverController', function($rootScope,$scope, $localS
 	   				$scope.reset();
 					$scope.listDrivers();
 	   		 });
+			//$scope.listDrivers();
 		})
 		.error(function(data, status, headers, config) {
 			//console.log(data);
@@ -708,7 +753,7 @@ batsAdminHome.controller('driverController', function($rootScope,$scope, $localS
 				//console.log(data);
 				$scope.httpLoading=false;
 				$('#driverUpdateModal').modal('hide');
-					$scope.listDrivers();
+				//$scope.listDrivers();
 				swal({title: "Driver Updated Successfully",
 		   			   text: "Success!",   
 		   			   type: "success",   
@@ -716,12 +761,20 @@ batsAdminHome.controller('driverController', function($rootScope,$scope, $localS
 		   			   closeOnConfirm: true }, 
 		   			   function(){   
 		   				$scope.reset();
+		   				$scope.listDrivers();
+		   				window.location.reload();
 		   		 });
+				
+				
 			})
 			.error(function(data, status, headers, config) {
 				//console.log(data);
-				$scope.httpLoading=false;
-				 if(data.err == "Expired Session")
+				$scope.httpLoading=false; 
+				if(data.err == "Some Trips are active, Please cancel Scheduled and Running trips"){
+				    swal({title: "Some Trips are active for this Driver, Please cancel Scheduled and Running trips"});
+				    
+				}
+			  if(data.err == "Expired Session")
 				  {
 	       		  $('#driverUpdateModal').modal('hide');
 				      expiredSession();

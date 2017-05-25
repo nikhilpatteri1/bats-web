@@ -35,8 +35,8 @@
 													class="floatlabeltxt show-hide">Enter the Name</label> -->
 										<input type="text" class="form-control TDinput" name="Tdname"
 											ng-model="travelDesk.Tdname"
-											placeholder="Enter Travel Desk User name" ng-maxlength="25"
-											required />
+											placeholder="Enter Travel Desk User name" style="text-transform: lowercase" ng-maxlength="25"
+											required  />
 										<p
 											ng-show="travelDeskForm.Tdname.$touched && travelDeskForm.Tdname.$invalid"
 											class="help-block error-help">Name is required.</p>

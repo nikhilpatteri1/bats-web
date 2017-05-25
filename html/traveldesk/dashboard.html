@@ -210,17 +210,17 @@
 							<div class="col-sm-12">
 								<div class="table-container" ng-style="histcontentheight"> 
 									<table class="activeTableStyle">
-										<thead class="theadStyle tablethead">
+										<thead class="theadStyle tablethead"> 
 											<tr>
 												
 												<th> 
-													<div class="tableThickline" ng-style="headTxt == 'Allocated' && {'background-color':'#008cdc'}  || headTxt == 'Un Allocated' && {'background-color':'#b3b3b3'} || headTxt == 'Activated' && {'background-color':'#01ae81'} || headTxt == 'Not activated' && {'background-color':'#5d686c'} || headTxt == 'Battery Low' && {'background-color':'#ee4423'} || headTxt == 'Tampered' && {'background-color':'#ffcc33'}"></div>
-												</th> 
+													<div class="tableThickline" ng-style="headTxt == 'Allocated' && {'background-color':'#008cdc'}  || headTxt == 'Un Allocated' && {'background-color':'#b3b3b3'} || headTxt == 'Activated' && {'background-color':'#01ae81'} || headTxt == 'Not activated' && {'background-color':'#5d686c'} || headTxt == 'Battery Low' && {'background-color':'#ee4423'} || headTxt == 'Tampered' && {'background-color':'#ffcc33'} || headTxt == 'Not Working' && {'background-color':'#ee4423'}"></div>
+												</th> <!--  == 'Scheduled'? {'background-color':'#008cdc'}:{'background-color':'#000000'} -->
 												<th><p class="tableThickTxt">{{headTxt}}</p></th>
 												<th></th>
-												<th></th>
 												<th ng-hide="hideStatus"><div></div></th>
-												<th></th>
+												<th ng-hide="headTxt == 'Un Allocated'"></th>
+												<th></th> 
 												<!-- <th><div>Activated</div></th> -->
 											</tr>
 											<tr>
@@ -228,18 +228,23 @@
 												<th><div></div></th>
 												<th><div>DEVICE ID</div></th>
 												<th><div>VEHICLE NO </div></th>
-												<th ng-hide="hideStatus"><div>Status</div></th>
-												<th><div>GROUP NAME</div></th>
+												<th ng-hide="hideStatus"><div>STATUS</div></th>
+												<th ng-hide="headTxt == 'Un Allocated'"><div>GROUP NAME</div></th>
 												<th><div>VEHICLE MODEL</div></th> 
 											</tr>
 										</thead>
 										<tbody class="tbodyStyle">
 											<tr class="tbodytr tabletbodytr" ng-repeat="tracker in TrackerActList">
-												<td><p class="culomPad">{{$index+1}}</p></td>
+												<td><p class="culomPad">{{$index+1}}</p></td>   
 												<td><p>{{tracker.devid}}</p></td>
-												<td><p>{{tracker.vehicle_num}}</p></td>
+												<td><p>{{tracker.vehicle_num}}</p></td>												
 												<td ng-hide="hideStatus"><p>{{tracker.active_status=="I"?"Inactive":"Active"}}</p></td>
-												<td><p>{{tracker.values.associated_group.gname}}</p></td>
+												
+												
+												<td ng-if="headTxt == 'Not Working'"><p>{{tracker.gname}}</p></td>
+												<td ng-if="headTxt == 'Allocated' || headTxt == 'Activated' || headTxt == 'Not activated'"><p>{{tracker.values.associated_group.gname}}</p></td>
+												
+												<!-- <td ng-show="headTxt='Not Working'"><p>{{tracker.gname}}</p></td> -->
 												<td><p>{{tracker.vehicle_model}}</p></td>
 											</tr>
 										</tbody>
@@ -284,7 +289,7 @@
 								</div>
 							</div>
 							<div class="col-sm-2" ng-class="{'removeCursorPointer':delay_count<=0}"
-								ng-click="getTripDataByStatus('Ds');gotoElement('tripDataTableT');headText='Delayed';">
+								ng-click="getTripDataByStatus('delay');gotoElement('tripDataTableT');headText='Delayed';">
 								<div class="TripCircleDiv">
 									<div>Delayed</div>
 									<div class="TripOuterCircle DOutCircle circle">
@@ -533,7 +538,7 @@
 											</div>
 											<div class="row">
 												<div class="">Max Limit</div>
-												<div class="vehicleCoverLimitTxt">300</div>
+												<div class="vehicleCoverLimitTxt">3000</div>
 											</div>
 											<div class="row">
 												<div class="">Note</div>

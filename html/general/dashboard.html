@@ -63,7 +63,7 @@
 				           <text class="activeCount" x="50%" y="50%" text-anchor="middle" stroke="#ffffff" stroke-width="0px" dx=".9em" dy="0.7em">10</text>
 				        </svg> -->
 				       <!--  <div class="trackerBTxt">Trackers</div> -->
-				        <div class="notWorking" ng-click="getList(6);gotoElement('trackerDataTableG');headTxt='Not Working'">Not Working  {{TrackerCount.nonworking}}</div>
+				        <div class="notWorking" ng-click="getList(6);gotoElement('trackerDataTableG');headTxt='Not Working'">Not Working:  {{TrackerCount.nonworking}}</div>
 				        </div>
 					</div>
 					<div class="col-sm-9">
@@ -182,6 +182,8 @@
 												<th></th>
 												<th></th>
 												<th></th>
+												<th ng-show="headTxt == 'Battery Low' || headTxt == 'Tampered'"></th> 
+												
 												<!-- <th><div>Activated</div></th> -->
 											</tr>
 											<tr>
@@ -191,6 +193,7 @@
 												<th><div>VEHICLE NO </div></th>
 												<th><div>GROUP NAME</div></th>
 												<th><div>VEHICLE MODEL</div></th> 
+												<th ng-show="headTxt == 'Battery Low' || headTxt == 'Tampered'"><div>TIME</div> </th>
 											</tr>
 										</thead>
 										<tbody class="tbodyStyle">
@@ -198,8 +201,12 @@
 												<td><p class="culomPad">{{$index+1}}</p></td>
 												<td><p>{{tracker.devid}}</p></td>
 												<td><p>{{tracker.vehicle_num}}</p></td>
-												<td><p>{{tracker.values.associated_group.gname}}</p></td>
+												
+												<td ng-if="headTxt == 'Not Working' || headTxt == 'Battery Low' || headTxt == 'Tampered'"><p>{{tracker.gname}}</p></td>
+												<td ng-if="headTxt == 'Allocated' || headTxt == 'Activated' || headTxt == 'Not activated'"><p>{{tracker.values.associated_group.gname}}</p></td>
+												
 												<td><p>{{tracker.vehicle_model}}</p></td>
+												<td ng-show="headTxt == 'Battery Low' || headTxt == 'Tampered'"><p>{{getTimeFormat(tracker.ts)}}</p></td>
 											</tr>
 										</tbody>
 									</table>
@@ -242,7 +249,7 @@
 								</div>
 							</div>
 							<div class="col-sm-2" ng-class="{'removeCursorPointer':delay_count<=0}"
-								ng-click="getTripDataByStatus('Ds');gotoElement('tripDataTable');headText='Delayed';">
+								ng-click="getTripDataByStatus('delay');gotoElement('tripDataTable');headText='Delayed';">
 								<div class="TripCircleDiv">
 									<div>Delayed</div>
 									<div class="TripOuterCircle DOutCircle circle">
@@ -565,10 +572,12 @@
 										<tr>
 											<th>
 												<div class="tableThickline" ng-style=" txtHead=='OverSpeed' && {'background-color':'#ec3f53'} || txtHead=='Geofence' && {'background-color':'#6668a5'}  || txtHead=='Panic' && {'background-color':'#ffcc33'} "></div>
-												
 											</th>
 											<th><p class="tableThickTxt">{{txtHead}}</p></th>
 											<th></th>
+											<th></th>
+											<th></th>
+											<th ng-hide="hideSpeed"></th>
 											<!-- <th><div>Activated</div></th> -->
 										</tr>
 										<tr>
@@ -586,7 +595,7 @@
 											<td><p>{{veh.devid}}</p></td>
 											<td><p>{{veh.vehicle_num}}</p></td>
 											<td ng-hide="hideSpeed"><p>{{veh.Velocity}}</p></td>
-											<td><p><a href="" ng-click="givelt(veh.lat,veh.long);" class="link">{{veh.lat}}{{veh.long}}</a></p></td>
+											<td><p><a href="" ng-click="givelt(veh.lat,veh.long);" class="link">Loaction</a></p></td>
 											<td><p>{{veh.vehicle_model}}</p></td>
 										</tr>
 									</tbody>
