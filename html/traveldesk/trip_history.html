@@ -54,7 +54,7 @@
 						<div id="selectTripSection" class="col-sm-12">
 							<select class="form-control" id="selectTrip" ng-model="tripName"
 								ng-options="tripDet.trip_name for tripDet in tripDetails track by tripDet.trip_id"
-								ng-change=showHistoryData(tripName)>
+								ng-change="showHistoryData(tripName)">
 							</select>
 						</div>
 

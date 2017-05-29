@@ -77,7 +77,7 @@ commonApp.service('commonAppService',function(commonFactory,$localStorage){
 	
 	
 	this.donutChart=function(chartID,arrayOfData){
-		//console.log(chartID);
+		console.log(chartID);
 		$(function() {
 	        var chart = new Highcharts.Chart({
 	            chart: {
@@ -86,6 +86,7 @@ commonApp.service('commonAppService',function(commonFactory,$localStorage){
 	                type: 'pie',
 	                height: 222,
 	                width:300,
+	                
 	            },
 	            title: {
 	                text: ''
@@ -117,7 +118,7 @@ commonApp.service('commonAppService',function(commonFactory,$localStorage){
 	                   
 	        },
 	        // using 
-	                                         
+	                                        
 	        function(chart) { // on complete
 	            
 	            var xpos = '50%';
@@ -142,6 +143,7 @@ commonApp.service('commonAppService',function(commonFactory,$localStorage){
 	            }).add();*/
 	        });
 	    });
+		 
 	}
 	
 	/**

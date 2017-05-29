@@ -49,9 +49,9 @@
 											{'featureType':'water','elementType':'all','stylers':[{'color':'#46bcec'},{'visibility':'on'}]},
 											{'featureType':'water','elementType':'labels','stylers':[{'visibility':'on'},{'color':'#000000'}]}]" -->
 				<marker ng-repeat="pos in marker" 
-					icon="../images/{{pos.devtype}}.png" 
+					icon="../images/{{pos.devtype}}S.png"  
 					position="{{pos.lat}},{{pos.long}}"
-					on-click="showDeviceInfo(event, pos)">
+					> <!-- on-click="showDeviceInfo(event, pos)" -->
 				</marker> 
 				<shape name="polygon" ng-repeat="geofence in geofence" paths="{{geofence}}" stroke-color="#FF0000" 
 					stroke-opacity="0.8" stroke-weight="2" fill-color="#FF0000" fill-opacity="0.10">
@@ -83,7 +83,7 @@
 										<!-- <li><span class="helpText">Speed</span><p class="actualText">{{device.speed}}Kmph</p></li> -->
 										<!-- <li><img src="{{img_url}}" class="statusImg"></li> -->
 										<li><a href="" ng-click="givelt(pos.lat,pos.long);popover.show($event);" class="link">
-																<span>{{pos.lat}}, {{pos.long}}</span>
+																<span>Location</span>
 														</a></li>
 									</ul>
 								</li>

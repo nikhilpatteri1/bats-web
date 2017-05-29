@@ -290,6 +290,7 @@ batstravelDeskHome.controller('tripHistory', function($rootScope,$scope, $localS
 		/*
 		 * fetch history*/
 		$scope.fetchHistory=function(searchtype){
+		    //console.log(searchtype);
 			$scope.httpLoading=true;
 			
 			$scope.getHistoryJson={};
@@ -341,19 +342,23 @@ batstravelDeskHome.controller('tripHistory', function($rootScope,$scope, $localS
 		
 		
 		$scope.showHistoryData=function(tripDetail){
-			
+		   // alert("data");
+			console.log(tripDetail);
 			$scope.showUpBtn=true;
 			$scope.startBouncing=true;
 			$scope.tripData=tripDetail;			
 			var polyPathArray=[];
 			var arr=$scope.tripData.path_way;
+			console.log(arr);
 			for(var inc=0;inc<arr.length;inc++){
-				var pathValues={}
+				var pathValues={};  
 				pathValues.lat=arr[inc][0];
-				pathValues.lng=arr[inc][0];
+				pathValues.lng=arr[inc][1]; 
 				polyPathArray.push(pathValues);
+				console.log(pathValues);
 			}
 			var poly_len = polyPathArray.length;
+			console.log(poly_len);
 			var iconsettings = {
 		            path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
 		        };
@@ -371,13 +376,15 @@ batstravelDeskHome.controller('tripHistory', function($rootScope,$scope, $localS
 		    	  historypolyline.setMap(null);
 		    	  historypolyline=null;
 		      }
-		      // console.log(historypolyline);
+		      
 		      historypolyline = new google.maps.Polyline(polylineoptns);	      
+		      console.log(historypolyline);
 		      
 		    var bounds = new google.maps.LatLngBounds();		      		    		
-		    	
+		    	console.log(polyPathArray);
 		    for(var j=0;j<poly_len;j++){
 		    	 var latlng = new google.maps.LatLng(polyPathArray[j].lat,polyPathArray[j].lng);
+		    	 console.log(latlng);
 		    	 bounds.extend(latlng);
 		    }
 		        map.fitBounds(bounds);

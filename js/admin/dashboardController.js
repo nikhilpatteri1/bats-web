@@ -9,7 +9,7 @@ batsAdminHome.controller('dashboardController', function($scope, $http, $rootSco
 	$scope.setTab = function(newTab){		
 		if(newTab=='2'){
 			commonAppService.initMap();
-			$rootScope.getTripData();
+			//$rootScope.getTripData();
 		}
       $scope.tab = newTab;
     };
@@ -25,6 +25,7 @@ batsAdminHome.controller('dashboardController', function($scope, $http, $rootSco
 	/*$scope.totalDevices=commonAppService.plotValues();*/
 	$scope.TrackerCount;
 	$scope.TrackerActList;
+	
 	
 	
 	$rootScope.getTripData=function(){
@@ -49,7 +50,7 @@ batsAdminHome.controller('dashboardController', function($scope, $http, $rootSco
 	}); 
 	}
 	$rootScope.getTripData();
-    var callAlarmApi = $interval($rootScope.getTripData ,requestTime * 1000);
+    //var callAlarmApi = $interval($rootScope.getTripData ,requestTime * 1000);
     
     var status
     $scope.getList =function(state){
@@ -99,6 +100,8 @@ batsAdminHome.controller('dashboardTripController', function($scope, $http, $roo
 //	console.log("trip"); 
     var requestTime = 12;
 	$scope.hideTripTable=true;
+	
+	
 	$rootScope.getTripData=function(){
 		commonAppService.getTripData(function(result){
 			console.log(JSON.stringify(result));
@@ -128,7 +131,7 @@ batsAdminHome.controller('dashboardTripController', function($scope, $http, $roo
 		});
 	};
 	
-	
+	$rootScope.getTripData();
 	var callAlarmApi = $interval($rootScope.getTripData ,requestTime * 1000);
 	
 	
@@ -250,6 +253,7 @@ batsAdminHome.controller('dashboardVehicleController', function($scope,$rootScop
 	});
 	};
 	
+	$rootScope.getTripData();
 	var callAlarmApi = $interval($rootScope.getTripData ,requestTime * 1000);
 	
 	

@@ -57,7 +57,7 @@ batstravelDeskHome.controller('dashboardController', function($scope, $http,$int
 	
 	
 	$rootScope.getTripData();
-	    var callAlarmApi = $interval($rootScope.getTripData ,requestTime * 1000);
+	   // var callAlarmApi = $interval($rootScope.getTripData ,requestTime * 1000);
 	
 	
 	var status
@@ -128,6 +128,7 @@ batstravelDeskHome.controller('dashboardTripController', function($scope, $http,
 		});
 	};
 	
+	$rootScope.getTripData();
 	var callAlarmApi = $interval($rootScope.getTripData ,requestTime * 1000);
 	
 	$scope.getTripDataByStatus=function(status){
