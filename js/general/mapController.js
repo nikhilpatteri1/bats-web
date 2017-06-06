@@ -1301,6 +1301,7 @@ batsGeneralHome.controller('GeneralController', function($rootScope,$scope, $int
 					var devSpeed = deviceData[inc].values[0].Velocity;
 					deviceObj.devid=devId;
 					deviceObj.speed=devSpeed;
+					deviceObj.vehicle_num = deviceData[inc].vehicle_num;
 					deviceObj.type=deviceData[inc].values[0].type;
 					$scope.devData.push(deviceObj);
 					$scope.speedlimit = deviceData[inc].speed_limit;

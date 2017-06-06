@@ -860,12 +860,16 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 			} else if (angular.isDefined(singleDeviceInterval)) {
 				$interval.cancel(singleDeviceInterval);
 			}
-			$scope.groupDevice = data;
-			// console.log(JSON.stringify($scope.groupDevice));
+			$scope.groupDevice = data;  
+			 console.log(JSON.stringify($scope.groupDevice));
 			$scope.carCount = $scope.groupDevice.carcount;
 			$scope.bikeCount = $scope.groupDevice.bikecount;
 			$scope.busCount = $scope.groupDevice.buscount;
 			$scope.truckCount = $scope.groupDevice.truckcount;
+			console.log($scope.bikeCount);
+			
+
+			
 			var dev_len = $scope.groupDevice.devlist.length;
 			$scope.devlistObject=$scope.groupDevice.devlist
 			var devlist = $scope.groupDevice.devlist;
@@ -1284,6 +1288,7 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 			if(deviceData[inc].values.length>0){
 				var devSpeed = deviceData[inc].values[0].Velocity;
 				deviceObj.devid=devId;
+				deviceObj.vehicle_num = deviceData[inc].vehicle_num;
 				deviceObj.speed=devSpeed;
 				deviceObj.type=deviceData[inc].values[0].type;
 				$scope.devData.push(deviceObj);

@@ -180,7 +180,7 @@
 														<td>{{x.Velocity}}</td>
 														<td><a href=""
 															ng-click="givelt(x.lat,x.long);popover.show($event);"
-															class="link"> <span>{{x.lat}}, {{x.long}}</span>
+															class="link"> <span>Location</span>
 														</a></td>
 													</tr>
 												</tbody>
@@ -225,7 +225,7 @@
 				$showTable.css("right", "0px");
 			} else if ($expand.text() == "> Info") {
 				$expand.text("< Info");
-				$showTable.css("right", "-200px");
+				$showTable.css("right", "-130px");
 			}
 		});
 	});

@@ -71,7 +71,7 @@
 									<ul class="deviceRowList">
 										<li><span class="barStyle" ng-style='{{getColor(device.type)}}'></span></li>
 										<li>{{$index+1}}</li>
-										<li><span class="helpText">Vehicle No</span><p class="actualText">{{device.devid}}</p></li>
+										<li><span class="helpText">Vehicle No</span><p class="actualText">{{device.vehicle_num.length>0?device.vehicle_num:device.devid}}</p></li>
 										<li><span class="helpText">Speed</span><p class="actualText">{{device.speed}}Kmph</p></li>
 										<li><img src="{{img_url}}" class="statusImg"></li>
 									</ul>
@@ -212,7 +212,7 @@
 							<div class="col-sm-8 verhorcentericon pad0">
 								<div class="countText">
 									<div>
-										<label>{{carCount}}</label>
+										<label>{{carCount || '0'}}</label>
 									</div>
 									<div>
 										<span>CAR</span>
@@ -229,7 +229,7 @@
 							<div class="col-sm-8 verhorcentericon pad0">
 								<div class="countText">
 									<div>
-										<label>{{busCount}}</label>
+										<label>{{busCount || '0'}}</label>
 									</div>
 									<div>
 										<span>BUS</span>
@@ -246,7 +246,7 @@
 							<div class="col-sm-8 verhorcentericon pad0">
 								<div class="countText">
 									<div>
-										<label>{{truckCount}}</label>
+										<label>{{truckCount || '0'}}</label>
 									</div>
 									<div>
 										<span>TRUCK</span>
@@ -263,7 +263,7 @@
 							<div class="col-sm-8 verhorcentericon pad0">
 								<div class="countText">
 									<div>
-										<label>{{bikeCount}}</label>
+										<label>{{bikeCount || '0'}}</label>
 									</div>
 									<div>
 										<span>BIKE</span>
