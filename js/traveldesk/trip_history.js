@@ -122,7 +122,7 @@ batstravelDeskHome.controller('tripHistory', function($rootScope,$scope, $localS
 	    $scope.isSet = function(tabNum){
 	    	//$scope.showTripDropDown=false;
 	    	//$scope.tripDetails="";
-	    	console.log("in isSetTab");
+	    	//console.log("in isSetTab");
 	    	
 	      return $scope.tab === tabNum;
 	    };
@@ -347,76 +347,113 @@ batstravelDeskHome.controller('tripHistory', function($rootScope,$scope, $localS
 		$scope.showHistoryData=function(tripDetail){
 			//console.log(trip_id);
 		   // alert("data");
+		   $scope.driver_hist;
 			console.log(tripDetail);
 			$scope.replayData ={};
-
-			$scope.replayData.devid = tripDetail.devid;
-			$scope.replayData.sts = tripDetail.drv_start_point.ts;
-			$scope.replayData.ets = tripDetail.drv_end_point.ts;
 			$scope.replayData.token = $scope.token;
+			$scope.replayData.devid = tripDetail.devid;
+			
+
+			if(tripDetail.status === "C"){
+					swal("trip cancelled");
+					$scope.replayData.sts = 0;
+					$scope.replayData.ets = 0;
+			}
+			else if(tripDetail.status === "R"){
+				swal("trip running");
+				$scope.replayData.sts = tripDetail.drv_start_point.ts;
+				//$scope.replayData.ets = tripDetail.drv_end_point.ts;
+				var d = new Date();
+				var n = d.getTime();
+				$scope.replayData.ets = n;
+					
+			}
+			else if(tripDetail.status === "S")
+			{
+				swal("trip Scheduled");
+				$scope.replayData.sts = 0;
+					$scope.replayData.ets = 0;
+
+			}
+			else{
+				$scope.replayData.sts = tripDetail.drv_start_point.ts;
+				$scope.replayData.ets = tripDetail.drv_end_point.ts;
+
+			}
+
+			console.log($scope.replayData.ets);
 			console.log($scope.replayData);
+
+
+
+
+
 
 			travelDeskFactory.callApi("POST",apiURL+"device/history",$scope.replayData,function(result){
 			      //console.log(result);
 			console.log(result); 
 			$scope.driver_hist = result.values; 
-			      
-		});
-
-
-			$scope.showUpBtn=true;
-			$scope.startBouncing=true;
-			$scope.tripData=tripDetail;			
+			console.log($scope.driver_hist);
 			var polyPathArray=[];
 			//var arr=$scope.tripData.path_way;
 			console.log($scope.driver_hist);
 			var arr=$scope.driver_hist;
 			console.log(arr.length);
 			if(arr.length == 0){
+				console.log("0")
 				swal('Vehicle in stationary');
 			}
 			else
 			{
-			for(var inc=0;inc<arr.length;inc++){
-				var pathValues={};  
-				pathValues.lat=arr[inc][0];
-				pathValues.lng=arr[inc][1]; 
-				polyPathArray.push(pathValues);
-				console.log(pathValues);
+				console.log("data");
+				for(var inc=0;inc<arr.length;inc++){
+					var pathValues={};  
+					pathValues.lat=arr[inc][0];
+					pathValues.lng=arr[inc][1]; 
+					polyPathArray.push(pathValues);
+					console.log(pathValues);
+				}
+				var poly_len = polyPathArray.length;
+				console.log(poly_len);
+				var iconsettings = {
+			            path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
+			        };
+			    var polylineoptns = {
+			            path: polyPathArray,
+			            strokeOpacity: 0.8,
+			            strokeWeight: 3,
+			            map: map,
+			            icons: [{
+			                icon: iconsettings,
+			                repeat:'35px',
+			                offset: '100%'}]
+			        };
+			      if(historypolyline!=null){
+			    	  historypolyline.setMap(null);
+			    	  historypolyline=null;
+			      }
+			      
+			      historypolyline = new google.maps.Polyline(polylineoptns);	      
+			      console.log(historypolyline);
+			      
+			    var bounds = new google.maps.LatLngBounds();		      		    		
+			    	console.log(polyPathArray);
+			    for(var j=0;j<poly_len;j++){
+			    	 var latlng = new google.maps.LatLng(polyPathArray[j].lat,polyPathArray[j].lng);
+			    	 console.log(latlng);
+			    	 bounds.extend(latlng);
+			    }
+			        map.fitBounds(bounds);
 			}
-			var poly_len = polyPathArray.length;
-			console.log(poly_len);
-			var iconsettings = {
-		            path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
-		        };
-		    var polylineoptns = {
-		            path: polyPathArray,
-		            strokeOpacity: 0.8,
-		            strokeWeight: 3,
-		            map: map,
-		            icons: [{
-		                icon: iconsettings,
-		                repeat:'35px',
-		                offset: '100%'}]
-		        };
-		      if(historypolyline!=null){
-		    	  historypolyline.setMap(null);
-		    	  historypolyline=null;
-		      }
-		      
-		      historypolyline = new google.maps.Polyline(polylineoptns);	      
-		      console.log(historypolyline);
-		      
-		    var bounds = new google.maps.LatLngBounds();		      		    		
-		    	console.log(polyPathArray);
-		    for(var j=0;j<poly_len;j++){
-		    	 var latlng = new google.maps.LatLng(polyPathArray[j].lat,polyPathArray[j].lng);
-		    	 console.log(latlng);
-		    	 bounds.extend(latlng);
-		    }
-		        map.fitBounds(bounds);
-		    }
+			      
+				});
+
+			$scope.showUpBtn=true;
+			$scope.startBouncing=true;
+			$scope.tripData=tripDetail;			
+			
+
 		}
 	/*====================================================>>>>>> End of API function <<<<<=================================================*/
 		
-});
+}); 
