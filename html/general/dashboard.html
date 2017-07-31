@@ -206,7 +206,7 @@
 												<td ng-if="headTxt == 'Allocated' || headTxt == 'Activated' || headTxt == 'Not activated'"><p>{{tracker.values.associated_group.gname}}</p></td>
 												
 												<td><p>{{tracker.vehicle_model}}</p></td>
-												<td ng-show="headTxt == 'Battery Low' || headTxt == 'Tampered'"><p>{{getTimeFormat(tracker.ts)}}</p></td>
+												<td ng-show="headTxt == 'Battery Low' || headTxt == 'Tampered'"><p>{{tracker.ts | date:'dd/MM/yyyy, HH:mm'}}</p></td>
 											</tr>
 										</tbody>
 									</table>
