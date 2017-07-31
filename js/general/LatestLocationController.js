@@ -24,8 +24,10 @@ batsGeneralHome.controller('GeneralLatestLocationCtrl', function($rootScope,$sco
 	
 	$scope.availableDeveice = false;
 
+	$scope.glists = function(){
 	$scope.customer={};
 	$scope.customer.token=token;
+	$scope.httpLoading=true;
 	//console.log(JSON.stringify($scope.customer));
 	$http({
 		method    : 'POST',
@@ -36,6 +38,7 @@ batsGeneralHome.controller('GeneralLatestLocationCtrl', function($rootScope,$sco
 	.success(function(data){
 		//console.log(JSON.stringify(data));
 		$scope.groupList = data.glist;
+		$scope.httpLoading=false;
 	})
 	.error(function(data,status,headers,config){
 		  if(data.err == "Expired Session")
@@ -51,6 +54,7 @@ batsGeneralHome.controller('GeneralLatestLocationCtrl', function($rootScope,$sco
 //		console.log(headers);
 //		console.log(config);
 	})
+	}
 	
 
 	/**

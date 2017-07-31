@@ -37,7 +37,7 @@ batsAdminHome.controller('dashboardController', function($scope, $http, $rootSco
     	var data=[
   	            {name: "Allocated",y: $scope.TrackerCount.allocated, color: '#008cdc'},
   	            {name: "Unalloacted",y: $scope.TrackerCount.unallocated, color: '#b3b3b3'},
-  	            {name: "Notworking",y: $scope.TrackerCount.nonworking, color: '#e54a4e' },          
+  	            // {name: "Notworking",y: $scope.TrackerCount.nonworking, color: '#e54a4e' },          
   	           ];
     	commonAppService.donutChart('container',data);
     	
@@ -145,7 +145,7 @@ batsAdminHome.controller('dashboardTripController', function($scope, $http, $roo
 				   }
 				   else{
 					   $scope.hideTripTable=true;
-					   alert(result.data);
+					   //alert(result.data);
 				   }				   
 			});    
 //		}
@@ -301,32 +301,34 @@ batsAdminHome.controller('dashboardVehicleController', function($scope,$rootScop
 		commonAppService.scrollTo(eID);
 	}
 	
-	/*$('.dashbHover')
-    .hover("mouseenter", function() {
-        $(this).append('<p id="passopt">Click Me!</p>');
-    })
-    .hover("mouseleave", function() {
-        $(this).children('#passopt').remove();
-    });*/
-/*	$(function() {
-		  $('.dashbHover,#ActiveThird-ring1,#NotActiveThird-ring1,#BatteryThird-ring1,#TamperedThird-ring1,.TripOuterCircle').hover(function() {
+	// $('.dashbHover')
+ //    .hover("mouseenter", function() {
+ //        $(this).append('<p id="passopt">Click Me!</p>');
+ //    })
+ //    .hover("mouseleave", function() {
+ //        $(this).children('#passopt').remove();
+ //    });
+	$(function() {
+		  $('.dashbHover,#ActiveThird-ring1,#NotActiveThird-ring1,#NotWorkingThird-ring1,#BatteryThird-ring1,#TamperedThird-ring1,.TripOuterCircle').hover(function() {
 			  $(this).append('<p id="passopt">Click Me!</p>');
 			  $(this).css("text-decoration","none");
+			  $(this).css("font-size","12px");
 		  },function(){
 			$(this).children('#passopt').remove();
 		  });
 		  
-		});*/
+		});
 	
-	/*$(function() {
+	$(function() {
 		  $('.vehicleHoverClass').hover(function() {
 			  $(this).append('<p id="vehicleHover">Click Me!</p>');
 			  $(this).css("text-decoration","none");
+			  $(this).css("font-size","12px");
 		  },function(){
 			$(this).children('#vehicleHover').remove();
 		  });
 		  
-		});*/
+		});
 	var d = new Date();
     var month = d.getMonth()+1;
     var day = d.getDate();

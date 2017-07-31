@@ -32,8 +32,10 @@ batsGeneralHome.controller("GeneralMaxKmCtrl",function($rootScope,$http,$scope,$
 	// $scope.hist = {"searchGroupModel":""};
 	// $scope.hist.searchDeviceModel = "";
 	
+	$scope.glists =function(){
 	$scope.customer = {};
 	$scope.customer.token = token;
+	$scope.httpLoading=true;
 	// console.log(JSON.stringify($scope.customer));
 	$http({
 	  method  : 'POST',		  
@@ -43,6 +45,7 @@ batsGeneralHome.controller("GeneralMaxKmCtrl",function($rootScope,$http,$scope,$
 	 })
 	  .success(function(data) {
 	  $scope.groupList = data.glist;
+	  $scope.httpLoading=false;
 	  // console.log(JSON.stringify($scope.groupList));
 	  })
 	  .error(function(data, status, headers, config) {
@@ -60,6 +63,7 @@ batsGeneralHome.controller("GeneralMaxKmCtrl",function($rootScope,$http,$scope,$
 		  console.log(headers);
 		  console.log(config);
 	  });
+	  }
 	
 	$scope.fetchDevList = function(groupID) {
 		$scope.httpLoading=true;

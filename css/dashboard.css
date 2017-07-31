@@ -313,7 +313,7 @@ table.activeTableStyle tbody td:first-child {
     -webkit-tap-highlight-color: transparent;
 }
 
-#ActiveRings1,#NotActiveRings1,#BatteryRings1,#TamperedRings1 {
+#ActiveRings1,#NotActiveRings1,#BatteryRings1,#TamperedRings1,#NotWorkingRings1 {
     position: relative;
     text-align: center;
     /* width: 200px; */
@@ -349,7 +349,7 @@ table.activeTableStyle tbody td:first-child {
     -moz-animation: turn_clockwise 10s infinite;
     animation: turn_clockwise 10s infinite; */   
 }
-#ActiveFirst-ring1, #NotActiveFirst-ring1,#BatteryFirst-ring1,#TamperedFirst-ring1 {
+#ActiveFirst-ring1, #NotActiveFirst-ring1,#BatteryFirst-ring1,#TamperedFirst-ring1,#NotWorkingFirst-ring1 {
    /*  position: absolute; */
     border: 8px solid #4698f2;
     /* border-top-color: #eee; */
@@ -379,6 +379,12 @@ table.activeTableStyle tbody td:first-child {
 #NotActiveFirst-ring1,#NotActiveThird-ring1{
 	border: 8px solid #edeef0;
 }
+
+
+#NotWorkingFirst-ring1,#NotWorkingThird-ring1{
+  border: 8px solid #edeef0;
+}
+
  
 #BatteryFirst-ring,#BatteryThird-ring{
 	border: 8px solid #fbedec;
@@ -419,6 +425,11 @@ table.activeTableStyle tbody td:first-child {
 #TamperedSecond-ring1{
 	border: 5px solid #ffd875;	
 }
+#NotWorkingSecond-ring1{
+  border: 5px solid #c7b299;  
+}
+
+
 #ActiveSecond-ring, #NotActiveSecond-ring,#BatterySecond-ring,#TamperedSecond-ring {
     position: absolute;
     /* border: 5px solid #f00; */
@@ -434,7 +445,7 @@ table.activeTableStyle tbody td:first-child {
     -moz-animation: turn_counter_clockwise ;
     animation: turn_counter_clockwise ; 
 }
-#ActiveSecond-ring1, #NotActiveSecond-ring1,#BatterySecond-ring1,#TamperedSecond-ring1 {
+#ActiveSecond-ring1, #NotActiveSecond-ring1,#BatterySecond-ring1,#TamperedSecond-ring1,#NotWorkingSecond-ring1 {
     position: absolute;
     /* border: 5px solid #f00; */
     /* border-top-color: #fff; */
@@ -464,7 +475,7 @@ table.activeTableStyle tbody td:first-child {
     -moz-animation: turn_clockwise 10s infinite;
     animation: turn_clockwise 10s infinite; */
 }
-#ActiveThird-ring1, #NotActiveThird-ring1,#BatteryThird-ring1,#TamperedThird-ring1 {
+#ActiveThird-ring1, #NotActiveThird-ring1,#BatteryThird-ring1,#TamperedThird-ring1,#NotWorkingThird-ring1 {
     position: absolute;
     /* border: 6px solid #315379; */
     /* border-bottom-color: #eee; */

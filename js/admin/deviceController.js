@@ -18,8 +18,14 @@ batsAdminHome.controller('deviceController', function($rootScope,$scope, $http, 
 	$scope.deviceNotAvailable = false;
 	$scope.noDevicesAllocated = false;
 	$scope.noDevicesUnAllocated = false;
+	$scope.regex = /^[^`~!@#$%\^&*()_+={}|[\]\\:';"<>?,./1-9]*$/;
 	
 	var pageRefresh;
+
+	//$scope.device_choice = [{name:"car"},{name:"bike"},{name:"truck"},{name:"bus"}];
+
+
+
 	// console.log($scope.token);
 	if (typeof $scope.token === "undefined") {
 		swal({
@@ -591,6 +597,13 @@ batsAdminHome.controller('deviceController', function($rootScope,$scope, $http, 
 			});
 		}).error(function(data, status, headers, config) {
 			// console.log(data.err);
+			if (data.err == "Some Trips are active, Please cancel Scheduled and Running trips") 
+			{
+				swal({
+				title : "Some Trips are active, Please cancel Scheduled and Running trips"
+				
+			})
+			}
 			if (data.err == "Expired Session") {
 				$('#updateDeviceModal').modal('hide');
 				expiredSession();

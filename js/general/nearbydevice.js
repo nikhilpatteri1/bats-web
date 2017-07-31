@@ -45,8 +45,12 @@ batsGeneralHome.controller('batsNearbyDevices', function($rootScope,$scope, $htt
 		center : centerVal,
 		zoom : 3
 	};
+
+
+	$scope.glists= function(){
 	$scope.customer = {};
 	$scope.customer.token = $scope.token;
+	$scope.httpLoading=true;
 	$http({
 		method : 'POST',
 		url : apiURL + 'group/list',
@@ -56,6 +60,7 @@ batsGeneralHome.controller('batsNearbyDevices', function($rootScope,$scope, $htt
 		}
 	}).success(function(data) {
 		listGroup(data);
+		$scope.httpLoading=false;
 	}).error(function(data, status, headers, config) {
 		// alert(data.err);
 		if (data.err == "Expired Session") {
@@ -72,6 +77,7 @@ batsGeneralHome.controller('batsNearbyDevices', function($rootScope,$scope, $htt
 		console.log(headers);
 		console.log(config);
 	});
+	}
 	/**
 	 * function to list the group id and name
 	 */

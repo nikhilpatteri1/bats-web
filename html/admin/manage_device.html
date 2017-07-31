@@ -351,9 +351,9 @@
 										ng-class="{ 'has-error' : updateDeviceForm.sr_num.$invalid && !updateDeviceForm.sr_num.$pristine }">
 										<label>Serial Number</label>
 										<!-- ng-show="device.sr_num" class="floatlabeltxt show-hide" -->
-										<input type="text" ng-model="device.sr_num" name="sr_num"
+										<input type="text" ng-model="device.sr_num" name="sr_num" 
 											class="form-control" placeholder="Serial Number" readonly
-											required />
+											required /> <!-- ng-pattern="panCardRegex" -->
 										<p
 											ng-show="updateDeviceForm.sr_num.$invalid && !updateDeviceForm.sr_num.$pristine"
 											class="help-block">Serial Number is required.</p>
@@ -367,13 +367,16 @@
 										<label>Vehicle Number</label>
 										<!-- ng-show="device.vehicle_num"
 											class="floatlabeltxt show-hide" -->
-										<input type="text" ng-model="device.vehicle_num"
-											name="vehicle_num"
+										<input type="text" ng-model="device.vehicle_num" ng-pattern="/^\S*$/"
+
+											name="vehicle_num" 
 											ng-blur="verifyVehicleNo(device.vehicle_num)"
 											class="form-control" placeholder="Vehicle Number" required />
+											
 										<p
 											ng-show="updateDeviceForm.vehicle_num.$invalid && !updateDeviceForm.vehicle_num.$pristine"
 											class="help-block">Vehicle Number is required.</p>
+											<span ng-show="updateDeviceForm.vehicle_num.$error.pattern" class="help-block">White Space not allowed</span>
 										<span class="help-block chk_frm_server" ng-show="error_vehno">Vechile
 											number is already associated</span>
 									</div>

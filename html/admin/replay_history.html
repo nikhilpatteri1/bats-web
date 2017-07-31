@@ -41,9 +41,9 @@
 						<option ng-repeat="option in groupList |orderBy:'gname' " value="{{ option.gid }}">{{option.gname}}</option>
 					</select>
 				</div>
-				<div class="col-sm-3 customcol3" id="clearTextDevice">
+				<!-- <div class="col-sm-3 customcol3" id="clearTextDevice">
 					<select id="selectDevice" class="form-control" name="deviceList"
-						ng-model="deviceId"
+						ng-model="deviceId" 
 						ng-change="fetchDeviceDetailHistory(deviceId);activeMenu = '5'">
 						<option></option>
 						<option ng-if="devlistObject.length" value="" selected disabled
@@ -52,6 +52,15 @@
 							No Device Available</option>
 						<option ng-repeat="option in devlistObject |orderBy:'devid' "
 							value="{{ option.devid }}">{{option.vehicle_num.length>0?option.vehicle_num:option.devid}}</option>
+					</select>
+				</div> -->
+				<div class="col-sm-3 customcol3" id="clearTextDevice">
+					<select id="selectDevice" class="form-control" name="deviceList"
+						ng-model="selectedOption" 
+						ng-options="option.vehicle_num.length>0?option.vehicle_num:option.devid for option in devlistObject"
+						ng-change="onChange(selectedOption);activeMenu = '5'">
+						<option value="" style="display: none"></option>
+						
 					</select>
 				</div>
 				<section ng-hide="showDatepicker">

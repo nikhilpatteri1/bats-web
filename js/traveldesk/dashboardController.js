@@ -38,11 +38,13 @@ batstravelDeskHome.controller('dashboardController', function($scope, $http,$int
 			name : "unalloacted",
 			y : $scope.TrackerCount.unallocated,
 			color : '#b3b3b3'
-		}, {
-			name : "Notworking",
-			y : $scope.TrackerCount.nonworking,
-			color : '#e54a4e'
-		}, ];
+		}, 
+		// {
+		// 	name : "Notworking",
+		// 	y : $scope.TrackerCount.nonworking,
+		// 	color : '#e54a4e'
+		// }, 
+		];
 		commonAppService.donutChart('container', data);
 
 		$scope.getPercentage = function(a, b) {
@@ -278,10 +280,11 @@ batstravelDeskHome.controller('dashboardVehicleController', function($scope,$loc
 		commonAppService.scrollTo(eID);
 	}
 	
-	/*$(function() {
+	$(function() {
 		  $('.dashbHover,#ActiveThird-ring1,#NotActiveThird-ring1,#BatteryThird-ring1,#TamperedThird-ring1,.TripOuterCircle').hover(function() {
 			  $(this).append('<p id="passopt">Click Me!</p>');
 			  $(this).css("text-decoration","none");
+			  $(this).css("font-size","12px");
 		  },function(){
 			$(this).children('#passopt').remove();
 		  });
@@ -292,11 +295,12 @@ batstravelDeskHome.controller('dashboardVehicleController', function($scope,$loc
 		  $('.vehicleHoverClass').hover(function() {
 			  $(this).append('<p id="vehicleHover">Click Me!</p>');
 			  $(this).css("text-decoration","none");
+			  $(this).css("font-size","12px");
 		  },function(){
 			$(this).children('#vehicleHover').remove();
 		  });
 		  
-		});*/
+		});
 	var d = new Date();
   var month = d.getMonth()+1;
   var day = d.getDate();

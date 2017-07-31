@@ -116,7 +116,7 @@
 											<div class="col-sm-2" >
 												<div class="row userIcons">
 													<div class="col-sm-12">
-													<div class="col-sm-6">
+													<!-- <div class="col-sm-6">
 														<a href="#" class="edit_icon" data-toggle="modal" ng-hide="{{tripdetail.status == 'R' || tripdetail.status == 'C' || tripdetail.status == 'F' ||  tripdetail.status == 'D'}}" 
 															ng-click="fetchTripInfo(tripdetail.trip_id);initUpdateMap()"
 															data-target="#updateTripModal"><i
@@ -124,7 +124,19 @@
 															<a href="#" class="delete_icon pad0" ng-hide="{{tripdetail.status == 'R' || tripdetail.status == 'C' || tripdetail.status == 'F'|| tripdetail.status == 'D' }}"
 															ng-click="cancelTrip(tripdetail.trip_id)"><i
 															class="fa fa-times"></i></a>
+													</div> -->
+													<div class="col-sm-6">
+														<a href="#" class="edit_icon" data-toggle="modal" ng-hide="{{tripdetail.status == 'R' || tripdetail.status == 'C' || tripdetail.status == 'F' ||  tripdetail.status == 'D'}}" 
+															
+															ng-click="fetchTripInfo(tripdetail.trip_id);
+															initUpdateMap()"
+															data-target="#updateTripModal"><i
+															class="fa fa-pencil"></i></a>
+															<a href="#" class="delete_icon pad0" ng-hide="{{tripdetail.status == 'R' || tripdetail.status == 'C' || tripdetail.status == 'F'|| tripdetail.status == 'D' }}"
+															ng-click="cancelTrip(tripdetail.trip_id)"><i
+															class="fa fa-times"></i></a>
 													</div>
+													<!-- ng-click="fetchTripInfo(tripdetail.trip_id); -->
 													<!-- <div class="col-sm-4">
 														<a href="#" class="delete_icon"
 															ng-click="cancelTrip(tripdetail.trip_id)"><i
@@ -140,7 +152,8 @@
 																		<i class="icon" ng-class="isEventShown(tripdetail)?'fa fa-angle-up':'fa fa-angle-down'"></i>
 														</button>
 														
-														<!-- id="id_{{driverdetail.driver_id}}" -->
+														<!-- id="id_{{driverdetail.driver_id}}"
+														data-target="#{{tripdetail.trip_id}}" -->
 														
 														
 														<!-- <button class="btn btn-primary btn-sm" data-toggle="collapse"
@@ -160,11 +173,13 @@
 												
 													<div class="col-sm-1">
 														<img
-															src="{{tripdetail.image_src.length>0?tripdetail.image_src:'../images/driver.png'}}"
+															src="{{tripdetail.image_src.length > 0 ? tripdetail.image_src : '../images/driver.png'}}"
 															class="img-responsive img-thumbnail fixWidthHeight Tripimg marT"
-															onerror="this.onerror=null;this.src='../images/driver.png';">
+															>
 													</div>
-													<div class="col-sm-2 pad0">
+													<!-- onerror="this.onerror=null;this.src='../images/driver.png';" -->
+													<!-- abn{{tripdetail.image_src.length > 0 ? "T":"F"}} -->
+													<div class="col-sm-3 pad0">
 														<p class="marT">Driver Details</p>
 														<div class="row">
 															<div class="col-sm-4">
@@ -187,7 +202,7 @@
 																<label>Licence no</label>
 															</div>
 															<div class="col-sm-8">
-																<!-- <p>{{tripdetail.contact_no}}</p> -->
+																<p>{{tripdetail.licence_id}}</p>
 															</div>
 														</div>
 														<div class="row">
@@ -230,7 +245,7 @@
 														</div>
 														<div class="row">
 															<div class="col-sm-4">
-																<label>Start time</label>
+																<label>Assigned Start time</label>
 															</div>
 															<div class="col-sm-8">
 																<p>{{getTimeFormat(tripdetail.td_start_point.ts)}}</p>
@@ -238,7 +253,7 @@
 														</div>
 														<div class="row">
 															<div class="col-sm-4">
-																<label class="marB">End time</label>
+																<label class="marB">Assigned End time</label>
 															</div>
 															<div class="col-sm-8">
 																<p>{{getTimeFormat(tripdetail.td_end_point.ts)}}</p>

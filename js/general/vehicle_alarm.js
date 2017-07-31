@@ -38,8 +38,10 @@ batsGeneralHome.controller('vehicleAlarm',function($rootScope,$scope, $http, $lo
 	* fetch device list based on group list
 */	
 	
+	$scope.glists = function(){
 	$scope.customer = {};
 	$scope.customer.token = $scope.token;
+	$scope.httpLoading=true;
 	//console.log(JSON.stringify($scope.customer));
 	$http({
 	  method  : 'POST',		  
@@ -49,6 +51,7 @@ batsGeneralHome.controller('vehicleAlarm',function($rootScope,$scope, $http, $lo
 	 })
 	  .success(function(data) {
 	  $scope.groupList = data.glist;
+	  $scope.httpLoading=false;
 	  //console.log(JSON.stringify($scope.groupList));
 	  })
 	  .error(function(data, status, headers, config) {
@@ -66,6 +69,8 @@ batsGeneralHome.controller('vehicleAlarm',function($rootScope,$scope, $http, $lo
 		  console.log(headers);
 		  console.log(config);
 	  });
+	  }
+
 	
 	$scope.fetchDevList = function(groupID) {
 	$scope.httpLoading=true;

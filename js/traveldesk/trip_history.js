@@ -322,6 +322,7 @@ batstravelDeskHome.controller('tripHistory', function($rootScope,$scope, $localS
 				}
 				else{
 					$scope.tripDetails=result.data;
+					$scope.driverStartTime = result.data;
 					$scope.showTripDropDown=true;
 					//$('.filterChoice, #openFilter').toggleClass('active');
 				}
@@ -329,6 +330,8 @@ batstravelDeskHome.controller('tripHistory', function($rootScope,$scope, $localS
 			});
 		}
 		
+		console.log($scope.tripName);
+
 		/**
 		 * 	Display the trip history data
 		 * 	on selection of trip
@@ -342,14 +345,38 @@ batstravelDeskHome.controller('tripHistory', function($rootScope,$scope, $localS
 		
 		
 		$scope.showHistoryData=function(tripDetail){
+			//console.log(trip_id);
 		   // alert("data");
 			console.log(tripDetail);
+			$scope.replayData ={};
+
+			$scope.replayData.devid = tripDetail.devid;
+			$scope.replayData.sts = tripDetail.drv_start_point.ts;
+			$scope.replayData.ets = tripDetail.drv_end_point.ts;
+			$scope.replayData.token = $scope.token;
+			console.log($scope.replayData);
+
+			travelDeskFactory.callApi("POST",apiURL+"device/history",$scope.replayData,function(result){
+			      //console.log(result);
+			console.log(result); 
+			$scope.driver_hist = result.values; 
+			      
+		});
+
+
 			$scope.showUpBtn=true;
 			$scope.startBouncing=true;
 			$scope.tripData=tripDetail;			
 			var polyPathArray=[];
-			var arr=$scope.tripData.path_way;
-			console.log(arr);
+			//var arr=$scope.tripData.path_way;
+			console.log($scope.driver_hist);
+			var arr=$scope.driver_hist;
+			console.log(arr.length);
+			if(arr.length == 0){
+				swal('Vehicle in stationary');
+			}
+			else
+			{
 			for(var inc=0;inc<arr.length;inc++){
 				var pathValues={};  
 				pathValues.lat=arr[inc][0];
@@ -388,6 +415,7 @@ batstravelDeskHome.controller('tripHistory', function($rootScope,$scope, $localS
 		    	 bounds.extend(latlng);
 		    }
 		        map.fitBounds(bounds);
+		    }
 		}
 	/*====================================================>>>>>> End of API function <<<<<=================================================*/
 		

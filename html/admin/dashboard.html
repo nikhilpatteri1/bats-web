@@ -102,7 +102,7 @@
 										<a class="dashbHover"><div class="trackerProgessCountUna" ng-click="getList(1);gotoElement('trackerDataTable');headTxt='Un Allocated';hideStatus=false">{{TrackerCount.unallocated}}</div></a>
 									</div>
 								</div>
-								<div class="row">
+								<!-- <div class="row">
 									<div class="col-sm-8">
 										<p class="trackerProgessText">Not Working</p>
 										<div class="progress trackerProgess">
@@ -114,7 +114,7 @@
 									<div class="col-sm-4">
 										<a class="dashbHover"><div class="trackerProgessCountNotW" ng-click="getList(6);gotoElement('trackerDataTable');headTxt='Not Working';hideStatus=true">{{TrackerCount.nonworking}}</div></a>  
 									</div>
-								</div>
+								</div> -->
 									
 								</div>
 							</div>
@@ -122,8 +122,8 @@
 						</div>
 					</div>
 				</div>
-				<div class="row mar0"> 
-					<div class="col-sm-3">
+				<div class="row mar0 notActMar"> 
+					<div class="col-sm-2">
 						<div class="activeDiv">
 						
 						<img alt="" src="../images/activated.png" class="activeImg">
@@ -147,7 +147,7 @@
 						</div>
 				        </div>
 					</div>
-					<div class="col-sm-3">
+					<div class="col-sm-2">
 						<div class="activeDiv">    
 						<img alt="" src="../images/not-activated.png" class="activeImg">
 						<div class="text">Not activated</div>
@@ -163,7 +163,23 @@
 				        
 				        </div>
 					</div>
-					<div class="col-sm-3">
+					<div class="col-sm-2">
+						<div class="activeDiv">    
+						<img alt="" src="../images/not-working.png" class="activeImg">
+						<div class="text">Not Working</div>
+				        <div id="NotWorkingRings1">
+						    <div id="NotWorkingFirst-ring1">
+						        <div id="NotWorkingSecond-ring1">
+						            <div id="NotWorkingThird-ring1" ng-class="{'removeCursorPointer':TrackerCount.nonworking<=0}" ng-click="getList(6);gotoElement('trackerDataTable');headTxt='Not Working';hideStatus=true">
+						            <div class="ActiveRingsTxt">{{TrackerCount.nonworking}}</div>
+						            </div>
+						        </div>
+						    </div>
+						</div>
+				        
+				        </div>
+					</div>
+					<div class="col-sm-2">
 						<div class="activeDiv">
 						<img alt="" src="../images/battery-low.png" class="activeImg">
 						<div class="text">Battery Low</div>
@@ -179,7 +195,7 @@
 				        
 				        </div>
 					</div>
-					<div class="col-sm-3">
+					<div class="col-sm-2">
 						<div class="activeDiv">
 						<img alt="" src="../images/tampered.png" class="activeImg">
 						<div class="text">Tampered</div>
@@ -207,7 +223,7 @@
 											<tr>
 												
 												<th> 
-													<div class="tableThickline" ng-style="headTxt == 'Allocated' && {'background-color':'#008cdc'}  || headTxt == 'Un Allocated' && {'background-color':'#b3b3b3'} || headTxt == 'Activated' && {'background-color':'#01ae81'} || headTxt == 'Not activated' && {'background-color':'#5d686c'} || headTxt == 'Battery Low' && {'background-color':'#ee4423'} || headTxt == 'Tampered' && {'background-color':'#ffcc33'} || headTxt == 'Not Working' && {'background-color':'#ee4423'}"></div>
+													<div class="tableThickline" ng-style="headTxt == 'Allocated' && {'background-color':'#008cdc'}  || headTxt == 'Un Allocated' && {'background-color':'#b3b3b3'} || headTxt == 'Activated' && {'background-color':'#01ae81'} || headTxt == 'Not activated' && {'background-color':'#5d686c'} || headTxt == 'Battery Low' && {'background-color':'#ee4423'} || headTxt == 'Tampered' && {'background-color':'#ffcc33'} || headTxt == 'Not Working' && {'background-color':'#c7b299'}"></div>
 												</th> <!--  == 'Scheduled'? {'background-color':'#008cdc'}:{'background-color':'#000000'} -->
 												<th><p class="tableThickTxt">{{headTxt}}</p></th>
 												<th></th>

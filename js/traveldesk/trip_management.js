@@ -42,13 +42,21 @@ batstravelDeskHome.controller('tripManagement', function($rootScope,$scope, $loc
 	}*/
 	
 	$scope.toggleEventInfo = function(driverd) {
+		console.log(driverd);
+		console.log($scope.isEventShown(driverd));
 	    if ($scope.isEventShown(driverd)) {
+	    	console.log("if");
 	      $scope.shownEvent = null;
 	    } else {
 	      $scope.shownEvent = driverd;
+	      console.log("else");
 	    }
 	  };
+
+
 	  $scope.isEventShown = function(driverd) {
+	  	console.log($scope.shownEvent);
+	  	console.log(driverd);
 	    return $scope.shownEvent === driverd;
 	  };
 	
@@ -673,7 +681,7 @@ batstravelDeskHome.controller('tripManagement', function($rootScope,$scope, $loc
 		
 	   directionsDisplay.setMap(updateMap);
 	   google.maps.event.addListener(updateMap, 'click', function(event) {
-		   alert("hi");
+		   //alert("hi");
 		   console.log(event.latLng);
 		   /*$scope.update.startlat = this.getPosition().lat();
 			$scope.update.startlong= this.getPosition().lng();*/

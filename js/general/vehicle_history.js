@@ -84,9 +84,12 @@ batsGeneralHome.controller('vehicleHistory',function($rootScope,$scope, $http, $
 	/**
 	 * on load fetch and fill group drop down menu
 	 * */
+
+	$scope.glists = function(){
 	$scope.admingroup = {};
 	$scope.admingroup.token = $scope.token;
 	// console.log($scope.admingroup);
+	$scope.httpLoading=true;
 	$http({
 		method : 'POST',
 		url : apiURL + 'group/list',
@@ -96,6 +99,7 @@ batsGeneralHome.controller('vehicleHistory',function($rootScope,$scope, $http, $
 		}
 	}).success(function(data) {
 		listGroup(data);
+		$scope.httpLoading=false;
 	}).error(function(data, status, headers, config) {
 		if (data.err == "Expired Session") {
 			$('#updateDeviceModal').modal('hide');
@@ -111,6 +115,7 @@ batsGeneralHome.controller('vehicleHistory',function($rootScope,$scope, $http, $
 		console.log(headers);
 		console.log(config);
 	});
+	}
 	/**
 	 * function to list the group id and name
 	 */

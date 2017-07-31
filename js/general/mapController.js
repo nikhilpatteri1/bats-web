@@ -118,7 +118,8 @@ batsGeneralHome.controller('GeneralController', function($rootScope,$scope, $int
 				 */
 			    $scope.zoomlevel=0;
 				google.maps.event.addListener(map, 'zoom_changed', function() {
-				    $scope.zoomlevel = map.getZoom();    			    
+				    $scope.zoomlevel = map.getZoom();  
+				      			    
 				});
 				function wheelEvent( event ) {
 					// console.log($scope.zoomlevel);
@@ -132,7 +133,7 @@ batsGeneralHome.controller('GeneralController', function($rootScope,$scope, $int
 						}
 					}
 					}
-					
+					$scope.$apply();
 			    }
 			    
 			    $map[0].addEventListener( 'mousewheel', wheelEvent, true );
@@ -772,6 +773,8 @@ batsGeneralHome.controller('GeneralController', function($rootScope,$scope, $int
 		 * scope.updateMap(MarkersOnload, mapPosOnload,polygonOnload);
 		 */
 		// Count of vehicle count
+
+
 		var multiDeviceInterval, singleDeviceInterval;
 		$scope.multiDevice = false;
 		$scope.singleDevice = false;
@@ -783,6 +786,9 @@ batsGeneralHome.controller('GeneralController', function($rootScope,$scope, $int
 		$scope.admingroup = {};
 		$scope.admingroup.token = $scope.token;
 		 console.log($scope.admingroup);
+
+		$scope.glists = function(){
+			$scope.httpLoading=true;
 		$http({
 			method : 'POST',
 			url : apiURL + 'group/list',
@@ -792,7 +798,9 @@ batsGeneralHome.controller('GeneralController', function($rootScope,$scope, $int
 			}
 		}).success(function(data) {
 			// console.log(JSON.stringify(data));
+
 			listGroup(data);
+			$scope.httpLoading=false;
 		}).error(function(data, status, headers, config) {
 			console.log(data);
 			if (data.err == "Expired Session") {
@@ -806,6 +814,7 @@ batsGeneralHome.controller('GeneralController', function($rootScope,$scope, $int
 			console.log(headers);
 			console.log(config);
 		});
+		}
 		/**
 		 * function to list the group id and name
 		 */

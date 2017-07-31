@@ -86,7 +86,9 @@ batsAdminHome.controller('LatestLocationCtrl', function($scope,$rootScope, $http
 		var devlist = data.devlist;
 		for(i=0;i<devlist.length;i++){
 		    if(devlist[i].devtype == ""){
-			var device_list = {"devid":devlist[i].devid,"vehicle_num":devlist[i].vehicle_num,"lat":devlist[i].lat,"long":devlist[i].long,"devtype":"marker"};
+			var device_list = {"devid":devlist[i].devid,"vehicle_num":devlist[i].vehicle_num,"lat":devlist[i].lat,"long":devlist[i].long,"devtype":"car"};
+		    resultDevices.push(device_list);
+		    console.log(device_list);
 		    }
 		    else{
 			var device_list = {"devid":devlist[i].devid,"vehicle_num":devlist[i].vehicle_num,"lat":devlist[i].lat,"long":devlist[i].long,"devtype":devlist[i].devtype};

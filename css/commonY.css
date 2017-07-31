@@ -401,3 +401,7 @@ background: coral;
     padding: 4px 18px !important;
     font-size: 15px!important;
 }
+
+.notActMar{
+    margin-right: -20% !important;
+}

@@ -271,11 +271,12 @@ batsGeneralHome.controller('dashboardVehicleController', function($scope,$localS
 		        }
 		);
 	};
-	/*
+	
 	$(function() {
 		  $('.dashbHover,#ActiveThird-ring1,#NotActiveThird-ring1,#BatteryThird-ring1,#TamperedThird-ring1,.TripOuterCircle').hover(function() {
 			  $(this).append('<p id="passopt">Click Me!</p>');
 			  $(this).css("text-decoration","none");
+			  $(this).css("font-size","12px");
 		  },function(){
 			$(this).children('#passopt').remove();
 		  });
@@ -286,11 +287,12 @@ batsGeneralHome.controller('dashboardVehicleController', function($scope,$localS
 		  $('.vehicleHoverClass').hover(function() {
 			  $(this).append('<p id="vehicleHover">Click Me!</p>');
 			  $(this).css("text-decoration","none");
+			  $(this).css("font-size","12px");
 		  },function(){
 			$(this).children('#vehicleHover').remove();
 		  });
 		  
-		});*/
+		});
 	var d = new Date();
 	var month = d.getMonth()+1;
 	var day = d.getDate();

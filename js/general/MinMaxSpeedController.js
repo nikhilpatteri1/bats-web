@@ -33,8 +33,10 @@ batsGeneralHome.controller("GeneralMinMaxSpeedCtrl",function($rootScope,$http,$s
 	// $scope.hist = {"searchGroupModel":""};
 	// $scope.hist.searchDeviceModel = "";
 	
+	$scope.glists =function(){
 	$scope.customer = {};
 	$scope.customer.token = token;
+	$scope.httpLoading=true;
 	// console.log(JSON.stringify($scope.customer));
 	$http({
 	  method  : 'POST',		  
@@ -44,6 +46,7 @@ batsGeneralHome.controller("GeneralMinMaxSpeedCtrl",function($rootScope,$http,$s
 	 })
 	  .success(function(data) {
 	  $scope.groupList = data.glist;
+	  $scope.httpLoading=false;
 	  // console.log(JSON.stringify($scope.groupList));
 	  })
 	  .error(function(data, status, headers, config) {
@@ -61,7 +64,8 @@ batsGeneralHome.controller("GeneralMinMaxSpeedCtrl",function($rootScope,$http,$s
 		  console.log(headers);
 		  console.log(config);
 	  });
-	
+	}
+
 	$scope.fetchDevList = function(groupID) {
 		$scope.httpLoading=true;
 		$('#clearTextDevice span.select2-chosen').empty();  
