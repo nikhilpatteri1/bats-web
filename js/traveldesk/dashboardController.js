@@ -35,7 +35,7 @@ batstravelDeskHome.controller('dashboardController', function($scope, $http,$int
 			y : $scope.TrackerCount.allocated,
 			color : '#008cdc'
 		}, {
-			name : "unalloacted",
+			name : "unallocated",
 			y : $scope.TrackerCount.unallocated,
 			color : '#b3b3b3'
 		}, 

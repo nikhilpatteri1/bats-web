@@ -182,6 +182,8 @@ batstravelDeskHome.controller('tripHistory', function($rootScope,$scope, $localS
 		            }).on("dp.change",function (e) {
 		            	//$("#tripHistoryDate").blur(); 
 		            	//closeResult();
+		            	$('#selectTripSection span.select2-chosen').empty();
+		$('#selectTripSection span.select2-chosen').text("- - Select Device - -");
 		            });
 			//startDateMinMaxError.style.display = 'none';
 		});
@@ -290,6 +292,18 @@ batstravelDeskHome.controller('tripHistory', function($rootScope,$scope, $localS
 		/*
 		 * fetch history*/
 		$scope.fetchHistory=function(searchtype){
+
+
+		$('#selectTripSection span.select2-chosen').empty();
+		$('#selectTripSection span.select2-chosen').text("- - Select Trip - -");
+
+		//historypolyline.setMap(null);
+		if(historypolyline!=null){
+			    	  historypolyline.setMap(null);
+			    	  historypolyline=null;
+			      }
+
+
 		    //console.log(searchtype);
 			$scope.httpLoading=true;
 			
@@ -347,6 +361,14 @@ batstravelDeskHome.controller('tripHistory', function($rootScope,$scope, $localS
 		$scope.showHistoryData=function(tripDetail){
 			//console.log(trip_id);
 		   // alert("data");
+
+
+		   if(historypolyline!=null){
+			    	  historypolyline.setMap(null);
+			    	  historypolyline=null;
+			      }
+
+
 		   $scope.driver_hist;
 			console.log(tripDetail);
 			$scope.replayData ={};
@@ -355,12 +377,12 @@ batstravelDeskHome.controller('tripHistory', function($rootScope,$scope, $localS
 			
 
 			if(tripDetail.status === "C"){
-					swal("trip cancelled");
+					swal("Trip cancelled");
 					$scope.replayData.sts = 0;
 					$scope.replayData.ets = 0;
 			}
 			else if(tripDetail.status === "R"){
-				swal("trip running");
+				//swal("Trip running");
 				$scope.replayData.sts = tripDetail.drv_start_point.ts;
 				//$scope.replayData.ets = tripDetail.drv_end_point.ts;
 				var d = new Date();
@@ -370,7 +392,7 @@ batstravelDeskHome.controller('tripHistory', function($rootScope,$scope, $localS
 			}
 			else if(tripDetail.status === "S")
 			{
-				swal("trip Scheduled");
+				swal("Trip Scheduled");
 				$scope.replayData.sts = 0;
 					$scope.replayData.ets = 0;
 
@@ -388,6 +410,9 @@ batstravelDeskHome.controller('tripHistory', function($rootScope,$scope, $localS
 
 
 
+			$scope.showUpBtn=true;
+			$scope.startBouncing=true;
+			$scope.tripData=tripDetail;
 
 			travelDeskFactory.callApi("POST",apiURL+"device/history",$scope.replayData,function(result){
 			      //console.log(result);
@@ -398,18 +423,22 @@ batstravelDeskHome.controller('tripHistory', function($rootScope,$scope, $localS
 			//var arr=$scope.tripData.path_way;
 			console.log($scope.driver_hist);
 			var arr=$scope.driver_hist;
-			console.log(arr.length);
+			console.log(arr);
 			if(arr.length == 0){
 				console.log("0")
 				swal('Vehicle in stationary');
 			}
 			else
 			{
-				console.log("data");
+				//console.log("data");
 				for(var inc=0;inc<arr.length;inc++){
 					var pathValues={};  
-					pathValues.lat=arr[inc][0];
-					pathValues.lng=arr[inc][1]; 
+					//pathValues.lat=arr[inc][0];
+					//pathValues.lng=arr[inc][1]; 
+
+					pathValues.lat=Number(arr[inc].lat);
+					pathValues.lng=Number(arr[inc].long); 
+					//console.log(pathValues);
 					polyPathArray.push(pathValues);
 					console.log(pathValues);
 				}
@@ -418,6 +447,7 @@ batstravelDeskHome.controller('tripHistory', function($rootScope,$scope, $localS
 				var iconsettings = {
 			            path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
 			        };
+			        console.log(polyPathArray);
 			    var polylineoptns = {
 			            path: polyPathArray,
 			            strokeOpacity: 0.8,
@@ -428,10 +458,9 @@ batstravelDeskHome.controller('tripHistory', function($rootScope,$scope, $localS
 			                repeat:'35px',
 			                offset: '100%'}]
 			        };
-			      if(historypolyline!=null){
-			    	  historypolyline.setMap(null);
-			    	  historypolyline=null;
-			      }
+console.log(polylineoptns);
+
+			      
 			      
 			      historypolyline = new google.maps.Polyline(polylineoptns);	      
 			      console.log(historypolyline);
@@ -448,9 +477,7 @@ batstravelDeskHome.controller('tripHistory', function($rootScope,$scope, $localS
 			      
 				});
 
-			$scope.showUpBtn=true;
-			$scope.startBouncing=true;
-			$scope.tripData=tripDetail;			
+						
 			
 
 		}
