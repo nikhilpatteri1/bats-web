@@ -424,3 +424,7 @@ padding: 10px !important;
 .disabled {
   cursor: not-allowed;
 }
+
+/*#s2id_selectTrip .select2-default {
+  color: #f00 !important;
+}*/
