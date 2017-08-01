@@ -140,7 +140,7 @@ batsAdminHome.controller('TDcontroller',function($rootScope,$scope,$http,$localS
 				else if (data.msg == "User with this name already exist."){
 		       		swal("Email Id already exists. Enter different mail id.");  
 		       	  }
-				 else if (data.msg == "user with this email already exist."){
+				 else if (data.err == "User with this email already exist"){
 			       		swal("Email Id already exists. Enter different mail id.");  
 			       	  }
 			});
@@ -191,11 +191,17 @@ batsAdminHome.controller('TDcontroller',function($rootScope,$scope,$http,$localS
 				expiredSession();
 				$localStorage.$reset();	
 			}
-			else if (dat.err == "Invalid User"){
+			else if (data.err == "Invalid User"){
 				/*$('#driverCreateModal').modal('hide');*/
 	       		  invalidUser();
 	   			  $localStorage.$reset();
 			}
+			else if (data.err == "User with this name already exist."){
+		       		swal("Email Id already exists. Enter different mail id.");  
+		       	  }
+				 else if (data.err == "User with this email already exist"){
+			       		swal("Email Id already exists. Enter different mail id.");  
+			       	  }
 			
 		});
 		
