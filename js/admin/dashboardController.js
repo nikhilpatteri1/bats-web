@@ -60,7 +60,7 @@ batsAdminHome.controller('dashboardController', function($scope, $http, $rootSco
     	if(result.data!="Trackers data not available for this status "+status){
 			   $scope.hideTripTable=false;
 			   $scope.TrackerActList = result;
-			   console.log($scope.TrackerActList);
+			   console.log($scope.TrackerActList+"\n"+$scope.TrackerActList.ts);
 		   }
 		   else{
 			   $scope.hideTripTable=true;

@@ -257,7 +257,8 @@
 												
 												<!-- <td ng-show="headTxt='Not Working'"><p>{{tracker.gname}}</p></td> -->
 												<td><p>{{tracker.vehicle_model}}</p></td>
-												<td ng-show="headTxt == 'Battery Low' || headTxt == 'Tampered'"><p>{{getTimeFormat(tracker.ts)}}</p></td>
+												{{tracker.ts}}
+												<td ng-show="headTxt == 'Battery Low' || headTxt == 'Tampered'"><p>{{tracker.ts | date:'dd/MM/yyyy, HH:mm'}}</p></td>
 											</tr>
 										</tbody>
 									</table>
