@@ -57,6 +57,7 @@
 										<label class="labelClass">Email</label> 
 										<input type="email"
 											ng-model="travelDesk.Email"
+											ng-keyup="verifyEmail(travelDesk.Email)"
 											ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
 											name="useremail" class="form-control TDinput"
 											placeholder="Enter Email Id" required />
@@ -64,11 +65,14 @@
 											ng-show="travelDeskForm.useremail.$touched  && travelDeskForm.useremail.$invalid"
 											class="help-block error-help">Email is required</p>
 										<p
-											ng-show="travelDeskForm.useremail.$error.pattern && !travelDeskForm.usermail.$pristine"
+											ng-show="travelDeskForm.useremail.$error.pattern && !travelDeskForm.useremail.$pristine"
 											class="help-block error-help">Enter a valid email.</p>
+											<span class="help-block chk_frm_server"
+										ng-show="error_mail.umail">{{statusMail}}</span>
 									</div>
 								</div>
 							</div>
+							<!-- {{travelDesk.Email}} -->
 							<div class="row">
 								<div class="col-sm-12">
 									<div class="form-group"
@@ -192,7 +196,7 @@
 													class="floatlabeltxt show-hide">Enter Email Id</label> -->
 									<label class="labelClass">Email</label> <input type="email"
 										ng-model="travelDesk.Email"
-										ng-keyup="verifyEmail(userUpdate.email)"
+										ng-keyup="verifyEmail(travelDesk.Email)"
 										ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
 										name="useremail" class="form-control TDinput"
 										placeholder="Enter Email Id" required />
