@@ -767,4 +767,14 @@ table td.shrink {
 	background-color:#f6fffc;
 }
 
+.not-working{
+    padding-top:2px;
+}
+.not-working-img{
+    height:20px;
+    width:20px;
+}
 
+.not-working-text{
+    padding-top:5px;
+}
