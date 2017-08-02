@@ -297,9 +297,12 @@ batstravelDeskHome.controller('tripHistory', function($rootScope,$scope, $localS
 		$('#selectTripSection span.select2-chosen').empty();
 		$('#selectTripSection span.select2-chosen').text("- - Select Trip - -");
 
+		$('#selectTripSection1 span.select2-chosen').empty();
+		$('#selectTripSection1 span.select2-chosen').text("- - Select Trip - -");
+
 		//historypolyline.setMap(null);
 		if(historypolyline!=null){
-			    	  historypolyline.setMap(null);
+			    	  historypolyline.setMap(null); 
 			    	  historypolyline=null;
 			      }
 
@@ -353,14 +356,21 @@ batstravelDeskHome.controller('tripHistory', function($rootScope,$scope, $localS
 		
 		$scope.getStatus= function(tripDataStatus)
 			{
-			return travelDeskService.showStatus(tripDataStatus);
+			return travelDeskService.showStatus(tripDataStatus); 
 			}
 		
 		
+			$scope.$watch('tripName', function(newvalue,oldvalue) {
+				if (oldVal == newVal) return; 
+    alert('here');
+				//alert(newvalue,oldvalue);
+            });
+
+
 		
 		$scope.showHistoryData=function(tripDetail){
 			//console.log(trip_id);
-		   // alert("data");
+		   alert("data");
 
 
 		   if(historypolyline!=null){

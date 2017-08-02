@@ -3,7 +3,7 @@
 		<div class="col-sm-10">
 			<div class="row">
 							<div class="col-sm-12">
-								<label class="custom_label">Search Group</label>
+								<label class="custom_label">Select Group</label>
 							</div>
 			</div>
 			<ul class="nav nav-tabs managedivH">    
@@ -55,7 +55,9 @@
 							<select class="form-control" id="selectTrip" ng-model="tripName"
 								ng-options="tripDet.trip_name for tripDet in tripDetails track by tripDet.trip_id"
 								ng-change="showHistoryData(tripName)">
+								<option>abc{{tripDet.trip_name for tripDet in tripDetails track by tripDet.trip_id}}</option>
 							</select>
+							<!-- <p>abc{{tripDet.trip_name for tripDet in tripDetails track by tripDet.trip_id}}</p> -->
 						</div>
 
 					</div>
@@ -183,18 +185,18 @@
 									<div class="col-sm-4">
 										<label class="styleFormodelCOntent">Trip</label>
 										<div class="row">
-											<div class="col-sm-6">Actual Start time:</div>
-											<div class="col-sm-6">{{getTimeFormat(tripData.drv_start_point.ts)}}</div>
+											<div class="col-sm-6">{{tripData.status == "C" ? "Assigned Start Time" : "Actual Start Time"}}</div>
+											<div class="col-sm-6">{{tripData.status == "C" || tripData.status == "S"? getTimeFormat(tripData.td_start_point.ts) : getTimeFormat(tripData.drv_start_point.ts)}}</div>
 										</div>
 										<br />
 										<div class="row">
-											<div class="col-sm-6">Actual End time:</div>
-											<div class="col-sm-6">{{getTimeFormat(tripData.drv_end_point.ts)}}</div>
+											<div class="col-sm-6">{{tripData.status == "C" || tripData.status == "R" ? "Assigned End Time" : "Actual End Time"}}</div>
+											<div class="col-sm-6">{{tripData.status == "C" || tripData.status == "S" || tripData.status == "R"? getTimeFormat(tripData.td_end_point.ts) : getTimeFormat(tripData.drv_end_point.ts)}}</div>
 										</div>
 										<br />
 										<div class="row">
 											<div class="col-sm-6">Destination</div>
-											<div class="col-sm-6">{{tripData.destination}}</div>
+											<div class="col-sm-6">{{tripData.td_destination.name}}</div>
 										</div>
 									</div>
 								</div>
