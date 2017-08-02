@@ -93,6 +93,53 @@ batsAdminHome.controller('TDcontroller',function($rootScope,$scope,$http,$localS
 	}
     
     
+/**
+ 	* On typing of email in textbox of Form
+    * 1) Checks email is available or not*/	
+	$scope.verifyEmail=function(userEmail){
+		console.log("tad mail"+userEmail);
+		$scope.verifyEmailJson={};
+		$scope.verifyEmailJson.token=$scope.token;
+		$scope.verifyEmailJson.email=userEmail;
+		$scope.verifyEmailJson.uname = "";
+		console.log(JSON.stringify($scope.verifyEmailJson));
+		$http({
+		      method  : 'POST',		  
+		      url     : apiURL+'user/emailcheck',
+			  data    : JSON.stringify($scope.verifyEmailJson), 
+			  headers : { 'Content-Type': 'application/json' }
+		     })
+			  .success(function(data) {
+				  console.log(data.msg);
+				  $scope.statusMail=data.msg;
+				  if(data.status == true){
+					  $scope.umail=true;
+					  $scope.error_mail = {umail:false};
+				  }
+				  else{
+					  $scope.umail=false;
+					  $scope.error_mail = {umail:true};
+				  }
+		      })
+		      .error(function(data, status, headers, config) {
+		    	  $scope.isSaving=true;
+		    	  //console.log(data);
+		    	  if(data.err == "Expired Session")
+    			  {
+            		  $('#createUserModal').modal('hide');
+    			      expiredSession();
+    			      $localStorage.$reset();
+    			  }
+	        	  else if(data.err == "Invalid User"){
+	        		  $('#createUserModal').modal('hide');
+	        		  invalidUser();
+	    			  $localStorage.$reset();  
+	        	  }
+		    	  console.log(status);
+		    	  console.log(headers);
+		    	  console.log(config);
+			  });
+	};
     
     
     
@@ -142,7 +189,10 @@ batsAdminHome.controller('TDcontroller',function($rootScope,$scope,$http,$localS
 		       	  }
 				 else if (data.msg == "user with this email already exist."){
 			       		swal("Email Id already exists. Enter different mail id.");  
-			       	  }
+			      }
+			      else{
+			      	swal(data.err);
+			      }
 			});
 		}
 	
@@ -191,11 +241,20 @@ batsAdminHome.controller('TDcontroller',function($rootScope,$scope,$http,$localS
 				expiredSession();
 				$localStorage.$reset();	
 			}
-			else if (dat.err == "Invalid User"){
+			else if (data.err == "Invalid User"){
 				/*$('#driverCreateModal').modal('hide');*/
 	       		  invalidUser();
 	   			  $localStorage.$reset();
 			}
+			else if (data.err == "User with this name already exist."){
+		       		swal("Email Id already exists. Enter different mail id.");  
+		    }
+		    else if (data.err == "User with this email already exist"){
+			       		swal("Email Id already exists. Enter different mail id.");  
+			}
+			else{
+			      	swal(data.err);
+			      }
 			
 		});
 		

@@ -14,11 +14,11 @@ batsGeneralHome.controller('dashboardController', function($scope, $http, $rootS
 	};
 
 	$scope.isSet = function(tabNum) {
-		// $scope.showTripDropDown=false;
+		// $scope.showTripDropDown=false;LL
 		// $scope.tripDetails="";
 		/* console.log("in isSetTab"); */
 
-		return $scope.tab === tabNum;
+	   return $scope.tab === tabNum;
 	};
 
 	/* $scope.totalDevices=commonAppService.plotValues(); */
@@ -30,6 +30,7 @@ batsGeneralHome.controller('dashboardController', function($scope, $http, $rootS
 		console.log(result);
 		$scope.TrackerCount = result;		
 		$scope.getPercentage = function(a, b) {
+			
 			return ((b * 100) / a).toFixed(2);
 		}
 		/*
@@ -184,7 +185,7 @@ batsGeneralHome.controller('dashboardDriverController', function($scope,$localSt
 			var data=[
 		              {name: "Available", y: 0, color: '#00af81' },
 		              {name: "On Trip", y: 0, color: '#43aae5'},
-		              {name: "No drivers", y:100, color: '#e0e0e0'},
+		              // {name: "No drivers", y:100, color: '#e0e0e0'},
 		              ]
 			commonAppService.donutChart('DriverContainer',data); 
 		}
