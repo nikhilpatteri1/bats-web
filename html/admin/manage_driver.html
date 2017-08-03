@@ -395,6 +395,7 @@
 													class="select_widht_customer" required>
 													<!-- <option selected disabled value="">Select Blood
 														Group</option> -->
+													<option value="" style="display: none"></option>
 													<option>a+</option>
 													<option>a-</option>
 													<option>b+</option>
@@ -512,6 +513,7 @@
 												<select ng-model="driver.country" name="driverCountry"
 													class="select_widht_customer" ng-change="onSelectCountry()"
 													required>
+													<option value="" style="display: none"></option>
 													<option ng-repeat="c in country" value="{{c}}">{{c}}</option>
 												</select>
 												<p
@@ -535,6 +537,7 @@
 													class="select_widht_customer" required>
 													<!-- <option selected disabled value="">- - Select State
 												- -</option> -->
+													<option value="" style="display: none"></option>
 													<option ng-repeat="s in states" value="{{s}}">{{s}}</option>
 												</select>
 												<p
@@ -552,7 +555,7 @@
 											<div class="col-sm-12">
 												<select ng-model="driver.city" name="driverCity"
 													class="select_widht_customer" required>
-
+													<option value="" style="display: none"></option>
 													<option ng-repeat="c in getCities(driver.state)">{{c.name}}</option>
 												</select>
 												<p
