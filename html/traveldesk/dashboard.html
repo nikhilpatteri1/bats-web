@@ -257,7 +257,7 @@
 												<td ng-hide="hideStatus"><p>{{tracker.active_status=="I"?"Inactive":"Active"}}</p></td>
 												
 												
-												<td ng-if="headTxt == 'Not Working'"><p>{{tracker.gname}}</p></td>
+												<td ng-if="headTxt == 'Not Working' || headTxt == 'Battery Low' || headTxt == 'Tampered'"><p>{{tracker.gname}}</p></td>
 												<td ng-if="headTxt == 'Allocated' || headTxt == 'Activated' || headTxt == 'Not activated'"><p>{{tracker.values.associated_group.gname}}</p></td>
 												
 												<!-- <td ng-show="headTxt='Not Working'"><p>{{tracker.gname}}</p></td> -->
