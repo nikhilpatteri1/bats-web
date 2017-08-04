@@ -350,3 +350,22 @@ body {
 .tripCustomelist li {
 	list-style-type: none;
 }
+
+.rowPadding{
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.rowBorder{
+	border-bottom: 0.5px solid lightgrey;
+}
+
+.top-row{
+	margin-left:0px;
+	margin-right:0px;
+	border:1px solid black
+}
+
+.bold{
+	font-weight: bold;
+}

@@ -361,22 +361,22 @@ batstravelDeskHome.controller('tripHistory', function($rootScope,$scope, $localS
 		
 		
 			$scope.$watch('tripName', function(newvalue,oldvalue) {
-				if (oldVal == newVal) return; 
-    alert('here');
+				if (oldvalue == newvalue) return; 
+    			// alert('here');
 				//alert(newvalue,oldvalue);
             });
 
 
 		
-		$scope.showHistoryData=function(tripDetail){
+		$scope.showHistoryData = function(tripDetail){
 			//console.log(trip_id);
-		   alert("data");
+		   console.log("data: "+angular.toJson(tripDetail));
 
 
 		   if(historypolyline!=null){
-			    	  historypolyline.setMap(null);
-			    	  historypolyline=null;
-			      }
+				historypolyline.setMap(null);
+				historypolyline=null;
+			}
 
 
 		   $scope.driver_hist;
@@ -390,24 +390,19 @@ batstravelDeskHome.controller('tripHistory', function($rootScope,$scope, $localS
 					swal("Trip cancelled");
 					$scope.replayData.sts = 0;
 					$scope.replayData.ets = 0;
-			}
-			else if(tripDetail.status === "R"){
-				//swal("Trip running");
+			}else if(tripDetail.status === "R" || tripDetail.status === "D"){
+				swal("Trip running");
 				$scope.replayData.sts = tripDetail.drv_start_point.ts;
 				//$scope.replayData.ets = tripDetail.drv_end_point.ts;
 				var d = new Date();
 				var n = d.getTime();
 				$scope.replayData.ets = n;
 					
-			}
-			else if(tripDetail.status === "S")
-			{
+			}else if(tripDetail.status === "S"){
 				swal("Trip Scheduled");
 				$scope.replayData.sts = 0;
 					$scope.replayData.ets = 0;
-
-			}
-			else{
+			}else{
 				$scope.replayData.sts = tripDetail.drv_start_point.ts;
 				$scope.replayData.ets = tripDetail.drv_end_point.ts;
 

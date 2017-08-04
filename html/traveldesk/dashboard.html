@@ -243,25 +243,34 @@
 												<!-- <th><div>Slno</div></th> -->
 												<th><div></div></th>
 												<th><div>DEVICE ID</div></th>
-												<th><div>VEHICLE NO </div></th>
+												<th ng-if="headTxt != 'Tampered'"><div>VEHICLE NO</div></th>
+												<th ng-if="headTxt == 'Tampered'"><div>TAMPER TYPE</div></th>
 												<th ng-hide="hideStatus"><div>STATUS</div></th>
 												<th ng-hide="headTxt == 'Un Allocated'"><div>GROUP NAME</div></th>
-												<th><div>VEHICLE MODEL</div></th> 
+												<th ng-if="headTxt != 'Tampered'"><div>VEHICLE MODEL</div></th>
+												<th ng-if="headTxt == 'Tampered'"><div>VEHICLE NUMBER</div></th>
+												<th ng-if="headTxt == 'Tampered'"><div>TIME</div></th> 
 											</tr>
 										</thead>
 										<tbody class="tbodyStyle">
 											<tr class="tbodytr tabletbodytr" ng-repeat="tracker in TrackerActList">
 												<td><p class="culomPad">{{$index+1}}</p></td>   
 												<td><p>{{tracker.devid}}</p></td>
-												<td><p>{{tracker.vehicle_num}}</p></td>												
+												<td ng-if="headTxt != 'Tampered'"><p>{{tracker.vehicle_num}}</p></td>
+												<td ng-if="headTxt == 'Tampered'">
+													<span style="float:left;" ng-if="tracker.alarm_type=='TAT-S'"><img alt="" class="tamper-img" src="../images/eventH/sim-tamper.png"></span>
+													<span style="float:left;" ng-if="tracker.alarm_type=='TAT-T'"><img alt="" class="tamper-img" src="../images/eventH/tamper-top.png"></span>
+													<p class="tamper-text">{{tracker.alarm_type=="TAT-S"?"Sim Tamper":"Top Cover Tamper"}}</p></td>					
 												<td ng-hide="hideStatus"><p>{{tracker.active_status=="I"?"Inactive":"Active"}}</p></td>
 												
 												
-												<td ng-if="headTxt == 'Not Working'"><p>{{tracker.gname}}</p></td>
+												<td ng-if="headTxt == 'Not Working' || headTxt == 'Battery Low' || headTxt == 'Tampered'"><p>{{tracker.gname}}</p></td>
 												<td ng-if="headTxt == 'Allocated' || headTxt == 'Activated' || headTxt == 'Not activated'"><p>{{tracker.values.associated_group.gname}}</p></td>
 												
 												<!-- <td ng-show="headTxt='Not Working'"><p>{{tracker.gname}}</p></td> -->
-												<td><p>{{tracker.vehicle_model}}</p></td>
+												<td ng-if="headTxt != 'Tampered'"><p>{{tracker.vehicle_model}}</p></td>
+												<td ng-if="headTxt == 'Tampered'"><p>{{tracker.vehicle_num}}</p></td>
+												<td ng-if="headTxt == 'Tampered'"><p>{{tracker.ts | date:'dd/MM/yyyy, HH:mm'}}</p></td> 
 											</tr>
 										</tbody>
 									</table>

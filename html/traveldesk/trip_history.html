@@ -54,8 +54,9 @@
 						<div id="selectTripSection" class="col-sm-12">
 							<select class="form-control" id="selectTrip" ng-model="tripName"
 								ng-options="tripDet.trip_name for tripDet in tripDetails track by tripDet.trip_id"
-								ng-change="showHistoryData(tripName)">
-								<option>abc{{tripDet.trip_name for tripDet in tripDetails track by tripDet.trip_id}}</option>
+								ng-click="showHistoryData(tripName)">
+								<!-- <option>abc{{tripDet.trip_name for tripDet in tripDetails track by tripDet.trip_id}}</option> -->
+								<option value="" style="display: none"></option>
 							</select>
 							<!-- <p>abc{{tripDet.trip_name for tripDet in tripDetails track by tripDet.trip_id}}</p> -->
 						</div>
@@ -140,19 +141,105 @@
 				<a id="showHistoryData" style="z-index: 900;"
 					ng-class="{bounce:startBouncing}" ng-show="showUpBtn"
 					ng-click="stopBouncing()" class='modalButton '
-					data-direction='bottom' href='#'><label class=""
+					data-direction='top' href='#'><label class=""
 					style="font-style: italic;">Trip info</label></a>
 			</div>
 		</div>
-		<div id="historyModal" class="modal fade marginFormodal" role="dialog">
-			<div class="modal-dialog modal-lg marginFormodal">
+		<div id="historyModal" class="modal fade" role="dialog">
+			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
 					<div class="modal-header noStyle">
+						<div style="text-align:center;font-weight:bold;">Trip Details</div>
 						<button type="button" class="close " data-dismiss="modal">&times;</button>
 					</div>
 					<div class="modal-body bodymodel">
-						<div class="row ">
-							<div class="col-sm-12">
+						<div class="row top-row">
+								<div class="col-sm-12">
+						<div class="row" style="padding-left:15px;padding-right:15px;">
+							<!-- <div style="text-align:center;font-weight:bold;">Trip Details</div> -->
+							<div class="row rowPadding rowBorder">
+								<div class="col-sm-4">
+									<div class="bold">Driver Name:</div>
+								</div>
+								<div class="col-sm-6">
+									<div>{{tripData.driver_name}}</div>
+								</div>
+								<div class="col-sm-2">
+									<img
+										src="{{tripData.image_src.length>0?tripData.image_src:'../images/driver.png'}}"
+										class="img-responsive img-thumbnail fixWidthHeight"
+										onerror="this.onerror=null;this.src='../images/404.png';"
+										alt="alternative text">
+								</div>
+							</div>
+							<div class="row rowPadding rowBorder">
+								<div class="col-sm-4">
+									<div class="bold">Passenger Details:</div>
+								</div>
+								<div class="col-sm-8">
+									<div class="row" ng-repeat="customer in tripData.customers">
+										<div class="col-sm-6 rowPadding">Name: {{customer.name}}</div><div class="col-sm-6 rowPadding"> Ph: {{customer.cn}}</div>
+									</div>
+								</div>
+							</div>
+							<div class="row rowPadding rowBorder">
+								<div class="col-sm-4">
+									<div class="bold">Trip Destination:</div>
+								</div>
+								<div class="col-sm-8">
+									<div>{{tripData.td_destination.name}}</div>
+								</div>
+							</div>
+							<div class="row rowPadding rowBorder">
+								<div class="col-sm-4">
+									<div class="bold">Scheduled Start time by Traveldesk:</div>
+								</div>
+								<div class="col-sm-8">
+									<div>{{tripData.td_start_point.ts | date:'dd/MM/yyyy, HH:mm'}}</div>
+								</div>
+							</div>
+							<div class="row rowPadding rowBorder">
+								<div class="col-sm-4">
+									<div class="bold">Scheduled End time by Traveldesk:</div>
+								</div>
+								<div class="col-sm-8">
+									<div>{{tripData.td_end_point.ts | date:'dd/MM/yyyy, HH:mm'}}</div>
+								</div>
+							</div>
+
+							<div class="row rowPadding rowBorder" style="margin-top:10px;">
+								<div class="col-sm-4">
+									<div class="bold">Current Status:</div>
+								</div>
+								<div class="col-sm-8">
+									<div style="font-size:22px;font-weight:bold;">{{getStatus(tripData.status)}}</div>
+								</div>
+							</div>
+							<div class="row rowPadding rowBorder">
+								<div class="col-sm-4">
+									<div class="bold">Actual Start Time of Trip:</div>
+								</div>
+								<div class="col-sm-8">
+									<div>{{tripData.td_start_point.ts | date:'dd/MM/yyyy, HH:mm'}}</div>
+								</div>
+							</div>
+							<div class="row rowPadding rowBorder"  ng-if="tripData.status=='F' || tripData.status=='D'">
+								<div class="col-sm-4">
+									<div class="bold">Actual Drop Time of Trip:</div>
+								</div>
+								<div class="col-sm-8">
+									<div>{{tripData.drv_drop_point.ts | date:'dd/MM/yyyy, HH:mm'}}</div>
+								</div>
+							</div>
+							<div class="row rowPadding" ng-if="tripData.status=='F'">
+								<div class="col-sm-4">
+									<div class="bold">Actual End Time of Trip:</div>
+								</div>
+								<div class="col-sm-8">
+									<div>{{tripData.drv_end_point.ts | date:'dd/MM/yyyy, HH:mm'}}</div>
+								</div>
+							</div>
+							<!-- <div class="col-sm-12">
 								<div class="row">
 									<div class="col-sm-3">
 										<label class="styleFormodelCOntent">Driver</label>
@@ -201,8 +288,10 @@
 									</div>
 								</div>
 
-							</div>
+							</div> -->
 						</div>
+						</div>
+					</div>
 					</div>
 				</div>
 			</div>
