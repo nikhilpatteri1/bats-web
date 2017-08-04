@@ -92,7 +92,7 @@ batsAdminHome.controller('TDcontroller',function($rootScope,$scope,$http,$localS
 		
 	}
     
-    
+   
 /**
  	* On typing of email in textbox of Form
     * 1) Checks email is available or not*/	
