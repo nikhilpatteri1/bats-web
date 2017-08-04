@@ -428,3 +428,13 @@ padding: 10px !important;
 /*#s2id_selectTrip .select2-default {
   color: #f00 !important;
 }*/
+
+.tamper-text{
+    float:left;
+    padding-left:5px;
+    padding-top:5px;
+}
+
+.tamper-img{
+    height: 25px;
+}
