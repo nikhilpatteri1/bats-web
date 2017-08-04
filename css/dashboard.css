@@ -778,3 +778,13 @@ table td.shrink {
 .not-working-text{
     padding-top:5px;
 }
+
+.tamper-text{
+    float:left;
+    padding-left:5px;
+    padding-top:5px;
+}
+
+.tamper-img{
+    height: 25px;
+}

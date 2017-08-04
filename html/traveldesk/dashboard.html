@@ -249,7 +249,7 @@
 												<th ng-hide="headTxt == 'Un Allocated'"><div>GROUP NAME</div></th>
 												<th ng-if="headTxt != 'Tampered'"><div>VEHICLE MODEL</div></th>
 												<th ng-if="headTxt == 'Tampered'"><div>VEHICLE NUMBER</div></th>
-												<!-- <th ng-if="headTxt == 'Tampered'"><div>TIME</div></th> -->
+												<th ng-if="headTxt == 'Tampered'"><div>TIME</div></th> 
 											</tr>
 										</thead>
 										<tbody class="tbodyStyle">
@@ -270,7 +270,7 @@
 												<!-- <td ng-show="headTxt='Not Working'"><p>{{tracker.gname}}</p></td> -->
 												<td ng-if="headTxt != 'Tampered'"><p>{{tracker.vehicle_model}}</p></td>
 												<td ng-if="headTxt == 'Tampered'"><p>{{tracker.vehicle_num}}</p></td>
-												<!-- <td ng-if="headTxt == 'Tampered'"><p>{{tracker.ts | date:'dd/MM/yyyy, HH:mm'}}</p></td> -->
+												<td ng-if="headTxt == 'Tampered'"><p>{{tracker.ts | date:'dd/MM/yyyy, HH:mm'}}</p></td> 
 											</tr>
 										</tbody>
 									</table>
