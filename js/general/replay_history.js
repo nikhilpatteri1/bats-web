@@ -45,6 +45,7 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 	  $scope.headings;
 	  $rootScope.headings1;
 	  var heading;
+	  var eventmarker =new Array();
 	  
 
 	  
@@ -547,7 +548,8 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 			// console.log(JSON.stringify(data.values));
 			if($scope.histData.values.length>=1){
 				$scope.httpLoading=false;
-				displayHistory();				
+				displayHistory();	
+				eve_hist($scope.deviceHistoryjson);			
 			}
 			else{
 				$scope.httpLoading=false;
@@ -590,6 +592,180 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 	 * 1) Plot on Map History Path 2) Display on Table
 	 * -----------------------------------------------------------------------
 	 */
+
+
+
+
+	 function eve_hist(data) {
+
+var infowindow = new google.maps.InfoWindow({
+  size: new google.maps.Size(150,50)
+});
+
+	 	
+//var marker4 = [];
+
+//clearMap();
+  // console.log(marker);
+      
+  //     if (eventmarker[0]) { 
+  //             console.log(eventmarker);
+  //                for(i in eventmarker){
+  //              console.log(eventmarker);
+  //              eventmarker[i].setMap(null);
+  //              }
+  //              }
+  //     eventmarker = [];
+
+
+console.log(data);
+$scope.alarmHistData = {}
+$scope.alarmHistData = data;
+  $http({
+    method: 'POST',
+    url: apiURL+'device/alarmhistory',
+    data: JSON.stringify($scope.alarmHistData),
+    headers : {
+          'Content-Type' : 'application/json'
+      }
+
+  }).success(function(data){
+    console.log(data);
+    console.log(data.values.length);
+
+    
+
+
+    if(data.values.length>0){
+      for (var i = 0; i <data.values.length;i++){
+        var evelist = new Array();
+        
+
+        var latE = Number(data.values[i].lat);
+        var longE = Number(data.values[i].long);
+        $scope.alarm_type =data.values[i].alarm_type;
+        //console.log($scope.latE,$scope.longE,$scope.alarm_type);
+      evelist.push($scope.alarm_type);
+      console.log(evelist);
+      
+        var marker = new google.maps.Marker({
+        position: {lat: latE, lng: longE},
+        map: map,
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          scale: 10,
+          strokeColor: '#393'
+        }
+      });
+
+
+
+        google.maps.event.addListener(marker,'click', (function(marker, i){
+        return function(){
+          // console.log("value of: ");
+          var elist = new Array();
+          for(j=0;j< data.values.length;j++){
+          console.log(data.values[j].alarm_type);
+          checkEventFilter(data.values[j].alarm_type);
+          elist.push($scope.eventValue); 
+          }
+
+         console.log(_.uniq(elist));
+
+         contentString  = '<b><label>Event type:</label></b> '+_.uniq(elist)+'</n><br><br> ';
+          console.log(elist);
+
+          infowindow.setContent(contentString);
+          infowindow.open(map, marker);
+
+        }
+      }) (marker, i));
+
+      }
+  }
+    else
+    {
+      //nothing;
+
+      
+// console.log(marker4);
+//     if (marker4[0]) { 
+//           console.log(marker4);
+//              for(i in marker4){
+//            console.log(marker4);
+//            marker4[i].setMap(null);
+//            }
+//            }
+//          marker4 = [];
+
+
+      
+    }
+
+  })
+  .error(function(data,status,headers,config){
+    console.log(data,status,headers,config);
+  });
+
+}
+
+
+function checkEventFilter(type){
+  console.log(type);
+console.log("inside checkfilter: "+type);
+var eventType;
+switch(type){
+case 0:
+eventType = 'Panic';
+break;
+case 1:
+eventType = 'Tamper Sim';
+break;
+case 2:
+eventType = 'Tamper Top';
+break;
+case 3:
+eventType = 'Battery Low';
+break;
+case 4:
+eventType = 'Overspeed';
+break;
+case 5:
+eventType = 'Geofence';
+break;
+case 6:
+eventType = 'Sanity alarm';
+break;
+case 7:
+eventType = 'Connection to tracker interrupted';
+break;
+case 8:
+eventType = 'Vehicle Moved / Theft';
+break;
+case 9:
+eventType = 'Tracker sim changed';
+break;
+case 10:
+eventType = 'Warning';
+break;
+}
+$scope.eventValue = eventType;
+// console.log("scope value: "+$scope.eventValue);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	function displayHistory() {
 	    console.log("display history")
 		// console.log(JSON.stringify($scope.histData.values));
@@ -820,8 +996,8 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 	        }
 	      }
 	 $scope.animate = function(d) {
-	     console.log($scope.headings);
-	     console.log("animate");
+	     // console.log($scope.headings);
+	     // console.log("animate");
 	        if (d>eol) {	
 	            $scope.end = true;
 	            for(i in svg){icons[i].rotation = $scope.headings;}
@@ -883,9 +1059,9 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 
 	        	//nothing
 	        }
-	        console.log($scope.headings);
-	        console.log(d);
-	        console.log(step);
+	        // console.log($scope.headings);
+	        // console.log(d);
+	        // console.log(step);
 	       
 	        updatePoly(d);
 	        // timerHandle = setTimeout("animate("+(d+step)+")", tick);

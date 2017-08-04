@@ -33,6 +33,29 @@ batstravelDeskHome.controller('tripManagement', function($rootScope,$scope, $loc
 			"color":"#ff0000" 
 	}
 	
+	// var $myGroupTrip = $('#myGroupTrip');
+ //    $myGroupTrip.on('show','.collapse', function() {
+ //        $myGroupTrip.find('.collapse.in').collapse('hide');
+ //    });
+
+ $('.collapse').on('show.bs.collapse', function (e) {
+    $('.collapse').not(e.target).removeClass('in');
+});
+
+
+//  $(document).ready(function(e) {
+//     $(".btn-click").click(function(e) {
+//          $(".btn-click").removeClass("btn-danger");
+//          $(this).addClass("btn-danger");
+//          var target = $(this).data("target");
+  
+//           var acpanels = $("#accordion").find(".panel-collapse.in").not(target);
+//           acpanels.collapse("hide");
+//           $(target).collapse("show");
+//     });
+// });
+
+	
 	$scope.getStatus= function(tripDataStatus)
 	{
 	return travelDeskService.showStatus(tripDataStatus);

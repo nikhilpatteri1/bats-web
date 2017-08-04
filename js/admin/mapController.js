@@ -861,16 +861,39 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 				$interval.cancel(singleDeviceInterval);
 			}
 			$scope.groupDevice = data;  
-			 console.log(JSON.stringify($scope.groupDevice));
+			//console.log(JSON.stringify($scope.groupDevice));
+            console.log($scope.groupDevice.devlist.length);
 			$scope.carCount = $scope.groupDevice.carcount;
 			$scope.bikeCount = $scope.groupDevice.bikecount;
 			$scope.busCount = $scope.groupDevice.buscount;
 			$scope.truckCount = $scope.groupDevice.truckcount;
-			console.log($scope.bikeCount);
-			
+            console.log($scope.carCount +$scope.bikeCount+ $scope.busCount+$scope.truckCount);
+            //console.log($scope.groupDevice.truckcount);
 
-			
+            if($scope.groupDevice.buscount === undefined){
+                $scope.busCount = 0;
+            }
+            if($scope.groupDevice.carcount === undefined){
+                $scope.carCount = 0;   
+            }
+             if($scope.groupDevice.bikecount === undefined){
+                $scope.bikeCount = 0;
+            }
+             if($scope.groupDevice.truckcount === undefined){
+                $scope.truckCount = 0;
+            }
+            else{
+                //nothing;
+            }
+            console.log($scope.busCount,$scope.bikeCount,$scope.carCount,$scope.truckCount);
+			var countt = Number($scope.bikeCount) + Number($scope.carCount) + Number($scope.busCount) + Number($scope.truckCount);
+            console.log(countt);
+
 			var dev_len = $scope.groupDevice.devlist.length;
+            var NCar = Number($scope.groupDevice.devlist.length) - countt;
+            console.log(NCar);
+            $scope.carCount = Number($scope.groupDevice.carcount) + NCar;
+
 			$scope.devlistObject=$scope.groupDevice.devlist
 			var devlist = $scope.groupDevice.devlist;
 			$scope.deviceList=[];

@@ -30,6 +30,10 @@ batstravelDeskHome.controller('batsDriverBinding', function($rootScope,$scope, $
 		 });
 	}
 	
+// 	$(document).ready(function() {
+	 
+// }
+
 	
 	/*====================================================>>>>>> End of Basic function <<<<<=================================================*/
 	/*====================================================>>>>>> Start of list Devices function <<<<<=================================================*/
@@ -68,6 +72,19 @@ batstravelDeskHome.controller('batsDriverBinding', function($rootScope,$scope, $
 	 * list devices*/
 	$scope.fetchDevicelist=function(groupname){
 		//alert("hi");
+
+
+		// var $myGroup = $('#myGroup');
+  //   $myGroup.on('show','.collapse', function() {
+  //   	alert("hi");
+  //       $myGroup.find('.collapse.in').collapse('hide');
+  //   }); 
+
+  $('.collapse').on('show.bs.collapse', function (e) {
+    $('.collapse').not(e.target).removeClass('in');
+})
+  
+
 		$scope.deviceId="";
 		$('#clearTextDevice span.select2-chosen').empty();  
 	    $('#clearTextDevice span.select2-chosen').text("- - Select Vehicle No/Device - -");
@@ -144,6 +161,10 @@ batstravelDeskHome.controller('batsDriverBinding', function($rootScope,$scope, $
 	 * Show Driver info*/ 
 	
 	$scope.showDriverInfo=function(driver_id){
+
+
+
+
 		$(".panel-body").css("border","none");  
 		$scope.imageUploading=true;
 		$scope.driverInfoJson={};
@@ -305,5 +326,9 @@ batstravelDeskHome.controller('batsDriverBinding', function($rootScope,$scope, $
 			$('#clearTextGroup span.select2-chosen').text("- - Select Group - -");
 			$('#clearTextDevice span.select2-chosen').text("- - Select Vehicle No/Device - -");
 		});// script
+
+
+
+
 	});
 });

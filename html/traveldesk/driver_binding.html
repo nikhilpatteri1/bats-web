@@ -370,16 +370,18 @@
 																	
 																
 																
-																
+																 
 																	<button type="button" class="btn btn-info btn-xs SHBtn"
 																		id="id_{{driverdetail.driver_id}}"
 																		data-toggle="collapse"
+																		
 																		data-target="#{{driverdetail.driver_id}}"
 																		ng-click="showDriverInfo(driverdetail.driver_id);toggleEventInfo(driverdetail)">
 																		{{isEventShown(driverdetail)?"Hide":"Show"}} info &nbsp;
 																		<i class="icon" ng-class="isEventShown(driverdetail)?'fa fa-angle-up':'fa fa-angle-down'"></i>
 																	</button>
 																</div>
+																
 																
 																
 																
@@ -449,7 +451,7 @@
 																			<div class="col-sm-1">
 																			</div>
 																			<div class="col-sm-6">
-																				<label class="assignBLabel">Trip History</label>
+																				<label class="assignBLabel">Device Binding History</label>
 																				<ul class="driverHistoryHeadList">
 																					<li>
 																						<div class="row histHead">

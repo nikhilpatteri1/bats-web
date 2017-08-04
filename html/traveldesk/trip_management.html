@@ -144,14 +144,17 @@
 													</div> -->
 													<div class="col-sm-6">
 														
+
+														 <div id="myGroupTrip">
 														<button type="button" class="btn btn-info btn-xs SHBtn"
-																		data-toggle="collapse"
+																		data-toggle="collapse" 
 																		data-target="#{{tripdetail.trip_id}}"
+																		data-parent="#accordion"
 																		ng-click="toggleEventInfo(tripdetail)" ng-class="{'pending-delete': isEventShown(tripdetail) == true}" >
 																		{{isEventShown(tripdetail)?"Hide":"Show"}} info &nbsp;
 																		<i class="icon" ng-class="isEventShown(tripdetail)?'fa fa-angle-up':'fa fa-angle-down'"></i>
 														</button>
-														
+														</div>
 														<!-- id="id_{{driverdetail.driver_id}}"
 														data-target="#{{tripdetail.trip_id}}" -->
 														
@@ -166,7 +169,7 @@
 											</div>
 											<!-- Driver Delete -->
 									</div>
-									<div id="{{tripdetail.trip_id}}" class="collapse panel-body Bheight">
+									<div id="{{tripdetail.trip_id}}" class="panel-collapse collapse panel-body Bheight">
 										<div class="row TripDetail">
 											
 											<div class="col-sm-12 tripDMRow">
@@ -318,6 +321,8 @@
 											</div>
 										</div>
 										<br>
+
+										</div>
 									</div>
 								</div></td>
 									
