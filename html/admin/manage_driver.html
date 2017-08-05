@@ -339,7 +339,7 @@
 										ng-model="driver.salary" name="driverSalary" numbers-only
 										ng-required="false" />
 								</div>
-								<div class="col-sm-6">
+								<div class="col-sm-6" ng-class="{'has-error':driverform.rdoResult.$invalid && !driverform.rdoResult.$pristine}">
 									<label class="requiredfield">Employment Type</label>
 									<div class="row">
 										<!-- Employment Type Choices -->
@@ -357,7 +357,11 @@
 													<input type="radio" class="driverRadio"
 													ng-model='driver.etype' ng-value='"Temporary"'
 													name="rdoResult" required/>Temporary</label>
-												</div>   
+												</div> 
+												<!-- <p
+											ng-show="driverform.driverEmergency.$invalid"
+											class="help-block error-help">Employment Type is
+											required</p> -->  
 											</div>
 											</div>
 										</div>
