@@ -29,9 +29,11 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
     var directionsService;
 	var map;
 	var historypolyline = null;
-	 var timerHandle = null;
-	  var step = 5; // metres
-	  var tick = 100; // milliseconds
+	var timerHandle = null;
+	var step = 5; // metres
+	var tick = 100; // milliseconds
+	$rootScope.lastStep = step;
+	$rootScope.lastTick = tick;
 	  var poly;
 	  var poly2;
 	  var lastVertex = 0;
@@ -106,18 +108,24 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 				step=5;
 				tick=100;
 				$scope.play = false;
+				$rootScope.lastStep = step;
+				$rootScope.lastTick = tick;
 				break;
 			case 1:
 			    oldStep = {step: 10,tick:50};
 				step=10;
 				tick=50;
 				$scope.play = false;
+				$rootScope.lastStep = step;
+				$rootScope.lastTick = tick;
 				break;
 			case 2:
 			    oldStep = {step: 50,tick:10};
 				step=50;
 				tick=10;
 				$scope.play = false;
+				$rootScope.lastStep = step;
+				$rootScope.lastTick = tick;
 				break;	
 			case 3:
 				step=0;
@@ -126,8 +134,10 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 				break;
 				
 			case 4:
-			   	step=oldStep.step;
-				tick=oldStep.tick;
+			   	// step=oldStep.step;
+				// tick=oldStep.tick;
+				step = $rootScope.lastStep;
+				tick = $rootScope.lastTick;
 				$scope.play = false;
 				break;
 			}
@@ -487,7 +497,7 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 	    oldStep = {step: 1,tick:100};
 	    $scope.end = false;
 	    $scope.replayPlayPause ={"slot_num" : slot_num, "noDataVal": noDataVal};
-	    $scope.play = false;
+	    // $scope.play = false;
 		if(noDataVal!=0){
 			if(slot_num==1){			
 			historyApiCall(getTimestamp(0,0,0),getTimestamp(5,59,59));
@@ -1017,15 +1027,19 @@ $scope.eventValue = eventType;
 		 * google.maps.geometry.spherical.computeHeading(lastPosn, p);
 		 * icon.rotation = heading; marker.setIcon(icon);
 		 */
-	        console.log($scope.headings);
-	        console.log($scope.play);
+	        // console.log($scope.headings);
+	        // console.log($scope.play);
 	        if($scope.play == false){
-	       	var lastPosn = marker[0].getPosition();
-	        for(i in svg){marker[i].setPosition(p);}
+			   	var lastPosn = marker[0].getPosition();
+				console.log("p value: "+p);
+				var newLatLong = p.toString().replace('(', '');
+				newLatLong = newLatLong.toString().replace(')', '');
+				var inputLatLong = newLatLong.split(",",2);
+	        for(i in svg){marker[i].setPosition(new google.maps.LatLng(parseFloat(inputLatLong[0]), parseFloat(inputLatLong[1])));}
 	          for(i in svg){icons[i].rotation = $scope.headings;}
 	          heading = google.maps.geometry.spherical.computeHeading(lastPosn, p);
 	          $scope.headings = heading;
-	          console.log($scope.headings);
+	        //   console.log($scope.headings);
 	          for(i in svg){icons[i].rotation = $scope.headings;}
 	          
 	          for(i in svg){
