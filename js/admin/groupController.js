@@ -322,6 +322,8 @@ batsAdminHome.controller('groupController', function($rootScope,$scope, $http, $
  	* On Submit of Create Group Form
 */
 	$scope.reset=function(){
+		$('#show2').hide();
+		$('#show3').hide();
 	    $scope.customerDevices = $scope.unallocateData;
 	    console.log($scope.unallocateData);
 	    

@@ -95,20 +95,26 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
 			step=5;
 			tick=100;
 			$scope.play = false;
+			$rootScope.lastStep = step;
+			$rootScope.lastTick = tick;
 			break;
 		case 1:
 		    //console.log(oldStep)
 		    oldStep = {step: 10,tick:50};
 			step=10;
 			tick=50;
-      $scope.play = false;
+			$scope.play = false;
+			$rootScope.lastStep = step;
+			$rootScope.lastTick = tick;
 			break;
 		case 2:
 		    //console.log(oldStep)
 		    oldStep = {step: 50,tick:10};
 			step=50;
 			tick=10;
-      $scope.play = false;
+			$scope.play = false;
+			$rootScope.lastStep = step;
+			$rootScope.lastTick = tick;
 			break;	
 		case 3:
 			step=0;
@@ -117,8 +123,10 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
 			break;
 		case 4:
 		    //console.log(oldStep)
-		   	step=oldStep.step;
-			tick=oldStep.tick;
+		   	// step=oldStep.step;
+			// tick=oldStep.tick;
+			step = $rootScope.lastStep;
+			tick = $rootScope.lastTick;
 			$scope.play = false;
 			break;
 		}
@@ -458,7 +466,7 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
 	    oldStep = {step: 1,tick:100};
 	    $scope.end = false;
 	    $scope.replayPlayPause ={"slot_num" : slot_num, "noDataVal": noDataVal};
-      $scope.play = false;
+    //   $scope.play = false;
 		if(noDataVal!=0){
 			// $scope.no_history=true;
 			if(slot_num==1){			
@@ -991,29 +999,30 @@ $scope.eventValue = eventType;
 		 * google.maps.geometry.spherical.computeHeading(lastPosn, p);
 		 * icon.rotation = heading; marker.setIcon(icon);
 		 */     
-	          if($scope.play == false){
-          var lastPosn = marker[0].getPosition();
-          for(i in svg){marker[i].setPosition(p);}
-            for(i in svg){icons[i].rotation = $scope.headings;}
-            heading = google.maps.geometry.spherical.computeHeading(lastPosn, p);
-            $scope.headings = heading;
-          //console.log($scope.headings);
-            for(i in svg){icons[i].rotation = $scope.headings;}
-            
-            for(i in svg){
-                marker[i].setIcon(icons[i]);
-                }
-            for(i in svg){icons[i].rotation = $scope.headings;}
-            /*console.log($scope.headings);
-          updatePoly(d);
-          
-          // timerHandle = setTimeout("animate("+(d+step)+")", tick);
-          timerHandle = setTimeout(function() {
-              $scope.animate(d + step);
-          }, tick);*/
-
-
-          }
+	        if($scope.play == false){
+				var lastPosn = marker[0].getPosition();
+				var newLatLong = p.toString().replace('(', '');
+				newLatLong = newLatLong.toString().replace(')', '');
+				var inputLatLong = newLatLong.split(",",2);
+				for(i in svg){marker[i].setPosition(new google.maps.LatLng(parseFloat(inputLatLong[0]), parseFloat(inputLatLong[1])));}
+					for(i in svg){icons[i].rotation = $scope.headings;}
+					heading = google.maps.geometry.spherical.computeHeading(lastPosn, p);
+					$scope.headings = heading;
+				//console.log($scope.headings);
+					for(i in svg){icons[i].rotation = $scope.headings;}
+					
+					for(i in svg){
+						marker[i].setIcon(icons[i]);
+						}
+					for(i in svg){icons[i].rotation = $scope.headings;}
+					/*console.log($scope.headings);
+				updatePoly(d);
+				
+				// timerHandle = setTimeout("animate("+(d+step)+")", tick);
+				timerHandle = setTimeout(function() {
+					$scope.animate(d + step);
+				}, tick);*/
+          	}
           else if ($scope.play == true){
             /*var lastPosn = marker[0].getPosition();
             for(i in svg){marker[i].setPosition(p);}
