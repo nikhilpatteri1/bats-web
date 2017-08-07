@@ -60,6 +60,24 @@ batsAdminHome.controller('driverController', function($rootScope,$scope, $localS
 	
 	$scope.bloodGroups = ["a+","a-","b-","b+","ab+","ab-","o+","o-","a1b+ve","a1o+ve","a1ab+ve","b1a+ve","b1ab+ve","b1o+ve","ab1a+ve","ab1b+ve","ab1o+ve","o1a+ve","o1b+ve","o1ab+ve","ab1a+ve","ab1b+ve","ab1o+ve","a1b-ve","a1o-ve","a1ab-ve","b1a-ve","b1ab-ve","b1o-ve","ab1a-ve","ab1b-ve","ab1o-ve","o1a-ve","o1b-ve","o1ab-ve","ab1a-ve","ab1b-ve","ab1o-ve"];
 	
+	$(document).on('click', function(e) {
+    if ( e.target.id != 'ok' ) {
+        // you clicked something else
+    }
+});
+
+
+
+// 	$(document).click(function() {
+//     console.log('clicked outside');
+//     console.log($scope.driverform.driverAadhaar.$pristine);
+//     $scope.driverform.driverAadhaar.$setPristine();
+//     $scope.driverform.driverAadhaar.$setUntouched();
+
+
+//     //form.$setPristine();
+// });
+
 	
 		 
 	/* Use Present Address as permanent address option
@@ -541,6 +559,9 @@ batsAdminHome.controller('driverController', function($rootScope,$scope, $localS
 	 * k)Driver blood group
 	 * l)Employee Type (Permanent or Temprorary)
 	 * */
+	 $scope.driver.aadhar = $scope.driverAadhar ; 
+
+	 
 	$scope.submitCreateDriverForm=function(){
 		$scope.createDriverObject={};
 		$scope.createDriverObject.token=$scope.token;

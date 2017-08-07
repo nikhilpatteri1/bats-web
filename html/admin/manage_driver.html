@@ -294,10 +294,10 @@
 											class="help-block error-help">Only Alpha Numeric....</p>
 									</div>
 								</div>
-								<div class="col-sm-4"
+								<!-- <div class="col-sm-4"
 									ng-class="{'has-error':driverform.driverAadhaar.$invalid && !driverform.driverAadhaar.$pristine}">
 									<label> Aadhaar Number</label>
-									<!--  ng-show="driver.aadhar" class="floatlabeltxt show-hide" -->
+									 ng-show="driver.aadhar" class="floatlabeltxt show-hide"
 									<input type="text" class="form-control" name="driverAadhaar"
 										ng-minlength="12" ng-maxlength="12" numbers-only
 										ng-model="driver.aadhar" ng-required="false" />
@@ -307,6 +307,19 @@
 									<p
 										ng-if="driverform.driverAadhaar.$error.maxlength && !driverform.driverAadhaar.$pristine"
 										class="help-block">Max 12 charcters</p>
+								</div> -->
+								<div class="col-sm-4">
+									<label> Aadhaar Number</label>
+									<!--  ng-show="driver.aadhar" class="floatlabeltxt show-hide" -->
+									<input type="text" class="form-control" name="driverAadhaar"
+										ng-minlength="12" ng-maxlength="12" numbers-only
+										ng-model="driverAadhar"/>
+									<!-- <p
+										ng-show="driverform.driverAadhaar.$error.minlength && !driverform.driverAadhaar.$pristine"
+										class="help-block">Min 12 charcters</p>
+									<p
+										ng-if="driverform.driverAadhaar.$error.maxlength && !driverform.driverAadhaar.$pristine"
+										class="help-block">Max 12 charcters</p> -->
 								</div>
 								<div class="col-sm-4">
 									<div class="form-group requiredfield"
@@ -350,6 +363,7 @@
 												<label class="radio-inline">
 												<input id="perid" class="driverRadio"
 													type="radio" ng-model='driver.etype' ng-value='"Permanent"'
+													ng-checked="true"
 													name="rdoResult" required/>Permanent</label></div>
 												<div class="col-sm-6">
 													 <label
