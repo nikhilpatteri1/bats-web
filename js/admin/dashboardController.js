@@ -50,7 +50,7 @@ batsAdminHome.controller('dashboardController', function($scope, $http, $rootSco
 	}); 
 	}
 	$rootScope.getTripData();
-    //var callAlarmApi = $interval($rootScope.getTripData ,requestTime * 1000);
+    var callAlarmApi = $interval($rootScope.getTripData ,requestTime * 1000);
     
     var status
     $scope.getList =function(state){
