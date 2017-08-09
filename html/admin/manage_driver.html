@@ -294,13 +294,33 @@
 											class="help-block error-help">Only Alpha Numeric....</p>
 									</div>
 								</div>
-								<!-- <div class="col-sm-4"
+								<div class="col-sm-4"
 									ng-class="{'has-error':driverform.driverAadhaar.$invalid && !driverform.driverAadhaar.$pristine}">
 									<label> Aadhaar Number</label>
-									 ng-show="driver.aadhar" class="floatlabeltxt show-hide"
+									 <!-- ng-show="driver.aadhar" class="floatlabeltxt show-hide" -->
 									<input type="text" class="form-control" name="driverAadhaar"
 										ng-minlength="12" ng-maxlength="12" numbers-only
-										ng-model="driver.aadhar" ng-required="false" />
+										ng-model="driver.aadhar" ng-required="false" ng-keypress="changeValid()" ng-keyup="changeValid()" ng-keydown="changeValid()" ng-blur="verifyAdhar('new',driver.aadhar)" />
+										
+
+
+									<p
+										ng-show="driverform.driverAadhaar.$error.minlength && !driverform.driverAadhaar.$pristine"
+										class="help-block">Min 12 charcters</p>
+									<p
+										ng-if="driverform.driverAadhaar.$error.maxlength && !driverform.driverAadhaar.$pristine"
+										class="help-block">Max 12 charcters</p>
+										<p ng-show="driverform.driverAadhaar.$error.Adharavailable"
+											class="help-block error-help">Aadhar Number is already
+											associated</p>
+								</div>
+								<!-- <div class="col-sm-4">
+									<label> Aadhaar Number</label>
+									
+									<input type="text" class="form-control" name="driverAadhaar"
+										ng-minlength="12" ng-maxlength="12" numbers-only
+										ng-model="driverAadhar" ng-clcick="changeValid()" />
+										<p>{{driverAadhar.length}}</p>
 									<p
 										ng-show="driverform.driverAadhaar.$error.minlength && !driverform.driverAadhaar.$pristine"
 										class="help-block">Min 12 charcters</p>
@@ -308,19 +328,6 @@
 										ng-if="driverform.driverAadhaar.$error.maxlength && !driverform.driverAadhaar.$pristine"
 										class="help-block">Max 12 charcters</p>
 								</div> -->
-								<div class="col-sm-4">
-									<label> Aadhaar Number</label>
-									<!--  ng-show="driver.aadhar" class="floatlabeltxt show-hide" -->
-									<input type="text" class="form-control" name="driverAadhaar"
-										ng-minlength="12" ng-maxlength="12" numbers-only
-										ng-model="driverAadhar"/>
-									<!-- <p
-										ng-show="driverform.driverAadhaar.$error.minlength && !driverform.driverAadhaar.$pristine"
-										class="help-block">Min 12 charcters</p>
-									<p
-										ng-if="driverform.driverAadhaar.$error.maxlength && !driverform.driverAadhaar.$pristine"
-										class="help-block">Max 12 charcters</p> -->
-								</div>
 								<div class="col-sm-4">
 									<div class="form-group requiredfield"
 										ng-class="{'has-error':driverform.driverEmergency.$invalid && !driverform.driverEmergency.$pristine}">
@@ -720,7 +727,7 @@
 			<div class="modal-footer">
 				<button class="btn btn-primary createuser"
 					ng-click="submitCreateDriverForm()"
-					ng-disabled="driverform.$invalid">Create</button>
+					ng-disabled="!(!!driver.name && !!driver.contact && !!driver.license && !!driver.city && !!driver.state && !!driver.pincode && !!driver.street && !!driver.country && !!driver.emergency_cn && !!driver.blood && !!driver.education && !!driver.password &&  !!driver.etype && Alength)">Create</button>
 			</div>
 		</div>
 	</div>
@@ -874,16 +881,20 @@
 								<div class="col-sm-4">
 									<div class="form-group"
 										ng-class="{'has-error':driverupdateform.driverAadhaar.$invalid && !driverupdateform.driverAadhaar.$pristine}">
-										<label> Aadhaar Number</label> <input type="text"
+										<label> Aadhaar Number</label> 
+										<input type="text"
 											class="form-control" name="driverAadhaar" ng-minlength="12"
-											ng-maxlength="12" ng-model="driver.aadhar" numbers-only
-											ng-required="false" />
+											ng-maxlength="12" ng-model="driver.aadhar" numbers-only  ng-blur="verifyAdhar(driver.driver_id,driver.aadhar)"
+											ng-required="false"  ng-keypress="changeValidu()" ng-keyup="changeValidu()" ng-keydown="changeValidu()"/>
 										<p
 											ng-if="driverupdateform.driverAadhaar.$error.minlength && !driverupdateform.driverAadhaar.$pristine"
 											class="help-block">Min 12 charcters</p>
 										<p
 											ng-if="driverupdateform.driverAadhaar.$error.maxlength && !driverupdateform.driverAadhaar.$pristine"
 											class="help-block">Max 12 charcters</p>
+										<p ng-show="driverupdateform.driverAadhaar.$error.Adharavailable"
+											class="help-block error-help">Aadhar Number is already
+											associated</p>
 									</div>
 								</div>
 								<div class="col-sm-4">
@@ -1270,9 +1281,11 @@
 
 			</div>
 			<div class="modal-footer">
-				<button class="btn btn-primary createuser"
-					ng-click="submitUpdateDriverForm()"
-					ng-disabled="driverupdateform.$invalid">Update</button>
+				<button class="btn btn-primary updateuser" id="updateDriver" 
+					ng-disabled="!(!!driver.name && !!driver.contact && !!driver.license && !!driver.city && !!driver.state && !!driver.pincode && !!driver.street && !!driver.country && !!driver.emergency_cn && !!driver.blood && !!driver.education && !!driver.etype && Aulength)"
+					ng-click="submitUpdateDriverForm()">Update</button>
+					<!-- ng-disabled="!(!!driver.name && !!driver.contact && !!driver.license && !!driver.city && !!driver.state && !!driver.pincode && !!driver.street && !!driver.country && !!driver.emergency_cn && !!driver.blood && !!driver.education && !!driver.password &&  !!driver.etype && Aulength)" -->
+					<!-- ng-disabled="driverupdateform.invalid" -->
 			</div>
 		</div>
 	</div>

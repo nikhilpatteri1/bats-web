@@ -55,7 +55,7 @@ batsAdminHome.controller('driverController', function($rootScope,$scope, $localS
 		  		   $localStorage.$reset();
 		  		 window.location = apiURL;
 		
-		  	   });
+		  	   }); 
 	}
 	
 	$scope.bloodGroups = ["a+","a-","b-","b+","ab+","ab-","o+","o-","a1b+ve","a1o+ve","a1ab+ve","b1a+ve","b1ab+ve","b1o+ve","ab1a+ve","ab1b+ve","ab1o+ve","o1a+ve","o1b+ve","o1ab+ve","ab1a+ve","ab1b+ve","ab1o+ve","a1b-ve","a1o-ve","a1ab-ve","b1a-ve","b1ab-ve","b1o-ve","ab1a-ve","ab1b-ve","ab1o-ve","o1a-ve","o1b-ve","o1ab-ve","ab1a-ve","ab1b-ve","ab1o-ve"];
@@ -66,17 +66,77 @@ batsAdminHome.controller('driverController', function($rootScope,$scope, $localS
     }
 });
 
+$scope.Alength = true;
+$(".createuser").prop('disabled', true);
+$scope.changeValid = function(){
+	//$scope.driverform.driverAadhaar.$setValidity();	
+	//$scope.driverform.driverAadhaar.$setValidity("driverAadhaar",false);
+	
+	
+	//$(".createuser").prop('disabled', true);
+	console.log($scope.driverform.driverAadhaar.$error.minlength);
+	console.log($scope.driverform.driverAadhaar.$error.maxlength);
+
+	if($scope.driverform.driverAadhaar.$error.minlength == false){
+		console.log("0");
+		$(".createuser").prop('disabled', false);
+		$scope.Alength = true;
+	}
+	else if($scope.driverform.driverAadhaar.$error.maxlength == false){
+		console.log("12");
+		$scope.Alength = true;
+		$(".createuser").prop('disabled', false);
+	}
+	else if($scope.driverform.driverAadhaar.$error.minlength > 0 || $scope.driverform.driverAadhaar.$error.maxlength < 12 ){
+		console.log("012");
+		$scope.Alength = false;
+		$(".createuser").prop('disabled', true);	
+	}
+	else{
+		//nothing
+		console.log("nothing");
+		$scope.Alength = true;
+	}
+	//$scope.Alength = true;
+
+}
+
+$scope.Aulength = false;
+
+$scope.changeValidu = function(){
+	//$scope.driverform.driverAadhaar.$setValidity();	
+	//$scope.driverform.driverAadhaar.$setValidity("driverAadhaar",false);
+	
+	
+	//$(".createuser").prop('disabled', true);
+	console.log($scope.driverupdateform.driverAadhaar.$error.minlength);
+	console.log($scope.driverupdateform.driverAadhaar.$error.maxlength);
+
+	if($scope.driverupdateform.driverAadhaar.$error.minlength == false){
+		console.log("0");
+		$("#updateDriver").prop('disabled', false);
+		$scope.Aulength = true;
+	}
+	else if($scope.driverupdateform.driverAadhaar.$error.maxlength == false){
+		console.log("12");
+		$scope.Aulength = true;
+		$("#updateDriver").prop('disabled', false);
+	}
+	else if($scope.driverupdateform.driverAadhaar.$error.minlength > 0 || $scope.driverupdateform.driverAadhaar.$error.maxlength < 12 ){
+		console.log("012");
+		$scope.Aulength = false;
+		$("#updateDriver").prop('disabled', true);	
+	}
+	else{
+		//nothing
+		console.log("nothing");
+		$scope.Aulength = true;
+	}
+	//$scope.Alength = true;
+
+}
 
 
-// 	$(document).click(function() {
-//     console.log('clicked outside');
-//     console.log($scope.driverform.driverAadhaar.$pristine);
-//     $scope.driverform.driverAadhaar.$setPristine();
-//     $scope.driverform.driverAadhaar.$setUntouched();
-
-
-//     //form.$setPristine();
-// });
 
 	
 		 
@@ -444,6 +504,69 @@ batsAdminHome.controller('driverController', function($rootScope,$scope, $localS
 				})
 			}		
 		};
+
+
+		$scope.verifyAdhar = function(d_id,driverAadharc){
+			console.log(d_id,driverAadharc);
+
+			if(typeof(driverAadharc) != 'undefined'){
+				$scope.verifyAdharJson = {};
+				$scope.verifyAdharJson.token = $scope.token;
+				if(d_id != 'new'){
+					$scope.verifyAdharJson.driver_id = d_id;
+				}
+				$scope.verifyAdharJson.adhar_id = driverAadharc;
+				$http({
+					method :'POST',
+					url: apiURL + 'driver/check_adhar',
+					data : JSON.stringify($scope.verifyAdharJson),
+					headers:{
+						'Content-Type': 'application/json'
+					}
+
+				}).success(function(data){
+					if(data.status == "available"){
+						//$scope.Alength = false;
+						$(".createuser").prop('disabled', false);
+						$("#updateDriver").prop('disabled', false);
+						
+						$scope.driverform.driverAadhaar.$setValidity('Adharavailable',true);
+						$scope.driverupdateform.driverAadhaar.$setValidity('Adharavailable',true);
+
+					} else {
+						//$scope.Alength = true;
+						$(".createuser").prop('disabled', true);
+						$("#updateDriver").prop('disabled', true);
+						$scope.driverform.driverAadhaar.$setValidity('Adharavailable',false);
+						$scope.driverupdateform.driverAadhaar.$setValidity('Adharavailable',false);
+					}
+				}).error(function(data,status,headers,config){
+					if (data.err == "Expired Session") {
+						// $('#driverUpdateModal').modal('hide');
+						// $('#driverCreateModal').modal('hide');
+						// expiredSession();
+						// $localStorage.$reset();
+					} else if (data.err == "Invalid User") {
+						// $('#driverUpdateModal').modal('hide');
+						// $('#driverCreateModal').modal('hide');
+						// invalidUser();
+						// $localStorage.$reset();
+					}
+					console.log(status);
+					console.log(headers);
+					console.log(config);
+				})
+
+
+
+			}
+
+		};
+
+
+
+
+
 		
 		$scope.countChild=function(){
 			var list=document.getElementById("driverUlist");
@@ -494,6 +617,11 @@ batsAdminHome.controller('driverController', function($rootScope,$scope, $localS
 			 $scope.driverupdateform.driverContact.$setValidity('contAvailable',true);
 			 $scope.driverform.driverlicense.$setValidity('dlavailable',true);
 			 $scope.driverupdateform.driverlicense.$setValidity('dlavailable',true);
+			 $scope.driverform.driverAadhaar.$setValidity('Adharavailable',true);
+			 $scope.driverupdateform.driverAadhaar.$setValidity('Adharavailable',true);
+
+
+
 			 
 			 $("#id_label_multiple").select2("val","");
 				$('#langSelect').select2({
@@ -559,7 +687,7 @@ batsAdminHome.controller('driverController', function($rootScope,$scope, $localS
 	 * k)Driver blood group
 	 * l)Employee Type (Permanent or Temprorary)
 	 * */
-	 $scope.driver.aadhar = $scope.driverAadhar ; 
+	 //$scope.driver.aadhar = $scope.driverAadhar ; 
 
 	 
 	$scope.submitCreateDriverForm=function(){
@@ -672,6 +800,7 @@ batsAdminHome.controller('driverController', function($rootScope,$scope, $localS
 			.success(function(data){
 				//console.log(JSON.stringify(data));
 				$scope.updateEditModal(data,function(){
+					$("#updateDriver").prop('disabled', false);
 					$("#driverUpdateModal").modal('show');
 				});				
 			})
@@ -938,6 +1067,8 @@ batsAdminHome.controller('driverController', function($rootScope,$scope, $localS
 	
 	$scope.clearForm = function(){
 		//alert("hi");
+		$(".createuser").prop('disabled', true);
+		$scope.reset();
 		$('#driverCreateModal').find('form')[0].reset();
 	};
 	

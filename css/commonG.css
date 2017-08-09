@@ -419,7 +419,7 @@ label [type="checkbox"] {
 	margin: 9PX;
 }
 
-.createuser,creategroup {
+.createuser,creategroup, .updateuser {
 	/* background: #03A9F4 !important;
 	border-color: #03A9F4 !important;
 	cursor: pointer !important;
