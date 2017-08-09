@@ -27,6 +27,41 @@ html,body {
 	color: #ff0000;
 }
 
+ /* notification css */
+ .Modlepadding{
+	padding:0px !important;
+	}
+	.textAlign{
+		text-align:center;
+		    color: black;
+	}
+	.notiheadersubHeading{
+		font:10px;
+		color:gray;
+	}
+	.notisubtext{
+		font-size:16px;color:gray; text-align:center;
+	}
+	.notilocation{
+		margin-top:50px;  
+		font-size: 17px;
+		    color: black;
+			    padding-left: 30px;
+    padding-right: 30px;
+	}
+	.headingfont{
+		font-family: inherit;
+	}	
+	.noti-btn{
+		background: #ab0202;
+    border: 2px;
+    border-radius: 5px !important;
+    font-size: 11px !important;
+    margin-left: 368px;
+    margin-top: 40px;
+    margin-bottom: 16px;
+	}
+/* notification css end */
 /* body {
     line-height:1;
      background:url('../images/bg1.jpg')no-repeat center center fixed;

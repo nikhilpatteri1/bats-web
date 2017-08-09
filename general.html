@@ -160,100 +160,94 @@
 	</nav> -->
 
 
-
+	
 		<!--==================== Notification Modal ===================-->
 		<div class="modal fade" id="showNotificationModal" role="dialog"
 			data-backdrop="static">
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
-					<div class="iconSection" align="center">
-						<div class="userIcon">
-							<i class="fa fa-bell fa-3x" aria-hidden="true"></i>
-						</div>
-					</div>
-					<div class="modal-body">
+					
+					<div class="modal-body Modlepadding">
 						<form class="form formInput">
-							<div class="col-sm-2 col-sm-offset-10" align="right">
-								<span class="closeIcon" data-direction="left"
-									data-dismiss="modal" aria-hidden="true">&times;</span>
+							
+							<div class="jumbotron text-center" style="    padding-bottom: 30px;">
+								<!-- <img src="../images/home-image.jpg"/> -->
+								<img ng-src="{{notifyModalValues.alarm_type == '0'  ? '../images/eventH/panic.png' :
+                                                    (notifyModalValues.alarm_type == '1' ? '../images/eventH/sim-tamper.png' :
+                                                    (notifyModalValues.alarm_type == '2' ? '../images/eventH/tamper-top.png' :
+                                                    (notifyModalValues.alarm_type == '3'? '../images/eventH/battery.png' :
+                                                    (notifyModalValues.alarm_type == '4' ? '../images/eventH/overspeed.png' :
+                                                    (notifyModalValues.alarm_type == '5' ? '../img/eventH/geofence.png' :
+                                                    (notifyModalValues.alarm_type == '6' ? '../images/eventH/sanity.png' :
+                                                    (notifyModalValues.alarm_type == '7' ? '../images/eventH/warning.png' :
+                                                    (notifyModalValues.alarm_type == '8' ? '../images/eventH/theft.png' :
+                                                    (notifyModalValues.alarm_type == '9' ? '../images/eventH/sim-tamper.png' :
+                                                    (notifyModalValues.alarm_type == '10' ? '../images/eventH/invalid.png' : 'img/eventH/invalid.png'))))))))))}}"/>
+													
+								<div  ng-if="notifyModalValues.alarm_type == '0' ">
+									<h3 class="headingfont">Panic Alarm </h3>
+									<div class="notiheadersubHeading">Someone clicked Panic Button  </div> 
+									</div>
+								<div  ng-if="notifyModalValues.alarm_type == '1' ">
+									<h3 class="headingfont">Tamper Sim Alarm</h3>
+									<div class="notiheadersubHeading">Sim of device is tampered  </div> 
+									
+								</div>
+								<div  ng-if="notifyModalValues.alarm_type == '2' ">
+									<h3 class="headingfont">Tamper Top Alarm </h3>
+									<div class="notiheadersubHeading">The Top cover of device is tampered  </div> 
+								</div>
+								
+								<div  ng-if="notifyModalValues.alarm_type == '3' ">
+									<h3 class="headingfont">Battery Alarm </h3>
+									<div class="notiheadersubHeading">Device running out of battery   </div> 
+								</div>
+								
+								<div  ng-if="notifyModalValues.alarm_type == '4' ">
+									<h3 class="headingfont">Overspeed 	Alarm</h3>
+									<div class="notiheadersubHeading">Vehicle Crossed the Speed limit  </div> 
+								</div>
+								<div  ng-if="notifyModalValues.alarm_type == '5' ">
+									<h3 class="headingfont">Geofence Alarm </h3>
+									<div class="notiheadersubHeading">Device Crossed the Geofence boundy </div> 
+								</div>
+								<div  ng-if="notifyModalValues.alarm_type == '6' ">
+									<h3 class="headingfont">Sanity Alarm </h3>
+									<div class="notiheadersubHeading">Worning  </div> 
+								</div>
+								<div  ng-if="notifyModalValues.alarm_type == '7' ">
+									<h3 class="headingfont">Power Interrupt Alarm </h3>
+									<div class="notiheadersubHeading">Power cable is removed from the device  </div> 
+								</div>
+								
 							</div>
-							<h1 class="titleHead">Notification Details</h1>
-							<div class="row">
-								<div class="col-sm-12">
-									<div class="row">
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label class="notificationtxt">Vehicle Number</label>
-												<h5 class="notify_values">{{notifyModalValues.vehicle_num}}</h5>
-											</div>
-										</div>
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label class="notificationtxt">Alarm Type</label>
-												<!-- <h5 class="notify_values">{{notifyModalValues.alarm_type}}</h5> -->
-												<h5 class="notify_values"
-													ng-if="notifyModalValues.alarm_type == '0' ">Panic
-													Alarm</h5>
-												<h5 class="notify_values"
-													ng-if="notifyModalValues.alarm_type == '1' ">Tamper
-													Sim Alarm</h5>
-												<h5 class="notify_values"
-													ng-if="notifyModalValues.alarm_type == '2' ">Tamper
-													Top Alarm</h5>
-												<h5 class="notify_values"
-													ng-if="notifyModalValues.alarm_type == '3' ">Battery
-													Alarm</h5>
-												<h5 class="notify_values"
-													ng-if="notifyModalValues.alarm_type == '4' ">Overspeed
-													Alarm</h5>
-												<h5 class="notify_values"
-													ng-if="notifyModalValues.alarm_type == '5' ">Geofence
-													Alarm</h5>
-												<h5 class="notify_values"
-													ng-if="notifyModalValues.alarm_type == '6' ">Sanity
-													Alarm</h5>
-												<h5 class="notify_values"
-													ng-if="notifyModalValues.alarm_type == '7' ">Power
-													Interrupt Alarm</h5>
-											</div>
-										</div>
+  
+							<div class="container">
+								<div class="row">
+									<div class="col-sm-3">
+										<h4 class="textAlign headingfont">{{notifyModalValues.vehicle_num}}</h4>
+										<div class="notisubtext">Vehicle Number</div>
 									</div>
-									<div class="row">
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label class="notificationtxt">Time</label>
-												<h5 class="notify_values">
-													<mydate>{{notifyModalValues.ts | date:'dd/MM/yyyy
-													hh:mm a'}}</mydate>
-												</h5>
-											</div>
-										</div>
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label class="notificationtxt">Speed</label>
-												<h5 class="notify_values">{{notifyModalValues.Velocity}}
-													Km/hr</h5>
-											</div>
-										</div>
+									<div class="col-sm-3">
+										<h4 class="textAlign headingfont">{{notifyModalValues.ts | date:'dd/MM/yyyy hh:mm a'}}</h4>
+										<div class="notisubtext">Date and Time</div>
 									</div>
-									<div class="row">
-										<div class="col-sm-12">
-											<div class="form-group">
-												<label class="notificationtxt">Location</label> <img
-													src="../images/loading_icon.gif" class="loadingImage"
-													ng-if="!address.length" />
-												<h5 class="notify_values" ng-if="addressFound">{{address}}</h5>
-												<h5 class="notify_values" ng-if="addressNotFound">
-													Address not found click this <a
-														href="http://maps.google.com/?q={{latObj}},{{lngObj}}"
-														target="_blank">link</a> to see the location
-												</h5>
-											</div>
-										</div>
+									<div class="col-sm-3">
+										<h4 class="textAlign headingfont">{{notifyModalValues.Velocity}}</h4>
+										<div class="notisubtext">Speed in Kmph</div>
 									</div>
 								</div>
+								<div  class="notilocation"><img src="../images/loading_icon.gif" class="loadingImage" ng-if="!address.length" />
+									<div  ng-if="addressFound">{{address}}</div>
+									<div ng-if="addressNotFound">	Address not found click this <a href="http://maps.google.com/?q={{latObj}},{{lngObj}}"
+															target="_blank">link</a> Map
+								
+										</div>
+								</div>
+								<div > 
+									<button class="btn btn-primary  noti-btn" data-dismiss="modal" aria-hidden="true">Close</button>
+								</div>
 							</div>
-
 						</form>
 					</div>
 				</div>
