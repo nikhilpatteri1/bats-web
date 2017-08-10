@@ -1075,10 +1075,98 @@ $scope.clearForm = function(){
 $("#show3").hide();
 $("#show1").show();
 $scope.showAllocate = function(){
-	$("#show3").show();
-	$("#show1").hide();
+	// $("#show3").show();
+	// $("#show1").hide();
+	checkforDuplicateEmail();
+	// validateUnique();
 }
 
+$scope.emailDuplicated = false;
+/** function for checking duplicate emails **/
+function checkforDuplicateEmail(){
+	for(var i=0;i<$scope.choices.length;i++){
+		var breakit = false;
+		var email = $scope.choices[i].contact_email;
+		for(var j=0;j<$scope.choices.length;j++){
+			if(i==j){
+				continue;
+			}else{
+				if($scope.choices[j].contact_email==email){
+					$scope.emailDuplicated = true;
+					breakit = true;
+					break;
+				}else{
+					$scope.emailDuplicated = false;
+				}
+			}
+		}
+		if(breakit){
+			break;
+		}
+	}
+	validateEmailCheck();
+}
+
+$scope.phoneDuplicated = false;
+/** function for checking duplicate phone_no **/
+function checkforDuplicatePhone(){
+	for(var i=0;i<$scope.choices.length;i++){
+		var breakit = false;
+		var phone_no = $scope.choices[i].contact_num;
+		for(var j=0;j<$scope.choices.length;j++){
+			if(i==j){
+				continue;
+			}else{
+				if($scope.choices[j].contact_num==phone_no){
+					$scope.phoneDuplicated = true;
+					breakit = true;
+					break;
+				}else{
+					$scope.phoneDuplicated = false;
+				}
+			}
+		}
+		if(breakit){
+			break;
+		}
+	}
+	validatePhoneCheck();
+}
+
+function validateEmailCheck(){
+	if($scope.emailDuplicated){
+		swal({ 
+			   title: "Email ID's are same",
+		  	   text: "Same Email ID is used for multiple users!",   
+		  	   type: "warning",   
+		  	   confirmButtonColor: "#ff0000",   
+		  	   closeOnConfirm: true }, 
+		  	   function(){  
+		  		//  $localStorage.$reset();
+		  		//  window.location = apiURL;
+		});
+	}else{
+		checkforDuplicatePhone()
+	}
+}
+
+function validatePhoneCheck(){
+	if($scope.phoneDuplicated){
+		swal({ 
+			   title: "Phone Numbers are same",
+		  	   text: "Same Phone Number is used for multiple users!",   
+		  	   type: "warning",   
+		  	   confirmButtonColor: "#ff0000",   
+		  	   closeOnConfirm: true }, 
+		  	   function(){  
+		  		//  $localStorage.$reset();
+		  		//  window.location = apiURL;
+		});
+	}else{
+		$("#show3").show();
+		$("#show1").hide();
+	}
+}
 
 $scope.factoryCheckAll = function(checkAll){
 	  if(checkAll){
