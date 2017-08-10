@@ -2,7 +2,7 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 	$rootScope.menuPos=8;
 	var dynamicMapHeight=window.screen.availHeight-100;
 	$scope.mapHeight={
-			height:dynamicMapHeight
+		height:dynamicMapHeight
 	}
 	$scope.yoData=false;
 	$scope.noData=false;
@@ -14,19 +14,19 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 	$scope.play = false;
 	$scope.end = false;
 	$scope.greyColor={
-			color:"#637778"
+		color:"#637778"
 	};
 	$scope.whiteColor={
-			color:"#fff"
+		color:"#fff"
 	};
 	var contentHeight=window.screen.availHeight-220;
 	$scope.histcontentheight={
-			"maxHeight":contentHeight
+		"maxHeight":contentHeight
 	}
 	var dev={};
 	var maploadedInterval;
 	var directionDisplay;
-    var directionsService;
+	var directionsService;
 	var map;
 	var historypolyline = null;
 	var timerHandle = null;
@@ -34,23 +34,23 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 	var tick = 100; // milliseconds
 	$rootScope.lastStep = step;
 	$rootScope.lastTick = tick;
-	  var poly;
-	  var poly2;
-	  var lastVertex = 0;
-	  var eol;
-	  var marker = new Array();
-	  var k=0;
-	  var svg = new Array();
-	  $scope.vehType;
-	  var endmarkers = new Array() ;
-	  var stmarkers = new Array();
-	  $scope.headings;
-	  $rootScope.headings1;
-	  var heading;
-	  var eventmarker =new Array();
-	  
+	var poly;
+	var poly2;
+	var lastVertex = 0;
+	var eol;
+	var marker = new Array();
+	var k=0;
+	var svg = new Array();
+	$scope.vehType;
+	var endmarkers = new Array() ;
+	var stmarkers = new Array();
+	$scope.headings;
+	$rootScope.headings1;
+	var heading;
+	var eventmarker =new Array();
+	
 
-	  
+	
 	  /*var carSvg = new Array();
 	  carSvg[0] = { path :"M26.068,7.719 C27.423,21.657 26.941,35.659 26.801,49.660 C26.765,52.945 23.953,55.681 20.511,55.727 C16.978,55.770 13.462,55.778 9.929,55.738 C6.486,55.697 3.672,52.944 3.640,49.660 C3.516,35.659 3.113,21.657 4.657,7.719 C5.083,4.446 7.639,1.760 10.572,1.739 C13.630,1.721 16.881,1.721 20.018,1.739 C23.034,1.760 25.695,4.446 26.068,7.719 L26.068,7.719 Z",fillColor : "rgb(237, 237, 237)"};
 	  carSvg[1] = { path : "M25.762,8.510 L20.921,2.204 C20.921,2.204 25.252,2.647 25.885,8.065 C26.517,13.483 25.762,8.510 25.762,8.510 ZM15.160,2.706 C12.355,2.772 10.092,2.853 10.085,2.450 C10.076,2.165 12.353,1.834 15.164,1.816 C17.968,1.902 20.240,2.220 20.248,2.466 C20.253,2.846 17.967,2.761 15.160,2.706 ZM4.815,8.074 C5.443,2.668 9.749,2.226 9.749,2.226 L4.937,8.518 C4.937,8.518 4.187,13.481 4.815,8.074 ZM5.000,47.349 L4.563,21.574 C4.563,21.574 9.613,34.691 5.000,47.349 ZM7.721,44.433 C7.865,44.256 8.144,44.114 8.372,44.086 L7.879,26.221 C7.668,26.129 7.434,25.911 7.299,25.650 C6.246,23.582 5.784,21.256 5.737,19.294 C5.700,18.027 6.392,17.124 7.323,16.364 C8.266,15.625 9.448,15.028 10.664,14.841 C13.663,14.447 16.725,14.440 19.798,14.794 C22.228,15.233 24.825,17.000 24.814,19.411 C24.761,21.376 24.325,23.625 23.296,25.754 C23.118,26.114 22.752,26.393 22.495,26.383 C18.058,26.218 12.293,26.214 8.082,26.268 C8.078,26.268 8.073,26.268 8.069,26.268 L8.559,44.083 C12.615,44.173 17.835,44.175 21.697,44.146 L22.187,26.376 L22.375,26.381 L21.885,44.149 C22.107,44.170 22.399,44.311 22.553,44.491 C23.529,45.647 23.957,46.947 24.001,48.043 C24.035,48.752 23.394,49.256 22.531,49.681 C21.656,50.094 20.560,50.428 19.432,50.532 C16.652,50.752 13.813,50.756 10.964,50.558 C8.711,50.313 6.303,49.325 6.313,47.978 C6.362,46.880 6.766,45.623 7.721,44.433 ZM25.938,21.591 L25.500,47.392 C20.891,34.722 25.938,21.591 25.938,21.591 Z", fillColor :"rgb(0, 0, 0)"};
@@ -102,38 +102,38 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 	  var oldStep;
 	  // To Change Replay Speed level
 	  $scope.updateSpeed=function(choice){
-		  switch (choice) {
-			case 0:
-			    oldStep = {step: 1,tick:100};
-				step=5;
-				tick=100;
-				$scope.play = false;
-				$rootScope.lastStep = step;
-				$rootScope.lastTick = tick;
-				break;
-			case 1:
-			    oldStep = {step: 10,tick:50};
-				step=10;
-				tick=50;
-				$scope.play = false;
-				$rootScope.lastStep = step;
-				$rootScope.lastTick = tick;
-				break;
-			case 2:
-			    oldStep = {step: 50,tick:10};
-				step=50;
-				tick=10;
-				$scope.play = false;
-				$rootScope.lastStep = step;
-				$rootScope.lastTick = tick;
-				break;	
-			case 3:
-				step=0;
-				tick=1000;
-				$scope.play = true;
-				break;
-				
-			case 4:
+	  	switch (choice) {
+	  		case 0:
+	  		oldStep = {step: 1,tick:100};
+	  		step=5;
+	  		tick=100;
+	  		$scope.play = false;
+	  		$rootScope.lastStep = step;
+	  		$rootScope.lastTick = tick;
+	  		break;
+	  		case 1:
+	  		oldStep = {step: 10,tick:50};
+	  		step=10;
+	  		tick=50;
+	  		$scope.play = false;
+	  		$rootScope.lastStep = step;
+	  		$rootScope.lastTick = tick;
+	  		break;
+	  		case 2:
+	  		oldStep = {step: 50,tick:10};
+	  		step=50;
+	  		tick=10;
+	  		$scope.play = false;
+	  		$rootScope.lastStep = step;
+	  		$rootScope.lastTick = tick;
+	  		break;	
+	  		case 3:
+	  		step=0;
+	  		tick=1000;
+	  		$scope.play = true;
+	  		break;
+	  		
+	  		case 4:
 			   	// step=oldStep.step;
 				// tick=oldStep.tick;
 				step = $rootScope.lastStep;
@@ -141,43 +141,43 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 				$scope.play = false;
 				break;
 			}
-	  }
+		}
 	// $("#loading_icon").hide();
 	if(typeof $scope.token==="undefined"){
 		swal({ 
-			   title: "Un Authorized Access",
-		  	   text: "Kindly Login!",   
-		  	   type: "warning",   
-		  	   confirmButtonColor: "#ff0000",   
-		  	   closeOnConfirm: false }, 
-		  	   function(){  
-		  		 $localStorage.$reset();
-		  		 window.location = apiURL;
-		  });
-		 
+			title: "Un Authorized Access",
+			text: "Kindly Login!",   
+			type: "warning",   
+			confirmButtonColor: "#ff0000",   
+			closeOnConfirm: false }, 
+			function(){  
+				$localStorage.$reset();
+				window.location = apiURL;
+			});
+		
 	}
 
 
 
 	// function initialize() {
-	$scope.initialize=function () {	
-	    var styleMap = [{"featureType":"administrative","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"landscape","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"color":"#bee4f4"},{"visibility":"on"}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"geometry.fill","stylers":[{"visibility":"on"}]},{"featureType":"transit","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#46bcec"},{"visibility":"on"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"on"},{"color":"#000000"}]}];
-	    var myOptions = {
-		    zoom: 8,
-		    maxZoom : 18,
-		    mapTypeId: google.maps.MapTypeId.ROADMAP
-	    };
-	    
-	    address = 'India';
+		$scope.initialize=function () {	
+			var styleMap = [{"featureType":"administrative","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"landscape","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"color":"#bee4f4"},{"visibility":"on"}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"geometry.fill","stylers":[{"visibility":"on"}]},{"featureType":"transit","elementType":"labels","stylers":[{"visibility":"on"},{"hue":"#ff0000"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#46bcec"},{"visibility":"on"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"on"},{"color":"#000000"}]}];
+			var myOptions = {
+				zoom: 8,
+				maxZoom : 18,
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+			};
+			
+			address = 'India';
 	    // address = 'Trinidad and Tobago'
 	    geocoder = new google.maps.Geocoder();
 	    geocoder.geocode( { 'address': address}, function(results, status) {
-	     map.fitBounds(results[0].geometry.viewport);
+	    	map.fitBounds(results[0].geometry.viewport);
 
 	    });	
 	    
 	    map = new google.maps.Map(document.getElementById("replay_map"),
-	            myOptions);
+	    	myOptions);
 	    google.maps.event.addListenerOnce(map, 'idle', function(){
 	        // do something only the first time the map is loaded
 	    	// console.log("map loaded");
@@ -185,12 +185,12 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 	    google.maps.event.addListenerOnce(map, 'tilesloaded', function(){
 	        // this part runs when the mapobject is created and rendered
 	    	// console.log("Map Loaded");
-	        google.maps.event.addListenerOnce(map, 'tilesloaded', function(){
+	    	google.maps.event.addListenerOnce(map, 'tilesloaded', function(){
 	            // this part runs when the mapobject shown for the first
 		    // time
 	        	// console.log("Map with tiles and polylines loaded one
 			// time");
-	        	
+			
 	        	// console.log("Hide Loading");
 	        });
 	    });
@@ -199,17 +199,17 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 	    	// console.log("map loaded with tiles every time");
 	    	// $("#loading_icon").hide();
 	    	// $scope.httpLoading=false;
-	    	});
+	    });
 	    poly = new google.maps.Polyline({
-	        path: [],
-	        strokeColor: '#97dcc9',
-	        strokeWeight: 5
+	    	path: [],
+	    	strokeColor: '#97dcc9',
+	    	strokeWeight: 5
 	    });
 	    poly2 = new google.maps.Polyline({
-	        path: [],
-	        strokeColor: '#FF0000',
-	        strokeOpacity: 0.00001,
-	        strokeWeight: 0
+	    	path: [],
+	    	strokeColor: '#FF0000',
+	    	strokeOpacity: 0.00001,
+	    	strokeWeight: 0
 	    });  
 	}
 	
@@ -221,7 +221,7 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 	 $scope.glists = function() {
 	 	console.log("glist");
 	 	$scope.admingroup = {};
-	$scope.admingroup.token = $scope.token;
+	 	$scope.admingroup.token = $scope.token;
 	// console.log($scope.admingroup);
 	$scope.httpLoading=true;
 	$http({
@@ -248,11 +248,11 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 // console.log(status);
 // console.log(headers);
 // console.log(config);
-	});
-	 	
-	 }
-
+});
 	
+}
+
+
 
 
 
@@ -260,23 +260,23 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 	 * function to list the group id and name
 	 */
 
-	function listGroup(data) {
-		var glist = [];
-		for ( var inc = 0; inc < data.glist.length; inc++) {
-			glist.push(data.glist[inc]);
-		}
-		$scope.groupList = glist;
-		 console.log($scope.groupList);
-	}
+	 function listGroup(data) {
+	 	var glist = [];
+	 	for ( var inc = 0; inc < data.glist.length; inc++) {
+	 		glist.push(data.glist[inc]);
+	 	}
+	 	$scope.groupList = glist;
+	 	console.log($scope.groupList);
+	 }
 	/**
 	 * fetch device list based on group id
 	 */
-	$scope.fetchDevicelistHistory = function(groupID) {
-		$scope.httpLoading=true;
-		$scope.showDatepicker=true;
-		$scope.noData = false;
-		$scope.showTimeSlot=false;
-		$scope.blankTable=false;
+	 $scope.fetchDevicelistHistory = function(groupID) {
+	 	$scope.httpLoading=true;
+	 	$scope.showDatepicker=true;
+	 	$scope.noData = false;
+	 	$scope.showTimeSlot=false;
+	 	$scope.blankTable=false;
 	/*
 	 * $('#clearTextDevice span.select2-chosen').empty();
 	 * $('#clearTextDevice span.select2-chosen').text("- - Select Vehicle
@@ -284,8 +284,8 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 	 */
 		// document.getElementById("groupNamelist").blur();
 		// console.log(groupID);
-	    $scope.initialize();
-	    $scope.yoData=false;
+		$scope.initialize();
+		$scope.yoData=false;
 		$scope.groupdevicejson = {};
 		$scope.groupdevicejson.token = $scope.token;
 		$scope.groupdevicejson.gid = groupID;
@@ -293,23 +293,23 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 		 * get device list based on group ID
 		 */
 
-		$http({
-			method : 'POST',
-			url : apiURL + 'group/devlist',
-			data : JSON.stringify($scope.groupdevicejson),
-			headers : {
-				'Content-Type' : 'application/json'
-			}
-		}).success(function(data) {
-			$scope.httpLoading=false;
-			$scope.groupDevice = data;
-			$scope.devlistObject=$scope.groupDevice.devlist;
-			$scope.deviceList = [];
-			var dev_len = $scope.groupDevice.devlist.length;
-			var devlist = $scope.groupDevice.devlist;
-			for ( var i = 0; i < dev_len; i++) {
-				$scope.deviceList.push(devlist[i].devid);
-			}
+		 $http({
+		 	method : 'POST',
+		 	url : apiURL + 'group/devlist',
+		 	data : JSON.stringify($scope.groupdevicejson),
+		 	headers : {
+		 		'Content-Type' : 'application/json'
+		 	}
+		 }).success(function(data) {
+		 	$scope.httpLoading=false;
+		 	$scope.groupDevice = data;
+		 	$scope.devlistObject=$scope.groupDevice.devlist;
+		 	$scope.deviceList = [];
+		 	var dev_len = $scope.groupDevice.devlist.length;
+		 	var devlist = $scope.groupDevice.devlist;
+		 	for ( var i = 0; i < dev_len; i++) {
+		 		$scope.deviceList.push(devlist[i].devid);
+		 	}
 			// console.log($scope.deviceList);
 		}).error(function(data, status, headers, config) {
 			if (data.err == "Expired Session") {
@@ -325,62 +325,62 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 // console.log(status);
 // console.log(headers);
 // console.log(config);
-		});
+});
 	};
 	/**
 	 * add selected device for fetching history
 	 */
-	
-	$scope.onChange = function(data){
-	    $scope.fetchDeviceDetailHistory(data.devid,data.devtype);
-	}
-	
-	$scope.fetchDeviceDetailHistory=function(devID,divType){
-	    
-	    $scope.vehType= divType;
-	    
-	    icons = new Array();
-		if(divType == "car"){
-		    svg = car;
-		}
-		else if(divType == "truck")
-		{
-		    svg = truck;
-		}
-		else if(divType == "bike"){
-		    svg = bike;
-		}
-		else if(divType == "bus"){
-		    svg = bus; 
-		}
-		else{
-			svg = car;
-		}
-	    
-	    for(i in svg){
-	  	icons[i] = {path : svg[i].path, fillColor : svg[i].fillColor, 
-	  		scale: .7, 
-	  		strokeColor: 'white', 
-	  		strokeWeight: .10, 
-	  		fillOpacity: 1, 
-	  		offset: '5%',
-	  		rotation: Number($scope.headings),
+	 
+	 $scope.onChange = function(data){
+	 	$scope.fetchDeviceDetailHistory(data.devid,data.devtype);
+	 }
+	 
+	 $scope.fetchDeviceDetailHistory=function(devID,divType){
+	 	
+	 	$scope.vehType= divType;
+	 	
+	 	icons = new Array();
+	 	if(divType == "car"){
+	 		svg = car;
+	 	}
+	 	else if(divType == "truck")
+	 	{
+	 		svg = truck;
+	 	}
+	 	else if(divType == "bike"){
+	 		svg = bike;
+	 	}
+	 	else if(divType == "bus"){
+	 		svg = bus; 
+	 	}
+	 	else{
+	 		svg = car;
+	 	}
+	 	
+	 	for(i in svg){
+	 		icons[i] = {path : svg[i].path, fillColor : svg[i].fillColor, 
+	 			scale: .7, 
+	 			strokeColor: 'white', 
+	 			strokeWeight: .10, 
+	 			fillOpacity: 1, 
+	 			offset: '5%',
+	 			rotation: Number($scope.headings),
 	  		anchor: new google.maps.Point(10, 25) // orig 10,50 back of
 								// car, 10,0 front of
 								// car, 10,25 center of
 								// car
-	  	};
-	  	console.log($scope.headings);
-	  }
-	    	
-		$scope.showDatepicker=false;
-		$('.md-datepicker-input').prop('readonly', true);
-		dev.devid=devID;
-		$scope.yoData=false;
-		$scope.showTimeSlot=false;
-		$scope.myDate = "";
-		$("#GtrvelRouteHstTime").val("");
-		$scope.initialize();
+							};
+							console.log($scope.headings);
+						}
+						
+						$scope.showDatepicker=false;
+						$('.md-datepicker-input').prop('readonly', true);
+						dev.devid=devID;
+						$scope.yoData=false;
+						$scope.showTimeSlot=false;
+						$scope.myDate = "";
+						$("#GtrvelRouteHstTime").val("");
+						$scope.initialize();
 		//var dt=new Date().getTime();
 		var dt=new Date();
 		$('#GtrvelRouteHstTime').val(showTime(dt));
@@ -393,10 +393,10 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 			/*
 			 * inline: true, sideBySide: true,
 			 */
-			format: 'DD/MM/YYYY',
-	        maxDate: 'now',        		
-			ignoreReadonly:true,
-	            }).on("dp.change",function (e) {
+			 format: 'DD/MM/YYYY',
+			 maxDate: 'now',        		
+			 ignoreReadonly:true,
+			}).on("dp.change",function (e) {
 	            	// $("#startDateMaxKm").blur();
 	            	// closeResult();
 	            	dateChange(e.date._d);
@@ -408,8 +408,8 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 	}
 	
 	dateChange = function(date){
-	$scope.myDateChange($scope.MyDate);
-	$scope.activeMenu = '5';
+		$scope.myDateChange($scope.MyDate);
+		$scope.activeMenu = '5';
 	};
 	
 	function showTime (ts) {
@@ -449,70 +449,70 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 		$scope.slotCheckjson.slots=[];
 		
 		$scope.slotCheckjson.slots.push({"sts":getTimestamp(0,0,0),"ets":getTimestamp(5,59,59)},
-										{"sts":getTimestamp(6,0,0),"ets":getTimestamp(11,59,59)},
-										{"sts":getTimestamp(12,0,0),"ets":getTimestamp(17,59,59)},
-										{"sts":getTimestamp(18,0,0),"ets":getTimestamp(23,59,59)});
+			{"sts":getTimestamp(6,0,0),"ets":getTimestamp(11,59,59)},
+			{"sts":getTimestamp(12,0,0),"ets":getTimestamp(17,59,59)},
+			{"sts":getTimestamp(18,0,0),"ets":getTimestamp(23,59,59)});
 		$http({
 			method:'POST',
 			url:apiURL+'device/history_data_exist',
 			data:JSON.stringify($scope.slotCheckjson),	
 			headers:{'Content-Type' : 'application/json'}
 		}).success(function(data) {
-				console.log(data.values);	
-				$scope.slotA=data.values[0].data ? '1' : '0';
-				$scope.slotB=data.values[1].data ? '1' : '0';
-				$scope.slotC=data.values[2].data ? '1' : '0';
-				$scope.slotD=data.values[3].data ? '1' : '0';
-				if(data.values[0].data!=true && data.values[1].data!=true&&data.values[2].data!=true&&data.values[3].data!=true){						
-					$scope.showTimeSlot=false;
-					swal({title:"No history available for the selected date"});
+			console.log(data.values);	
+			$scope.slotA=data.values[0].data ? '1' : '0';
+			$scope.slotB=data.values[1].data ? '1' : '0';
+			$scope.slotC=data.values[2].data ? '1' : '0';
+			$scope.slotD=data.values[3].data ? '1' : '0';
+			if(data.values[0].data!=true && data.values[1].data!=true&&data.values[2].data!=true&&data.values[3].data!=true){						
+				$scope.showTimeSlot=false;
+				swal({title:"No history available for the selected date"});
 					//$("#GtrvelRouteHstTime").val("");
 				}
 				else{
 					$scope.showTimeSlot=true;
 				}
-		}).error(function(data, status, headers,config) {
-					if (data.err == "Expired Session") {
-						$('#updateDeviceModal').modal('hide');
-						expiredSession();
-						$localStorage.$reset();
-					} else if (data.err == "Invalid User") {
-						$('#updateDeviceModal').modal('hide');
-						invalidUser();
-						$localStorage.$reset();
-					}
+			}).error(function(data, status, headers,config) {
+				if (data.err == "Expired Session") {
+					$('#updateDeviceModal').modal('hide');
+					expiredSession();
+					$localStorage.$reset();
+				} else if (data.err == "Invalid User") {
+					$('#updateDeviceModal').modal('hide');
+					invalidUser();
+					$localStorage.$reset();
+				}
 // console.log(data);
 // console.log(status);
 // console.log(headers);
 // console.log(config);
-		}).finally(function(){		
-			$scope.httpLoading=false;
-		});
-	};
+}).finally(function(){		
+	$scope.httpLoading=false;
+});
+};
 	/**
 	 * 1 for 00:00 - 05:59 2 for 06:00 - 11:59 3 for 12:00 - 17:59 4 for
 	 * 18:00 - 23:59
 	 */
-	$scope.slotHistory=function(slot_num,noDataVal){
-	    oldStep = {step: 1,tick:100};
-	    $scope.end = false;
-	    $scope.replayPlayPause ={"slot_num" : slot_num, "noDataVal": noDataVal};
+	 $scope.slotHistory=function(slot_num,noDataVal){
+	 	oldStep = {step: 1,tick:100};
+	 	$scope.end = false;
+	 	$scope.replayPlayPause ={"slot_num" : slot_num, "noDataVal": noDataVal};
 	    // $scope.play = false;
-		if(noDataVal!=0){
-			if(slot_num==1){			
-			historyApiCall(getTimestamp(0,0,0),getTimestamp(5,59,59));
-		}
-		else if(slot_num==2){			
-			historyApiCall(getTimestamp(6,0,0),getTimestamp(11,59,59));
-		}
-		else if(slot_num==3){			
-			historyApiCall(getTimestamp(12,0,0),getTimestamp(17,59,59));
-		}
-		else if(slot_num==4){			
-			historyApiCall(getTimestamp(18,0,0),getTimestamp(23,59,59));
-		}
-			}
-		else{swal("Kindly check for available slot(s)");}
+	    if(noDataVal!=0){
+	    	if(slot_num==1){			
+	    		historyApiCall(getTimestamp(0,0,0),getTimestamp(5,59,59));
+	    	}
+	    	else if(slot_num==2){			
+	    		historyApiCall(getTimestamp(6,0,0),getTimestamp(11,59,59));
+	    	}
+	    	else if(slot_num==3){			
+	    		historyApiCall(getTimestamp(12,0,0),getTimestamp(17,59,59));
+	    	}
+	    	else if(slot_num==4){			
+	    		historyApiCall(getTimestamp(18,0,0),getTimestamp(23,59,59));
+	    	}
+	    }
+	    else{swal("Kindly check for available slot(s)");}
 	};
 	function getTimestamp(hr,mins,sec){
 		var trvelRouteHstTime=document.getElementById('GtrvelRouteHstTime').value;
@@ -526,18 +526,18 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 		 * var d=new Date($scope.myDate); d.setHours(hr);
 		 * d.setMinutes(mins); d.setSeconds(sec); return d.getTime();
 		 */
-	}
-	$scope.showHistory = function(mydate) {
-		var sts=new Date(mydate).getTime();
-		var d=new Date(mydate);
-		d.setHours(23);
-		d.setMinutes(59);
-		d.setSeconds(59);
-		var ets=d.getTime();
-		historyApiCall(sts,ets);
-	};
-	function historyApiCall(sts,ets){
-		$scope.httpLoading=true;
+		}
+		$scope.showHistory = function(mydate) {
+			var sts=new Date(mydate).getTime();
+			var d=new Date(mydate);
+			d.setHours(23);
+			d.setMinutes(59);
+			d.setSeconds(59);
+			var ets=d.getTime();
+			historyApiCall(sts,ets);
+		};
+		function historyApiCall(sts,ets){
+			$scope.httpLoading=true;
 		// $("#loading_icon").show();
 		$scope.deviceHistoryjson = {};
 		$scope.deviceHistoryjson.token = $scope.token;
@@ -545,15 +545,15 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 		$scope.deviceHistoryjson.sts = sts;
 		$scope.deviceHistoryjson.ets = ets;
 		$http(
-				{
-					method : 'POST',
-					url : apiURL + 'device/history',
-					data : JSON
-							.stringify($scope.deviceHistoryjson),
-					headers : {
-						'Content-Type' : 'application/json'
-					}
-				}).success(function(data) {
+		{
+			method : 'POST',
+			url : apiURL + 'device/history',
+			data : JSON
+			.stringify($scope.deviceHistoryjson),
+			headers : {
+				'Content-Type' : 'application/json'
+			}
+		}).success(function(data) {
 			$scope.histData = data;
 			// console.log(JSON.stringify(data.values));
 			if($scope.histData.values.length>=1){
@@ -570,34 +570,34 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 				$scope.activeMenu=5;
 			}
 		})
-				.error(
-						function(data, status, headers,
-								config) {
-							if (data.err == "Expired Session") {
-								$('#updateDeviceModal').modal('hide');
-								expiredSession();
-								$localStorage.$reset();
-							} else if (data.err == "Invalid User") {
-								$('#updateDeviceModal').modal('hide');
-								invalidUser();
-								$localStorage.$reset();
-							}
+		.error(
+			function(data, status, headers,
+				config) {
+				if (data.err == "Expired Session") {
+					$('#updateDeviceModal').modal('hide');
+					expiredSession();
+					$localStorage.$reset();
+				} else if (data.err == "Invalid User") {
+					$('#updateDeviceModal').modal('hide');
+					invalidUser();
+					$localStorage.$reset();
+				}
 // console.log(data);
 // console.log(status);
 // console.log(headers);
 // console.log(config);
-						}).finally(function(){		
-							$scope.httpLoading=false;
-						});
+}).finally(function(){		
+	$scope.httpLoading=false;
+});
+}
+function checkMaploaded(){
+	console.log($scope.historyMap);
+	if($scope.historyMap){
+		$interval.cancel(maploadedInterval);		
 	}
-	function checkMaploaded(){
-		console.log($scope.historyMap);
-		if($scope.historyMap){
-			$interval.cancel(maploadedInterval);		
-		}
-		else{			
-		}
+	else{			
 	}
+}
 	/**
 	 * 1) Plot on Map History Path 2) Display on Table
 	 * -----------------------------------------------------------------------
@@ -608,16 +608,16 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 
 	 function eve_hist(data) {
 
-var infowindow = new google.maps.InfoWindow({
-  size: new google.maps.Size(150,50)
-});
+	 	var infowindow = new google.maps.InfoWindow({
+	 		size: new google.maps.Size(150,50)
+	 	});
 
 	 	
 //var marker4 = [];
 
 //clearMap();
   // console.log(marker);
-      
+  
   //     if (eventmarker[0]) { 
   //             console.log(eventmarker);
   //                for(i in eventmarker){
@@ -628,73 +628,73 @@ var infowindow = new google.maps.InfoWindow({
   //     eventmarker = [];
 
 
-console.log(data);
-$scope.alarmHistData = {}
-$scope.alarmHistData = data;
+  console.log(data);
+  $scope.alarmHistData = {}
+  $scope.alarmHistData = data;
   $http({
-    method: 'POST',
-    url: apiURL+'device/alarmhistory',
-    data: JSON.stringify($scope.alarmHistData),
-    headers : {
-          'Content-Type' : 'application/json'
-      }
+  	method: 'POST',
+  	url: apiURL+'device/alarmhistory',
+  	data: JSON.stringify($scope.alarmHistData),
+  	headers : {
+  		'Content-Type' : 'application/json'
+  	}
 
   }).success(function(data){
-    console.log(data);
-    console.log(data.values.length);
+  	console.log(data);
+  	console.log(data.values.length);
 
-    
+  	
 
 
-    if(data.values.length>0){
-      for (var i = 0; i <data.values.length;i++){
-        var evelist = new Array();
-        
+  	if(data.values.length>0){
+  		for (var i = 0; i <data.values.length;i++){
+  			var evelist = new Array();
+  			
 
-        var latE = Number(data.values[i].lat);
-        var longE = Number(data.values[i].long);
-        $scope.alarm_type =data.values[i].alarm_type;
+  			var latE = Number(data.values[i].lat);
+  			var longE = Number(data.values[i].long);
+  			$scope.alarm_type =data.values[i].alarm_type;
         //console.log($scope.latE,$scope.longE,$scope.alarm_type);
-      evelist.push($scope.alarm_type);
-      console.log(evelist);
-      
+        evelist.push($scope.alarm_type);
+        console.log(evelist);
+        
         var marker = new google.maps.Marker({
-        position: {lat: latE, lng: longE},
-        map: map,
-        icon: {
-          path: google.maps.SymbolPath.CIRCLE,
-          scale: 10,
-          strokeColor: '#393'
-        }
-      });
+        	position: {lat: latE, lng: longE},
+        	map: map,
+        	icon: {
+        		path: google.maps.SymbolPath.CIRCLE,
+        		scale: 10,
+        		strokeColor: '#393'
+        	}
+        });
 
 
 
         google.maps.event.addListener(marker,'click', (function(marker, i){
-        return function(){
+        	return function(){
           // console.log("value of: ");
           var elist = new Array();
           for(j=0;j< data.values.length;j++){
-          console.log(data.values[j].alarm_type);
-          checkEventFilter(data.values[j].alarm_type);
-          elist.push($scope.eventValue); 
+          	console.log(data.values[j].alarm_type);
+          	checkEventFilter(data.values[j].alarm_type);
+          	elist.push($scope.eventValue); 
           }
 
-         console.log(_.uniq(elist));
+          console.log(_.uniq(elist));
 
-         contentString  = '<b><label>Event type:</label></b> '+_.uniq(elist)+'</n><br><br> ';
+          contentString  = '<b><label>Event type:</label></b> '+_.uniq(elist)+'</n><br><br> ';
           console.log(elist);
 
           infowindow.setContent(contentString);
           infowindow.open(map, marker);
 
-        }
-      }) (marker, i));
-
       }
-  }
-    else
-    {
+  }) (marker, i));
+
+    }
+}
+else
+{
       //nothing;
 
       
@@ -709,57 +709,57 @@ $scope.alarmHistData = data;
 //          marker4 = [];
 
 
-      
-    }
 
-  })
+}
+
+})
   .error(function(data,status,headers,config){
-    console.log(data,status,headers,config);
+  	console.log(data,status,headers,config);
   });
 
 }
 
 
 function checkEventFilter(type){
-  console.log(type);
-console.log("inside checkfilter: "+type);
-var eventType;
-switch(type){
-case 0:
-eventType = 'Panic';
-break;
-case 1:
-eventType = 'Tamper Sim';
-break;
-case 2:
-eventType = 'Tamper Top';
-break;
-case 3:
-eventType = 'Battery Low';
-break;
-case 4:
-eventType = 'Overspeed';
-break;
-case 5:
-eventType = 'Geofence';
-break;
-case 6:
-eventType = 'Sanity alarm';
-break;
-case 7:
-eventType = 'Connection to tracker interrupted';
-break;
-case 8:
-eventType = 'Vehicle Moved / Theft';
-break;
-case 9:
-eventType = 'Tracker sim changed';
-break;
-case 10:
-eventType = 'Warning';
-break;
-}
-$scope.eventValue = eventType;
+	console.log(type);
+	console.log("inside checkfilter: "+type);
+	var eventType;
+	switch(type){
+		case 0:
+		eventType = 'Panic';
+		break;
+		case 1:
+		eventType = 'Tamper Sim';
+		break;
+		case 2:
+		eventType = 'Tamper Top';
+		break;
+		case 3:
+		eventType = 'Battery Low';
+		break;
+		case 4:
+		eventType = 'Overspeed';
+		break;
+		case 5:
+		eventType = 'Geofence';
+		break;
+		case 6:
+		eventType = 'Sanity alarm';
+		break;
+		case 7:
+		eventType = 'Connection to tracker interrupted';
+		break;
+		case 8:
+		eventType = 'Vehicle Moved / Theft';
+		break;
+		case 9:
+		eventType = 'Tracker sim changed';
+		break;
+		case 10:
+		eventType = 'Warning';
+		break;
+	}
+	$scope.eventValue = eventType;
 // console.log("scope value: "+$scope.eventValue);
 }
 
@@ -776,10 +776,10 @@ $scope.eventValue = eventType;
 
 
 
-	function displayHistory() {
-	    console.log("display history")
+function displayHistory() {
+	console.log("display history")
 		// console.log(JSON.stringify($scope.histData.values));
-	    
+		
 		$scope.yoData=true;
 		$scope.noData=false;
 		var lat_tot = 0, lg_tot = 0, lat_avg = 0, lg_avg = 0;
@@ -791,26 +791,26 @@ $scope.eventValue = eventType;
 		var coordinates = [];		
 		
 		for(var inc = 0; inc < hist_len; inc++){
-		    executeHisory(histData[inc].lat,histData[inc].long,histData[inc].Velocity,histData[inc].ts, 
-			    function(historyStatus){
+			executeHisory(histData[inc].lat,histData[inc].long,histData[inc].Velocity,histData[inc].ts, 
+				function(historyStatus){
                 // console.log(JSON.stringify(historyStatus));
-			var arr = {};
-    			var plottedObj={};
-    			arr.lat = Number(historyStatus.latitude);
-				arr.lng = Number(historyStatus.longitude);
-				plottedObj.lat = Number(historyStatus.latitude);
-				plottedObj.long = Number(historyStatus.longitude);
-				plottedObj.Velocity = historyStatus.velocity;
-				plottedObj.ts = historyStatus.timestamp;
-				polyPathArray.push(arr);
-				$scope.plottedData.push(plottedObj);
-				lat_tot += Number(historyStatus.latitude);
-				lg_tot += Number(historyStatus.longitude);
-		  	});
-		  	
-		  }
+                var arr = {};
+                var plottedObj={};
+                arr.lat = Number(historyStatus.latitude);
+                arr.lng = Number(historyStatus.longitude);
+                plottedObj.lat = Number(historyStatus.latitude);
+                plottedObj.long = Number(historyStatus.longitude);
+                plottedObj.Velocity = historyStatus.velocity;
+                plottedObj.ts = historyStatus.timestamp;
+                polyPathArray.push(arr);
+                $scope.plottedData.push(plottedObj);
+                lat_tot += Number(historyStatus.latitude);
+                lg_tot += Number(historyStatus.longitude);
+            });
+			
+		}
 		if($scope.plottedData.length <= 1){
-		    swal({title:"Stationary Vehicle"});
+			swal({title:"Stationary Vehicle"});
 		}
 		else{
 			// nothing
@@ -837,64 +837,64 @@ $scope.eventValue = eventType;
 		else{
 			clearMap();
 // console.log(JSON.stringify(polyPathArray));
-			
-			if (stmarkers[0]) { 
-		         	console.log(stmarkers);
-		             for(i in stmarkers){
-		        	 console.log(stmarkers);
-		        	 stmarkers[i].setMap(null);
-		        	 }
-		           }
-			stmarkers = [];
-			
-			if (endmarkers[0]) { 
-		         	console.log(endmarkers);
-		             for(i in endmarkers){
-		        	 console.log(endmarkers);
-		        	 endmarkers[i].setMap(null);
-		        	 }
-		           }
-			endmarkers = [];
-			 bounds = new google.maps.LatLngBounds();
-			var pts=[];
-    	    var length = 0;
-            var point = null;
-            
-            var icon2;
-            var icon1;
-            
-            var myLatLng = {"lat":polyPathArray[0].lat,"lng":polyPathArray[0].lng};
-            icon1 = {
-        	    url: '../images/menu/startFlag.png',
-        	    scaledSize: new google.maps.Size(38, 38), // scaled size
-            };
 
-           var  marker1 = new google.maps.Marker({
-                    position: myLatLng,
-                    map: map,
-                    icon: icon1,
-                    scale:0.1
-            });
-            
-            stmarkers.push(marker1);
-            console.log(stmarkers);
+if (stmarkers[0]) { 
+	console.log(stmarkers);
+	for(i in stmarkers){
+		console.log(stmarkers);
+		stmarkers[i].setMap(null);
+	}
+}
+stmarkers = [];
+
+if (endmarkers[0]) { 
+	console.log(endmarkers);
+	for(i in endmarkers){
+		console.log(endmarkers);
+		endmarkers[i].setMap(null);
+	}
+}
+endmarkers = [];
+bounds = new google.maps.LatLngBounds();
+var pts=[];
+var length = 0;
+var point = null;
+
+var icon2;
+var icon1;
+
+var myLatLng = {"lat":polyPathArray[0].lat,"lng":polyPathArray[0].lng};
+icon1 = {
+	url: '../images/menu/startFlag.png',
+        	    scaledSize: new google.maps.Size(38, 38), // scaled size
+        	};
+
+        	var  marker1 = new google.maps.Marker({
+        		position: myLatLng,
+        		map: map,
+        		icon: icon1,
+        		scale:0.1
+        	});
+        	
+        	stmarkers.push(marker1);
+        	console.log(stmarkers);
 
             // console.log("zoom level: "+map.getZoom());
 
             icon2 = {
                     url: '../images/menu/finishFlag.png', // url
                     scaledSize: new google.maps.Size(38, 38), // scaled size
-            };
+                };
             // console.log("zoom level4: "+map.getZoom());
 
             var myLatLng = {"lat":polyPathArray[polyPathArray.length-1].lat,"lng":polyPathArray[polyPathArray.length-1].lng};
-           var  marker2 = new google.maps.Marker({
-                    position: myLatLng,
-                    map: map,
-                    icon: icon2
+            var  marker2 = new google.maps.Marker({
+            	position: myLatLng,
+            	map: map,
+            	icon: icon2
             });
-           endmarkers.push(marker2);
-           console.log(endmarkers);
+            endmarkers.push(marker2);
+            console.log(endmarkers);
             
             
             
@@ -911,24 +911,24 @@ $scope.eventValue = eventType;
             }
             poly = new google.maps.Polyline({
             	map:map,
-    	        path: pts,
-    	        strokeColor: '#97dcc9',
-    	        strokeWeight: 5
-    	    });
-    	    map.setZoom(16);
+            	path: pts,
+            	strokeColor: '#97dcc9',
+            	strokeWeight: 5
+            });
+            map.setZoom(16);
             map.fitBounds(bounds);
             startAnimation();  	    
-		}
-	}
-	function clearMap(){
-		poly.setMap(null);
-		poly2.setMap(null);
-	}
-	 function startAnimation() {   	 
-	     console.log("start animation");
-         if (timerHandle) clearInterval(timerHandle);
-         eol=poly.Distance();
-         map.setCenter(poly.getPath().getAt(0));
+        }
+    }
+    function clearMap(){
+    	poly.setMap(null);
+    	poly2.setMap(null);
+    }
+    function startAnimation() {   	 
+    	console.log("start animation");
+    	if (timerHandle) clearInterval(timerHandle);
+    	eol=poly.Distance();
+    	map.setCenter(poly.getPath().getAt(0));
          // map.addOverlay(new
 	    // google.maps.Marker(polyline.getAt(0),G_START_ICON));
          // map.addOverlay(new
@@ -939,12 +939,12 @@ $scope.eventValue = eventType;
 	     * google.maps.Marker({position:poly.getPath().getAt(0),
 	     * map:map,icon:icon});
 	     */
-         
-         console.log($scope.headings);
-         
-         if (marker[0]) {
-      	for(i in marker){marker[i].setMap(null);}
-            }
+	     
+	     console.log($scope.headings);
+	     
+	     if (marker[0]) {
+	     	for(i in marker){marker[i].setMap(null);}
+	     }
           //marker = [];
           /*for(i in svg){
         	  marker[i] = new google.maps.Marker({
@@ -953,71 +953,71 @@ $scope.eventValue = eventType;
         		icon: icons[i]
         	  });
         	  
-          }*/
-         for(i in svg){
-   	  marker[i] = new google.maps.Marker({
-   		position: poly.getPath().getAt(0),
-   		map: map,
-   		icon: {
-   		path : svg[i].path, fillColor : svg[i].fillColor, 
-	  		scale: .7, 
-	  		strokeColor: 'white', 
-	  		strokeWeight: .10, 
-	  		fillOpacity: 1, 
-	  		offset: '5%',
-	  		rotation: Number($scope.headings),
-	  		anchor: new google.maps.Point(10, 25)
-   		    }
-   	  });
-   	  
-     }
-         console.log($scope.headings); 
+        	}*/
+        	for(i in svg){
+        		marker[i] = new google.maps.Marker({
+        			position: poly.getPath().getAt(0),
+        			map: map,
+        			icon: {
+        				path : svg[i].path, fillColor : svg[i].fillColor, 
+        				scale: .7, 
+        				strokeColor: 'white', 
+        				strokeWeight: .10, 
+        				fillOpacity: 1, 
+        				offset: '5%',
+        				rotation: Number($scope.headings),
+        				anchor: new google.maps.Point(10, 25)
+        			}
+        		});
+        		
+        	}
+        	console.log($scope.headings); 
          // map.addOverlay(marker);
          poly2 = new google.maps.Polyline({path: [poly.getPath().getAt(0)], strokeColor:"#0000FF",strokeOpacity: 0.00001, strokeWeight:0});
          // map.addOverlay(poly2);
          // setTimeout("animate(50)",2000); // Allow time for the initial map
 	    // display
-         setTimeout(function() {
- 	        $scope.animate(50);
- 	    }, 2000);
-	 }
-	 function updatePoly(d) {
-	     console.log("update");
-	     for(i in svg){icons[i].rotation = $scope.headings;}
+	    setTimeout(function() {
+	    	$scope.animate(50);
+	    }, 2000);
+	}
+	function updatePoly(d) {
+		console.log("update");
+		for(i in svg){icons[i].rotation = $scope.headings;}
 	        // Spawn a new polyline every 20 vertices, because updating a
 		// 100-vertex poly is too slow
-	        if (poly2.getPath().getLength() > 20) {
-	          poly2= new google.maps.Polyline([poly.getPath().getAt(lastVertex - 1)]);
-	          /* console.log(poly.getPath().getAt(lastVertex - 1).lat); */
+		if (poly2.getPath().getLength() > 20) {
+			poly2= new google.maps.Polyline([poly.getPath().getAt(lastVertex - 1)]);
+			/* console.log(poly.getPath().getAt(lastVertex - 1).lat); */
 	          // map.addOverlay(poly2)
 	          //poly2.setMap(map);
 	          poly2.setMap(null);
-	        }
-
-	        if (poly.GetIndexAtDistance(d) < lastVertex+2) {
-	           if (poly2.getPath().getLength()>1) {
-	        	   poly2.getPath().removeAt(poly2.getPath().getLength() - 1);
-	           }
-	           /* poly2.insertVertex(poly2.getVertexCount(),poly.GetPointAtDistance(d)); */
-	           poly2.getPath().insertAt(poly2.getPath().getLength(), poly.GetPointAtDistance(d));
-	        } else {
-	          /* poly2.insertVertex(poly2.getPath().getLength(),poly.getVertex(lastVertex++)); */         
-	          poly2.getPath().insertAt(poly2.getPath().getLength(), poly.getPath().getAt(lastVertex++));
-	        }
 	      }
-	 $scope.animate = function(d) {
+
+	      if (poly.GetIndexAtDistance(d) < lastVertex+2) {
+	      	if (poly2.getPath().getLength()>1) {
+	      		poly2.getPath().removeAt(poly2.getPath().getLength() - 1);
+	      	}
+	      	/* poly2.insertVertex(poly2.getVertexCount(),poly.GetPointAtDistance(d)); */
+	      	poly2.getPath().insertAt(poly2.getPath().getLength(), poly.GetPointAtDistance(d));
+	      } else {
+	      	/* poly2.insertVertex(poly2.getPath().getLength(),poly.getVertex(lastVertex++)); */         
+	      	poly2.getPath().insertAt(poly2.getPath().getLength(), poly.getPath().getAt(lastVertex++));
+	      }
+	  }
+	  $scope.animate = function(d) {
 	     // console.log($scope.headings);
 	     // console.log("animate");
-	        if (d>eol) {	
-	            $scope.end = true;
-	            for(i in svg){icons[i].rotation = $scope.headings;}
-	            console.log("end"); 
-	            console.log($scope.headings);
-	          return;
-	        }
-	        var p = poly.GetPointAtDistance(d);
+	     if (d>eol) {	
+	     	$scope.end = true;
+	     	for(i in svg){icons[i].rotation = $scope.headings;}
+	     		console.log("end"); 
+	     	console.log($scope.headings);
+	     	return;
+	     }
+	     var p = poly.GetPointAtDistance(d);
 	      // if (k++>=180/step) {
-	         map.panTo(p);
+	      	map.panTo(p);
 	        /*
 		 * k=0; }
 		 */ 
@@ -1030,22 +1030,22 @@ $scope.eventValue = eventType;
 	        // console.log($scope.headings);
 	        // console.log($scope.play);
 	        if($scope.play == false){
-			   	var lastPosn = marker[0].getPosition();
-				console.log("p value: "+p);
-				var newLatLong = p.toString().replace('(', '');
-				newLatLong = newLatLong.toString().replace(')', '');
-				var inputLatLong = newLatLong.split(",",2);
-	        for(i in svg){marker[i].setPosition(new google.maps.LatLng(parseFloat(inputLatLong[0]), parseFloat(inputLatLong[1])));}
-	          for(i in svg){icons[i].rotation = $scope.headings;}
-	          heading = google.maps.geometry.spherical.computeHeading(lastPosn, p);
-	          $scope.headings = heading;
+	        	var lastPosn = marker[0].getPosition();
+	        	console.log("p value: "+p);
+	        	var newLatLong = p.toString().replace('(', '');
+	        	newLatLong = newLatLong.toString().replace(')', '');
+	        	var inputLatLong = newLatLong.split(",",2);
+	        	for(i in svg){marker[i].setPosition(new google.maps.LatLng(parseFloat(inputLatLong[0]), parseFloat(inputLatLong[1])));}
+	        		for(i in svg){icons[i].rotation = $scope.headings;}
+	        			heading = google.maps.geometry.spherical.computeHeading(lastPosn, p);
+	        		$scope.headings = heading;
 	        //   console.log($scope.headings);
-	          for(i in svg){icons[i].rotation = $scope.headings;}
-	          
-	          for(i in svg){
-	              marker[i].setIcon(icons[i]);
-	              }
-	          for(i in svg){icons[i].rotation = $scope.headings;}
+	        for(i in svg){icons[i].rotation = $scope.headings;}
+	        	
+	        	for(i in svg){
+	        		marker[i].setIcon(icons[i]);
+	        	}
+	        	for(i in svg){icons[i].rotation = $scope.headings;}
 	          /*console.log($scope.headings);
 	        updatePoly(d);
 	        
@@ -1055,8 +1055,8 @@ $scope.eventValue = eventType;
 	        }, tick);*/
 
 
-	        }
-	        else if ($scope.play == true){
+	    }
+	    else if ($scope.play == true){
 	        	/*var lastPosn = marker[0].getPosition();
 	       		for(i in svg){marker[i].setPosition(p);}
 	          for(i in svg){icons[i].rotation = $scope.headings;}
@@ -1064,27 +1064,27 @@ $scope.eventValue = eventType;
 	          $scope.headings = heading;
 	          console.log($scope.headings);*/
 	          for(i in svg){icons[i].rotation = $scope.headings;}
-	          
-	          for(i in svg){
-	              marker[i].setIcon(icons[i]);
-	              }
-	          for(i in svg){icons[i].rotation = $scope.headings;}
-	          
+	          	
+	          	for(i in svg){
+	          		marker[i].setIcon(icons[i]);
+	          	}
+	          	for(i in svg){icons[i].rotation = $scope.headings;}
+	          		
 
 	        	//nothing
-	        }
+	    }
 	        // console.log($scope.headings);
 	        // console.log(d);
 	        // console.log(step);
-	       
+	        
 	        updatePoly(d);
 	        // timerHandle = setTimeout("animate("+(d+step)+")", tick);
 	        timerHandle = setTimeout(function() {
-	            $scope.animate(d + step);
+	        	$scope.animate(d + step);
 	        }, tick);
 
 
-	      }
+	    }
 	 // ----------------------------------------------------------------------------
 		// =============== ~animation funcitons =====================
 		/***************************************************************
@@ -1138,20 +1138,20 @@ $scope.eventValue = eventType;
 		}
 
 		google.maps.LatLng.prototype.latRadians = function () {
-		    return this.lat() * Math.PI / 180;
+			return this.lat() * Math.PI / 180;
 		}
 
 		google.maps.LatLng.prototype.lngRadians = function () {
-		    return this.lng() * Math.PI / 180;
+			return this.lng() * Math.PI / 180;
 		}
 
 		// === A method which returns the length of a path in metres ===
 		google.maps.Polygon.prototype.Distance = function () {
-		    var dist = 0;
-		    for (var i = 1; i < this.getPath().getLength(); i++) {
-		        dist += this.getPath().getAt(i).distanceFrom(this.getPath().getAt(i - 1));
-		    }
-		    return dist;
+			var dist = 0;
+			for (var i = 1; i < this.getPath().getLength(); i++) {
+				dist += this.getPath().getAt(i).distanceFrom(this.getPath().getAt(i - 1));
+			}
+			return dist;
 		}
 
 		// === A method which returns a GLatLng of a point a given
@@ -1167,43 +1167,43 @@ $scope.eventValue = eventType;
 		    var dist = 0;
 		    var olddist = 0;
 		    for (var i = 1;
-		    (i < this.getPath().getLength() && dist < metres); i++) {
-		        olddist = dist;
-		        dist += this.getPath().getAt(i).distanceFrom(this.getPath().getAt(i - 1));
-		    }
-		    if (dist < metres) {
-		        return null;
-		    }
-		    var p1 = this.getPath().getAt(i - 2);
-		    var p2 = this.getPath().getAt(i - 1);
-		    var m = (metres - olddist) / (dist - olddist);
-		    return new google.maps.LatLng(p1.lat() + (p2.lat() - p1.lat()) * m, p1.lng() + (p2.lng() - p1.lng()) * m);
+		    	(i < this.getPath().getLength() && dist < metres); i++) {
+		    	olddist = dist;
+		    dist += this.getPath().getAt(i).distanceFrom(this.getPath().getAt(i - 1));
 		}
+		if (dist < metres) {
+			return null;
+		}
+		var p1 = this.getPath().getAt(i - 2);
+		var p2 = this.getPath().getAt(i - 1);
+		var m = (metres - olddist) / (dist - olddist);
+		return new google.maps.LatLng(p1.lat() + (p2.lat() - p1.lat()) * m, p1.lng() + (p2.lng() - p1.lng()) * m);
+	}
 
 		// === A method which returns an array of GLatLngs of points a
 		// given
 		// interval along the path ===
 		google.maps.Polygon.prototype.GetPointsAtDistance = function (metres) {
-		    var next = metres;
-		    var points = [];
+			var next = metres;
+			var points = [];
 		    // some awkward special cases
 		    if (metres <= 0) return points;
 		    var dist = 0;
 		    var olddist = 0;
 		    for (var i = 1;
-		    (i < this.getPath().getLength()); i++) {
-		        olddist = dist;
-		        dist += this.getPath().getAt(i).distanceFrom(this.getPath().getAt(i - 1));
-		        while (dist > next) {
-		            var p1 = this.getPath().getAt(i - 1);
-		            var p2 = this.getPath().getAt(i);
-		            var m = (next - olddist) / (dist - olddist);
-		            points.push(new google.maps.LatLng(p1.lat() + (p2.lat() - p1.lat()) * m, p1.lng() + (p2.lng() - p1.lng()) * m));
-		            next += metres;
-		        }
+		    	(i < this.getPath().getLength()); i++) {
+		    	olddist = dist;
+		    dist += this.getPath().getAt(i).distanceFrom(this.getPath().getAt(i - 1));
+		    while (dist > next) {
+		    	var p1 = this.getPath().getAt(i - 1);
+		    	var p2 = this.getPath().getAt(i);
+		    	var m = (next - olddist) / (dist - olddist);
+		    	points.push(new google.maps.LatLng(p1.lat() + (p2.lat() - p1.lat()) * m, p1.lng() + (p2.lng() - p1.lng()) * m));
+		    	next += metres;
 		    }
-		    return points;
 		}
+		return points;
+	}
 
 		// === A method which returns the Vertex number at a given
 		// distance along
@@ -1217,15 +1217,15 @@ $scope.eventValue = eventType;
 		    var dist = 0;
 		    var olddist = 0;
 		    for (var i = 1;
-		    (i < this.getPath().getLength() && dist < metres); i++) {
-		        olddist = dist;
-		        dist += this.getPath().getAt(i).distanceFrom(this.getPath().getAt(i - 1));
-		    }
-		    if (dist < metres) {
-		        return null;
-		    }
-		    return i;
+		    	(i < this.getPath().getLength() && dist < metres); i++) {
+		    	olddist = dist;
+		    dist += this.getPath().getAt(i).distanceFrom(this.getPath().getAt(i - 1));
 		}
+		if (dist < metres) {
+			return null;
+		}
+		return i;
+	}
 		// === Copy all the above functions to GPolyline ===
 		google.maps.Polyline.prototype.Distance = google.maps.Polygon.prototype.Distance;
 		google.maps.Polyline.prototype.GetPointAtDistance = google.maps.Polygon.prototype.GetPointAtDistance;
@@ -1238,7 +1238,7 @@ $scope.eventValue = eventType;
 		 * movement---------------------------------------------------------------
 		 * 
 		 */
-	function SortByts(x,y) {
+		 function SortByts(x,y) {
 		// console.log(x);
 		// console.log(y);
 		return ((x.ts == y.ts) ? 0 : ((x.ts > y.ts) ? 1 : -1 ));
@@ -1255,37 +1255,37 @@ $scope.eventValue = eventType;
 	 * get Date formatted date based on TIMESTAMP
 	 * -----------------------------------------------------------------------
 	 */
-	$scope.showTime = function(ts) {
-		 var d = new Date(Number(ts));	 	
-	 	  var hours = d.getHours();
-	 	  var minutes = d.getMinutes();
-	 	  var ampm = hours >= 12 ? 'pm' : 'am';
-	 	  hours = hours % 12;
+	 $scope.showTime = function(ts) {
+	 	var d = new Date(Number(ts));	 	
+	 	var hours = d.getHours();
+	 	var minutes = d.getMinutes();
+	 	var ampm = hours >= 12 ? 'pm' : 'am';
+	 	hours = hours % 12;
 	 	  hours = hours ? hours : 12; // the hour '0' should be '12'
 	 	  minutes = minutes < 10 ? '0'+minutes : minutes;
 	 	  var strTime = hours + ':' + minutes + ' ' + ampm;
 	 	  return strTime;
-	};
-	
-	
-	$scope.givelt=function(lt,lg){
+	 	};
+	 	
+	 	
+	 	$scope.givelt=function(lt,lg){
 		// alert("success");
 		var geocoder = new google.maps.Geocoder();
 		var latLng = new google.maps.LatLng(lt,lg);
 		geocoder.geocode({       
-		        latLng: latLng     
-		        }, 
-		        function(responses) 
-		        {     
-		           if (responses && responses.length > 0) 
-		           {        
-		               swal(responses[0].formatted_address);     
-		           } 
-		           else 
-		           {       
-		             swal('Not getting Any address for given latitude and longitude.');     
-		           }   
-		        }
+			latLng: latLng     
+		}, 
+		function(responses) 
+		{     
+			if (responses && responses.length > 0) 
+			{        
+				swal(responses[0].formatted_address);     
+			} 
+			else 
+			{       
+				swal('Not getting Any address for given latitude and longitude.');     
+			}   
+		}
 		);
 	}
 	$(".spdCtrl").click(function() {
