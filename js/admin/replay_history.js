@@ -34,7 +34,7 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
   var stmarkers = new Array();
   var eventmarker =new Array();
 
-  
+
   
   
   
@@ -143,7 +143,7 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
        $localStorage.$reset();
        window.location = apiURL;
      });
-   
+
 	}
 	// function initialize() {
    $scope.initialize=function () {	
@@ -175,7 +175,7 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
 		    // time
 	        	// console.log("Map with tiles and polylines loaded one
 			// time");
-      
+
 	        	// console.log("Hide Loading");
 	        });
      });
@@ -197,7 +197,7 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
        strokeWeight: 0
      });  
    }
-   
+
 
 	/**
 	 * on load fetch and fill group drop down menu
@@ -293,15 +293,15 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
 	/**
 	 * add selected device for fetching history
 	 */
-  
+
   $scope.onChange = function(data){
    $scope.fetchDeviceDetailHistory(data.devid,data.devtype);
  }
- 
+
  $scope.fetchDeviceDetailHistory=function(devID,divType){ 
 	    	//alert("div");
        $scope.vehType= divType;
-       
+
        icons = new Array();
        if($scope.vehType == "car"){
         svg = car;
@@ -319,7 +319,7 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
       else{
        svg = car;
      }
-     
+
      for(i in svg){
       icons[i] = {path : svg[i].path, fillColor : svg[i].fillColor, scale: .7, strokeColor: 'white', strokeWeight: .10, fillOpacity: 1, offset: '5%',
 	  		anchor: new google.maps.Point(10, 25) // orig 10,50 back of
@@ -328,7 +328,7 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
 								// car
               };
             }
-            
+
             console.log(devID);
             console.log(divType);
             $scope.showDatepicker=false;
@@ -342,11 +342,11 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
             var dt=new Date()
             $('#trvelRouteHstTime').val(showTime(dt));
             dateChange(dt);
-            
-            
-            
+
+
+
           };
-          
+
 	/*$(document).on('click', '#trvelRouteHstTimePic', function(){
 	    
 	});*/
@@ -354,7 +354,7 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
 	$scope.openCal = function(){
 		//console.log("1");
 		$('#trvelRouteHstTimePic').datetimepicker({
-      
+
 			/*
 			 * inline: true, sideBySide: true,
 			 */
@@ -374,7 +374,7 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
    $scope.myDateChange();
    $scope.activeMenu = '5';
  }
- 
+
  function showTime (ts) {
 		// console.log(ts);
 		var d = new Date(Number(ts));
@@ -453,16 +453,16 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
      }).finally(function(){		
        $scope.httpLoading=false;
      });
-     
+
    };
-   
+
 //console.log($scope.slotCheckjson);
 	/**
 	 * 1 for 00:00 - 05:59 2 for 06:00 - 11:59 3 for 12:00 - 17:59 4 for
 	 * 18:00 - 23:59
 	 */
   $scope.slotHistory=function(slot_num,noDataVal){
-   
+
    oldStep = {step: 1,tick:100};
    $scope.end = false;
    $scope.replayPlayPause ={"slot_num" : slot_num, "noDataVal": noDataVal};
@@ -485,7 +485,7 @@ batsAdminHome.controller('replayHistory', function($scope,$rootScope, $http, $lo
    else{swal("Kindly check for available slot(s)");
 		// $scope.no_history=false;
   }
-  
+
 };
 function getTimestamp(hr,mins,sec){		
   var trvelRouteHstTime=document.getElementById('trvelRouteHstTime').value;
@@ -578,7 +578,7 @@ var infowindow = new google.maps.InfoWindow({
 });
 
   //console.log(marker);
-  
+
       // if (eventmarker[0]) { 
       //         console.log(eventmarker);
       //            for(i in eventmarker){
@@ -604,9 +604,9 @@ var infowindow = new google.maps.InfoWindow({
         console.log(data);
         console.log(data.values.length);
 
-        
 
-    //console.log(_.uniq(data.values.lat));
+        console.log(_.pluck(data.values, 'lat'));
+        console.log(_.uniq(data.values, 'lat'));
     if(data.values.length>0){
       for (var i = 0; i <data.values.length;i++){
         var evelist = new Array();
@@ -688,11 +688,11 @@ var infowindow = new google.maps.InfoWindow({
 
 
 
-        
+
 
         google.maps.event.addListener(marker,'click' ,(function(marker,i){
           return function(){
-            
+
       //     console.log(elist);
       //console.log(checkEventFilter(data.values[i].alarm_type));
       //console.log($scope.eventValue);
@@ -805,7 +805,7 @@ function displayHistory() {
         	 }
            }
            marker = [];*/
-           
+
            $scope.yoData=true;
            $scope.noData=false;
            var lat_tot = 0, lg_tot = 0, lat_avg = 0, lg_avg = 0;
@@ -815,7 +815,7 @@ function displayHistory() {
            var polyPathArray = [];
            $scope.plottedData=[];
            var coordinates = [];		
-           
+
            for(var inc = 0; inc < hist_len; inc++){
              executeHisory(histData[inc].lat,histData[inc].long,histData[inc].Velocity,histData[inc].ts,
                function(historyStatus){
@@ -829,7 +829,7 @@ function displayHistory() {
                 plottedObj.Velocity = historyStatus.velocity;
                 plottedObj.ts = historyStatus.timestamp;
                 polyPathArray.push(arr);
-                
+
 /*for(var i=0 ; i<plottedObj.length ; i++){
 					
 					i = i+100;
@@ -852,7 +852,7 @@ function displayHistory() {
 				        }
 				);
       }*/
-      
+
       $scope.plottedData.push(plottedObj);
 				//console.log($scope.plottedData.length);
 				/*
@@ -860,17 +860,17 @@ function displayHistory() {
 				 * swal({title:"Vehicle in stationary"}); }
 				 * else{ //nothing }
 				 */
-         
+
          lat_tot += Number(historyStatus.latitude);
          lg_tot += Number(historyStatus.longitude);
-         
-         
-         
-         
-         
-         
+
+
+
+
+
+
        });
-             
+
            }
            if($scope.plottedData.length <= 1){
              swal({title:"Stationary Vehicle"});
@@ -908,7 +908,7 @@ function displayHistory() {
         }
       }
       stmarkers = [];
-      
+
       if (endmarkers[0]) { 
         console.log(endmarkers);
         for(i in endmarkers){
@@ -917,9 +917,9 @@ function displayHistory() {
         }
       }
       endmarkers = [];
-      
-      
-      
+
+
+
 //			console.log(JSON.stringify(polyPathArray));
 bounds = new google.maps.LatLngBounds();
 var pts=[];
@@ -933,7 +933,7 @@ icon1 = {
  url: '../images/menu/startFlag.png',
                         	    scaledSize: new google.maps.Size(38, 38), // scaled size
                             };
-                            
+
                             var  marker1 = new google.maps.Marker({
                               position: myLatLng,
                               map: map,
@@ -945,13 +945,13 @@ icon1 = {
                             console.log(stmarkers);
 
                             // console.log("zoom level: "+map.getZoom());
-                            
+
                             icon2 = {
                                     url: '../images/menu/finishFlag.png', // url
                                     scaledSize: new google.maps.Size(38, 38), // scaled size
                                   };
                             // console.log("zoom level4: "+map.getZoom());
-                            
+
                             var myLatLng = {"lat":polyPathArray[polyPathArray.length-1].lat,"lng":polyPathArray[polyPathArray.length-1].lng};
                             var  marker2 = new google.maps.Marker({
                               position: myLatLng,
@@ -960,7 +960,7 @@ icon1 = {
                             });
                             endmarkers.push(marker2);
                             console.log(endmarkers);
-                            
+
                             for(var i=0;i<polyPathArray.length;i++){
                              pts[i]=new google.maps.LatLng(polyPathArray[i].lat,polyPathArray[i].lng)
                              if(i>0){
@@ -1023,7 +1023,7 @@ for(i in svg){
          // map.addOverlay(poly2);
          // setTimeout("animate(50)",2000); // Allow time for the initial map
 	    // display
-     
+
      setTimeout(function() {
       $scope.animate(50);
     }, 2000);
@@ -1084,7 +1084,7 @@ var p = poly.GetPointAtDistance(d);
        $scope.headings = heading;
 				//console.log($scope.headings);
        for(i in svg){icons[i].rotation = $scope.headings;}
-         
+
          for(i in svg){
           marker[i].setIcon(icons[i]);
         }
@@ -1105,19 +1105,19 @@ var p = poly.GetPointAtDistance(d);
             $scope.headings = heading;
             console.log($scope.headings);*/
             for(i in svg){icons[i].rotation = $scope.headings;}
-              
+
               for(i in svg){
                 marker[i].setIcon(icons[i]);
               }
               for(i in svg){icons[i].rotation = $scope.headings;}
-                
+
 
             //nothing
         }
           // console.log($scope.headings);
           // console.log(d);
           // console.log(step);
-          
+
           updatePoly(d);
           // timerHandle = setTimeout("animate("+(d+step)+")", tick);
           timerHandle = setTimeout(function() {
@@ -1306,8 +1306,8 @@ var p = poly.GetPointAtDistance(d);
 	 	  var strTime = hours + ':' + minutes + ' ' + ampm;
 	 	  return strTime;
    };
-   
-   
+
+
    $scope.givelt=function(lt,lg){
 		// alert("success");
 		var geocoder = new google.maps.Geocoder();
