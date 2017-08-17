@@ -44,7 +44,7 @@
 						<h1 class="titleClass">loading!...</h1>
 					</div>
 				</div> -->
-				<div ng-show="isSet(1)" class="setBackgroundColor">
+				<div ng-if="isSet(1)" class="setBackgroundColor">
 				<div class="row">
 					<div class="col-sm-3">
 							<!-- <div id="TestDonut" style="width: 175px; height: 175px;></div>
@@ -225,7 +225,7 @@
 						</div>
 					
 </div>
-				<div ng-show="isSet(2)" class="setBackgroundColor" ng-controller="dashboardTripController"
+				<div ng-if="isSet(2)" class="setBackgroundColor" ng-controller="dashboardTripController"
 					>
 					<div class="row mar0">
 						<div id="TripMap" class="TripMap"></div>
@@ -345,7 +345,7 @@
 						</div>
 					</div>
 				</div>
-				<div ng-show="isSet(3)" class="setBackgroundColor" ng-controller="dashboardDriverController"
+				<div ng-if="isSet(3)" class="setBackgroundColor" ng-controller="dashboardDriverController"
 					ng-init="tripStatus='false'">
 					<div class="row">
 						<div class="col-sm-4">
@@ -465,7 +465,7 @@
 						</div>
 					</div>
 				</div>
-				<div ng-show="isSet(4)" class="setBackgroundColor" ng-controller="dashboardVehicleController">
+				<div ng-if="isSet(4)" class="setBackgroundColor" ng-controller="dashboardVehicleController">
 					<div class="row">
 						<div class="col-sm-4">
 							<!-- <div id="TestDonut" style="width: 175px; height: 175px;></div>
