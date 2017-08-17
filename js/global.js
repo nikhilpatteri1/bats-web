@@ -8,6 +8,10 @@ var apiURL="http://220.227.124.134:8058/";//dev server(modified traveldesk user 
 
 //var apiURL="http://220.227.124.134:8042/"; //crown plaza
 //var apiURL="http://10.1.71.40:8052/"
+
+//var apiURL = "http://10.1.73.169:8058/";//dev server for driver app
+
+
 var reqTime=5;  
 var maxSpeed=10;
 //var factoryToken="VQGIO34xB0V3ZSxo";    
