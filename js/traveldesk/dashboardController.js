@@ -53,6 +53,10 @@ batstravelDeskHome.controller('dashboardController', function($scope, $interval,
 	$scope.gotoElement=function(eID){
 		commonAppService.scrollTo(eID);
 	}
+
+	$scope.$on('$destroy', function(){
+    	$interval.cancel($rootScope.callAlarmApi)
+	});
 	    
 });
 
