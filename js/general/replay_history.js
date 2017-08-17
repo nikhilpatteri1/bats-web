@@ -48,7 +48,7 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 	$rootScope.headings1;
 	var heading;
 	var eventmarker =new Array();
-	
+$scope.play = false;	
 
 	
 	  /*var carSvg = new Array();
@@ -202,7 +202,7 @@ batsGeneralHome.controller('replayHistory',function($rootScope,$scope, $http, $l
 	    });
 	    poly = new google.maps.Polyline({
 	    	path: [],
-	    	strokeColor: '#97dcc9',
+	    	strokeColor: '#4cde7d',
 	    	strokeWeight: 5
 	    });
 	    poly2 = new google.maps.Polyline({
@@ -658,15 +658,19 @@ function checkMaploaded(){
         evelist.push($scope.alarm_type);
         console.log(evelist);
         
+       iconE = {
+                             url: '../images/event-marker.png',
+                              scaledSize: new google.maps.Size(25, 25), // scaled size
+                            };
+
+
+
         var marker = new google.maps.Marker({
-        	position: {lat: latE, lng: longE},
-        	map: map,
-        	icon: {
-        		path: google.maps.SymbolPath.CIRCLE,
-        		scale: 10,
-        		strokeColor: '#393'
-        	}
-        });
+          position: {lat: latE, lng: longE},
+          map: map,
+          icon: iconE,
+          scale:0.1
+        }); 
 
 
 

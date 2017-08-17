@@ -1093,7 +1093,7 @@ batsAdminHome.controller('smartcontroller', function($scope, $interval, $http, $
 					}else if(data[0].devtype=="bike"){
 						$scope.bikeCount = 1;
 					}
-					else{$scope.carCount = 0;
+					else{$scope.carCount = 1;
         					$scope.bikeCount = 0;
         					$scope.busCount = 0;
         					$scope.truckCount = 0;
