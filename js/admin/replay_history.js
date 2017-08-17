@@ -604,15 +604,35 @@ var infowindow = new google.maps.InfoWindow({
         console.log(data);
         console.log(data.values.length);
 
+        var b = [];
+        $scope.latt = _.pluck(data.values, 'lat');
+        $scope.longg = _.pluck(data.values, 'long');
+        $scope.eve1 = _.pluck(data.values, 'alarm_type');
+$scope.latlongg = _.object(_.pluck(data.values, 'lat'), _.pluck(data.values, 'long'));
+console.log($scope.latlongg);
 
+        
         console.log(_.pluck(data.values, 'lat'));
-        console.log(_.uniq(data.values, 'lat'));
+        console.log(_.pluck(data.values, 'long'));
+        console.log(_.pluck(data.values, 'alarm_type'));
+        //console.log(_(data).chain().flatten().pluck('lat,long').unique().value());
+
+        var result = _.map(data.values, function(currentObject) {
+    return _.pick(currentObject, "lat", "long","alarm_type");
+});
+        console.log(result);
+
+
+
+
+        var a= [];
+        var bb=[];
     if(data.values.length>0){
       for (var i = 0; i <data.values.length;i++){
         var evelist = new Array();
         var latC, longC = "";
         var storedAlarm = "";
-        var a= [];
+        
 
        // var latC = Number(data.values[0].lat);
         //var longC = Number(data.values[0].long) ;
@@ -622,10 +642,12 @@ var infowindow = new google.maps.InfoWindow({
         var latE = Number(data.values[i].lat);
         var longE = Number(data.values[i].long);
         $scope.alarm_type =data.values[i].alarm_type;
-        //console.log($scope.latE,$scope.longE,$scope.alarm_type);
-        evelist.push($scope.alarm_type);
-        //console.log(evelist);
         
+        //console.log($scope.latE,$scope.longE,$scope.alarm_type);
+        a.push(latE,longE,$scope.alarm_type);
+        console.log(a);
+        evelist.push($scope.alarm_type);
+        //console.log(evelist);        
         var marker = new google.maps.Marker({
           position: {lat: latE, lng: longE},
           map: map,
@@ -635,6 +657,7 @@ var infowindow = new google.maps.InfoWindow({
             strokeColor: '#393'
           }
         });
+
 
 
         // if(latE == latC && longE == longC){
@@ -650,35 +673,36 @@ var infowindow = new google.maps.InfoWindow({
         // latC = latE;
         // longC = longE;
 
-        var sameeve= [];
-        var diffeve = [];
-        var difflat = [];
-        for (var j= 0; j< data.values.length;j++) {
-          if(latE == data.values[j].lat &&  longE == data.values[j].long){
-            console.log("same latlong");
-            if ($scope.alarm_type == data.values[j].alarm_type) {
-              console.log("same event");
-              sameeve = $scope.alarm_type;
-              a.push($scope.alarm_type);
-            }
-            else{
-              console.log("differ event");
-              a.push($scope.alarm_type);
-              diffeve.push($scope.alarm_type);
-              diffeve.push(data.values[j].alarm_type);
-              a.push(data.values[j].alarm_type); 
-            }
-          }
-          else{
-            difflat.push($scope.alarm_type);
-            console.log("differ latlong");
-            a.push($scope.alarm_type);
-          }
-          console.log(a);
-          console.log(sameeve);
-          console.log(diffeve);
-          console.log(difflat);
-        }
+
+        // var sameeve= [];
+        // var diffeve = [];
+        // var difflat = [];
+        // for (var j= 0; j< data.values.length;j++) {
+        //   if(latE == data.values[j].lat &&  longE == data.values[j].long){
+        //     console.log("same latlong");
+        //     if ($scope.alarm_type == data.values[j].alarm_type) {
+        //       console.log("same event");
+        //       sameeve = $scope.alarm_type;
+        //       a.push($scope.alarm_type);
+        //     }
+        //     else{
+        //       console.log("differ event");
+        //       a.push($scope.alarm_type);
+        //       diffeve.push($scope.alarm_type);
+        //       diffeve.push(data.values[j].alarm_type);
+        //       a.push(data.values[j].alarm_type); 
+        //     }
+        //   }
+        //   else{
+        //     difflat.push($scope.alarm_type);
+        //     console.log("differ latlong");
+        //     a.push($scope.alarm_type);
+        //   }
+        //   console.log(a);
+        //   console.log(sameeve);
+        //   console.log(diffeve);
+        //   console.log(difflat);
+        // }
 
 
 
