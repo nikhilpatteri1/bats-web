@@ -595,16 +595,16 @@ var infowindow = new google.maps.InfoWindow({
   size: new google.maps.Size(150,50)
 });
 
-  //console.log(marker);
+  console.log(eventmarker);
 
-      // if (eventmarker[0]) { 
-      //         console.log(eventmarker);
-      //            for(i in eventmarker){
-      //          console.log(eventmarker);
-      //          eventmarker[i].setMap(null);
-      //          }
-      //          }
-      // eventmarker = [];
+      if (eventmarker[0]) { 
+              console.log(eventmarker);
+                 for(i in eventmarker){
+               console.log(eventmarker);
+               eventmarker[i].setMap(null);
+               }
+               }
+      eventmarker = [];
 
 
       console.log(data);
@@ -692,6 +692,10 @@ var infowindow = new google.maps.InfoWindow({
                     //  strokeColor: '#393'
                     // }
                   });
+                eventmarker.push(marker);
+                console.log(eventmarker);
+
+
                 google.maps.event.addListener(marker, 'click', (function (marker, i) {
                   return function () {
                         // console.log("value of: ");
@@ -1046,6 +1050,10 @@ var p = poly.GetPointAtDistance(d);
 	        /*
 		 * k=0; }
 		 */ 
+
+     console.log(d);
+     console.log(p);
+     console.log(step);
 	        /*
 		 * var lastPosn = marker.getPosition(); marker.setPosition(p);
 		 * var heading =

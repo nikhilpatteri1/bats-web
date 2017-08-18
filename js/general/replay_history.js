@@ -612,6 +612,17 @@ function checkMaploaded(){
 	 		size: new google.maps.Size(150,50)
 	 	});
 
+console.log(eventmarker);
+
+      if (eventmarker[0]) { 
+              console.log(eventmarker);
+                 for(i in eventmarker){
+               console.log(eventmarker);
+               eventmarker[i].setMap(null);
+               }
+               }
+      eventmarker = [];
+
 	 	
 //var marker4 = [];
 
@@ -671,7 +682,7 @@ function checkMaploaded(){
           icon: iconE,
           scale:0.1
         }); 
-
+        eventmarker.push(marker);
 
 
         google.maps.event.addListener(marker,'click', (function(marker, i){

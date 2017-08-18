@@ -1107,6 +1107,15 @@ batsGeneralHome.controller('GeneralController', function($rootScope,$scope, $int
 			}).success(function(data) {
 				// console.log(JSON.stringify(data));
 				$scope.multiDevice = false;
+				if(data[0].changed_gid == $scope.groupname){
+					swal('Geofence has Changed');
+					plotDevices();
+
+
+				}
+				else{
+					//nothing;
+				}
 				if(data[0].values.length>0){				
 					$scope.singleDevice = true;		
 					speedValue=data[0].values[0].Velocity;					
