@@ -56,6 +56,10 @@ batsGeneralHome.controller('dashboardController', function($scope, $http, $rootS
 	$scope.getTimeFormat = function(ts){
 		return commonAppService.showTime(ts); 
 	}
+
+	$scope.$on('$destroy', function(){
+    	$interval.cancel($rootScope.callAlarmApi)
+	});
 	
 });
 /**
