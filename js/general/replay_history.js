@@ -558,8 +558,9 @@ $scope.play = false;
 			// console.log(JSON.stringify(data.values));
 			if($scope.histData.values.length>=1){
 				$scope.httpLoading=false;
+				eve_hist($scope.deviceHistoryjson);
 				displayHistory();	
-				eve_hist($scope.deviceHistoryjson);			
+							
 			}
 			else{
 				$scope.httpLoading=false;
@@ -604,15 +605,34 @@ function checkMaploaded(){
 	 */
 
 
+function getEventString(values, markerLat, markerLng, event) {
+            var eventString = "";//= BatsServices.matchAlarm(event);
+            for (var j = 0; j < values.length; j++) {
+                console.log(" CHEXCH THIS  " + j + markerLat, Number(values[j].lat), markerLng, Number(values[j].long));
+                //console.log(j + "  " + eventString);
+                if (markerLat === Number(values[j].lat) && markerLng === Number(values[j].long)) {
+                    console.log(" " + j + markerLat, Number(values[j].lat), markerLng, Number(values[j].long));
+                    console.log(values[j].alarm_type)
+                    eventString = eventString + "\n <br> " + checkEventFilter(values[j].alarm_type);
+                    console.log(eventString + values[j].alarm_type);
+                }
+
+            }
+            return eventString;
+        }
+
+
 
 
 	 function eve_hist(data) {
+//var marker4 = [];
 
-	 	var infowindow = new google.maps.InfoWindow({
-	 		size: new google.maps.Size(150,50)
-	 	});
+//clearMap();
+var infowindow = new google.maps.InfoWindow({
+  size: new google.maps.Size(150,50)
+});
 
-console.log(eventmarker);
+  console.log(eventmarker);
 
       if (eventmarker[0]) { 
               console.log(eventmarker);
@@ -623,114 +643,119 @@ console.log(eventmarker);
                }
       eventmarker = [];
 
-	 	
-//var marker4 = [];
 
-//clearMap();
-  // console.log(marker);
-  
-  //     if (eventmarker[0]) { 
-  //             console.log(eventmarker);
-  //                for(i in eventmarker){
-  //              console.log(eventmarker);
-  //              eventmarker[i].setMap(null);
-  //              }
-  //              }
-  //     eventmarker = [];
+      console.log(data);
+      $scope.alarmHistData = {}
+      $scope.alarmHistData = data;
+      $http({
+        method: 'POST',
+        url: apiURL+'device/alarmhistory',
+        data: JSON.stringify($scope.alarmHistData),
+        headers : {
+          'Content-Type' : 'application/json'
+        }
 
+      }).success(function(data){
+        console.log(data);
+        console.log(data.values.length);
 
-  console.log(data);
-  $scope.alarmHistData = {}
-  $scope.alarmHistData = data;
-  $http({
-  	method: 'POST',
-  	url: apiURL+'device/alarmhistory',
-  	data: JSON.stringify($scope.alarmHistData),
-  	headers : {
-  		'Content-Type' : 'application/json'
-  	}
+        var b = [];
+        $scope.latt = _.pluck(data.values, 'lat');
+        $scope.longg = _.pluck(data.values, 'long');
+        $scope.eve1 = _.pluck(data.values, 'alarm_type');
+        $scope.latlongg = _.object(_.pluck(data.values, 'lat'), _.pluck(data.values, 'long'));
+        console.log($scope.latlongg);
 
-  }).success(function(data){
-  	console.log(data);
-  	console.log(data.values.length);
-
-  	
-
-
-  	if(data.values.length>0){
-  		for (var i = 0; i <data.values.length;i++){
-  			var evelist = new Array();
-  			
-
-  			var latE = Number(data.values[i].lat);
-  			var longE = Number(data.values[i].long);
-  			$scope.alarm_type =data.values[i].alarm_type;
-        //console.log($scope.latE,$scope.longE,$scope.alarm_type);
-        evelist.push($scope.alarm_type);
-        console.log(evelist);
         
-       iconE = {
-                             url: '../images/event-marker.png',
-                              scaledSize: new google.maps.Size(25, 25), // scaled size
-                            };
+        console.log(_.pluck(data.values, 'lat'));
+        console.log(_.pluck(data.values, 'long'));
+        console.log(_.pluck(data.values, 'alarm_type'));
+        //console.log(_(data).chain().flatten().pluck('lat,long').unique().value());
+
+        var result = _.map(data.values, function(currentObject) {
+          return _.pick(currentObject, "lat", "long","alarm_type");
+        });
+        console.log(result);
+
+
+        for(i=0 ; i<result.length ; i++){
+          var a1,b1,c1,d1 = [];
+          var circle = [];
+          var eveN = [];
+
+          a1,c1= result.lat;
+          b1,d1 = result.long;
 
 
 
-        var marker = new google.maps.Marker({
-          position: {lat: latE, lng: longE},
-          map: map,
-          icon: iconE,
-          scale:0.1
-        }); 
-        eventmarker.push(marker);
+        }
 
+        var value=data.values;
 
-        google.maps.event.addListener(marker,'click', (function(marker, i){
-        	return function(){
-          // console.log("value of: ");
-          var elist = new Array();
-          for(j=0;j< data.values.length;j++){
-          	console.log(data.values[j].alarm_type);
-          	checkEventFilter(data.values[j].alarm_type);
-          	elist.push($scope.eventValue); 
+        var a= [];
+        var bb=[];
+
+        var values = value.filter(function (a) {
+          var key =  a.lat + '|' + a.long + '|'  + a.alarm_type  ;
+          if (!this[key]) {
+            this[key] = true;
+            return true;
           }
-
-          console.log(_.uniq(elist));
-
-          contentString  = '<b><label>Event type:</label></b> '+_.uniq(elist)+'</n><br><br> ';
-          console.log(elist);
-
-          infowindow.setContent(contentString);
-          infowindow.open(map, marker);
-
-      }
-  }) (marker, i));
-
-    }
-}
-else
-{
-      //nothing;
-
-      
-// console.log(marker4);
-//     if (marker4[0]) { 
-//           console.log(marker4);
-//              for(i in marker4){
-//            console.log(marker4);
-//            marker4[i].setMap(null);
-//            }
-//            }
-//          marker4 = [];
+        }, Object.create(null));
 
 
+        var infowindow = new google.maps.InfoWindow();
+        //console.log("inside marker creration:" + angular.toJson(eventObj));
+        for (var i = 0; i < values.length; i++) {
+                // console.log("drawing marker:"+event);
+                // var event = values[i];
+                var markerLat = Number(values[i].lat);
+                var markerLng = Number(values[i].long);
+                var icon1 = {
+                    url: '../images/event-marker.png', // url
+                    scaledSize: new google.maps.Size(28, 28), // scaled size
+                  };
 
-}
+                // console.log("drawing marker:"+angular.toJson(event));
+                // console.log("lat & long: "+event.lat);
+                var marker = new google.maps.Marker({
+                  position: { lat: markerLat, lng: markerLng },
+                  map: map,
+                  icon: icon1,
+                  scale: 0.01
+                    // icon: {
+                    //  url: 'img/event-marker.png',
+                    //  scale: 0.1,
+                    //  strokeColor: '#393'
+                    // }
+                  });
+                eventmarker.push(marker);
+                console.log(eventmarker);
 
-})
-  .error(function(data,status,headers,config){
-  	console.log(data,status,headers,config);
-  });
+
+                google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                  return function () {
+                        // console.log("value of: ");
+                       // var alarmType = BatsServices.matchAlarm(values[i].alarm_type);
+                        //console.log(alarmType);
+                        $scope.eventValue = getEventString(values, Number(values[i].lat), Number(values[i].long), values[i].alarm_type);
+                        //checkEventFilter(values[i].alarm_type)
+                        console.log($scope.eventValue);
+                        infowindow.setContent($scope.eventValue);
+                        infowindow.open(map, marker);
+                        // console.log("content of marker is: "+values[i].alarm_type);
+                      }
+                    })(marker, i));
+              }
+
+
+
+            
+
+  })
+.error(function(data,status,headers,config){
+  console.log(data,status,headers,config);
+});
 
 }
 
@@ -775,6 +800,7 @@ function checkEventFilter(type){
 		break;
 	}
 	$scope.eventValue = eventType;
+	return $scope.eventValue;
 // console.log("scope value: "+$scope.eventValue);
 }
 

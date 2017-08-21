@@ -291,16 +291,18 @@ batstravelDeskHome.controller('tripManagement', function($rootScope,$scope, $loc
 			/*defaultDate:'now',*/        
 			minDate: 'now',        		
 			ignoreReadonly:true,
+		}).on("dp.change",function(e){
+			calcRoute();
 		});
 	});			
-	/*$(document).on('click', '#endTimePicker', function(){
-		$('#endTimePicker').datetimepicker({
-			format: 'DD/MM/YYYY hh:mm a',
-			defaultDate:'now',	        
-	        minDate: 'now',
-			ignoreReadonly:true,
-		});
-	});*/
+	// $(document).on('click', '#endTimePicker', function(){
+	// 	$('#endTimePicker').datetimepicker({
+	// 		format: 'DD/MM/YYYY hh:mm a',
+	// 		defaultDate:'now',	        
+	//         minDate: 'now',
+	// 		ignoreReadonly:true,
+	// 	});
+	// });
 	$(document).on('click', '#startTimePickerU', function(){
 		$('#startTimePickerU').datetimepicker({
 			format: 'DD/MM/YYYY hh:mm a',

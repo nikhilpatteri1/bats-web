@@ -60,11 +60,11 @@ batsAdminHome.controller('driverController', function($rootScope,$scope, $localS
 	
 	$scope.bloodGroups = ["a+","a-","b-","b+","ab+","ab-","o+","o-","a1b+ve","a1o+ve","a1ab+ve","b1a+ve","b1ab+ve","b1o+ve","ab1a+ve","ab1b+ve","ab1o+ve","o1a+ve","o1b+ve","o1ab+ve","ab1a+ve","ab1b+ve","ab1o+ve","a1b-ve","a1o-ve","a1ab-ve","b1a-ve","b1ab-ve","b1o-ve","ab1a-ve","ab1b-ve","ab1o-ve","o1a-ve","o1b-ve","o1ab-ve","ab1a-ve","ab1b-ve","ab1o-ve"];
 	
-	$(document).on('click', function(e) {
-    if ( e.target.id != 'ok' ) {
-        // you clicked something else
-    }
-});
+// 	$(document).on('click', function(e) {
+//     if ( e.target.id != 'ok' ) {
+//         // you clicked something else
+//     }
+// });
 
 $scope.Alength = true;
 $(".createuser").prop('disabled', true);
